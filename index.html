@@ -292,7 +292,7 @@
   .chart .bl { fill: var(--text); font-size: 10px; font-weight: 600; text-anchor: middle; }
   .chart .hit { fill: transparent; cursor: pointer; }
   .tip { font-size: 12px; color: var(--dim); margin-top: 6px; }
-  .seg { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line-2); border-radius: var(--r); overflow: hidden; margin-top: 10px; }
+  .seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border: 1px solid var(--line-2); border-radius: var(--r); overflow: hidden; margin-top: 10px; }
   .seg button { min-height: 48px; background: transparent; border: none; font-family: var(--head); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); transition: var(--t); }
   .seg button.on { background: var(--lime); color: #09090B; }
 
@@ -330,6 +330,74 @@
   .toast.red { background: var(--red); color: #fff; }
   input[type=file] { display: none; }
 
+  /* header buttons + menu */
+  .hbtns { display: flex; gap: 8px; }
+  .ibtn.on { border-color: var(--lime); color: var(--lime); }
+  .ibtn.icon { padding: 0; width: 48px; display: flex; align-items: center; justify-content: center; }
+  .ibtn.icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+  .mlist { margin-top: 12px; border-top: 1px solid var(--line); }
+  .mrow { width: 100%; min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 4px; background: transparent; border: none; border-bottom: 1px solid var(--line); font-family: var(--head); font-size: 16px; font-weight: 700; text-align: left; transition: var(--t); }
+  .mrow small { display: block; font-family: var(--data); font-size: 12px; font-weight: 500; color: var(--dim); margin-top: 2px; }
+  .mrow .chev { color: var(--dim); font-size: 20px; font-weight: 400; }
+  .mrow.on, .mrow.on .chev { color: var(--lime); }
+  .mrow:active { background: var(--panel-2); }
+
+  /* stats */
+  .seg.sm { margin: 0 0 8px; width: 120px; margin-left: auto; }
+  .seg.sm button { min-height: 44px; font-size: 11px; }
+  /* Guide: plan > train > record > review loop */
+  .steps { list-style: none; margin: 18px 0 0; padding: 0; counter-reset: st; }
+  .box .steps li { position: relative; margin: 0; padding: 0 0 20px 46px; counter-increment: st; }
+  .steps li::before { content: counter(st); position: absolute; left: 0; top: -3px; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--lime); color: var(--lime); font-family: var(--head); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+  .steps li::after { content: ''; position: absolute; left: 15px; top: 31px; bottom: 4px; width: 1px; background: var(--line-2); }
+  .steps b { display: block; font-family: var(--head); font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text); }
+  .steps span { display: block; font-size: 14px; color: var(--muted); margin-top: 3px; line-height: 1.45; }
+  .steps .btn-q { min-height: 44px; padding: 0; color: var(--lime); text-align: left; }
+  .loop { display: flex; align-items: center; gap: 10px; margin: -6px 0 0 4px; font-size: 13px; color: var(--dim); }
+  .loop .ic { width: 22px; height: 22px; color: var(--lime); }
+  .chart .bchart { width: 100%; height: 150px; display: block; font-family: var(--data); }
+  .shead { font-size: 14px; color: var(--dim); margin: 14px 0 0; }
+  .shead b { color: var(--text); }
+  .wnav { display: grid; grid-template-columns: 48px 1fr 48px; align-items: center; margin-top: 14px; }
+  .wnav button { height: 48px; background: transparent; border: 1px solid var(--line); border-radius: var(--r); font-size: 22px; color: var(--muted); }
+  .wnav button:active { border-color: var(--lime); color: var(--lime); }
+  .wnav div { text-align: center; }
+  .wnav b { display: block; font-family: var(--head); font-size: 17px; }
+  .wnav small { font-size: 12px; color: var(--dim); }
+  .plan { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-top: 10px; }
+  .pday { min-height: 78px; padding: 8px 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); transition: var(--t); }
+  .pday .dn { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim); }
+  .pday .dd { font-family: var(--head); font-size: 16px; font-weight: 700; color: var(--muted); }
+  .pday .pw { font-family: var(--head); font-size: 11px; font-weight: 700; letter-spacing: 0.02em; color: var(--text); }
+  .pday.cl .pw { color: var(--muted); }
+  .pday.rest .pw { color: var(--line-3); font-weight: 500; }
+  .pday.today { border-color: var(--lime); }
+  .pday.done { background: var(--lime); border-color: var(--lime); }
+  .pday.done .dn, .pday.done .dd, .pday.done .pw { color: #09090B; }
+  .pday.miss .pw { color: var(--dim); text-decoration: line-through; }
+  .pday:active { transform: scale(0.96); }
+  .psum { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: 13px; color: var(--dim); margin-top: 10px; }
+  .psum b { color: var(--text); }
+  .pwarn { font-size: 12px; color: var(--red); margin-top: 6px; }
+  .pbtns { display: flex; justify-content: space-between; }
+  .msets { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 4px 12px; }
+  .mset { display: grid; grid-template-columns: 82px 1fr 64px; gap: 10px; align-items: center; min-height: 40px; border-bottom: 1px solid var(--line); }
+  .mset:last-child { border-bottom: none; }
+  .mset .mg { font-size: 13px; font-weight: 600; }
+  .mset .mb { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+  .mset .mb i { display: block; height: 100%; background: var(--lime); border-radius: 3px; }
+  .mset .mv { text-align: right; font-family: var(--head); font-size: 14px; font-weight: 700; }
+  .mset .mv small { font-family: var(--data); font-size: 11px; color: var(--dim); font-weight: 500; }
+  .lift { display: grid; grid-template-columns: 1fr 64px 56px; gap: 10px; align-items: center; padding: 10px 12px; min-height: 60px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); margin-top: 6px; }
+  .lift .a { font-family: var(--head); font-size: 14px; font-weight: 700; text-transform: uppercase; line-height: 1.15; }
+  .lift .b { font-size: 12px; color: var(--dim); margin-top: 3px; }
+  .lift .b b { color: var(--text); }
+  .spark { width: 64px; height: 24px; }
+  .spark polyline { fill: none; stroke: var(--lime); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .spark circle { fill: var(--lime); }
+  .lc { text-align: right; font-family: var(--head); font-size: 13px; font-weight: 700; color: var(--dim); }
+  .lc.up { color: var(--lime); } .lc.dn { color: var(--red); }
+
   /* Samsung "Screen zoom" larger = 360-384px wide: tighter set rows so numbers fit */
   @media (max-width: 400px) {
     main { padding: 12px 8px; }
@@ -349,9 +417,9 @@
 <header class="hdr">
   <div class="hdr-row">
     <div class="brand"><h1>SCULPT<span>.</span></h1><small>The New Gym</small></div>
-    <div style="display:flex;gap:8px">
-      <button class="ibtn" id="btnInstall" style="display:none;border-color:var(--lime);color:var(--lime)">Install</button>
-      <button class="ibtn" id="btnRules">Rules</button>
+    <div class="hbtns">
+      <button class="ibtn" id="btnStats">Stats</button>
+      <button class="ibtn icon" id="btnMenu" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
     </div>
   </div>
   <nav class="tabs" id="tabs"></nav>
@@ -388,6 +456,38 @@
 
 <div class="modal" id="mGuide"><div class="box" id="guideBox"></div></div>
 <div class="modal" id="mFinish"><div class="box" id="finishBox"></div></div>
+<div class="modal" id="mPlan"><div class="box" id="planBox"></div></div>
+<div class="modal" id="mHow">
+  <div class="box">
+    <div class="grab"></div>
+    <button class="xbtn" data-close aria-label="Close">×</button>
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><b>Plan</b><span>Your week has 4 lifts, 2 classes and 1 rest day. Tap a day to change it.</span><button class="btn-q" data-go="plan">Open my week</button></li>
+      <li><b>Train</b><span>Open today's workout. Tap your resting heart rate, then go top to bottom.</span><button class="btn-q" data-go="today">Today's workout</button></li>
+      <li><b>Record</b><span>Tap the circle after each set and rate it. Finish + log, add calories from your watch.</span></li>
+      <li><b>Review</b><span>Stats shows your week, month and lifts. The app sets your next weights.</span><button class="btn-q" data-go="lifts">See my lifts</button></li>
+    </ol>
+    <div class="loop"><svg class="ic" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg>Repeat every week</div>
+    <button class="btn btn-p" data-close>Got it</button>
+  </div>
+</div>
+<div class="modal" id="mMenu">
+  <div class="box">
+    <div class="grab"></div>
+    <button class="xbtn" data-close aria-label="Close">×</button>
+    <h2>Menu</h2>
+    <div class="mlist">
+      <button class="mrow" data-menu="guide"><span>Guide<small>How to use the app</small></span><span class="chev">›</span></button>
+      <button class="mrow" data-menu="rules"><span>Rules<small>Heart and pelvic floor safety</small></span><span class="chev">›</span></button>
+      <button class="mrow" data-menu="install" id="rowInstall" style="display:none"><span>Install app</span><span class="chev">›</span></button>
+    </div>
+    <h4>Backup</h4>
+    <div class="dgrid" style="margin-top:8px"><button class="btn btn-g" id="btnExport">Export</button><button class="btn btn-g" id="btnImport">Import</button></div>
+    <p class="note">Your data lives on this phone. Export once a month.</p>
+    <p class="note" id="appVer" style="text-align:center;margin-top:18px"></p>
+  </div>
+</div>
 <div class="modal" id="mRules">
   <div class="box">
     <div class="grab"></div>
@@ -423,7 +523,6 @@
       <li>All reps done = app adds weight next time.</li>
     </ul>
     <button class="btn btn-p" data-close>OK</button>
-    <p class="note" id="appVer" style="text-align:center"></p>
   </div>
 </div>
 
@@ -533,6 +632,14 @@ const MOVES = {
     props: [{ t: 'rect', x: 44, y: 30, w: 12, h: 40 }, { t: 'rect', x: 36, y: 70, w: 28, h: 4 }, { t: 'pad', j: 'E1', d: [-4,-5,-4,5] }, { t: 'pad', j: 'E2', d: [4,-5,4,5] }] },
   backext: { A: [48,76, 56,52, 67,69, 78,86, 57,66, 50,70], B: [42,30, 56,52, 67,69, 78,86, 50,40, 45,44],
     props: [{ t: 'line', x1: 60, y1: 60, x2: 82, y2: 90 }, { t: 'line', x1: 52, y1: 60, x2: 63, y2: 52 }, { t: 'line', x1: 74, y1: 90, x2: 85, y2: 83 }] },
+  /* class figures (static, no start pose) */
+  pump: { front: true, A: [50,30, 50,58, 42,74, 40,90, 36,22, 36,10, 58,74, 60,90, 64,22, 64,10],
+    props: [{ t: 'line', x1: 22, y1: 10, x2: 78, y2: 10 }, { t: 'plate', x: 17, y: 3, w: 6, h: 14 }, { t: 'plate', x: 77, y: 3, w: 6, h: 14 }] },
+  combat: { A: [54,28, 50,54, 60,72, 64,90, 68,30, 82,30, 40,72, 34,90, 58,38, 60,27], props: [{ t: 'db', j: 'W1' }, { t: 'db', j: 'W2' }] },
+  yoga: { front: true, A: [50,30, 50,56, 46,73, 47,90, 40,18, 48,8, 66,68, 49,72, 60,18, 52,8], props: [{ t: 'rect', x: 26, y: 89, w: 48, h: 2 }] },
+  walk: { A: [52,26, 50,52, 58,68, 62,81, 46,40, 44,52, 44,70, 38,85, 58,40, 64,48],
+    props: [{ t: 'line', x1: 16, y1: 89, x2: 86, y2: 78 }, { t: 'line', x1: 84, y1: 78, x2: 80, y2: 40 }, { t: 'line', x1: 80, y1: 40, x2: 70, y2: 42 }] },
+  stretch: { A: [50,40, 48,66, 64,70, 66,90, 57,52, 63,63, 34,88, 18,89, 55,53, 61,64], props: [{ t: 'rect', x: 12, y: 89, w: 64, h: 2 }] },
   pallof: { A: [50,26, 50,54, 52,72, 54,90, 58,38, 60,32, 47,72, 45,90], B: [50,26, 50,54, 52,72, 54,90, 62,30, 75,30, 47,72, 45,90],
     props: [{ t: 'line', x1: 6, y1: 14, x2: 6, y2: 90 }, { t: 'cable', x: 8, y: 32, j: 'W1' }] },
   cablefly: { front: true, A: [50,26, 50,54, 46,72, 46,90, 34,44, 24,62, 54,72, 54,90, 66,44, 76,62], B: [50,26, 50,54, 46,72, 46,90, 38,32, 47,22, 54,72, 54,90, 62,32, 53,22],
@@ -566,6 +673,7 @@ function moveSVG(key, on) {
   (m.props || []).forEach(pr => {
     if (pr.t === 'rect') back += `<rect class="eq" x="${pr.x}" y="${pr.y}" width="${pr.w}" height="${pr.h}" rx="1"/>`;
     else if (pr.t === 'line') back += `<line class="eqs" x1="${pr.x1}" y1="${pr.y1}" x2="${pr.x2}" y2="${pr.y2}"/>`;
+    else if (pr.t === 'plate') fore += `<rect class="wt" x="${pr.x}" y="${pr.y}" width="${pr.w}" height="${pr.h}" rx="1"/>`;
     else if (pr.t === 'db') fore += ci('wt', a[pr.j], b[pr.j], 3.8, on);
     else if (pr.t === 'roll') fore += ci('eqr', a[pr.j], b[pr.j], 3.4, on);
     else if (pr.t === 'cable') back += ln(pr.c || 'cb', [pr.x, pr.y], a[pr.j], [pr.x, pr.y], b[pr.j], on);
@@ -706,27 +814,33 @@ const PROGRAM = [
         guide: { setup: ['Cable at lowest point.', 'Stand side-on. Handle in far hand.', 'Lift to shoulder height.'], avoid: ['Leaning away.', 'Shrugging.'] } } }
   ]},
   { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', sub: 'Light weights. RPE 7.', warm: 'Walk 5 min before class.', items: [
-    { id: 'wed_pump', cls: true, name: 'New Pump', vn: 'Class, 55 min', icon: 'cls', rules: ['Lightest plates on every track.', 'Squat track: shallow only.', 'Deadlift track: light. Exhale every rep.', 'HR over 150 = rest that song.'], alt: { name: 'Light Circuit', cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press. 2 rounds × 15.' } },
-    { id: 'wed_walk', cls: true, name: 'Incline Walk', vn: 'Treadmill, optional', icon: 'cardio', rules: ['10 min. Incline 6-8.', 'HR under 130.'], alt: { name: 'Easy Bike', cue: '10 min. HR under 130.' } }
+    { id: 'wed_pump', cls: true, name: 'New Pump', vn: 'Class, 55 min', icon: 'cls', move: 'pump', rules: ['Lightest plates on every track.', 'Squat track: shallow only.', 'Deadlift track: light. Exhale every rep.', 'HR over 150 = rest that song.'], alt: { name: 'Light Circuit', cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press. 2 rounds × 15.' } },
+    { id: 'wed_walk', cls: true, name: 'Incline Walk', vn: 'Treadmill, optional', icon: 'cardio', move: 'walk', rules: ['10 min. Incline 6-8.', 'HR under 130.'], alt: { name: 'Easy Bike', cue: '10 min. HR under 130.' } }
   ]},
   { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', sub: 'Max 1x per week. HR is the limit.', warm: 'None. Walk to the studio.', items: [
-    { id: 'sat_combat', cls: true, name: 'New Combat', vn: 'Class, 55 min', icon: 'cls', rules: ['Low-impact option. No jumps.', 'HR over 150 = walk until under 120.', 'Skip the last track if HR stayed over 140.', 'Dizzy or shaky = leave.'], alt: { name: 'Easy Elliptical', cue: '20 min. HR under 125. Or join Yoga.' } },
-    { id: 'sat_stretch', cls: true, name: 'Cool-down Stretch', vn: 'Mat, 10 min', icon: 'floor', rules: ['Child pose 2 min.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.'], alt: { name: 'Slow Walk', cue: 'Treadmill flat, 10 min.' } }
+    { id: 'sat_combat', cls: true, name: 'New Combat', vn: 'Class, 55 min', icon: 'cls', move: 'combat', rules: ['Low-impact option. No jumps.', 'HR over 150 = walk until under 120.', 'Skip the last track if HR stayed over 140.', 'Dizzy or shaky = leave.'], alt: { name: 'Easy Elliptical', cue: '20 min. HR under 125. Or join Yoga.' } },
+    { id: 'sat_stretch', cls: true, name: 'Cool-down Stretch', vn: 'Mat, 10 min', icon: 'floor', move: 'stretch', rules: ['Child pose 2 min.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.'], alt: { name: 'Slow Walk', cue: 'Treadmill flat, 10 min.' } }
   ]},
   { id: 'sun', tab: 'YOGA', tt: 'Class', type: 'class', title: 'Yoga', sub: 'Recovery. Relax the pelvic floor.', warm: 'None.', items: [
-    { id: 'sun_yoga', cls: true, name: 'Yoga', vn: 'Class, 60 min', icon: 'cls', rules: ['Recovery only. No power flow.', 'Long exhales. Let the pelvic floor drop.', 'Skip inversions.', 'No lifting today.'], alt: { name: 'Home Mobility 20 min', cue: 'Cat-cow, child pose, 90/90 hips, happy baby, belly breathing.' } }
+    { id: 'sun_yoga', cls: true, name: 'Yoga', vn: 'Class, 60 min', icon: 'cls', move: 'yoga', rules: ['Recovery only. No power flow.', 'Long exhales. Let the pelvic floor drop.', 'Skip inversions.', 'No lifting today.'], alt: { name: 'Home Mobility 20 min', cue: 'Cat-cow, child pose, 90/90 hips, happy baby, belly breathing.' } }
   ]}
 ];
 const ORDER = ['mon', 'tue', 'thu', 'fri', 'wed', 'sat', 'sun'];
+/* standard week, Mon..Sun: Glutes A, Push, Yoga, Glutes B, Pull, Pump, Rest */
+const STANDARD = ['mon', 'tue', 'sun', 'thu', 'fri', 'wed', 'rest'];
+const DOW = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const GROUP = { glute_max: 'Glutes', glute_med: 'Glutes', hams: 'Glutes', quads: 'Legs', upper_chest: 'Chest', inner_chest: 'Chest', side_delt: 'Shoulders', rear_delt: 'Shoulders', lats: 'Back', upper_back: 'Back', abs: 'Core' };
+const GROUPS = ['Glutes', 'Back', 'Chest', 'Shoulders', 'Core', 'Legs'];
 const ABBR = { mon: 'GA', tue: 'PU', thu: 'GB', fri: 'PL', wed: 'PM', sat: 'CB', sun: 'YG' };
 const LIFTS = ['mon', 'tue', 'thu', 'fri'];
 const DAYS = {}; PROGRAM.forEach(d => DAYS[d.id] = d);
 const EX = {}; PROGRAM.forEach(d => d.items.forEach(it => EX[it.id] = it));
+const HKDEF = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk && !HKDEF[it.hk]) HKDEF[it.hk] = it; if (it.swap && !HKDEF[it.swap.hk]) HKDEF[it.swap.hk] = Object.assign({}, it.swap, { sets: it.swap.sets || it.sets }); }));
 const HKNAME = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk) HKNAME[it.hk] = it.name; if (it.swap) HKNAME[it.swap.hk] = it.swap.name; }));
 
 /* ================= STATE ================= */
 const KEY = 'sculpt_v3';
-const fresh = () => ({ view: 'mon', viewDate: '', hr: {}, missing: {}, sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null });
+const fresh = () => ({ view: 'mon', viewDate: '', hr: {}, missing: {}, plans: {}, basePlan: null, statTab: 'week', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null });
 let S = load();
 function load() {
   try {
@@ -742,11 +856,23 @@ const ds = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'
 const todayStr = () => ds(new Date());
 function weekStart() { const d = new Date(); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return ds(d); }
 function weekCount(id) { const ws = weekStart(); return S.sessions.filter(s => s.day === id && s.date >= ws).length; }
+const addDays = (d0, n) => { const d = new Date(d0 + 'T12:00:00'); d.setDate(d.getDate() + n); return ds(d); };
+const wsOf = d0 => { const d = new Date(d0 + 'T12:00:00'); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return ds(d); };
+const todayIdx = () => (new Date().getDay() + 6) % 7;
+const planFor = ws => (S.plans && S.plans[ws]) || S.basePlan || STANDARD;
+/* a planned slot counts as done when that workout was logged any day of that week (order-free) */
+function planStatus(ws) {
+  const plan = planFor(ws), we = addDays(ws, 6), left = {};
+  S.sessions.forEach(x => { if (x.date >= ws && x.date <= we) left[x.day] = (left[x.day] || 0) + 1; });
+  const done = plan.map(id => { if (id !== 'rest' && left[id]) { left[id]--; return true; } return false; });
+  const extra = Object.keys(left).filter(k => left[k] > 0 && DAYS[k]).map(k => DAYS[k].title);
+  return { plan, done, extra };
+}
 function nextUp() {
+  const st = planStatus(weekStart());
+  for (let j = todayIdx(); j < 7; j++) if (st.plan[j] !== 'rest' && !st.done[j]) return st.plan[j];
   for (const id of LIFTS) if (!weekCount(id)) return id;
-  if (!weekCount('wed')) return 'wed';
-  if (!weekCount('sun')) return 'sun';
-  return 'mon';
+  return st.plan.find(x => x !== 'rest') || 'mon';
 }
 function buzz(p) { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) {} }
 const fmtW = w => (w % 1 === 0 ? String(w) : String(Math.round(w * 100) / 100));
@@ -818,13 +944,13 @@ const $ = s => document.querySelector(s);
 const tabsEl = $('#tabs'), mainEl = $('#main');
 
 function renderTabs() {
-  const nx = nextUp();
+  const nx = nextUp(), tp = planFor(weekStart())[todayIdx()];
   tabsEl.innerHTML = ORDER.map(id => { const d = DAYS[id], n = weekCount(id);
-    const tt = n ? (n > 1 ? 'Done ' + n + '×' : 'Done') : id === nx ? 'Next' : '';
-    return `<button class="tab ${id === S.view ? 'active' : ''} ${d.type === 'class' ? 'cls' : ''} ${n ? 'done' : ''} ${id === nx && !n ? 'next' : ''}" data-day="${id}"><span>${d.tab}</span>${tt ? `<span class="tt">${tt}</span>` : ''}</button>`; }).join('')
-    + `<button class="tab stats ${S.view === 'stats' ? 'active' : ''}" data-day="stats"><span>STATS</span></button>`;
+    const tt = n ? (n > 1 ? 'Done ' + n + '×' : 'Done') : id === nx ? (id === tp ? 'Today' : 'Next') : '';
+    return `<button class="tab ${id === S.view ? 'active' : ''} ${d.type === 'class' ? 'cls' : ''} ${n ? 'done' : ''} ${id === nx && !n ? 'next' : ''}" data-day="${id}"><span>${d.tab}</span>${tt ? `<span class="tt">${tt}</span>` : ''}</button>`; }).join('');
+  $('#btnStats').classList.toggle('on', S.view === 'stats');
 }
-function centerTab() { const a = tabsEl.querySelector('.active'); if (a) tabsEl.scrollLeft = a.offsetLeft - (tabsEl.clientWidth - a.offsetWidth) / 2; }
+function centerTab() { const a = tabsEl.querySelector('.active') || tabsEl.querySelector('.next') || tabsEl.firstElementChild; if (a) tabsEl.scrollLeft = a.offsetLeft - (tabsEl.clientWidth - a.offsetWidth) / 2; }
 function render(keepScroll) { renderTabs(); centerTab(); if (S.view === 'stats') renderStats(); else renderDay(); updateHUD(); if (!keepScroll) window.scrollTo({ top: 0 }); }
 
 function renderDay() {
@@ -883,7 +1009,7 @@ function setRow(c, s, k, sel) {
 function cardClass(it) {
   const on = !!S.classes[it.id];
   return `<article class="card ccard ${on ? 'complete' : ''}" data-cls="${it.id}">
-    <div class="ch"><div class="thumb">${ICONS[it.icon]}</div><div><h3>${it.name}</h3><div class="badges"><span class="badge gray">${it.vn}</span></div></div><div></div></div>
+    <div class="ch"><div class="thumb">${it.move ? moveSVG(it.move, false) : ICONS[it.icon]}</div><div><h3>${it.name}</h3><div class="meta">${it.vn}</div></div><div></div></div>
     <div class="body"><ul>${it.rules.map(r => `<li>${r}</li>`).join('')}</ul>
       <button class="big ${on ? 'on' : ''}" data-clschk="${it.id}">${on ? '✓ Done' : 'Mark done'}</button></div>
     <div class="alt">No class or HR high? <b>${it.alt.name}</b> · ${it.alt.cue}</div>
@@ -1023,6 +1149,7 @@ $('#feel').addEventListener('click', e => {
 tabsEl.addEventListener('click', e => { const b = e.target.closest('.tab'); if (!b) return; buzz(10); S.view = b.dataset.day; S.viewDate = todayStr(); save(); render(); });
 
 mainEl.addEventListener('click', e => {
+  if (S.view === 'stats') { statsClick(e); return; }
   const t = e.target;
   const card = t.closest('[data-ex]'); const ex = card ? EX[card.dataset.ex] : null;
 
@@ -1198,73 +1325,167 @@ function weeksOf(k) {
     out.push({ a: ds(a), b: ds(b), la: a.getDate(), lb: b.getDate() }); d.setDate(d.getDate() + 7); }
   return out;
 }
-let statMode = 'vol', statMonth = null;
-function renderStats() {
-  const months = lastMonths(6); if (!statMonth || !months.includes(statMonth)) statMonth = months[5];
-  const agg = k => { const r = { vol: 0, cal: 0, n: 0 }; S.sessions.forEach(s => { if (s.date.slice(0, 7) === k) { r.vol += s.vol || 0; r.cal += s.cal || 0; r.n++; } }); return r; };
-  const A = {}; months.forEach(m => A[m] = agg(m));
-  const cur_ = agg(statMonth), prv = agg(prevMonth(statMonth));
-  const delta = (a, b) => (b ? Math.round((a - b) / b * 100) : null);
-  const tile = (k, v, d, unit) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d ${d === null ? '' : d >= 0 ? 'up' : 'dn'}">${d === null ? unit : (d >= 0 ? '▲ ' : '▼ ') + Math.abs(d) + '% vs prev'}</div></div>`;
-
-  const vals = months.map(m => (statMode === 'vol' ? A[m].vol : A[m].cal)), max = Math.max(1, ...vals);
-  const W = 320, H = 170, pB = 22, pT = 18, bw = W / 6;
-  let bars = '';
-  months.forEach((m, i) => {
-    const v = vals[i], bh = Math.round((H - pB - pT) * v / max), x = i * bw + 9, y = H - pB - bh, cx = x + (bw - 18) / 2, sel = m === statMonth;
-    bars += `<g data-mi="${m}"><rect class="hit" x="${i * bw}" y="0" width="${bw}" height="${H}"/>
-      <rect class="bar ${v ? '' : 'zero'} ${sel ? 'sel' : ''}" x="${x}" y="${v ? y : H - pB - 2}" width="${bw - 18}" height="${v ? bh : 2}" rx="3"/>
-      ${v ? `<text class="bl" x="${cx}" y="${y - 5}">${kfmt(v)}</text>` : ''}
-      <text class="ax ${sel ? 'sel' : ''}" x="${cx}" y="${H - 6}" text-anchor="middle">${MON[+m.slice(5, 7) - 1]}</text></g>`;
+let statMode = 'vol', statMonth = null, statWeek = 0;
+const delta = (a, b) => (b ? Math.round((a - b) / b * 100) : null);
+const tile = (k, v, d, unit, vs) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d ${!d ? '' : d > 0 ? 'up' : 'dn'}">${d === null ? unit : d === 0 ? '= ' + vs.replace('vs ', '') : (d > 0 ? '▲ ' : '▼ ') + Math.abs(d) + '% ' + vs}</div></div>`;
+const aggRange = (a, b) => { const r = { vol: 0, cal: 0, n: 0 }; S.sessions.forEach(x => { if (x.date >= a && x.date <= b) { r.vol += x.vol || 0; r.cal += x.cal || 0; r.n++; } }); return r; };
+const rangeLabel = (a, b) => MON[+a.slice(5, 7) - 1] + ' ' + (+a.slice(8)) + ' – ' + (a.slice(5, 7) === b.slice(5, 7) ? '' : MON[+b.slice(5, 7) - 1] + ' ') + (+b.slice(8));
+/* single-series bar chart: one hue, selected bar solid + labelled, tap a bar to select */
+function barChart(items, attr) {
+  const W = 320, H = 150, pB = 20, pT = 18, bw = W / items.length, gap = Math.max(8, bw * 0.3), max = Math.max(1, ...items.map(i => i.v));
+  let g = [0.5, 1].map(f => `<line class="grid" x1="0" x2="${W}" y1="${H - pB - (H - pB - pT) * f}" y2="${H - pB - (H - pB - pT) * f}"/>`).join('');
+  items.forEach((it, i) => {
+    const bh = Math.round((H - pB - pT) * it.v / max), x = i * bw + gap / 2, w = bw - gap, y = H - pB - bh, cx = x + w / 2;
+    g += `<g data-${attr}="${it.key}"><rect class="hit" x="${i * bw}" y="0" width="${bw}" height="${H}"/>`
+      + `<rect class="bar ${it.v ? '' : 'zero'} ${it.sel ? 'sel' : ''}" x="${x}" y="${it.v ? y : H - pB - 2}" width="${w}" height="${it.v ? bh : 2}" rx="3"/>`
+      + (it.v && it.sel ? `<text class="bl" x="${cx}" y="${y - 6}">${kfmt(it.v)}</text>` : '')
+      + `<text class="ax ${it.sel ? 'sel' : ''}" x="${cx}" y="${H - 5}" text-anchor="middle">${it.label}</text></g>`;
   });
-  const grid = [0.5, 1].map(f => `<line class="grid" x1="0" x2="${W}" y1="${H - pB - (H - pB - pT) * f}" y2="${H - pB - (H - pB - pT) * f}"/>`).join('');
-
-  const today = todayStr();
+  return `<svg viewBox="0 0 ${W} ${H}" class="bchart">${g}</svg>`;
+}
+function renderStats() {
+  const tab = S.statTab || 'week';
+  mainEl.innerHTML = `<section class="day-head"><h2>Stats</h2></section>
+    <div class="seg">${[['week', 'Week'], ['month', 'Month'], ['lifts', 'Lifts']].map(([k, l]) => `<button class="${tab === k ? 'on' : ''}" data-stab="${k}">${l}</button>`).join('')}</div>
+    ${tab === 'week' ? statsWeek() : tab === 'month' ? statsMonth() : statsLifts()}`;
+}
+function planWarn(plan) {
+  const w = [], a = plan.indexOf('mon'), b = plan.indexOf('thu'), lifts = plan.filter(x => LIFTS.includes(x)).length;
+  if (a >= 0 && b >= 0 && Math.abs(a - b) < 2) w.push('Glutes A and B back to back. Keep 2 days apart.');
+  if (!plan.includes('rest')) w.push('No rest day. Keep at least 1.');
+  if (lifts < 4) w.push(lifts + ' of 4 lifts planned.');
+  return w;
+}
+function statsWeek() {
+  const ws = addDays(weekStart(), 7 * statWeek), we = addDays(ws, 6), today = todayStr();
+  const st = planStatus(ws), plan = st.plan, custom = !!(S.plans && S.plans[ws]);
+  const label = statWeek === 0 ? 'This week' : statWeek === 1 ? 'Next week' : statWeek === -1 ? 'Last week' : rangeLabel(ws, we);
+  const slots = plan.map((id, i) => {
+    const date = addDays(ws, i), rest = id === 'rest', cls = !rest && DAYS[id].type === 'class', miss = !rest && !st.done[i] && date < today;
+    return `<button class="pday ${date === today ? 'today' : ''} ${st.done[i] ? 'done' : ''} ${rest ? 'rest' : ''} ${cls ? 'cl' : ''} ${miss ? 'miss' : ''}" data-pday="${i}"><span class="dn">${DOW[i]}</span><span class="dd">${+date.slice(8)}</span><span class="pw">${rest ? 'Rest' : (st.done[i] ? '✓' : '') + ABBR[id]}</span></button>`;
+  }).join('');
+  const isL = x => LIFTS.includes(x), isC = x => x !== 'rest' && !LIFTS.includes(x);
+  const lp = plan.filter(isL).length, ld = plan.filter((x, i) => isL(x) && st.done[i]).length;
+  const cp = plan.filter(isC).length, cd = plan.filter((x, i) => isC(x) && st.done[i]).length;
+  const nx = statWeek === 0 ? nextUp() : null;
+  const warns = planWarn(plan).map(t => `<div class="pwarn">${t}</div>`).join('');
+  /* this week so far vs last week up to the same weekday (fair mid-week comparison) */
+  const upTo = statWeek === 0 ? todayIdx() : 6;
+  const cw = aggRange(ws, we), pw = aggRange(addDays(ws, -7), addDays(ws, -7 + upTo));
+  /* sets per muscle: done (from history) vs planned (from this week's plan) */
+  const done = {}, planned = {};
+  Object.keys(S.history).forEach(hk => {
+    const d = HKDEF[hk]; if (!d) return; const g = GROUP[d.target];
+    S.history[hk].forEach(e => { if (e.date >= ws && e.date <= we) done[g] = (done[g] || 0) + e.sets.length; });
+  });
+  plan.forEach(id => { if (isL(id)) DAYS[id].items.forEach(it => { const g = GROUP[it.target]; planned[g] = (planned[g] || 0) + it.sets; }); });
+  const msets = GROUPS.filter(g => planned[g] || done[g]).map(g => {
+    const p0 = planned[g] || 0, d0 = done[g] || 0, pct = p0 ? Math.min(100, Math.round(d0 / p0 * 100)) : 100;
+    return `<div class="mset"><span class="mg">${g}</span><span class="mb"><i style="width:${pct}%"></i></span><span class="mv">${d0}<small> / ${p0}</small></span></div>`;
+  }).join('');
+  const weeks = Array.from({ length: 8 }, (_, k) => ({ off: k - 7, ws: addDays(weekStart(), -7 * (7 - k)) }));
+  const chart = barChart(weeks.map(w => { const a = aggRange(w.ws, addDays(w.ws, 6)); return { key: w.off, label: (+w.ws.slice(8)) + '/' + (+w.ws.slice(5, 7)), v: statMode === 'vol' ? a.vol : a.cal, sel: w.off === statWeek }; }), 'wbar');
+  return `
+    <div class="wnav"><button data-wk="-1" aria-label="Previous week">‹</button><div><b>${label}</b><small>${rangeLabel(ws, we)}</small></div><button data-wk="1" aria-label="Next week">›</button></div>
+    <div class="plan">${slots}</div>
+    <div class="psum"><span>Lifts <b>${ld}/${lp}</b> · Classes <b>${cd}/${cp}</b></span>${nx ? `<span>Next <b>${DAYS[nx].title}</b></span>` : ''}</div>
+    ${warns}${st.extra.length ? `<div class="note">Also done: ${st.extra.join(', ')}</div>` : ''}
+    ${custom ? `<div class="pbtns"><button class="btn-q" data-plan="reset">Reset to standard</button><button class="btn-q" data-plan="base">Make this my standard</button></div>` : `<div class="note">Tap a day to change it.</div>`}
+    <div class="hero">${tile('Volume kg', kfmt(cw.vol), delta(cw.vol, pw.vol), 'kg lifted', 'vs last wk')}${tile('Workouts', cw.n, delta(cw.n, pw.n), 'done', 'vs last wk')}${tile('Calories', kfmt(cw.cal), delta(cw.cal, pw.cal), 'kcal', 'vs last wk')}</div>
+    <div class="lbl">Sets per muscle · done / planned</div>
+    <div class="msets">${msets || '<div class="note">No lifts planned this week.</div>'}</div>
+    <div class="lbl">Last 8 weeks</div>
+    <div class="chart"><div class="seg sm"><button class="${statMode === 'vol' ? 'on' : ''}" data-mode="vol">kg</button><button class="${statMode === 'cal' ? 'on' : ''}" data-mode="cal">kcal</button></div>${chart}</div>`;
+}
+function statsMonth() {
+  const months = lastMonths(6); if (!statMonth || !months.includes(statMonth)) statMonth = months[5];
+  const agg = k => aggRange(k + '-01', k + '-31');
+  const A = {}; months.forEach(m => A[m] = agg(m));
+  const cm = A[statMonth], pm = agg(prevMonth(statMonth)), mName = MON[+statMonth.slice(5, 7) - 1], today = todayStr();
+  const chart = barChart(months.map(m => ({ key: m, label: MON[+m.slice(5, 7) - 1], v: statMode === 'vol' ? A[m].vol : A[m].cal, sel: m === statMonth })), 'mi');
   const weeks = weeksOf(statMonth).filter(w => w.a <= today).map(w => {
-    const ss = S.sessions.filter(s => s.date >= w.a && s.date <= w.b);
-    const cnt = {}; ss.forEach(s => cnt[s.day] = (cnt[s.day] || 0) + 1);
-    return Object.assign(w, { cnt, vol: ss.reduce((a, s) => a + (s.vol || 0), 0), cal: ss.reduce((a, s) => a + (s.cal || 0), 0), lifts: LIFTS.filter(id => cnt[id]).length, n: ss.length });
+    const ss = S.sessions.filter(x => x.date >= w.a && x.date <= w.b), cnt = {}; ss.forEach(x => cnt[x.day] = (cnt[x.day] || 0) + 1);
+    return Object.assign(w, { cnt, vol: ss.reduce((a, x) => a + (x.vol || 0), 0), cal: ss.reduce((a, x) => a + (x.cal || 0), 0), lifts: LIFTS.filter(id => cnt[id]).length });
   });
   const wmax = Math.max(1, ...weeks.map(w => w.vol));
-  const mName = MON[+statMonth.slice(5, 7) - 1];
-  const weekRows = weeks.map(w => `<div class="wk"><div class="wl">${w.la === w.lb ? w.la : w.la + '–' + w.lb}<small class="${w.lifts >= 4 ? 'ok4' : ''}">${w.lifts}/4 lifts</small></div>
+  const rows = weeks.map(w => `<div class="wk"><div class="wl">${w.la === w.lb ? w.la : w.la + '–' + w.lb}<small class="${w.lifts >= 4 ? 'ok4' : ''}">${w.lifts}/4 lifts</small></div>
       ${ORDER.map(id => { const n = w.cnt[id] || 0; return `<div class="cell ${n ? 'on' : ''} ${DAYS[id].type === 'class' ? 'cl' : ''}">${n > 1 ? n : n ? '✓' : ''}</div>`; }).join('')}
       <div class="wv">${w.vol ? kfmt(w.vol) : '—'}<small>${w.cal ? w.cal + ' kcal' : '— kcal'}</small><div class="vb"><i style="width:${Math.round(w.vol / wmax * 100)}%"></i></div></div></div>`).join('');
-
-  const bests = Object.keys(S.history).filter(k => HKNAME[k] && S.history[k].some(h => h.sets.length)).map(k => {
-    const as = !!HKASSIST[k], better = (s, b) => !b || (as ? s.w < b.w : s.w > b.w) || (s.w === b.w && s.r > b.r);
-    let b = null; S.history[k].forEach(ss => ss.sets.forEach(s => { if (better(s, b)) b = { w: s.w, r: s.r, date: ss.date }; }));
-    const l = lastSession(k), lws = l.sets.map(s => s.w), lw = as ? Math.min(...lws) : Math.max(...lws);
-    return { name: HKNAME[k], b, l, lw, as };
-  });
-  const list = S.sessions.map((s, i) => ({ s, i })).filter(o => o.s.date.slice(0, 7) === statMonth).reverse();
-
-  mainEl.innerHTML = `
-    <section class="day-head"><div class="kicker">Progress · tap a month</div><h2>${monthLabel(statMonth)}</h2></section>
-    <div class="hero">${tile('Volume kg', kfmt(cur_.vol), delta(cur_.vol, prv.vol), 'kg lifted')}${tile('Sessions', cur_.n, delta(cur_.n, prv.n), 'this month')}${tile('Calories', kfmt(cur_.cal), delta(cur_.cal, prv.cal), 'kcal')}</div>
-    <div class="seg"><button class="${statMode === 'vol' ? 'on' : ''}" data-mode="vol">Volume kg</button><button class="${statMode === 'cal' ? 'on' : ''}" data-mode="cal">Calories</button></div>
-    <div class="chart" style="margin-top:8px"><div class="ct"><span>${statMode === 'vol' ? 'Volume per month' : 'Calories per month'}</span><span>6 months</span></div>
-      <svg viewBox="0 0 ${W} ${H}" id="chart">${grid}${bars}</svg>
-      <div class="tip">${monthLabel(statMonth)} · ${cur_.vol.toLocaleString()} kg · ${cur_.cal} kcal · ${cur_.n} sessions</div></div>
+  const list = S.sessions.map((x, i) => ({ x, i })).filter(o => o.x.date.slice(0, 7) === statMonth).reverse();
+  return `
+    <div class="shead"><b>${monthLabel(statMonth)}</b> · tap a bar for another month</div>
+    <div class="hero">${tile('Volume kg', kfmt(cm.vol), delta(cm.vol, pm.vol), 'kg lifted', 'vs prev')}${tile('Workouts', cm.n, delta(cm.n, pm.n), 'this month', 'vs prev')}${tile('Calories', kfmt(cm.cal), delta(cm.cal, pm.cal), 'kcal', 'vs prev')}</div>
+    <div class="chart" style="margin-top:8px"><div class="seg sm"><button class="${statMode === 'vol' ? 'on' : ''}" data-mode="vol">kg</button><button class="${statMode === 'cal' ? 'on' : ''}" data-mode="cal">kcal</button></div>${chart}</div>
     <div class="lbl">Weeks in ${mName}</div>
     <div class="wkbox">
       <div class="wk head"><span class="wh" style="text-align:left">Days</span>${ORDER.map(id => `<span class="wh">${ABBR[id]}</span>`).join('')}<span class="wh r">kg · kcal</span></div>
-      ${weekRows}
-      <div class="legend"><b>GA</b> Glutes A · <b>PU</b> Push · <b>GB</b> Glutes B · <b>PL</b> Pull · <b>PM</b> Pump · <b>CB</b> Combat · <b>YG</b> Yoga. Goal: 4/4 lifts each week.</div>
+      ${rows || '<div class="note">No weeks yet.</div>'}
+      <div class="legend"><b>GA</b> Glutes A · <b>PU</b> Push · <b>GB</b> Glutes B · <b>PL</b> Pull · <b>PM</b> Pump · <b>CB</b> Combat · <b>YG</b> Yoga</div>
     </div>
-    <div class="lbl">Best lifts</div>
-    ${bests.length ? bests.map(b => `<div class="row"><div><div class="a">${b.name}</div><div class="b">Last: ${fmtW(b.lw)} kg · ${b.l.date}</div></div><div></div><div class="c">${fmtW(b.b.w)} × ${b.b.r}<small>${b.as ? 'least assist' : 'best'}</small></div></div>`).join('') : '<div class="empty">Log a workout to see bests.</div>'}
-    <div class="lbl">Sessions in ${mName} · tap to edit kcal</div>
-    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.s.title}</div><div class="b">${o.s.date} · ${o.s.sets} sets</div></div><div class="c">${o.s.vol ? kfmt(o.s.vol) : '—'}<small>kg</small></div><div class="c">${o.s.cal || '—'}<small>kcal</small></div></div>`).join('') : '<div class="empty">No sessions this month.</div>'}
-    <div class="lbl">Backup</div>
-    <div class="dgrid"><button class="btn btn-g" id="btnExport">Export</button><button class="btn btn-g" id="btnImport">Import</button></div>
-    <p class="note">Data lives on this phone. Export once a month.</p>`;
-
-  mainEl.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => { buzz(10); statMode = b.dataset.mode; renderStats(); }));
-  $('#chart').addEventListener('click', e => { const g = e.target.closest('[data-mi]'); if (!g) return; buzz(10); statMonth = g.dataset.mi; renderStats(); });
-  mainEl.querySelectorAll('[data-sess]').forEach(r => r.addEventListener('click', () => { buzz(15); openFinish(+r.dataset.sess); }));
-  $('#btnExport').addEventListener('click', exportData);
-  $('#btnImport').addEventListener('click', () => $('#fileIn').click());
+    <div class="lbl">Workouts in ${mName} · tap to edit kcal</div>
+    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.x.title}</div><div class="b">${o.x.date} · ${o.x.sets} sets</div></div><div class="c">${o.x.vol ? kfmt(o.x.vol) : '—'}<small>kg</small></div><div class="c">${o.x.cal || '—'}<small>kcal</small></div></div>`).join('') : '<div class="empty">No workouts this month.</div>'}`;
+}
+function spark(pts, invert) {
+  const W = 64, H = 24, q = pts.slice(-12);
+  if (q.length < 2) return `<svg class="spark" viewBox="0 0 ${W} ${H}"><circle cx="${W - 4}" cy="${H / 2}" r="3"/></svg>`;
+  const mn = Math.min(...q), mx = Math.max(...q), rg = mx - mn || 1;
+  const xy = q.map((v, i) => [i / (q.length - 1) * (W - 8) + 4, H - 4 - ((invert ? mx - v : v - mn) / rg) * (H - 8)]);
+  const last = xy[xy.length - 1];
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}"><polyline points="${xy.map(p0 => p0[0].toFixed(1) + ',' + p0[1].toFixed(1)).join(' ')}"/><circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="3"/></svg>`;
+}
+function statsLifts() {
+  const rows = Object.keys(S.history).filter(hk => HKDEF[hk] && S.history[hk].some(e => e.sets.length)).map(hk => {
+    const d = HKDEF[hk], ent = S.history[hk].filter(e => e.sets.length);
+    const pts = ent.map(e => d.noW ? Math.max(...e.sets.map(x => x.r)) : d.assist ? Math.min(...e.sets.map(x => x.w)) : Math.max(...e.sets.map(x => x.w)));
+    const first = pts[0], last = pts[pts.length - 1], gain = d.assist ? first - last : last - first;
+    return { d, pts, first, last, gain, pct: first ? Math.round(gain / first * 100) : 0, n: ent.length, lastDate: ent[ent.length - 1].date };
+  }).sort((a, b) => b.lastDate.localeCompare(a.lastDate) || b.n - a.n);
+  if (!rows.length) return '<div class="empty" style="margin-top:14px">Finish a workout to see your lifts here.</div>';
+  const multi = rows.filter(r => r.n >= 2), up = multi.filter(r => r.gain > 0).length;
+  const head = multi.length ? `<div class="shead">Stronger on <b>${up} of ${multi.length}</b> lifts since your first session.</div>` : '<div class="shead">Do each workout twice to see progress.</div>';
+  return head + rows.map(r => {
+    const unit = r.d.noW ? ' reps' : r.d.assist ? ' kg assist' : ' kg';
+    const ch = r.n < 2 ? '<span class="lc">new</span>' : r.gain > 0 ? `<span class="lc up">▲ ${r.pct}%</span>` : r.gain < 0 ? `<span class="lc dn">▼ ${Math.abs(r.pct)}%</span>` : '<span class="lc">same</span>';
+    return `<div class="lift"><div><div class="a">${r.d.name}</div><div class="b">${r.n < 2 ? '' : fmtW(r.first) + ' → '}<b>${fmtW(r.last)}</b>${unit} · ${r.n}×</div></div>${spark(r.pts, r.d.assist)}${ch}</div>`;
+  }).join('');
+}
+/* plan editing */
+let planEdit = null;
+function openPlan(ws, i) {
+  planEdit = { ws, i };
+  const cur0 = planFor(ws)[i], date = addDays(ws, i);
+  $('#planBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
+    <div class="kicker">${DOW[i]} · ${MON[+date.slice(5, 7) - 1]} ${+date.slice(8)}</div><h2>Pick a workout</h2>
+    <div class="mlist">${[...ORDER, 'rest'].map(id => `<button class="mrow ${id === cur0 ? 'on' : ''}" data-pick="${id}"><span>${id === 'rest' ? 'Rest day' : DAYS[id].title}<small>${id === 'rest' ? 'Recover' : DAYS[id].type === 'lift' ? 'Lift' : 'Class'}</small></span><span class="chev">${id === cur0 ? '✓' : '›'}</span></button>`).join('')}</div>`;
+  openModal('mPlan');
+}
+$('#planBox').addEventListener('click', e => {
+  const b = e.target.closest('[data-pick]'); if (!b || !planEdit) return;
+  const { ws, i } = planEdit, id = b.dataset.pick, plan = planFor(ws).slice();
+  if (id === 'sat' && plan.some((x, j) => x === 'sat' && j !== i)) { toast('Combat max 1× per week', true); buzz([40, 40, 40]); return; }
+  plan[i] = id; S.plans[ws] = plan; save(); buzz(15); closeAll(); renderTabs(); renderStats();
+});
+/* before changing the standard week, pin past weeks to the old plan so history does not change */
+function freezePast() {
+  const cw = weekStart(), old = (S.basePlan || STANDARD).slice();
+  new Set(S.sessions.map(x => wsOf(x.date))).forEach(w => { if (w < cw && !S.plans[w]) S.plans[w] = old.slice(); });
+}
+function statsClick(e) {
+  const t = e.target, hit = sel => t.closest(sel);
+  let b;
+  if ((b = hit('[data-stab]'))) { buzz(10); S.statTab = b.dataset.stab; save(); renderStats(); return; }
+  if ((b = hit('[data-wk]'))) { buzz(10); statWeek = Math.min(4, Math.max(-12, statWeek + +b.dataset.wk)); renderStats(); return; }
+  if ((b = hit('[data-wbar]'))) { buzz(10); statWeek = +b.dataset.wbar; renderStats(); return; }
+  if ((b = hit('[data-pday]'))) { buzz(15); openPlan(addDays(weekStart(), 7 * statWeek), +b.dataset.pday); return; }
+  if ((b = hit('[data-plan]'))) {
+    buzz(15); const ws = addDays(weekStart(), 7 * statWeek);
+    if (b.dataset.plan === 'reset') { delete S.plans[ws]; toast('Back to standard'); }
+    else { freezePast(); S.basePlan = planFor(ws).slice(); delete S.plans[ws]; toast('Saved as your standard week'); }
+    save(); renderTabs(); renderStats(); return;
+  }
+  if ((b = hit('[data-mode]'))) { buzz(10); statMode = b.dataset.mode; renderStats(); return; }
+  if ((b = hit('[data-mi]'))) { buzz(10); statMonth = b.dataset.mi; renderStats(); return; }
+  if ((b = hit('[data-sess]'))) { buzz(15); openFinish(+b.dataset.sess); }
 }
 function exportData() {
   const blob = new Blob([JSON.stringify(S, null, 2)], { type: 'application/json' });
@@ -1287,7 +1508,23 @@ function closeAll(fromPop) {
 }
 window.addEventListener('popstate', () => closeAll(true));
 document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) { buzz(10); closeAll(); } }));
-$('#btnRules').addEventListener('click', () => { buzz(10); openModal('mRules'); });
+$('#btnStats').addEventListener('click', () => {
+  buzz(10);
+  if (S.view === 'stats') S.view = DAYS[S.lastView] ? S.lastView : nextUp(); else { S.lastView = S.view; S.view = 'stats'; }
+  S.viewDate = todayStr(); save(); render();
+});
+$('#btnMenu').addEventListener('click', () => { buzz(10); openModal('mMenu'); });
+/* Guide shortcuts: jump to the week plan, today's workout, or lift progress */
+$('#mHow').addEventListener('click', e => {
+  const g = e.target.closest('[data-go]'); if (!g) return; buzz(10); closeAll();
+  if (g.dataset.go === 'today') S.view = nextUp();
+  else { if (S.view !== 'stats') S.lastView = S.view; S.view = 'stats'; S.statTab = g.dataset.go === 'lifts' ? 'lifts' : 'week'; statWeek = 0; }
+  S.viewDate = todayStr(); save(); render();
+});
+/* swap one open sheet for another without touching history (back still closes it) */
+function switchModal(id) { document.querySelectorAll('.modal.show').forEach(m => m.classList.remove('show')); $('#' + id).classList.add('show'); try { history.replaceState({ m: id }, ''); } catch (e) {} }
+$('#btnExport').addEventListener('click', exportData);
+$('#btnImport').addEventListener('click', () => $('#fileIn').click());
 /* swipe a sheet down from its top to close it */
 document.querySelectorAll('.modal .box').forEach(box => {
   let y0 = null, dy = 0;
@@ -1314,9 +1551,9 @@ if (GO) { S.view = GO === 'stats' ? 'stats' : nextUp(); S.viewDate = todayStr();
 if (!DAYS[S.view] && S.view !== 'stats') S.view = 'mon';
 S.rate = null;
 render(); resumeTimer();
-if (!localStorage.getItem(KEY + '_seen')) { openModal('mRules'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
+if (!localStorage.getItem(KEY + '_seen')) { openModal('mHow'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
 /* keep APP_VER in step with VERSION in sw.js */
-const APP_VER = '3.2.0';
+const APP_VER = '3.3.0';
 $('#appVer').textContent = 'SCULPT v' + APP_VER + ' · The New Gym';
 if ('serviceWorker' in navigator) {
   const hadCtrl = !!navigator.serviceWorker.controller;
@@ -1324,8 +1561,13 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
 let installEvt = null;
-window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; $('#btnInstall').style.display = ''; });
-$('#btnInstall').addEventListener('click', async () => { if (!installEvt) return; installEvt.prompt(); await installEvt.userChoice; installEvt = null; $('#btnInstall').style.display = 'none'; });
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; $('#rowInstall').style.display = ''; });
+$('#mMenu').addEventListener('click', async e => {
+  const r = e.target.closest('[data-menu]'); if (!r) return; buzz(10);
+  if (r.dataset.menu === 'rules') switchModal('mRules');
+  if (r.dataset.menu === 'guide') switchModal('mHow');
+  if (r.dataset.menu === 'install' && installEvt) { closeAll(); installEvt.prompt(); await installEvt.userChoice; installEvt = null; $('#rowInstall').style.display = 'none'; }
+});
 </script>
 </body>
 </html>
