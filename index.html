@@ -834,10 +834,18 @@ const PROGRAM = [
       swap: { hk: 'cablelat', name: 'Cable Lateral Raise', what: 'One arm lifts a low cable out to the side.', vn: 'Cable, low', move: 'cablelat', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90, side: true,
         guide: { setup: ['Cable at lowest point.', 'Stand side-on. Handle in far hand.', 'Lift to shoulder height.'], avoid: ['Leaning away.', 'Shrugging.'] } } }
   ]},
-  { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', sub: 'Light weights. RPE 7.', warm: 'Walk 5 min before class.', items: [
+  { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', sub: 'Class 45 · glute finisher 10 · walk 15 min.', warm: 'Walk 5 min before class.', items: [
     { id: 'wed_pump', cls: true, name: 'New Pump', vn: 'Class, 45 min', icon: 'cls', move: 'pump', rules: ['Lightest plates on every track.', 'Squat track: shallow only.', 'Deadlift track: light. Exhale every rep.', 'HR over 150 = rest that song.'], alt: { name: 'Light Circuit', cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press. 2 rounds × 15.' } },
-    { id: 'wed_walk', cls: true, name: 'Incline Walk', vn: 'Treadmill, 15 min', icon: 'cardio', move: 'walk', rules: ['15 min. Incline 6-8. Speed 5-6.', 'HR under 130. Lower incline if over.', 'Hands off the rails.'], alt: { name: 'Easy Bike', cue: '15 min. HR under 130.' } },
-    { id: 'wed_band', cls: true, name: 'Glute Band Finisher', vn: 'Mat, 10 min', icon: 'floor', move: 'latwalk', rules: ['Band lateral walk: 2 × 15 steps per side.', 'Glute bridge: 2 × 15. Hold 2 s at top.', 'Exhale on every rep.'], alt: { name: 'Abductor Machine', cue: '2 × 20, light.' } }
+    /* glute finisher: 2 light moves after class, tracked as sets */
+    { id: 'wed_lw', hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 15, unit: 'steps', noW: 'Band', rest: 90, swapAsk: 'No band?',
+      guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', '15 steps right, then 15 back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] },
+      swap: { hk: 'abductor_f', name: 'Abductor Machine · Light', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', reps: 20, w: 15, step: 5, max: 30, rest: 90,
+        guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Going heavy: this is a finisher.'] } } },
+    { id: 'wed_gb', hk: 'bridge_bw', name: 'Glute Bridge', what: 'Lie on your back. Lift hips, hold 2 s.', vn: 'Mat', move: 'frogpump', muscle: 'Glute max', target: 'glute_max', sets: 2, reps: 15, noW: 'Body', rest: 90, swapAsk: 'No space?',
+      guide: { setup: ['Lie on back. Knees bent, feet flat.', 'Exhale, lift hips. Hold 2 s, keep breathing.', 'Lower slow.'], avoid: ['Arching the lower back.', 'Holding breath at the top.'] },
+      swap: { hk: 'thrust_mf', name: 'Hip Thrust Machine · Light', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 15, step: 5, max: 40, rest: 90,
+        guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back.', 'Going heavy: this is a finisher.'] } } },
+    { id: 'wed_walk', cls: true, name: 'Incline Walk', vn: 'Treadmill, 15 min · cool-down', icon: 'cardio', move: 'walk', rules: ['15 min. Incline 6-8. Speed 5-6.', 'HR under 130. Lower incline if over.', 'Hands off the rails.'], alt: { name: 'Easy Bike', cue: '15 min. HR under 130.' } }
   ]},
   { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', sub: 'Max 1x per week. HR is the limit.', warm: 'None. Walk to the studio.', items: [
     { id: 'sat_combat', cls: true, name: 'New Combat', vn: 'Class, 45 min', icon: 'cls', move: 'combat', rules: ['Low-impact option. No jumps.', 'HR over 150 = walk until under 120.', 'Skip the last track if HR stayed over 140.', 'Dizzy or shaky = leave.'], alt: { name: 'Easy Elliptical', cue: '20 min. HR under 125. Or join Yoga.' } },
@@ -953,14 +961,17 @@ function sets(ex) {
   return S.sets[k];
 }
 function setVol(c, s) { if (c.noW || c.assist) return 0; return s.w * s.r * (c.side ? 2 : 1) * (c.pair ? 2 : 1); }
+/* a day can mix class cards (count 1 each) and exercises (count sets) */
 function dayProgress(day) {
-  if (day.type === 'class') return { t: day.items.length, d: day.items.filter(i => S.classes[i.id]).length };
-  let t = 0, d = 0; day.items.forEach(e => { const ss = sets(e), od = otherDone(e).length; t += ss.length + od; d += ss.filter(s => s.done).length + od; });
+  let t = 0, d = 0;
+  day.items.forEach(e => {
+    if (e.cls) { t++; if (S.classes[e.id]) d++; return; }
+    const ss = sets(e), od = otherDone(e).length; t += ss.length + od; d += ss.filter(s => s.done).length + od;
+  });
   return { t, d };
 }
 function dayVolume(day) {
-  if (day.type === 'class') return 0;
-  return day.items.reduce((a, e) => { const c = cur(e), oc = otherCur(e);
+  return day.items.filter(e => !e.cls).reduce((a, e) => { const c = cur(e), oc = otherCur(e);
     return a + sets(e).filter(s => s.done).reduce((b, s) => b + setVol(c, s), 0) + otherDone(e).reduce((b, s) => b + setVol(oc, s), 0); }, 0);
 }
 
@@ -1005,7 +1016,7 @@ function cardEx(ex, i) {
   const arrow = sg.t === 'up' ? '▲ ' : sg.t === 'down' ? '▼ ' : '';
   const swapLine = c.isSwap
     ? `<button class="swap on" data-swap="${ex.id}"><span class="z">${IC.back}</span><span class="tx">Back to <b>${ex.name}</b></span><span class="chev">›</span></button>`
-    : `<button class="swap" data-swap="${ex.id}"><span class="z">${IC.swap}</span><span class="tx">Busy? Swap to <b>${ex.swap.name}</b></span><span class="chev">›</span></button>`;
+    : `<button class="swap" data-swap="${ex.id}"><span class="z">${IC.swap}</span><span class="tx">${ex.swapAsk || 'Busy?'} Swap to <b>${ex.swap.name}</b></span><span class="chev">›</span></button>`;
   return `<article class="card ${done ? 'complete' : ''}" data-ex="${ex.id}">
     <div class="ch"><button class="thumb" data-guide="${ex.id}" aria-label="Show how">${moveSVG(c.move, false)}</button>
       <div><h3>${c.name}</h3>
@@ -1089,7 +1100,7 @@ function finishTimer() {
   setTimeout(() => { if (S.timer && !timerActive()) endTimer(); }, 4000);
 }
 function endTimer() { clearInterval(tick); tick = null; S.timer = null; save(); hud.classList.remove('timer', 'go', 'rate'); document.body.classList.remove('tm-on'); applyLock(); }
-function hrBlocked() { return LIFTS.includes(S.view) && !['low', 'mid'].includes(hrNow()); }
+function hrBlocked() { return !!DAYS[S.view] && DAYS[S.view].items.some(it => !it.cls) && !['low', 'mid'].includes(hrNow()); }
 function applyLock() {
   const l = timerActive() || hrBlocked();
   document.querySelectorAll('.ok').forEach(b => { const lk = l && !b.classList.contains('on'); b.classList.toggle('locked', lk); b.setAttribute('aria-disabled', lk); });
@@ -1306,7 +1317,7 @@ const histMax = hk => Math.max(...(S.history[hk] || []).flatMap(e => e.sets.map(
 /* minutes since the first set of the day was done; 0 when unknown, under 1 or over 4 h */
 const sessMin = id => { const t = S.start[id]; if (!t) return 0; const m = Math.round((Date.now() - t) / 60000); return m < 1 ? 0 : Math.min(240, m); };
 /* exercises with a new-best set today: [{ name, w }] */
-const dayPbs = day => day.type === 'class' ? [] : day.items.filter(it => !it.cls).flatMap(it => {
+const dayPbs = day => day.items.filter(it => !it.cls).flatMap(it => {
   const a = sets(it).filter(s => s.done && s.pb), b = otherDone(it).filter(s => s.pb), out = [];
   if (a.length) out.push({ name: cur(it).name, w: Math.max(...a.map(s => s.w)) });
   if (b.length) out.push({ name: otherCur(it).name, w: Math.max(...b.map(s => s.w)) });
@@ -1411,7 +1422,7 @@ function statsWeek() {
     const d = HKDEF[hk]; if (!d) return; const g = GROUP[d.target];
     S.history[hk].forEach(e => { if (e.date >= ws && e.date <= we) done[g] = (done[g] || 0) + e.sets.length; });
   });
-  plan.forEach(id => { if (isL(id)) DAYS[id].items.forEach(it => { const g = GROUP[it.target]; planned[g] = (planned[g] || 0) + it.sets; }); });
+  plan.forEach(id => { if (id !== 'rest') DAYS[id].items.forEach(it => { if (it.cls) return; const g = GROUP[it.target]; planned[g] = (planned[g] || 0) + it.sets; }); });
   const msets = GROUPS.filter(g => planned[g] || done[g]).map(g => {
     const p0 = planned[g] || 0, d0 = done[g] || 0, pct = p0 ? Math.min(100, Math.round(d0 / p0 * 100)) : 100;
     return `<div class="mset"><span class="mg">${g}</span><span class="mb"><i style="width:${pct}%"></i></span><span class="mv">${d0}<small> / ${p0}</small></span></div>`;
@@ -1653,7 +1664,7 @@ S.rate = null;
 render(); resumeTimer();
 if (!localStorage.getItem(KEY + '_seen')) { openModal('mHow'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
 /* keep APP_VER in step with VERSION in sw.js */
-const APP_VER = '3.4.2';
+const APP_VER = '3.4.3';
 $('#appVer').textContent = 'SCULPT v' + APP_VER;
 if ('serviceWorker' in navigator) {
   const hadCtrl = !!navigator.serviceWorker.controller;
