@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>SCULPT / The New Gym</title>
+<title>SCULPT</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -435,7 +435,7 @@
 
 <header class="hdr">
   <div class="hdr-row">
-    <div class="brand"><h1>SCULPT<span>.</span></h1><small>The New Gym</small></div>
+    <div class="brand"><h1>SCULPT<span>.</span></h1><small>Workout tracker</small></div>
     <div class="hbtns">
       <button class="ibtn" id="btnStats">Stats</button>
       <button class="ibtn icon" id="btnMenu" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
@@ -498,7 +498,7 @@
     <h2>Menu</h2>
     <div class="mlist">
       <button class="mrow" data-menu="guide"><span>Guide<small>How to use the app</small></span><span class="chev">›</span></button>
-      <button class="mrow" data-menu="rules"><span>Rules<small>Heart and pelvic floor safety</small></span><span class="chev">›</span></button>
+      <button class="mrow" data-menu="rules"><span>Rules<small>Heart and lifting safety</small></span><span class="chev">›</span></button>
       <button class="mrow" data-menu="profile"><span>Profile<small>InBody and body trend</small></span><span class="chev">›</span></button>
       <button class="mrow" data-menu="install" id="rowInstall" style="display:none"><span>Install app</span><span class="chev">›</span></button>
     </div>
@@ -530,12 +530,12 @@
       <li>Class: HR over 150 = walk until under 120.</li>
       <li>Combat max 1x per week.</li>
     </ul>
-    <h4 class="red">Pelvic floor</h4>
+    <h4 class="red">Lifting</h4>
     <ul>
       <li>No barbell squat. No heavy deadlift.</li>
       <li>Leg press: light, feet high, stop at 90°.</li>
       <li>Exhale on every push. Never hold breath.</li>
-      <li>Rectal pressure = stop, walk 2 min, swap.</li>
+      <li>Pressure or pain = stop, walk 2 min, swap.</li>
     </ul>
     <h4>Weights</h4>
     <ul>
@@ -565,7 +565,7 @@ const ICONS = {
 };
 
 /* ================= GYM VIDEOS =================
-   The New Gym machine playlist: youtube.com/playlist?list=PLhD1Un1i_zCXYJDkBSkAogClCy6eJRVaC
+   Gym machine playlist: youtube.com/playlist?list=PLhD1Un1i_zCXYJDkBSkAogClCy6eJRVaC
    Keyed by history key (hk). Exercises without a gym video get a YouTube search link. */
 const VIDS = {
   legpress: '2bS49E5I-Qo', anglepress: 'TvQtRib_smI', chestpress: 'saiWPVjGD0M', cpress_hi: 'saiWPVjGD0M',
@@ -744,9 +744,9 @@ function figure(key) {
 const PROGRAM = [
   { id: 'mon', tab: 'GLU A', tt: 'Lift', type: 'lift', title: 'Glutes A', sub: 'Hip thrust day. Round, lifted glutes.', warm: 'Bike 8 min, easy. HR under 120.', items: [
     { id: 'mon_thrustm', hk: 'thrust_m', name: 'Hip Thrust Machine', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 4, reps: 12, w: 20, step: 5, max: 60, rest: 120,
-      guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat. Shins straight up at the top.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath (pelvic pressure).', 'Pushing through the toes.'] },
+      guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat. Shins straight up at the top.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Pushing through the toes.'] },
       swap: { hk: 'thrust', name: 'DB Hip Thrust', what: 'Upper back on a bench. Lift hips with a dumbbell on them.', vn: 'Bench + 1 dumbbell', move: 'hipthrust', muscle: 'Glute max', target: 'glute_max', reps: 12, w: 10, step: 2, rest: 120,
-        guide: { setup: ['Upper back on bench edge. Feet flat.', 'Dumbbell on hip bones. Hold both ends.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath (pelvic pressure).', 'Feet too close: thighs take over.'] } } },
+        guide: { setup: ['Upper back on bench edge. Feet flat.', 'Dumbbell on hip bones. Hold both ends.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Feet too close: thighs take over.'] } } },
     { id: 'mon_legpress', hk: 'legpress', name: 'Leg Press · Half Range', what: 'Sit and push the plate away with your feet.', vn: 'Máy đạp chân ngang', move: 'legpress', muscle: 'Glutes', target: 'glute_max', sets: 3, reps: 12, w: 40, step: 5, max: 60, rest: 120,
       guide: { setup: ['Feet high and wide on the plate.', 'Lower until knees reach 90°. Stop.', 'Exhale. Push through heels.'], avoid: ['Going deep: knees to chest.', 'Heavy load or holding breath.', 'Locking knees straight.'] },
       swap: { hk: 'gobletsq', name: 'DB Goblet Box Squat', what: 'Hold a dumbbell at chest. Sit to a box, stand up.', vn: 'Box + 1 dumbbell', move: 'gobletsq', muscle: 'Glutes', target: 'glute_max', reps: 12, w: 8, step: 2, rest: 120,
@@ -842,8 +842,8 @@ const PROGRAM = [
     { id: 'sat_combat', cls: true, name: 'New Combat', vn: 'Class, 55 min', icon: 'cls', move: 'combat', rules: ['Low-impact option. No jumps.', 'HR over 150 = walk until under 120.', 'Skip the last track if HR stayed over 140.', 'Dizzy or shaky = leave.'], alt: { name: 'Easy Elliptical', cue: '20 min. HR under 125. Or join Yoga.' } },
     { id: 'sat_stretch', cls: true, name: 'Cool-down Stretch', vn: 'Mat, 10 min', icon: 'floor', move: 'stretch', rules: ['Child pose 2 min.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.'], alt: { name: 'Slow Walk', cue: 'Treadmill flat, 10 min.' } }
   ]},
-  { id: 'sun', tab: 'YOGA', tt: 'Class', type: 'class', title: 'Yoga', sub: 'Recovery. Relax the pelvic floor.', warm: 'None.', items: [
-    { id: 'sun_yoga', cls: true, name: 'Yoga', vn: 'Class, 60 min', icon: 'cls', move: 'yoga', rules: ['Recovery only. No power flow.', 'Long exhales. Let the pelvic floor drop.', 'Skip inversions.', 'No lifting today.'], alt: { name: 'Home Mobility 20 min', cue: 'Cat-cow, child pose, 90/90 hips, happy baby, belly breathing.' } }
+  { id: 'sun', tab: 'YOGA', tt: 'Class', type: 'class', title: 'Yoga', sub: 'Recovery. Breathe and relax.', warm: 'None.', items: [
+    { id: 'sun_yoga', cls: true, name: 'Yoga', vn: 'Class, 60 min', icon: 'cls', move: 'yoga', rules: ['Recovery only. No power flow.', 'Long exhales. Belly breathing.', 'Skip inversions.', 'No lifting today.'], alt: { name: 'Home Mobility 20 min', cue: 'Cat-cow, child pose, 90/90 hips, happy baby, belly breathing.' } }
   ]}
 ];
 const ORDER = ['mon', 'tue', 'thu', 'fri', 'wed', 'sat', 'sun'];
@@ -1651,8 +1651,8 @@ S.rate = null;
 render(); resumeTimer();
 if (!localStorage.getItem(KEY + '_seen')) { openModal('mHow'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
 /* keep APP_VER in step with VERSION in sw.js */
-const APP_VER = '3.4.0';
-$('#appVer').textContent = 'SCULPT v' + APP_VER + ' · The New Gym';
+const APP_VER = '3.4.1';
+$('#appVer').textContent = 'SCULPT v' + APP_VER;
 if ('serviceWorker' in navigator) {
   const hadCtrl = !!navigator.serviceWorker.controller;
   navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadCtrl) toast('Updated to v' + APP_VER); });
