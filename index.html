@@ -480,14 +480,16 @@
     <div class="mlist">
       <button class="mrow" data-menu="guide"><span>Guide<small>How to use the app</small></span><span class="chev">›</span></button>
       <button class="mrow" data-menu="rules"><span>Rules<small>Heart and pelvic floor safety</small></span><span class="chev">›</span></button>
+      <button class="mrow" data-menu="profile"><span>Profile<small>InBody and body trend</small></span><span class="chev">›</span></button>
       <button class="mrow" data-menu="install" id="rowInstall" style="display:none"><span>Install app</span><span class="chev">›</span></button>
     </div>
     <h4>Backup</h4>
     <div class="dgrid" style="margin-top:8px"><button class="btn btn-g" id="btnExport">Export</button><button class="btn btn-g" id="btnImport">Import</button></div>
-    <p class="note">Your data lives on this phone. Export once a month.</p>
+    <p class="note" id="backupNote">Your data lives on this phone. Export once a month.</p>
     <p class="note" id="appVer" style="text-align:center;margin-top:18px"></p>
   </div>
 </div>
+<div class="modal" id="mProfile"><div class="box" id="profileBox"></div></div>
 <div class="modal" id="mRules">
   <div class="box">
     <div class="grab"></div>
@@ -840,7 +842,7 @@ const HKNAME = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk) HKNAM
 
 /* ================= STATE ================= */
 const KEY = 'sculpt_v3';
-const fresh = () => ({ view: 'mon', viewDate: '', hr: {}, missing: {}, plans: {}, basePlan: null, statTab: 'week', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null });
+const fresh = () => ({ view: 'mon', viewDate: '', hr: {}, missing: {}, plans: {}, basePlan: null, statTab: 'week', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, lastExport: '' });
 let S = load();
 function load() {
   try {
@@ -1499,6 +1501,9 @@ $('#fileIn').addEventListener('change', e => {
   r.readAsText(f); e.target.value = '';
 });
 
+/* ================= PROFILE ================= */
+function renderProfile() { $('#profileBox').innerHTML = '<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button><h2>Profile</h2>'; }
+
 /* ================= MODAL / TOAST ================= */
 /* sheets push a history entry so the Android back gesture closes the sheet, not the app */
 function openModal(id) { const m = $('#' + id); if (m.classList.contains('show')) return; m.classList.add('show'); try { history.pushState({ m: id }, ''); } catch (e) {} }
@@ -1566,6 +1571,7 @@ $('#mMenu').addEventListener('click', async e => {
   const r = e.target.closest('[data-menu]'); if (!r) return; buzz(10);
   if (r.dataset.menu === 'rules') switchModal('mRules');
   if (r.dataset.menu === 'guide') switchModal('mHow');
+  if (r.dataset.menu === 'profile') { renderProfile(); switchModal('mProfile'); }
   if (r.dataset.menu === 'install' && installEvt) { closeAll(); installEvt.prompt(); await installEvt.userChoice; installEvt = null; $('#rowInstall').style.display = 'none'; }
 });
 </script>
