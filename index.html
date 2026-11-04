@@ -863,10 +863,12 @@ const HKNAME = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk) HKNAM
 const KEY = 'sculpt_v3';
 const fresh = () => ({ view: 'mon', viewDate: '', hr: {}, missing: {}, plans: {}, basePlan: null, statTab: 'week', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, lastExport: '' });
 let S = load();
+/* fill fields an older backup may lack or hold as null */
+const norm = s => { const f = fresh(); ['hr','missing','plans','sets','classes','swaps','sel','history','profile','start'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; }); ['sessions','body'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; }); if (typeof s.lastExport !== 'string') s.lastExport = ''; return s; };
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return Object.assign(fresh(), JSON.parse(raw));
+    if (raw) return norm(Object.assign(fresh(), JSON.parse(raw)));
     const old = localStorage.getItem('sculpt_v2') || localStorage.getItem('sculpt_tng_v1');
     if (old) { const o = JSON.parse(old); const s = fresh(); s.history = o.history || {}; s.sessions = o.sessions || []; return s; }
   } catch (e) {}
@@ -1537,7 +1539,7 @@ function paintBackup() {
 $('#fileIn').addEventListener('change', e => {
   const f = e.target.files[0]; if (!f) return;
   const r = new FileReader();
-  r.onload = () => { try { const o = JSON.parse(r.result); if (!o.sessions || !o.history) throw 0; if (!confirm('Replace all data with this file?')) return; S = Object.assign(fresh(), o); save(); render(); toast('Imported'); } catch (x) { toast('Bad file', true); } };
+  r.onload = () => { try { const o = JSON.parse(r.result); if (!o.sessions || !o.history) throw 0; if (!confirm('Replace all data with this file?')) return; S = norm(Object.assign(fresh(), o)); save(); render(); toast('Imported'); } catch (x) { toast('Bad file', true); } };
   r.readAsText(f); e.target.value = '';
 });
 
