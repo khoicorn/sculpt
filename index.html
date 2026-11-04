@@ -1221,7 +1221,7 @@ mainEl.addEventListener('click', e => {
     if (timerActive()) { nope('Rest first'); return; }
     s.done = true; s.t = Date.now(); buzz([30, 50, 30]); hideRate();
     if (!S.start[S.view]) S.start[S.view] = Date.now();
-    const pb = !c.noW && !c.assist && (S.history[c.hk] || []).some(e => e.sets.length) && s.w > histMax(c.hk); if (pb) s.pb = true;
+    const pb = !c.noW && !c.assist && (S.history[c.hk] || []).some(e => e.sets.length) && s.w > histMax(c.hk) && !ss.some(x => x !== s && x.done && x.pb && x.w >= s.w); if (pb) s.pb = true;
     if (ss[k + 1] && !ss[k + 1].done) { ss[k + 1].w = s.w; ss[k + 1].r = s.r; S.sel[ex.id] = k + 1; } else delete S.sel[ex.id];
     save(); refreshCard(ex);
     const ref = { id: ex.id, key: skey(ex), k }, p = dayProgress(DAYS[S.view]);
@@ -1302,7 +1302,7 @@ let finEdit = null;
 /* heaviest set ever logged for a history key; -Infinity when nothing logged */
 const histMax = hk => Math.max(...(S.history[hk] || []).flatMap(e => e.sets.map(x => x.w)));
 /* minutes since the first set of the day was done; 0 when unknown, under 1 or over 4 h */
-const sessMin = id => { const t = S.start[id]; if (!t) return 0; const m = Math.round((Date.now() - t) / 60000); return m >= 1 && m <= 240 ? m : 0; };
+const sessMin = id => { const t = S.start[id]; if (!t) return 0; const m = Math.round((Date.now() - t) / 60000); return m < 1 ? 0 : Math.min(240, m); };
 /* exercises with a new-best set today: [{ name, w }] */
 const dayPbs = day => day.type === 'class' ? [] : day.items.filter(it => !it.cls).flatMap(it => {
   const a = sets(it).filter(s => s.done && s.pb), b = otherDone(it).filter(s => s.pb), out = [];
@@ -1518,9 +1518,10 @@ function statsClick(e) {
   if ((b = hit('[data-sess]'))) { buzz(15); openFinish(+b.dataset.sess); }
 }
 function exportData() {
+  S.lastExport = todayStr(); save();
   const blob = new Blob([JSON.stringify(S, null, 2)], { type: 'application/json' });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'sculpt-backup-' + todayStr() + '.json'; a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 2000); S.lastExport = todayStr(); save(); paintBackup(); toast('Exported');
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000); paintBackup(); toast('Exported');
 }
 /* menu backup note: red when never exported or last export over 30 days ago */
 function paintBackup() {
@@ -1531,7 +1532,7 @@ function paintBackup() {
 $('#fileIn').addEventListener('change', e => {
   const f = e.target.files[0]; if (!f) return;
   const r = new FileReader();
-  r.onload = () => { try { const o = JSON.parse(r.result); if (!o.sessions || !o.history) throw 0; if (!confirm('Replace all data with this file?')) return; S = norm(Object.assign(fresh(), o)); save(); render(); toast('Imported'); } catch (x) { toast('Bad file', true); } };
+  r.onload = () => { try { const o = JSON.parse(r.result); if (!o.sessions || !o.history) throw 0; if (!confirm('Replace all data with this file?')) return; S = norm(Object.assign(fresh(), o)); save(); render(); paintBackup(); toast('Imported'); } catch (x) { toast('Bad file', true); } };
   r.readAsText(f); e.target.value = '';
 });
 
@@ -1593,7 +1594,7 @@ $('#profileBox').addEventListener('change', e => {
   if (e.target.id !== 'pfH') return;
   const h = numIn(e.target.value, 100, 250);
   if (Number.isNaN(h)) { toast('Check the numbers', true); buzz([40, 40, 40]); e.target.value = S.profile.h || ''; return; }
-  S.profile.h = h || 0; save(); renderProfile();
+  S.profile.h = h || 0; save(); setTimeout(renderProfile, 0);
 });
 
 /* ================= MODAL / TOAST ================= */
