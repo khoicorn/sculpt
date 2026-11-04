@@ -323,6 +323,9 @@
   .dgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .empty { color: var(--dim); font-size: 13px; padding: 14px; text-align: center; border: 1px dashed var(--line-2); border-radius: var(--r); }
   .note { font-size: 12px; color: var(--dim); margin-top: 8px; }
+  .note.red { color: var(--red); }
+  .note.lime { color: var(--lime); }
+  .kv.three { grid-template-columns: 1fr 1fr 1fr; }
 
   .toast { position: fixed; left: 50%; bottom: calc(120px + env(safe-area-inset-bottom)); transform: translateX(-50%) translateY(20px); z-index: 70; background: var(--lime); color: #09090B; font-family: var(--head); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 18px; border-radius: var(--r); opacity: 0; pointer-events: none; transition: var(--t); white-space: nowrap; }
   body.tm-on .toast { bottom: calc(270px + env(safe-area-inset-bottom)); }
@@ -1192,18 +1195,21 @@ mainEl.addEventListener('click', e => {
     const nope = msg => { ok.classList.add('hit'); setTimeout(() => ok.classList.remove('hit'), 400); toast(msg, true); buzz([40, 40, 40]); };
     if (s.done) {
       if (Date.now() - (s.t || 0) < 1200) return; /* ignore a shaky double tap */
-      s.done = false; delete s.f; S.sel[ex.id] = k;
+      s.done = false; delete s.f; delete s.pb; S.sel[ex.id] = k;
       const r0 = curRef(); if (r0 && r0.id === ex.id && r0.k === k) { if (S.timer) endTimer(); hideRate(); }
       save(); refreshCard(ex); return;
     }
     if (hrBlocked()) { nope(hrNow() === 'high' ? 'HR too high today' : 'Tap resting HR first'); const hb = $('.hr'); if (hb) hb.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
     if (timerActive()) { nope('Rest first'); return; }
     s.done = true; s.t = Date.now(); buzz([30, 50, 30]); hideRate();
+    if (!S.start[S.view]) S.start[S.view] = Date.now();
+    const pb = !c.noW && !c.assist && s.w > histMax(c.hk); if (pb) s.pb = true;
     if (ss[k + 1] && !ss[k + 1].done) { ss[k + 1].w = s.w; ss[k + 1].r = s.r; S.sel[ex.id] = k + 1; } else delete S.sel[ex.id];
     save(); refreshCard(ex);
     const ref = { id: ex.id, key: skey(ex), k }, p = dayProgress(DAYS[S.view]);
     if (p.d < p.t) { startTimer(c.rest, nextLabel(ex, k), ref); setTimeout(() => scrollNext(ex.id), 350); }
-    else { showRate(ref); toast('All done. Rate it, then Finish.'); }
+    else { showRate(ref); if (!pb) toast('All done. Rate it, then Finish.'); }
+    if (pb) toast('New best · ' + fmtW(s.w) + ' kg');
     return;
   }
 
@@ -1211,7 +1217,7 @@ mainEl.addEventListener('click', e => {
   if (rowTap && ex) { const k = +rowTap.dataset.set; if (!sets(ex)[k].done) { S.sel[ex.id] = k; save(); selectRow(card, k); } return; }
 
   const cl = t.closest('[data-clschk]');
-  if (cl) { buzz([30, 50, 30]); const id = cl.dataset.clschk; S.classes[id] = !S.classes[id]; save();
+  if (cl) { buzz([30, 50, 30]); const id = cl.dataset.clschk; S.classes[id] = !S.classes[id]; if (S.classes[id] && !S.start[S.view]) S.start[S.view] = Date.now(); save();
     cl.classList.toggle('on', S.classes[id]); cl.textContent = S.classes[id] ? '✓ Done' : 'Mark done';
     cl.closest('.card').classList.toggle('complete', S.classes[id]); afterChange(); return; }
 
@@ -1241,7 +1247,7 @@ function afterChange() { renderTabs(); updateHUD(); applyLock(); const f = $('#b
 function resetDay() {
   const day = DAYS[S.view]; if (!confirm('Clear ' + day.title + '?')) return;
   day.items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
-  if (S.timer) endTimer(); hideRate(); save(); render(); toast('Reset');
+  delete S.start[day.id]; if (S.timer) endTimer(); hideRate(); save(); render(); toast('Reset');
 }
 
 /* ================= GUIDE ================= */
@@ -1275,14 +1281,25 @@ $('#guideBox').addEventListener('click', e => {
 
 /* ================= FINISH ================= */
 let finCal = 0, finEdit = null;
+/* heaviest set ever logged for a history key; -Infinity when nothing logged */
+const histMax = hk => Math.max(...(S.history[hk] || []).flatMap(e => e.sets.map(x => x.w)));
+/* minutes since the first set of the day was done; 0 when unknown, under 1 or over 4 h */
+const sessMin = id => { const t = S.start[id]; if (!t) return 0; const m = Math.round((Date.now() - t) / 60000); return m >= 1 && m <= 240 ? m : 0; };
+/* exercises with a new-best set today: [{ name, w }] */
+const dayPbs = day => day.type === 'class' ? [] : day.items.filter(it => !it.cls).flatMap(it => {
+  const a = sets(it).filter(s => s.done && s.pb), b = otherDone(it).filter(s => s.pb), out = [];
+  if (a.length) out.push({ name: cur(it).name, w: Math.max(...a.map(s => s.w)) });
+  if (b.length) out.push({ name: otherCur(it).name, w: Math.max(...b.map(s => s.w)) });
+  return out; });
 function openFinish(editIdx) {
   finEdit = editIdx ?? null;
-  let vol, setsN, title, date;
-  if (finEdit !== null) { const s = S.sessions[finEdit]; vol = s.vol; setsN = s.sets; title = s.title; date = s.date; finCal = s.cal || 0; }
-  else { const day = DAYS[S.view], p = dayProgress(day); vol = dayVolume(day); setsN = p.d; title = day.title; date = todayStr(); finCal = 0; }
+  let vol, setsN, title, date, min, pbs;
+  if (finEdit !== null) { const s = S.sessions[finEdit]; vol = s.vol; setsN = s.sets; title = s.title; date = s.date; finCal = s.cal || 0; min = s.min || 0; pbs = (s.pbs || []).map(n => ({ name: n })); }
+  else { const day = DAYS[S.view], p = dayProgress(day); vol = dayVolume(day); setsN = p.d; title = day.title; date = todayStr(); finCal = 0; min = sessMin(day.id); pbs = dayPbs(day); }
+  const pbLine = pbs.length ? `<p class="note lime">New best: ${pbs.slice(0, 3).map(o => o.name + (o.w ? ' ' + fmtW(o.w) + ' kg' : '')).join(', ')}${pbs.length > 3 ? ' +' + (pbs.length - 3) : ''}</p>` : '';
   $('#finishBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
     <div class="kicker">${finEdit !== null ? 'Edit session' : 'Finish'} · ${date}</div><h2>${title}</h2>
-    <div class="kv"><div><div class="k">Volume</div><div class="v">${Math.round(vol).toLocaleString()} <small style="font-size:11px;color:var(--dim)">kg</small></div></div><div><div class="k">Sets</div><div class="v">${setsN}</div></div></div>
+    <div class="kv ${min ? 'three' : ''}"><div><div class="k">Volume</div><div class="v">${Math.round(vol).toLocaleString()} <small style="font-size:11px;color:var(--dim)">kg</small></div></div><div><div class="k">Sets</div><div class="v">${setsN}</div></div>${min ? `<div><div class="k">Time</div><div class="v">${min} <small style="font-size:11px;color:var(--dim)">min</small></div></div>` : ''}</div>${pbLine}
     <h4>Calories from your watch</h4>
     <div class="big-num" id="calNum">${finCal} <small>KCAL</small></div>
     <div class="calrow"><button class="pill neg" data-cal="-25">−25</button><button class="pill" data-cal="25">+25</button><button class="pill" data-cal="50">+50</button><button class="pill" data-cal="100">+100</button></div>
@@ -1308,8 +1325,9 @@ function logSession() {
     put(cur(it), sets(it).filter(s => s.done)); put(otherCur(it), otherDone(it));
   });
   if (!n) { toast('Nothing to log', true); return; }
-  const p = dayProgress(day);
-  S.sessions.push({ date, day: day.id, title: day.title, type: day.type, vol: Math.round(dayVolume(day)), sets: p.d, cal: finCal });
+  const p = dayProgress(day), sess = { date, day: day.id, title: day.title, type: day.type, vol: Math.round(dayVolume(day)), sets: p.d, cal: finCal };
+  const min = sessMin(day.id), pbs = dayPbs(day); if (min) sess.min = min; if (pbs.length) sess.pbs = pbs.map(o => o.name);
+  S.sessions.push(sess); delete S.start[day.id];
   day.items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
   if (S.timer) endTimer(); hideRate(); releaseWake();
   save(); closeAll(); buzz([30, 50, 30, 50, 60]); render(); toast('Logged · ' + date);
@@ -1425,7 +1443,7 @@ function statsMonth() {
       <div class="legend"><b>GA</b> Glutes A · <b>PU</b> Push · <b>GB</b> Glutes B · <b>PL</b> Pull · <b>PM</b> Pump · <b>CB</b> Combat · <b>YG</b> Yoga</div>
     </div>
     <div class="lbl">Workouts in ${mName} · tap to edit kcal</div>
-    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.x.title}</div><div class="b">${o.x.date} · ${o.x.sets} sets</div></div><div class="c">${o.x.vol ? kfmt(o.x.vol) : '—'}<small>kg</small></div><div class="c">${o.x.cal || '—'}<small>kcal</small></div></div>`).join('') : '<div class="empty">No workouts this month.</div>'}`;
+    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.x.title}</div><div class="b">${o.x.date} · ${o.x.sets} sets${o.x.min ? ' · ' + o.x.min + ' min' : ''}</div></div><div class="c">${o.x.vol ? kfmt(o.x.vol) : '—'}<small>kg</small></div><div class="c">${o.x.cal || '—'}<small>kcal</small></div></div>`).join('') : '<div class="empty">No workouts this month.</div>'}`;
 }
 function spark(pts, invert) {
   const W = 64, H = 24, q = pts.slice(-12);
@@ -1492,7 +1510,13 @@ function statsClick(e) {
 function exportData() {
   const blob = new Blob([JSON.stringify(S, null, 2)], { type: 'application/json' });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'sculpt-backup-' + todayStr() + '.json'; a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 2000); toast('Exported');
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000); S.lastExport = todayStr(); save(); paintBackup(); toast('Exported');
+}
+/* menu backup note: red when never exported or last export over 30 days ago */
+function paintBackup() {
+  const d = S.lastExport, n = d ? Math.round((new Date(todayStr() + 'T12:00:00') - new Date(d + 'T12:00:00')) / 864e5) : -1;
+  const el = $('#backupNote'); el.textContent = 'Last export: ' + (n < 0 ? 'never' : n === 0 ? 'today' : n === 1 ? '1 day ago' : n + ' days ago');
+  el.classList.toggle('red', n < 0 || n > 30);
 }
 $('#fileIn').addEventListener('change', e => {
   const f = e.target.files[0]; if (!f) return;
@@ -1518,7 +1542,7 @@ $('#btnStats').addEventListener('click', () => {
   if (S.view === 'stats') S.view = DAYS[S.lastView] ? S.lastView : nextUp(); else { S.lastView = S.view; S.view = 'stats'; }
   S.viewDate = todayStr(); save(); render();
 });
-$('#btnMenu').addEventListener('click', () => { buzz(10); openModal('mMenu'); });
+$('#btnMenu').addEventListener('click', () => { buzz(10); paintBackup(); openModal('mMenu'); });
 /* Guide shortcuts: jump to the week plan, today's workout, or lift progress */
 $('#mHow').addEventListener('click', e => {
   const g = e.target.closest('[data-go]'); if (!g) return; buzz(10); closeAll();
