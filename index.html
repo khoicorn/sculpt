@@ -154,12 +154,19 @@
 
   /* class card */
   .ccard .body { padding: 0 12px 12px; }
-  .ccard ul { margin: 0; padding-left: 16px; color: var(--muted); font-size: 14px; }
-  .ccard li { margin-bottom: 3px; }
+  .ccard ul { margin: 0; padding-left: 16px; color: var(--muted); font-size: 15px; }
+  .ccard li { margin-bottom: 6px; }
+  .ccard li.hrr { color: var(--red); font-weight: 600; }
+  .ccard .body + .body { padding-top: 0; }
+  .ccard .big { margin-top: 0; }
+  .ccard .big.live { border-color: var(--lime); color: var(--lime); }
+  .ccard .big.calm { margin-top: 0; background: var(--lime); border-color: var(--lime); color: #09090B; }
+  .calmok { display: flex; align-items: center; justify-content: space-between; min-height: 44px; font-size: 13px; color: var(--lime); }
+  .calmok .btn-q { min-height: 44px; min-width: 48px; }
+  .calmok.red { color: var(--red); }
+  .thumb.static { color: var(--dim); border-color: var(--line); }
   .big { width: 100%; min-height: 56px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; background: transparent; border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; transition: var(--t); }
   .big.on { background: var(--lime); border-color: var(--lime); color: #09090B; }
-  .alt { margin: 0 12px 12px; padding: 10px 12px; border: 1px dashed var(--line-2); border-radius: var(--r); font-size: 13px; color: var(--muted); }
-  .alt b { color: var(--text); font-family: var(--head); text-transform: uppercase; font-size: 12px; letter-spacing: 0.06em; }
 
   .foot { display: grid; grid-template-columns: 1fr 2fr; gap: 8px; margin-top: 18px; }
   .btn { min-height: 56px; padding: 0 14px; border-radius: var(--r); font-family: var(--head); font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; transition: var(--t); }
@@ -834,23 +841,36 @@ const PROGRAM = [
       swap: { hk: 'cablelat', name: 'Cable Lateral Raise', what: 'One arm lifts a low cable out to the side.', vn: 'Cable, low', move: 'cablelat', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90, side: true,
         guide: { setup: ['Cable at lowest point.', 'Stand side-on. Handle in far hand.', 'Lift to shoulder height.'], avoid: ['Leaning away.', 'Shrugging.'] } } }
   ]},
-  { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', sub: 'Class 45 · glute finisher 10 · walk 15 min.', warm: 'Walk 5 min before class.', items: [
-    { id: 'wed_pump', cls: true, name: 'New Pump', vn: 'Class, 45 min', icon: 'cls', move: 'pump', rules: ['Lightest plates on every track.', 'Squat track: shallow only.', 'Deadlift track: light. Exhale every rep.', 'HR over 150 = rest that song.'], alt: { name: 'Light Circuit', cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press. 2 rounds × 15.' } },
-    /* glute finisher: 2 light moves after class, tracked as sets */
-    { id: 'wed_lw', hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 15, unit: 'steps', noW: 'Band', rest: 90, swapAsk: 'No band?',
-      guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', '15 steps right, then 15 back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] },
+  { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', after: 'finisher', warm: 'Walk 5 min, flat. HR under 110.', warmMin: 5, items: [
+    { id: 'wed_pump', cls: true, main: true, name: 'New Pump', vn: 'Class', min: 45, icon: 'cls', move: 'pump',
+      rules: ['HR over 150 = sit out one track.', 'Lightest plates. Add nothing mid-class.', 'Squat track: half depth. Exhale up.', 'Lunge track: no bar. Core: keep breathing.'],
+      alt: { name: 'Light Circuit', vn: 'Machines', min: 40, cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press, Leg Press half range. 2 × 15 each. Rest 90 s. Exhale every rep.' } },
+    /* glute finisher after class: 2 light machine moves, mat swaps */
+    { id: 'wed_ht', hk: 'thrust_mf', name: 'Hip Thrust Machine · Light', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 2, reps: 15, w: 15, step: 5, max: 40, rest: 90,
+      guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat. Shins straight at the top.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back.', 'Going heavy: this is a finisher.'] },
+      swap: { hk: 'frogpump', name: 'Frog Pump', what: 'On your back, soles together, knees out. Pump hips up.', vn: 'Mat', move: 'frogpump', muscle: 'Glute max', target: 'glute_max', reps: 20, noW: 'Body', rest: 90,
+        guide: { setup: ['Lie back. Soles of feet together.', 'Let knees fall open.', 'Exhale, pump hips up. Squeeze.'], avoid: ['Arching the back.', 'Holding breath.'] } } },
+    { id: 'wed_ab', hk: 'abductor_f', name: 'Abductor Machine · Light', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 20, w: 15, step: 5, max: 30, rest: 90,
+      guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Going heavy: this is a finisher.'] },
+      swap: { hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', reps: 15, unit: 'steps', noW: 'Band', rest: 90,
+        guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', '15 steps right, then 15 back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] } } },
+    { id: 'wed_walk', cls: true, name: 'Cool-down Walk', vn: 'Treadmill', min: 5, icon: 'cardio', move: 'walk', rules: ['5 min. Flat. Speed 4.', 'Leave with HR under 110.', 'Hands off the rails.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, cue: '5 min. HR under 110.' } }
+  ]},
+  { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', after: 'cool-down', warm: 'Walk 3 min, flat.', warmMin: 3, items: [
+    { id: 'sat_combat', cls: true, main: true, name: 'New Combat', vn: 'Class', min: 45, icon: 'cls', move: 'combat',
+      rules: ['HR over 150 = march until under 130.', 'Low option every track. No jumps.', 'Kicks knee height. Never lock the knee.', 'Dizzy, shaky or chest tight = stop.'],
+      alt: { name: 'Easy Elliptical', vn: 'Elliptical', min: 20, cue: '20 min. HR under 125. Or join Yoga.' } },
+    { id: 'sat_walk', cls: true, name: 'Walk-down', vn: 'Treadmill', min: 5, icon: 'cardio', move: 'walk', rules: ['Up to 5 min. Flat. Slow.', 'Stop when HR is under 110.', 'No more cardio today.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, cue: '5 min. HR under 110.' } },
+    /* posture + glute med after the walk-down: no cardio, low HR moves */
+    { id: 'sat_fp', hk: 'facepull_l', name: 'Cable Face Pull', what: 'Pull a rope toward your face, elbows high.', vn: 'Cable + rope, high', move: 'facepull', muscle: 'Rear shoulder', target: 'rear_delt', sets: 2, reps: 15, w: 7.5, step: 2.5, rest: 90,
+      guide: { setup: ['Rope at forehead height.', 'Pull to forehead. Elbows high.', 'Thumbs back. Squeeze 1 s.'], avoid: ['Leaning back.', 'Elbows dropping low.'] },
+      swap: { hk: 'reardelt', name: 'Rear-Delt DB Fly', what: 'Chest on a bench. Lift dumbbells out to the sides.', vn: 'Incline bench + 2 dumbbells', move: 'reardelt', muscle: 'Rear shoulder', target: 'rear_delt', reps: 15, w: 3, pair: true, step: 1, rest: 90,
+        guide: { setup: ['Chest on incline bench.', 'Arms hang. Slight elbow bend.', 'Lift out to shoulder height.'], avoid: ['Swinging.', 'Shrugging.'] } } },
+    { id: 'sat_sl', hk: 'sidelying', name: 'Side-Lying Leg Raise', what: 'Lie on your side. Lift the top leg up.', vn: 'Mat', move: 'sidelying', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 15, noW: 'Body', rest: 90, side: true, swapAsk: 'No mat?',
+      guide: { setup: ['Lie on side. Bottom knee bent.', 'Top toes point slightly down.', 'Lift slow to 45°. Pause 1 s.'], avoid: ['Rolling backward.', 'Lifting too high.'] },
       swap: { hk: 'abductor_f', name: 'Abductor Machine · Light', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', reps: 20, w: 15, step: 5, max: 30, rest: 90,
         guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Going heavy: this is a finisher.'] } } },
-    { id: 'wed_gb', hk: 'bridge_bw', name: 'Glute Bridge', what: 'Lie on your back. Lift hips, hold 2 s.', vn: 'Mat', move: 'frogpump', muscle: 'Glute max', target: 'glute_max', sets: 2, reps: 15, noW: 'Body', rest: 90, swapAsk: 'No space?',
-      guide: { setup: ['Lie on back. Knees bent, feet flat.', 'Exhale, lift hips. Hold 2 s, keep breathing.', 'Lower slow.'], avoid: ['Arching the lower back.', 'Holding breath at the top.'] },
-      swap: { hk: 'thrust_mf', name: 'Hip Thrust Machine · Light', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 15, step: 5, max: 40, rest: 90,
-        guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back.', 'Going heavy: this is a finisher.'] } } },
-    { id: 'wed_walk', cls: true, name: 'Incline Walk', vn: 'Treadmill, 15 min · cool-down', icon: 'cardio', move: 'walk', rules: ['15 min. Incline 6-8. Speed 5-6.', 'HR under 130. Lower incline if over.', 'Hands off the rails.'], alt: { name: 'Easy Bike', cue: '15 min. HR under 130.' } }
-  ]},
-  { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', sub: 'Max 1x per week. HR is the limit.', warm: 'None. Walk to the studio.', items: [
-    { id: 'sat_combat', cls: true, name: 'New Combat', vn: 'Class, 45 min', icon: 'cls', move: 'combat', rules: ['Low-impact option. No jumps.', 'HR over 150 = walk until under 120.', 'Skip the last track if HR stayed over 140.', 'Dizzy or shaky = leave.'], alt: { name: 'Easy Elliptical', cue: '20 min. HR under 125. Or join Yoga.' } },
-    { id: 'sat_walk', cls: true, name: 'Easy Walk', vn: 'Treadmill, 10 min', icon: 'cardio', move: 'walk', rules: ['Flat. Slow. 10 min.', 'Stop when HR is under 120.'], alt: { name: 'Easy Bike', cue: '10 min. HR under 120.' } },
-    { id: 'sat_stretch', cls: true, name: 'Cool-down Stretch', vn: 'Mat, 10 min', icon: 'floor', move: 'stretch', rules: ['Child pose 2 min.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.'], alt: { name: 'Slow Walk', cue: 'Treadmill flat, 10 min.' } }
+    { id: 'sat_stretch', cls: true, name: 'Stretch', vn: 'Mat', min: 6, icon: 'floor', move: 'stretch', rules: ['Child pose 2 min. Belly breathing.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.', 'Chest stretch on frame 30 s per side.'], alt: { name: 'Slow Walk', vn: 'Treadmill', min: 6, cue: '6 min flat.' } }
   ]},
   { id: 'sun', tab: 'YOGA', tt: 'Class', type: 'class', title: 'Yoga', sub: 'Recovery. Breathe and relax.', warm: 'None.', items: [
     { id: 'sun_yoga', cls: true, name: 'Yoga', vn: 'Class, 60 min', icon: 'cls', move: 'yoga', rules: ['Recovery only. No power flow.', 'Long exhales. Belly breathing.', 'Skip inversions.', 'No lifting today.'], alt: { name: 'Home Mobility 20 min', cue: 'Cat-cow, child pose, 90/90 hips, happy baby, belly breathing.' } }
@@ -871,10 +891,10 @@ const HKNAME = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk) HKNAM
 
 /* ================= STATE ================= */
 const KEY = 'sculpt_v3';
-const fresh = () => ({ view: 'mon', viewDate: '', hr: {}, missing: {}, plans: {}, basePlan: null, statTab: 'week', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, lastExport: '' });
+const fresh = () => ({ view: 'mon', viewDate: '', hr: {}, missing: {}, plans: {}, basePlan: null, statTab: 'week', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, cin: {}, calm: {}, lastExport: '' });
 let S = load();
 /* fill fields an older backup may lack or hold as null */
-function norm(s) { const f = fresh(); ['hr','missing','plans','sets','classes','swaps','sel','history','profile','start'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; }); ['sessions','body'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; }); if (typeof s.lastExport !== 'string') s.lastExport = ''; return s; }
+function norm(s) { const f = fresh(); ['hr','missing','plans','sets','classes','swaps','sel','history','profile','start','cin','calm'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; }); ['sessions','body'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; }); if (typeof s.lastExport !== 'string') s.lastExport = ''; return s; }
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
@@ -992,14 +1012,19 @@ function render(keepScroll) { renderTabs(); centerTab(); if (S.view === 'stats')
 function renderDay() {
   const day = DAYS[S.view], lift = day.type === 'lift', hr = hrNow();
   const wc = weekCount(day.id);
-  const est = lift ? Math.round((day.items.reduce((a, e) => { const c = cur(e); return a + c.sets * (c.rest + 45 * (c.side ? 2 : 1)); }, 0) / 60 + 7) / 5) * 5 : 0;
+  const exMin = day.items.filter(e => !e.cls).reduce((a, e) => { const c = cur(e); return a + c.sets * (c.rest + 45 * (c.side ? 2 : 1)); }, 0) / 60;
+  const est = lift ? Math.round((exMin + 7) / 5) * 5 : 0;
+  const clsMin = day.items.filter(e => e.cls && e.main).reduce((a, e) => a + clsLen(e), 0);
+  const afterMin = Math.round((day.items.filter(e => e.cls && !e.main).reduce((a, e) => a + clsLen(e), 0) + exMin) / 5) * 5;
+  const total = Math.round((clsMin + afterMin + (day.warmMin || 0)) / 5) * 5;
+  const sub = lift ? `${day.items.length} exercises · ~${est} min · <span class="ex">exhale every rep</span>` : clsMin ? `${clsMin} min class${afterMin ? ' + ' + afterMin + ' min after' : ''} · ~${total} min` : day.sub;
   let h = `<section class="day-head"><div class="kicker">${lift ? 'Lift' : 'Class'}${wc ? ' · done ' + wc + '× this week' : ''}</div><h2>${day.title}</h2>
-    <p>${lift ? `${day.items.length} exercises · ~${est} min · <span class="ex">exhale every rep</span>` : day.sub}</p>
-    ${day.id === 'sat' && wc ? '<div class="chips"><span class="chip red">Combat done this week</span></div>' : ''}</section>
-    <div class="hr ${hr === 'high' ? 'bad' : ''}"><div class="q">Resting heart rate</div>
+    <p>${sub}</p>
+    ${day.id === 'sat' ? `<div class="chips"><span class="chip ${wc ? 'red' : ''}">${wc ? 'Combat done this week' : 'Max 1× per week'}</span></div>` : ''}</section>
+    <div class="hr ${hr === 'high' ? 'bad' : ''}"><div class="q">Resting heart rate${lift ? '' : ' before class'}</div>
       <div class="opts">${[['low', '< 90'], ['mid', '90–100'], ['high', '> 100']].map(([k, l]) => `<button class="opt ${hr === k ? 'on' : ''} ${k === 'high' ? 'bad' : ''}" data-hr="${k}">${l}</button>`).join('')}</div>
-      ${hr === 'low' || hr === 'mid' ? '' : `<div class="msg">${hr === 'high' ? (lift ? 'Too high. Sets locked. Do Yoga or walk.' : 'Too high. Easy walk only today.') : (lift ? 'Tap one to unlock your sets.' : 'Tap one before you start.')}</div>`}</div>
-    <div class="lbl">Warm-up</div><div class="warm"><span>${day.warm}</span>${WARMVID[day.id] ? `<a class="wlink" href="${ytUrl(WARMVID[day.id])}" target="_blank" rel="noopener">${IC.play}Video</a>` : ''}</div>
+      ${hr === 'low' || hr === 'mid' ? '' : `<div class="msg">${hr === 'high' ? (lift ? 'Too high. Sets locked. Do Yoga or walk.' : 'Too high. Skip the class. Do the swap.') : (lift ? 'Tap one to unlock your sets.' : 'Tap one before class.')}</div>`}</div>
+    ${/^None/.test(day.warm) ? '' : `<div class="lbl">Warm-up</div><div class="warm"><span>${day.warm}</span>${WARMVID[day.id] ? `<a class="wlink" href="${ytUrl(WARMVID[day.id])}" target="_blank" rel="noopener">${IC.play}Video</a>` : ''}</div>`}
     <div class="lbl">${lift ? 'Workout' : 'Session'}</div>`;
   day.items.forEach((it, i) => h += it.cls ? cardClass(it) : cardEx(it, i));
   const p = dayProgress(day);
@@ -1042,13 +1067,33 @@ function setRow(c, s, k, sel) {
     <button class="ok ${s.done ? 'on' : ''}" aria-label="Set ${k + 1} done">${s.done ? '<svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg>' : k + 1}</button>
   </div>`;
 }
+/* class cards: a main class is 2-step (Start class, Class done); others are 1 tap */
+const clsSwapped = it => S.swaps[it.id] === 'use';
+const clsLen = it => (clsSwapped(it) ? (it.alt.min || it.min) : it.min) || 0;
 function cardClass(it) {
-  const on = !!S.classes[it.id];
-  return `<article class="card ccard ${on ? 'complete' : ''}" data-cls="${it.id}">
-    <div class="ch"><div class="thumb">${it.move ? moveSVG(it.move, false) : ICONS[it.icon]}</div><div><h3>${it.name}</h3><div class="meta">${it.vn}</div></div><div></div></div>
-    <div class="body"><ul>${it.rules.map(r => `<li>${r}</li>`).join('')}</ul>
-      <button class="big ${on ? 'on' : ''}" data-clschk="${it.id}">${on ? '✓ Done' : 'Mark done'}</button></div>
-    <div class="alt">No class or HR high? <b>${it.alt.name}</b> · ${it.alt.cue}</div>
+  const day = DAYS[S.view];
+  if (S.cin[it.id] && Date.now() - S.cin[it.id] > 4 * 3600000) { delete S.cin[it.id]; delete S.start[day.id]; } /* stale Start from another day */
+  if (S.classes[it.id] && ds(new Date(+S.classes[it.id] || 0)) !== todayStr()) { delete S.classes[it.id]; delete S.calm[day.id]; if (S.start[day.id] && Date.now() - S.start[day.id] > 4 * 3600000) delete S.start[day.id]; } /* class done on another day */
+  const done = !!S.classes[it.id], sw = clsSwapped(it), live = !done && !!S.cin[it.id];
+  const name = sw ? it.alt.name : it.name, vn = sw ? it.alt.vn || 'Swap' : it.vn, min = clsLen(it);
+  const rules = sw ? it.alt.cue.split('. ').map(x => x.replace(/\.$/, '') + '.') : it.rules;
+  const inMin = live ? Math.max(0, Math.round((Date.now() - S.cin[it.id]) / 60000)) : 0;
+  const meta = done ? '✓ Done · ' + min + ' min' : live ? 'In progress · ' + inMin + ' min' : vn + ' · ' + min + ' min';
+  const btn = it.main
+    ? (done ? '' : `<button class="big ${live ? 'live' : ''}" data-clschk="${it.id}">${live ? 'Class done' : 'Start'}</button>`)
+    : `<button class="big ${done ? 'on' : ''}" data-clschk="${it.id}">${done ? '✓ Done' : 'Done'}</button>`;
+  const undo = `<button class="btn-q" data-clschk="${it.id}">undo</button>`;
+  const calm = it.main && done ? (hrNow() === 'high'
+    ? `<div class="calmok red">HR over 100 today. No ${day.after}. ${undo}</div>`
+    : S.calm[day.id] === todayStr()
+    ? `<div class="calmok">✓ HR under 120 · ${day.after} unlocked ${undo}</div>`
+    : `<button class="big calm" data-calm="${day.id}">HR under 120? Start ${day.after}</button><div class="calmok">&nbsp;${undo}</div>`) : '';
+  const swapBtn = done ? '' : `<button class="swap ${sw ? 'on' : ''}" data-clsswap="${it.id}"><span class="z">${sw ? IC.back : IC.swap}</span><span class="tx">${sw ? 'Back to <b>' + it.name + '</b>' : 'No class or HR high? Swap to <b>' + it.alt.name + '</b>'}</span><span class="chev">›</span></button>`;
+  return `<article class="card ccard ${done ? 'complete' : ''}" data-cls="${it.id}">
+    <div class="ch"><div class="thumb static">${it.move ? moveSVG(it.move, false) : ICONS[it.icon]}</div><div><h3>${name}</h3><div class="meta">${meta}</div></div><div></div></div>
+    ${done ? '' : `<div class="body"><ul>${rules.map((r, i) => `<li class="${it.main && !sw && i === 0 ? 'hrr' : ''}">${r}</li>`).join('')}</ul></div>`}
+    ${swapBtn}
+    <div class="body">${btn}${calm}</div>
   </article>`;
 }
 
@@ -1100,7 +1145,15 @@ function finishTimer() {
   setTimeout(() => { if (S.timer && !timerActive()) endTimer(); }, 4000);
 }
 function endTimer() { clearInterval(tick); tick = null; S.timer = null; save(); hud.classList.remove('timer', 'go', 'rate'); document.body.classList.remove('tm-on'); applyLock(); }
-function hrBlocked() { return !!DAYS[S.view] && DAYS[S.view].items.some(it => !it.cls) && !['low', 'mid'].includes(hrNow()); }
+function hrBlocked() {
+  const day = DAYS[S.view]; if (!day || !day.items.some(it => !it.cls)) return false;
+  if (day.type === 'class') return hrNow() === 'high' || S.calm[day.id] !== todayStr();
+  return !['low', 'mid'].includes(hrNow());
+}
+function scrollNextCard(dayId) {
+  const cards = [...mainEl.querySelectorAll('.card')], i = cards.findIndex(c => c.dataset.cls && EX[c.dataset.cls] && EX[c.dataset.cls].main), nx = cards[i + 1]; if (!nx) return;
+  const top = $('.hdr').getBoundingClientRect().bottom + 8, r = nx.getBoundingClientRect(); if (r.top > top) window.scrollBy({ top: r.top - top, behavior: 'smooth' });
+}
 function applyLock() {
   const l = timerActive() || hrBlocked();
   document.querySelectorAll('.ok').forEach(b => { const lk = l && !b.classList.contains('on'); b.classList.toggle('locked', lk); b.setAttribute('aria-disabled', lk); });
@@ -1190,7 +1243,9 @@ mainEl.addEventListener('click', e => {
   const card = t.closest('[data-ex]'); const ex = card ? EX[card.dataset.ex] : null;
 
   const hrb = t.closest('[data-hr]');
-  if (hrb) { buzz(15); S.hr = { v: hrb.dataset.hr, d: todayStr() }; save(); render(true); if (hrb.dataset.hr === 'high') buzz([60, 60, 60]); return; }
+  if (hrb) { buzz(15); S.hr = { v: hrb.dataset.hr, d: todayStr() };
+    if (DAYS[S.view].type === 'class') DAYS[S.view].items.forEach(it => { if (it.main && !S.classes[it.id] && !S.cin[it.id]) S.swaps[it.id] = hrb.dataset.hr === 'high' ? 'use' : 0; });
+    save(); render(true); if (hrb.dataset.hr === 'high') buzz([60, 60, 60]); return; }
 
   const g = t.closest('[data-guide]');
   if (g) { buzz(15); const x = EX[g.dataset.guide]; openGuide(x, isSwapped(x)); return; }
@@ -1230,7 +1285,7 @@ mainEl.addEventListener('click', e => {
       const r0 = curRef(); if (r0 && r0.id === ex.id && r0.k === k) { if (S.timer) endTimer(); hideRate(); }
       save(); refreshCard(ex); return;
     }
-    if (hrBlocked()) { nope(hrNow() === 'high' ? 'HR too high today' : 'Tap resting HR first'); const hb = $('.hr'); if (hb) hb.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+    if (hrBlocked()) { nope(hrNow() === 'high' ? 'HR too high today' : DAYS[S.view].type === 'class' ? 'Class first, then HR under 120' : 'Tap resting HR first'); const hb = $('.hr'); if (hb) hb.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
     if (timerActive()) { nope('Rest first'); return; }
     s.done = true; s.t = Date.now(); buzz([30, 50, 30]); hideRate();
     if (!S.start[S.view]) S.start[S.view] = Date.now();
@@ -1247,10 +1302,18 @@ mainEl.addEventListener('click', e => {
   const rowTap = t.closest('.set');
   if (rowTap && ex) { const k = +rowTap.dataset.set; if (!sets(ex)[k].done) { S.sel[ex.id] = k; save(); selectRow(card, k); } return; }
 
+  const csw = t.closest('[data-clsswap]');
+  if (csw) { buzz([20, 40, 20]); const id = csw.dataset.clsswap; S.swaps[id] = S.swaps[id] === 'use' ? 0 : 'use'; save(); render(true); return; }
+  const cm = t.closest('[data-calm]');
+  if (cm) { buzz([30, 50, 30]); S.calm[cm.dataset.calm] = todayStr(); save(); render(true); toast(DAYS[S.view].after + ' unlocked'); setTimeout(() => scrollNextCard(cm.dataset.calm), 350); return; }
   const cl = t.closest('[data-clschk]');
-  if (cl) { buzz([30, 50, 30]); const id = cl.dataset.clschk; S.classes[id] = !S.classes[id]; if (S.classes[id] && !S.start[S.view]) S.start[S.view] = Date.now(); save();
-    cl.classList.toggle('on', S.classes[id]); cl.textContent = S.classes[id] ? '✓ Done' : 'Mark done';
-    cl.closest('.card').classList.toggle('complete', S.classes[id]); afterChange(); return; }
+  if (cl) {
+    const id = cl.dataset.clschk, it = EX[id], now = Date.now();
+    if (S.classes[id]) { if (now - S.classes[id] < 1200) return; delete S.classes[id]; delete S.calm[S.view]; }
+    else if (it.main && !S.cin[id]) { S.cin[id] = now; if (!S.start[S.view]) S.start[S.view] = now; }
+    else if (it.main && now - S.cin[id] < 1200) return; /* shaky double tap on Start */
+    else { S.classes[id] = now; delete S.cin[id]; if (!S.start[S.view]) S.start[S.view] = now - clsLen(it) * 60000; }
+    buzz([30, 50, 30]); save(); render(true); afterChange(); return; }
 
   if (t.id === 'btnReset') { resetDay(); return; }
   if (t.id === 'btnFinish') { openFinish(); return; }
@@ -1278,7 +1341,7 @@ function afterChange() { renderTabs(); updateHUD(); applyLock(); const f = $('#b
 function resetDay() {
   const day = DAYS[S.view]; if (!confirm('Clear ' + day.title + '?')) return;
   day.items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
-  delete S.start[day.id]; if (S.timer) endTimer(); hideRate(); save(); render(); toast('Reset');
+  delete S.start[day.id]; delete S.calm[day.id]; day.items.forEach(it => delete S.cin[it.id]); if (S.timer) endTimer(); hideRate(); save(); render(); toast('Reset');
 }
 
 /* ================= GUIDE ================= */
@@ -1316,6 +1379,8 @@ let finEdit = null;
 const histMax = hk => Math.max(...(S.history[hk] || []).flatMap(e => e.sets.map(x => x.w)));
 /* minutes since the first set of the day was done; 0 when unknown, under 1 or over 4 h */
 const sessMin = id => { const t = S.start[id]; if (!t) return 0; const m = Math.round((Date.now() - t) / 60000); return m < 1 ? 0 : Math.min(240, m); };
+/* class days: at least the minutes of the class cards marked done */
+const dayMin = day => Math.max(sessMin(day.id), day.items.filter(it => it.cls && S.classes[it.id]).reduce((a, it) => a + clsLen(it), 0));
 /* exercises with a new-best set today: [{ name, w }] */
 const dayPbs = day => day.items.filter(it => !it.cls).flatMap(it => {
   const a = sets(it).filter(s => s.done && s.pb), b = otherDone(it).filter(s => s.pb), out = [];
@@ -1326,11 +1391,16 @@ function openFinish(editIdx) {
   finEdit = editIdx ?? null;
   let vol, setsN, title, date, min, pbs;
   if (finEdit !== null) { const s = S.sessions[finEdit]; vol = s.vol; setsN = s.sets; title = s.title; date = s.date; min = s.min || 0; pbs = (s.pbs || []).map(n => ({ name: n })); }
-  else { const day = DAYS[S.view], p = dayProgress(day); vol = dayVolume(day); setsN = p.d; title = day.title; date = todayStr(); min = sessMin(day.id); pbs = dayPbs(day); }
+  else { const day = DAYS[S.view], p = dayProgress(day); vol = dayVolume(day); setsN = p.d; title = day.title; date = todayStr(); min = dayMin(day); pbs = dayPbs(day); if (day.type === 'class') setsN = day.items.filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0); }
   const pbLine = pbs.length ? `<p class="note lime">New best: ${pbs.slice(0, 3).map(o => o.name + (o.w ? ' ' + fmtW(o.w) + ' kg' : '')).join(', ')}${pbs.length > 3 ? ' +' + (pbs.length - 3) : ''}</p>` : '';
   $('#finishBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
     <div class="kicker">${finEdit !== null ? 'Edit session' : 'Finish'} · ${date}</div><h2>${title}</h2>
-    <div class="kv ${min ? 'three' : ''}"><div><div class="k">Volume</div><div class="v">${Math.round(vol).toLocaleString()} <small style="font-size:11px;color:var(--dim)">kg</small></div></div><div><div class="k">Sets</div><div class="v">${setsN}</div></div>${min ? `<div><div class="k">Time</div><div class="v">${min} <small style="font-size:11px;color:var(--dim)">min</small></div></div>` : ''}</div>${pbLine}
+    ${(() => { const tiles = []; const u = x => `<small style="font-size:11px;color:var(--dim)">${x}</small>`;
+      if (vol) tiles.push(['Volume', Math.round(vol).toLocaleString() + ' ' + u('kg')]);
+      if (setsN) tiles.push([vol ? 'Sets' : 'Finisher sets', setsN]);
+      if (min) tiles.push(['Time', min + ' ' + u('min')]);
+      if (!tiles.length) tiles.push(['Done', '✓']);
+      return `<div class="kv ${tiles.length === 3 ? 'three' : ''}">${tiles.map(([k, v]) => `<div><div class="k">${k}</div><div class="v">${v}</div></div>`).join('')}</div>`; })()}${pbLine}
     ${finEdit !== null ? '<button class="btn btn-r" id="btnDel">Delete session</button>' : '<button class="btn btn-p" id="btnSave">Log session</button>'}
     <button class="btn btn-g" data-close>Cancel</button>`;
   openModal('mFinish');
@@ -1349,9 +1419,11 @@ function logSession() {
     put(cur(it), sets(it).filter(s => s.done)); put(otherCur(it), otherDone(it));
   });
   if (!n) { toast('Nothing to log', true); return; }
-  const p = dayProgress(day), sess = { date, day: day.id, title: day.title, type: day.type, vol: Math.round(dayVolume(day)), sets: p.d };
-  const min = sessMin(day.id), pbs = dayPbs(day); if (min) sess.min = min; if (pbs.length) sess.pbs = pbs.map(o => o.name);
-  S.sessions.push(sess); delete S.start[day.id];
+  const p = dayProgress(day), swapped = day.items.some(it => it.cls && it.main && S.classes[it.id] && clsSwapped(it));
+  const exSets = day.items.filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0);
+  const sess = { date, day: day.id, title: day.title + (swapped ? ' · swap' : ''), type: day.type, vol: Math.round(dayVolume(day)), sets: day.type === 'class' ? exSets : p.d };
+  const min = dayMin(day), pbs = dayPbs(day); if (min) sess.min = min; if (pbs.length) sess.pbs = pbs.map(o => o.name);
+  S.sessions.push(sess); delete S.start[day.id]; delete S.calm[day.id]; day.items.forEach(it => delete S.cin[it.id]);
   day.items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
   if (S.timer) endTimer(); hideRate(); releaseWake();
   save(); closeAll(); buzz([30, 50, 30, 50, 60]); render(); toast('Logged · ' + date);
@@ -1664,7 +1736,7 @@ S.rate = null;
 render(); resumeTimer();
 if (!localStorage.getItem(KEY + '_seen')) { openModal('mHow'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
 /* keep APP_VER in step with VERSION in sw.js */
-const APP_VER = '3.4.3';
+const APP_VER = '3.5.0';
 $('#appVer').textContent = 'SCULPT v' + APP_VER;
 if ('serviceWorker' in navigator) {
   const hadCtrl = !!navigator.serviceWorker.controller;
