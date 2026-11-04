@@ -1203,7 +1203,7 @@ mainEl.addEventListener('click', e => {
     if (timerActive()) { nope('Rest first'); return; }
     s.done = true; s.t = Date.now(); buzz([30, 50, 30]); hideRate();
     if (!S.start[S.view]) S.start[S.view] = Date.now();
-    const pb = !c.noW && !c.assist && s.w > histMax(c.hk); if (pb) s.pb = true;
+    const pb = !c.noW && !c.assist && (S.history[c.hk] || []).some(e => e.sets.length) && s.w > histMax(c.hk); if (pb) s.pb = true;
     if (ss[k + 1] && !ss[k + 1].done) { ss[k + 1].w = s.w; ss[k + 1].r = s.r; S.sel[ex.id] = k + 1; } else delete S.sel[ex.id];
     save(); refreshCard(ex);
     const ref = { id: ex.id, key: skey(ex), k }, p = dayProgress(DAYS[S.view]);
