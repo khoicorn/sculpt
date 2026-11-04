@@ -835,11 +835,13 @@ const PROGRAM = [
         guide: { setup: ['Cable at lowest point.', 'Stand side-on. Handle in far hand.', 'Lift to shoulder height.'], avoid: ['Leaning away.', 'Shrugging.'] } } }
   ]},
   { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', sub: 'Light weights. RPE 7.', warm: 'Walk 5 min before class.', items: [
-    { id: 'wed_pump', cls: true, name: 'New Pump', vn: 'Class, 55 min', icon: 'cls', move: 'pump', rules: ['Lightest plates on every track.', 'Squat track: shallow only.', 'Deadlift track: light. Exhale every rep.', 'HR over 150 = rest that song.'], alt: { name: 'Light Circuit', cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press. 2 rounds × 15.' } },
-    { id: 'wed_walk', cls: true, name: 'Incline Walk', vn: 'Treadmill, optional', icon: 'cardio', move: 'walk', rules: ['10 min. Incline 6-8.', 'HR under 130.'], alt: { name: 'Easy Bike', cue: '10 min. HR under 130.' } }
+    { id: 'wed_pump', cls: true, name: 'New Pump', vn: 'Class, 45 min', icon: 'cls', move: 'pump', rules: ['Lightest plates on every track.', 'Squat track: shallow only.', 'Deadlift track: light. Exhale every rep.', 'HR over 150 = rest that song.'], alt: { name: 'Light Circuit', cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press. 2 rounds × 15.' } },
+    { id: 'wed_walk', cls: true, name: 'Incline Walk', vn: 'Treadmill, 15 min', icon: 'cardio', move: 'walk', rules: ['15 min. Incline 6-8. Speed 5-6.', 'HR under 130. Lower incline if over.', 'Hands off the rails.'], alt: { name: 'Easy Bike', cue: '15 min. HR under 130.' } },
+    { id: 'wed_band', cls: true, name: 'Glute Band Finisher', vn: 'Mat, 10 min', icon: 'floor', move: 'latwalk', rules: ['Band lateral walk: 2 × 15 steps per side.', 'Glute bridge: 2 × 15. Hold 2 s at top.', 'Exhale on every rep.'], alt: { name: 'Abductor Machine', cue: '2 × 20, light.' } }
   ]},
   { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', sub: 'Max 1x per week. HR is the limit.', warm: 'None. Walk to the studio.', items: [
-    { id: 'sat_combat', cls: true, name: 'New Combat', vn: 'Class, 55 min', icon: 'cls', move: 'combat', rules: ['Low-impact option. No jumps.', 'HR over 150 = walk until under 120.', 'Skip the last track if HR stayed over 140.', 'Dizzy or shaky = leave.'], alt: { name: 'Easy Elliptical', cue: '20 min. HR under 125. Or join Yoga.' } },
+    { id: 'sat_combat', cls: true, name: 'New Combat', vn: 'Class, 45 min', icon: 'cls', move: 'combat', rules: ['Low-impact option. No jumps.', 'HR over 150 = walk until under 120.', 'Skip the last track if HR stayed over 140.', 'Dizzy or shaky = leave.'], alt: { name: 'Easy Elliptical', cue: '20 min. HR under 125. Or join Yoga.' } },
+    { id: 'sat_walk', cls: true, name: 'Easy Walk', vn: 'Treadmill, 10 min', icon: 'cardio', move: 'walk', rules: ['Flat. Slow. 10 min.', 'Stop when HR is under 120.'], alt: { name: 'Easy Bike', cue: '10 min. HR under 120.' } },
     { id: 'sat_stretch', cls: true, name: 'Cool-down Stretch', vn: 'Mat, 10 min', icon: 'floor', move: 'stretch', rules: ['Child pose 2 min.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.'], alt: { name: 'Slow Walk', cue: 'Treadmill flat, 10 min.' } }
   ]},
   { id: 'sun', tab: 'YOGA', tt: 'Class', type: 'class', title: 'Yoga', sub: 'Recovery. Breathe and relax.', warm: 'None.', items: [
@@ -1651,7 +1653,7 @@ S.rate = null;
 render(); resumeTimer();
 if (!localStorage.getItem(KEY + '_seen')) { openModal('mHow'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
 /* keep APP_VER in step with VERSION in sw.js */
-const APP_VER = '3.4.1';
+const APP_VER = '3.4.2';
 $('#appVer').textContent = 'SCULPT v' + APP_VER;
 if ('serviceWorker' in navigator) {
   const hadCtrl = !!navigator.serviceWorker.controller;
