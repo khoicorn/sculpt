@@ -1,3 +1,92 @@
+# QA Report · SCULPT v3.6.1 · 2026-11-04
+
+## Verdict: PASS
+
+No blocking or major issue. 4 small notes below. All are optional cosmetic fixes and can ship as is.
+
+## Summary
+
+- All 8 suites pass with the expected counts. 0 fails, 0 console errors. Width scan is CLEAN at 360, 384 and 412 px.
+- New probes: `qa361\p1_func.py` (84 checks) and `qa361\p2_width.py` (17 screens × 3 widths). All pass, 0 console errors.
+- Safety text is intact. Each of the 67 review rows is applied as written. The lateral walk shows "15 steps / side", moves by 5, and remembers the best from the last session.
+
+## Automated suites
+
+Run one at a time, each with `timeout 170`. Output: `qa361\suites.out`.
+
+| Suite | Checks | Fail | Console errors |
+|---|---|---|---|
+| t6 | 33 | 0 | 0 |
+| t7 | 7 | 0 | 0 |
+| t8 | 37 | 0 | 0 |
+| qa_width | CLEAN × 3 (360 / 384 / 412) | 0 | 0 |
+| t10 | 34 | 0 | 0 |
+| t11 | 57 | 0 | 0 |
+| t12 | 11 | 0 | 0 |
+| t13 | 11 | 0 | 0 |
+| qa361 p1_func (new) | 84 | 0 | 0 |
+| qa361 p2_width (new) | 17 screens × 3 widths, no overflow, no clipped text, no target < 44 px | 0 | 0 |
+
+Folder for `qa361`: `C:\Users\ngoho\AppData\Local\Temp\claude\52c4674560278348\97fa529f-458e-437d-a894-6259a8e77f66\scratchpad\qa361\`.
+
+## Findings
+
+| # | Severity | Where | Steps | Expected | Actual | Fix |
+|---|---|---|---|---|---|---|
+| N1 | Cosmetic | `index.html` line 2061, `renderAdd` | Read the code | Comment matches the code | Comment says "up to 2 short lines"; the code now shows 1 (`lines.slice(0, 1)`) | Change the comment to "one line: the safety line first, else the answer" |
+| N2 | Cosmetic | `index.html` lines 1784 and 1786, `openFinish` | Read the code | No unused variables | `addN` is still computed but no longer shown (row F4 cut it) | Remove `addN` |
+| N3 | Cosmetic, owner call | Picker, "Band and mat" group, Banded Lateral Walk row | Log 30 steps, open Add > Glutes | Same wording as the card | Row says "Band · Last 30 steps". The card says "30 steps / side". The number is the same, so nothing is wrong | Optional: in `lastTxt`, add `(d.side ? ' / side' : '')` to the `noW` line. This also changes Dead Bug and Reverse Lunge rows |
+| N4 | Info | Set rows (D9) | Open Glutes A at 360 px | Rows look even | Columns and row heights are equal (69 px each). The number on set 1 sits about 6 px higher than on sets 2 to 4, because "kg" / "reps" sits under it on set 1 only | No fix needed |
+
+## Checked and OK
+
+**A. Safety text (diff of `wording\index.v360.html` vs `index.html`)**
+- HR box: "Resting heart rate", "< 90 · 90–100 · > 100", "Tap one to unlock your sets.", "Tap one before class.", both "Too high…" lines. Unchanged.
+- D2: "exhale every rep" is kept, same red `.ex` span, same place. Only "N exercises ·" is cut.
+- D8: sets and rest left the card but are in the "i" start box ("· 4 sets · 120s rest"). Rest timer, 90 s minimum and rest lock code are unchanged.
+- C2: main classes and Yoga (`icon === 'cls'`) keep "No class or HR high? Swap to …". Only Cool-down Walk, Walk-down and Stretch say "Busy? Swap to …". The HR > 100 auto-swap is unchanged.
+- C3: Combat keeps the same HR 120 gate. Text is "HR under 120? Start extras", "✓ HR under 120 · extras unlocked", "HR over 100 today. No extras."
+- P8: one banner. Order is HR high (red, all rows disabled), then "Tap resting HR first.", then "Light only today.". Tested all 3.
+- P10: "Light only today." Same rule (`i.lo`).
+- M4: "Class days: max 3 light extras." Same limit.
+- All `rules:` arrays, all `warm:` lines, Heart and Lifting lists: unchanged, except C5 ("5 min." cut; card meta still says "Treadmill · 5 min").
+- All `avoid:` arrays: unchanged. One line added: Glutes B lateral walk now also has "Holding breath." (same as the Pump copy).
+- Safety toasts and other section 3 strings: all present, none dropped.
+
+**B. Each row applied as written**
+- All 67 rows checked in the diff and in the browser.
+- No double spaces, stray " · " or empty wrappers on: Glutes A, "i" sheet, Pump (before and after class), Finish, picker (both views, class day and lift day), Stats Week, 4 wk, 12 wk, Lifts.
+- D9: units show on set 1 only. After +/− on rows 1 and 2, `refreshRow` keeps units off rows 2+. Columns line up (same x and width per column).
+- C4: toast reads "Finisher unlocked" (Pump) and "Extras unlocked" (Combat).
+- G2: "Start 20 kg × 12 reps" with no history. "Today 30 kg × 12 reps" after history, same as the card ("30 kg × 12", ▲ +5 kg). Every lift card on all 4 lift days, main and swap: "i" sheet kg and reps = card. 0 mismatches.
+- A1: Pump and Combat show 1 add row: "Add before class" until the class starts, then 1 row at the end.
+- R1: 1 Done button in Reorder. R2: class row sub reads "45 min".
+- F1 kicker "Nov 4". F2/F3 tiles "Lifted, Sets, Time". T2/T3/T4: no Reset, Removed or Added toast.
+- S10 date reads "Mon Nov 2 · 17 sets". S2 header has no "N short". S5 hides "Classes" at 0.
+- APP_VER `3.6.1` = sw.js `sculpt-v3.6.1`.
+
+**C. Banded Lateral Walk**
+- Card: "Band × 15 steps / side". "i" sheet: "Start Band × 15 steps / side · 4 sets · 90s rest" and "Step right, then the same back left."
+- Steps +/− by 5 (15 → 20 → 10).
+- History with 20, 30, 25 → card and "i" sheet suggest 30. History with 10 → still 15 (never below program).
+- Weighted moves unaffected: Cable Hip Abduction all hit → +1 rep at same kg; miss + hard → lighter. Same as v3.6.0.
+- Volume = 0 for the band move (`setVol` returns 0 for `noW`).
+- Weekly count: 3 logged sets = 3 Glutes sets. `side` does not double it (`histCat` counts `e.sets.length`).
+- Same on Pump (wed_ab swap).
+
+**E. Layout at 360, 384, 412 px**
+- Glutes A, Glutes B with lateral walk, Pump before and after class, Combat before and after class, picker muscles and moves (class day and lift day), "i" sheet (weighted and lateral walk), Finish sheet, Stats Week, 4 wk, 12 wk, Lifts.
+- No page wider than the screen, no clipped text, all tap targets ≥ 44 px. Screenshot `qa361\shot_latwalk360.png` looks right.
+
+## Not tested
+
+- A real phone. Only headless Chrome at set widths.
+- Service worker update flow ("Updated to v3.6.1" toast) on a live install.
+- A real double tap faster than 600 ms (covered in t12 from v3.6.0; code is unchanged).
+- Stats Lifts rows with 3+ sessions were scanned for layout only. The "· 5×" cut (S14) was checked in the code diff, not on screen.
+
+---
+
 # QA Report · SCULPT v3.6.0 · 2026-11-04
 
 **Verdict after fixes: PASS** (first pass: PASS WITH FIXES, see below)
