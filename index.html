@@ -401,6 +401,22 @@
   .lc { text-align: right; font-family: var(--head); font-size: 13px; font-weight: 700; color: var(--dim); }
   .lc.up { color: var(--lime); } .lc.dn { color: var(--red); }
 
+  /* profile: InBody tiles, height row, entry form */
+  .inp { width: 100%; min-height: 48px; padding: 0 12px; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); color: var(--text); font-family: var(--head); font-size: 16px; font-weight: 700; user-select: text; -webkit-user-select: text; outline: none; color-scheme: dark; transition: var(--t); }
+  .inp:focus { border-color: var(--lime); }
+  .inp::-webkit-inner-spin-button, .inp::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  .inp::placeholder { color: var(--dim); font-weight: 500; }
+  .row.pf { grid-template-columns: 1fr 120px; margin-top: 12px; clear: both; }
+  .row.pf .inp { text-align: right; }
+  .tile .spark { display: block; margin-top: 8px; }
+  .tile .d { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fld { margin-top: 10px; min-width: 0; }
+  .fld .k { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-weight: 700; margin-bottom: 4px; }
+  .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .f2 .fld { margin-top: 8px; }
+  .pbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  @media (max-width: 400px) { .ph .tile .d { font-size: 10px; } }
+
   /* Samsung "Screen zoom" larger = 360-384px wide: tighter set rows so numbers fit */
   @media (max-width: 400px) {
     main { padding: 12px 8px; }
@@ -1526,7 +1542,65 @@ $('#fileIn').addEventListener('change', e => {
 });
 
 /* ================= PROFILE ================= */
-function renderProfile() { $('#profileBox').innerHTML = '<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button><h2>Profile</h2>'; }
+/* InBody scans live in S.body as { d, w, m, f, s }, sorted by date, one per date; S.profile.h = height cm */
+let bodyEdit = null;   /* index in S.body being edited, -1 = new scan */
+const numIn = (v, lo, hi) => { if (v === '' || v == null) return null; const n = +v; return isFinite(n) && n >= lo && n <= hi ? Math.round(n * 10) / 10 : NaN; };
+const bodyLine = e => [fmtW(e.w) + ' kg', e.m != null ? fmtW(e.m) + ' m' : '', e.f != null ? fmtW(e.f) + ' %' : ''].filter(Boolean).join(' · ');
+function renderProfile(form) {
+  if (!form) bodyEdit = null;
+  $('#profileBox').innerHTML = '<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button><h2>Profile</h2>' + (form ? profileForm() : profileHome());
+}
+function profileHome() {
+  const b = S.body, L = b[b.length - 1], P = b[b.length - 2], h = S.profile.h;
+  /* dir: 1 = up is good (muscle), -1 = down is good (fat), 0 = neutral (weight) */
+  const tile = (k, key, unit, dir) => {
+    const pts = b.map(e => e[key]).filter(v => v != null), v = L && L[key] != null ? fmtW(L[key]) : '—';
+    let d = '';
+    if (L && P && L[key] != null && P[key] != null) {
+      const df = Math.round((L[key] - P[key]) * 10) / 10, cls = !df || !dir ? '' : (df > 0) === (dir > 0) ? ' up' : ' dn';
+      d = `<div class="d${cls}">${df ? (df > 0 ? '▲ ' : '▼ ') + fmtW(Math.abs(df)) + ' ' + unit + ' vs last' : 'Same as last'}</div>`;
+    } else if (L) d = '<div class="d">First scan</div>';
+    if (key === 'w' && L && h) d += `<div class="d">BMI ${(L.w / (h / 100) ** 2).toFixed(1)}</div>`;
+    return `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div>${pts.length ? spark(pts, dir < 0) : ''}${d}</div>`;
+  };
+  const list = b.map((e, i) => ({ e, i })).reverse().map(o => `<div class="row tap" data-body="${o.i}"><div><div class="a">${o.e.d}</div><div class="b">${bodyLine(o.e)}</div></div><div class="c">${o.e.s != null ? fmtW(o.e.s) : '—'}<small>score</small></div></div>`).join('');
+  return `<div class="row pf"><div><div class="a">Height</div><div class="b">cm</div></div><input class="inp" id="pfH" type="number" inputmode="decimal" step="1" placeholder="—" value="${h || ''}"></div>
+    <div class="hero ph">${tile('Weight kg', 'w', 'kg', 0)}${tile('Muscle kg', 'm', 'kg', 1)}${tile('Fat %', 'f', '%', -1)}</div>
+    <div class="note">Scan every 4 weeks, same time of day.</div>
+    <button class="btn btn-p" id="bfAdd">Add InBody</button>
+    <div class="lbl">Scans</div>
+    ${list || '<div class="empty">Add your first InBody scan.</div>'}`;
+}
+function profileForm() {
+  const e = bodyEdit >= 0 ? S.body[bodyEdit] : { d: todayStr(), w: null, m: null, f: null, s: null };
+  const f = (id, k, v, step) => `<div class="fld"><div class="k">${k}</div><input class="inp" id="${id}" type="number" inputmode="decimal" step="${step}" placeholder="—" value="${v == null ? '' : v}"></div>`;
+  return `<div class="lbl">${bodyEdit >= 0 ? 'Edit scan' : 'New scan'}</div>
+    <div class="fld"><div class="k">Date</div><input class="inp" id="bfD" type="date" value="${e.d}"></div>
+    <div class="f2">${f('bfW', 'Weight kg', e.w, '0.1')}${f('bfM', 'Muscle kg', e.m, '0.1')}</div>
+    <div class="f2">${f('bfF', 'Fat %', e.f, '0.1')}${f('bfS', 'Score', e.s, '1')}</div>
+    <div class="pbtns"><button class="btn btn-p" id="bfSave">Save</button><button class="btn btn-g" id="bfCancel">Cancel</button></div>
+    ${bodyEdit >= 0 ? '<button class="btn btn-r" id="bfDel">Delete</button>' : ''}`;
+}
+function saveBody() {
+  const d = $('#bfD').value, w = numIn($('#bfW').value, 20, 300), m = numIn($('#bfM').value, 0, 100), f = numIn($('#bfF').value, 0, 70), s = numIn($('#bfS').value, 0, 100);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || w === null || [w, m, f, s].some(Number.isNaN)) { toast('Check the numbers', true); buzz([40, 40, 40]); return; }
+  if (bodyEdit >= 0) S.body.splice(bodyEdit, 1);
+  S.body = S.body.filter(x => x.d !== d).concat({ d, w, m, f, s }).sort((a, b) => a.d.localeCompare(b.d));
+  save(); renderProfile(); toast('Saved');
+}
+$('#profileBox').addEventListener('click', e => {
+  const t = e.target, r = t.closest('[data-body]');
+  if (t.id === 'bfAdd' || r) { buzz(10); bodyEdit = r ? +r.dataset.body : -1; renderProfile(true); $('#profileBox').scrollTop = 0; return; }
+  if (t.id === 'bfCancel') { buzz(10); renderProfile(); return; }
+  if (t.id === 'bfSave') { buzz(15); saveBody(); return; }
+  if (t.id === 'bfDel' && confirm('Delete this scan?')) { S.body.splice(bodyEdit, 1); save(); renderProfile(); toast('Deleted', true); }
+});
+$('#profileBox').addEventListener('change', e => {
+  if (e.target.id !== 'pfH') return;
+  const h = numIn(e.target.value, 100, 250);
+  if (Number.isNaN(h)) { toast('Check the numbers', true); buzz([40, 40, 40]); e.target.value = S.profile.h || ''; return; }
+  S.profile.h = h || 0; save(); renderProfile();
+});
 
 /* ================= MODAL / TOAST ================= */
 /* sheets push a history entry so the Android back gesture closes the sheet, not the app */
