@@ -424,6 +424,85 @@
   .pbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
   @media (max-width: 400px) { .ph .tile .d { font-size: 10px; } }
 
+  /* v3.6: reorder, add exercise, muscle reports */
+  .lblrow { display: flex; align-items: center; justify-content: space-between; margin: 18px 0 8px; }
+  .lblrow .lbl { margin: 0; }
+  .rbtn { min-height: 44px; min-width: 44px; padding: 0 4px 0 10px; display: flex; align-items: center; gap: 6px; background: transparent; border: none; color: var(--muted); font-family: var(--data); font-size: 13px; font-weight: 600; }
+  .rbtn.on { color: var(--lime); }
+  .addrow { width: 100%; min-height: 52px; margin: 0 0 12px; display: flex; align-items: center; justify-content: center; gap: 8px; background: transparent; border: 1px dashed var(--line-2); border-radius: var(--r); color: var(--dim); font-family: var(--data); font-size: 14px; font-weight: 600; transition: var(--t); }
+  .addrow .ic { color: var(--lime); }
+  .addrow:active { border-color: var(--lime); color: var(--lime); }
+  .addrow[disabled] { opacity: 0.45; }
+  .rrow { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; min-height: 64px; padding: 8px 8px 8px 10px; margin-bottom: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); }
+  .rrow.pinned { opacity: 0.6; }
+  .rfig { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+  .rfig svg { width: 40px; height: 40px; }
+  .rfig svg.ico { width: 26px; height: 26px; stroke: var(--dim); fill: none; stroke-width: 1.8; }
+  .rtx { min-width: 0; }
+  .rtx b { display: block; font-family: var(--head); font-size: 14px; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rtx small { display: block; font-size: 12px; color: var(--dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rbtns { display: flex; gap: 6px; align-items: center; }
+  .mvb { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: var(--panel-2); border: 1px solid var(--line-2); border-radius: var(--r); color: var(--text); transition: var(--t); }
+  .mvb .ic { width: 20px; height: 20px; }
+  .mvb[disabled] { opacity: 0.25; }
+  .mvb:active { border-color: var(--lime); color: var(--lime); }
+  .pin { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--dim); padding-right: 6px; white-space: nowrap; }
+  .rdone { width: 100%; margin-top: 10px; }
+  .abanner { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+  .abanner.red { color: var(--red); }
+  .crow { width: 100%; min-height: 64px; display: grid; grid-template-columns: 1fr auto 16px; column-gap: 10px; row-gap: 7px; align-items: center; padding: 10px 4px; background: transparent; border: none; border-bottom: 1px solid var(--line); text-align: left; transition: var(--t); }
+  .crow .cn { font-family: var(--head); font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .crow .cv { font-family: var(--head); font-size: 14px; font-weight: 700; color: var(--muted); }
+  .crow .chev { color: var(--dim); font-size: 20px; line-height: 1; }
+  .crow .cb { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; display: flex; }
+  .crow .cb i { display: block; height: 100%; background: var(--lime); }
+  .crow .cb i.lt { background: rgba(204,255,0,0.3); }
+  .crow .ch2 { white-space: normal; line-height: 1.3; }
+  .box .clg { padding-top: 10px; }
+  .crow .ch2 { grid-column: 2 / 4; font-size: 12px; color: var(--dim); text-align: right; white-space: nowrap; }
+  .crow:active { background: var(--panel-2); }
+  .crow[disabled] { opacity: 0.4; }
+  .ahead { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+  .ahead h2 { margin: 0; }
+  .bk { width: 44px; height: 44px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--line-2); border-radius: 50%; color: var(--muted); }
+  .xrow { width: 100%; min-height: 64px; display: grid; grid-template-columns: 44px 1fr auto 12px; gap: 10px; align-items: center; padding: 8px 4px; background: transparent; border: none; border-bottom: 1px solid var(--line); text-align: left; transition: var(--t); }
+  .xrow .xf svg { width: 44px; height: 44px; }
+  .xrow .xt { min-width: 0; }
+  .xrow .xt b { display: block; font-family: var(--head); font-size: 14px; text-transform: uppercase; line-height: 1.15; }
+  .xrow .xt small { display: block; font-size: 12px; color: var(--dim); margin-top: 3px; }
+  .xrow .chev { color: var(--dim); }
+  .xrow:active { background: var(--panel-2); }
+  .xrow[disabled] { opacity: 0.4; }
+  .cset { display: grid; grid-template-columns: 76px 1fr 76px; gap: 10px; align-items: center; min-height: 36px; padding: 4px 0; border-bottom: 1px solid var(--line); }
+  .cset:last-child { border-bottom: none; }
+  .cset.dimrow { opacity: 0.55; }
+  .cset .mg { font-size: 13px; font-weight: 600; }
+  .cbar { height: 10px; background: var(--line); border-radius: 5px; overflow: hidden; display: flex; }
+  .cbar i { display: block; height: 100%; background: var(--lime); }
+  .cbar i.lt { background: rgba(204,255,0,0.3); }
+  .cset .mv { text-align: right; font-family: var(--head); font-size: 14px; font-weight: 700; white-space: nowrap; }
+  .cset .mv small { font-family: var(--data); font-size: 11px; color: var(--dim); font-weight: 500; }
+  .cset .mv em { display: block; font-style: normal; font-family: var(--data); font-size: 11px; color: var(--red); font-weight: 600; }
+  .clg { display: flex; gap: 14px; font-size: 11px; color: var(--dim); padding: 8px 0 4px; }
+  .clg i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--lime); margin-right: 5px; vertical-align: -1px; }
+  .clg i.lt { background: rgba(204,255,0,0.3); }
+  .g12 { display: grid; grid-template-columns: 64px repeat(12, 1fr); gap: 2px; align-items: center; padding: 8px 0 0; }
+  .g12 .gl { font-size: 12px; font-weight: 600; }
+  .g12 .gc { height: 20px; border-radius: 2px; background: var(--panel-2); }
+  .g12 .gc.l1 { background: rgba(204,255,0,0.18); }
+  .g12 .gc.l2 { background: rgba(204,255,0,0.45); }
+  .g12 .gc.l3 { background: var(--lime); }
+  .g12 .gc.now { outline: 1px solid var(--lime); outline-offset: -1px; }
+  .g12 .gx { font-size: 9px; color: var(--dim); white-space: nowrap; overflow: visible; padding-top: 4px; }
+  .glg { display: flex; gap: 10px; font-size: 11px; color: var(--dim); padding: 10px 0 8px; flex-wrap: wrap; }
+  .glg i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; background: var(--panel-2); }
+  .srow { display: grid; grid-template-columns: 76px 1fr auto; gap: 10px; align-items: center; min-height: 36px; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .srow:last-child { border-bottom: none; }
+  .srow .mg { font-weight: 600; }
+  .srow .sv2 { color: var(--muted); }
+  .srow .up { color: var(--lime); font-family: var(--head); font-weight: 700; }
+  .seg.rng { margin-top: 8px; }
+
   /* Samsung "Screen zoom" larger = 360-384px wide: tighter set rows so numbers fit */
   @media (max-width: 400px) {
     main { padding: 12px 8px; }
@@ -483,6 +562,7 @@
 <div class="modal" id="mGuide"><div class="box" id="guideBox"></div></div>
 <div class="modal" id="mFinish"><div class="box" id="finishBox"></div></div>
 <div class="modal" id="mPlan"><div class="box" id="planBox"></div></div>
+<div class="modal" id="mAdd"><div class="box" id="addBox"></div></div>
 <div class="modal" id="mHow">
   <div class="box">
     <div class="grab"></div>
@@ -490,9 +570,9 @@
     <h2>How it works</h2>
     <ol class="steps">
       <li><b>Plan</b><span>Your week has 4 lifts, 2 classes and 1 rest day. Tap a day to change it.</span><button class="btn-q" data-go="plan">Open my week</button></li>
-      <li><b>Train</b><span>Open today's workout. Tap your resting heart rate, then go top to bottom.</span><button class="btn-q" data-go="today">Today's workout</button></li>
+      <li><b>Train</b><span>Open today's workout. Tap resting HR. Reorder if a class is late.</span><button class="btn-q" data-go="today">Today's workout</button></li>
       <li><b>Record</b><span>Tap the circle after each set and rate it. Then Finish + log.</span></li>
-      <li><b>Review</b><span>Stats shows your week, month and lifts. The app sets your next weights.</span><button class="btn-q" data-go="lifts">See my lifts</button></li>
+      <li><b>Review</b><span>Stats shows sets per muscle, month and lifts. The app sets your next weights.</span><button class="btn-q" data-go="lifts">See my lifts</button></li>
     </ol>
     <div class="loop"><svg class="ic" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg>Repeat every week</div>
     <button class="btn btn-p" data-close>Got it</button>
@@ -525,7 +605,8 @@
     <ul>
       <li>4 lifts: Glutes A, Push, Glutes B, Pull.</li>
       <li>Plus 1-3 classes: Pump, Combat, Yoga.</li>
-      <li>Each workout: do every exercise, top to bottom.</li>
+      <li>Do every exercise. Reorder if needed.</li>
+      <li>Class days: light extras only. Max 3.</li>
       <li>Glutes A and B: 2+ days apart.</li>
     </ul>
     <h4 class="red">Heart</h4>
@@ -533,6 +614,7 @@
       <li>No HIIT. Cardio = warm-up only.</li>
       <li>Stop every set with 2-3 reps left.</li>
       <li>Rest timer locks the next set. Skip only after 90 s.</li>
+      <li>Sets before class: tap resting HR first.</li>
       <li>Resting HR over 100 = Yoga or walk.</li>
       <li>Class: HR over 150 = walk until under 120.</li>
       <li>Combat max 1x per week.</li>
@@ -563,7 +645,14 @@
 const IC = {
   swap: '<svg class="ic" viewBox="0 0 24 24"><path d="M4 8h14l-4-4M20 16H6l4 4"/></svg>',
   back: '<svg class="ic" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3"/></svg>',
-  play: '<svg class="ic" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor" stroke="none"/></svg>'
+  play: '<svg class="ic" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor" stroke="none"/></svg>',
+  up: '<svg class="ic" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg>',
+  down: '<svg class="ic" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>',
+  plus: '<svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',
+  x: '<svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  sort: '<svg class="ic" viewBox="0 0 24 24"><path d="M8 20V4M4 8l4-4 4 4M16 4v16M12 16l4 4 4-4"/></svg>',
+  lock: '<svg class="ic" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+  left: '<svg class="ic" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>'
 };
 const ICONS = {
   cls: '<svg class="ico" viewBox="0 0 32 32"><circle cx="16" cy="7" r="3"/><path d="M16 10v9M16 19l-5 8M16 19l5 8M8 14l8-2 8 2"/></svg>',
@@ -873,7 +962,7 @@ const PROGRAM = [
     { id: 'sat_stretch', cls: true, name: 'Stretch', vn: 'Mat', min: 6, icon: 'floor', move: 'stretch', rules: ['Child pose 2 min. Belly breathing.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.', 'Chest stretch on frame 30 s per side.'], alt: { name: 'Slow Walk', vn: 'Treadmill', min: 6, cue: '6 min flat.' } }
   ]},
   { id: 'sun', tab: 'YOGA', tt: 'Class', type: 'class', title: 'Yoga', sub: 'Recovery. Breathe and relax.', warm: 'None.', items: [
-    { id: 'sun_yoga', cls: true, name: 'Yoga', vn: 'Class, 60 min', icon: 'cls', move: 'yoga', rules: ['Recovery only. No power flow.', 'Long exhales. Belly breathing.', 'Skip inversions.', 'No lifting today.'], alt: { name: 'Home Mobility 20 min', cue: 'Cat-cow, child pose, 90/90 hips, happy baby, belly breathing.' } }
+    { id: 'sun_yoga', cls: true, name: 'Yoga', vn: 'Class', min: 60, icon: 'cls', move: 'yoga', rules: ['Recovery only. No power flow.', 'Long exhales. Belly breathing.', 'Skip inversions.', 'Light extras only.'], alt: { name: 'Home Mobility 20 min', cue: 'Cat-cow, child pose, 90/90 hips, happy baby, belly breathing.' } }
   ]}
 ];
 const ORDER = ['mon', 'tue', 'thu', 'fri', 'wed', 'sat', 'sun'];
@@ -881,20 +970,85 @@ const ORDER = ['mon', 'tue', 'thu', 'fri', 'wed', 'sat', 'sun'];
 const STANDARD = ['mon', 'tue', 'sun', 'thu', 'fri', 'wed', 'rest'];
 const DOW = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const GROUP = { glute_max: 'Glutes', glute_med: 'Glutes', hams: 'Glutes', quads: 'Legs', upper_chest: 'Chest', inner_chest: 'Chest', side_delt: 'Shoulders', rear_delt: 'Shoulders', lats: 'Back', upper_back: 'Back', abs: 'Core' };
-const GROUPS = ['Glutes', 'Back', 'Chest', 'Shoulders', 'Core', 'Legs'];
+/* muscle tags by history key (hk). p = primary (counts 1 set), s = secondary (0.5 set each).
+   pl = place in the picker. l = light (class days, Glutes-tomorrow). lv = light twin used on light-only days.
+   to = hidden in the picker, its movement row is `to`. old = legacy hk, not in PROGRAM (old history only). */
+const CATS = ['Glutes', 'Chest', 'Back', 'Shoulders', 'Core'];   /* picker, reports, tie order */
+const CATS_R = CATS.concat('Legs');                               /* reports */
+const TAGS = {
+  thrust_m:      { p: 'Glutes', s: [], pl: 'Machine', lv: 'thrust_mf' },
+  thrust:        { p: 'Glutes', s: [], pl: 'Dumbbell' },
+  legpress:      { p: 'Glutes', s: ['Legs'], pl: 'Machine' },
+  gobletsq:      { p: 'Glutes', s: ['Legs'], pl: 'Dumbbell' },
+  glutemach:     { p: 'Glutes', s: [], pl: 'Machine' },
+  kick:          { p: 'Glutes', s: [], pl: 'Cable' },
+  abductor:      { p: 'Glutes', s: [], pl: 'Machine', lv: 'abductor_f' },
+  abd:           { p: 'Glutes', s: [], pl: 'Band', l: 1 },
+  deadbug:       { p: 'Core', s: [], pl: 'Mat', l: 1 },
+  pallof:        { p: 'Core', s: [], pl: 'Cable', l: 1 },
+  chestpress:    { p: 'Chest', s: ['Shoulders'], pl: 'Machine' },
+  incpress:      { p: 'Chest', s: ['Shoulders'], pl: 'Dumbbell' },
+  pecdeck:       { p: 'Chest', s: [], pl: 'Machine' },
+  incfly:        { p: 'Chest', s: [], pl: 'Dumbbell', lv: 'incfly_l' },
+  shoulderpress: { p: 'Shoulders', s: [], pl: 'Machine' },
+  dbspress:      { p: 'Shoulders', s: [], pl: 'Dumbbell' },
+  latmach:       { p: 'Shoulders', s: [], pl: 'Machine' },
+  latraise:      { p: 'Shoulders', s: [], pl: 'Dumbbell' },
+  facepull:      { p: 'Shoulders', s: ['Back'], pl: 'Cable', lv: 'facepull_l' },
+  reardelt:      { p: 'Shoulders', s: ['Back'], pl: 'Dumbbell' },
+  rdl:           { p: 'Glutes', s: ['Legs'], pl: 'Dumbbell' },
+  pullthrough:   { p: 'Glutes', s: ['Legs'], pl: 'Cable' },
+  bss:           { p: 'Glutes', s: ['Legs'], pl: 'Dumbbell' },
+  revlunge:      { p: 'Glutes', s: ['Legs'], pl: 'Mat' },
+  anglepress:    { p: 'Glutes', s: ['Legs'], pl: 'Machine' },
+  stepup:        { p: 'Glutes', s: ['Legs'], pl: 'Dumbbell' },
+  cableabd:      { p: 'Glutes', s: [], pl: 'Cable' },
+  latwalk:       { p: 'Glutes', s: [], pl: 'Band', l: 1 },
+  backext:       { p: 'Glutes', s: ['Legs'], pl: 'Machine' },
+  bridge:        { p: 'Glutes', s: [], pl: 'Dumbbell' },
+  latpull:       { p: 'Back', s: [], pl: 'Machine' },
+  cablepd:       { p: 'Back', s: [], pl: 'Cable' },
+  cablerow:      { p: 'Back', s: [], pl: 'Machine' },
+  dbrow:         { p: 'Back', s: [], pl: 'Dumbbell' },
+  assistpu:      { p: 'Back', s: [], pl: 'Machine' },
+  bandpu:        { p: 'Back', s: [], pl: 'Band' },
+  incfly_l:      { p: 'Chest', s: [], pl: 'Dumbbell', l: 1, to: 'incfly' },
+  cablefly_lh_l: { p: 'Chest', s: [], pl: 'Cable', l: 1 },
+  cablelat:      { p: 'Shoulders', s: [], pl: 'Cable' },
+  thrust_mf:     { p: 'Glutes', s: [], pl: 'Machine', l: 1, to: 'thrust_m' },
+  frogpump:      { p: 'Glutes', s: [], pl: 'Mat', l: 1 },
+  abductor_f:    { p: 'Glutes', s: [], pl: 'Machine', l: 1, to: 'abductor' },
+  facepull_l:    { p: 'Shoulders', s: ['Back'], pl: 'Cable', l: 1, to: 'facepull' },
+  sidelying:     { p: 'Glutes', s: [], pl: 'Mat', l: 1 },
+  /* legacy keys: count old history only */
+  bridge_bw:     { p: 'Glutes', s: [], old: 1 },
+  abcrunch:      { p: 'Core', s: [], old: 1 },
+  legext:        { p: 'Legs', s: [], old: 1 },
+  cpress_hi:     { p: 'Chest', s: ['Shoulders'], old: 1 }
+};
+/* class minutes for old sessions that have no cmin */
+const CLSMIN = { wed: 45, sat: 45, sun: 60 };
 const ABBR = { mon: 'GA', tue: 'PU', thu: 'GB', fri: 'PL', wed: 'PM', sat: 'CB', sun: 'YG' };
 const LIFTS = ['mon', 'tue', 'thu', 'fri'];
 const DAYS = {}; PROGRAM.forEach(d => DAYS[d.id] = d);
 const EX = {}; PROGRAM.forEach(d => d.items.forEach(it => EX[it.id] = it));
 const HKDEF = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk && !HKDEF[it.hk]) HKDEF[it.hk] = it; if (it.swap && !HKDEF[it.swap.hk]) HKDEF[it.swap.hk] = Object.assign({}, it.swap, { sets: it.swap.sets || it.sets }); }));
 const HKNAME = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk) HKNAME[it.hk] = it.name; if (it.swap) HKNAME[it.swap.hk] = it.swap.name; }));
+/* tags for any hk: TAGS first, then the old single-group map, else null (not counted) */
+const tagOf = hk => TAGS[hk] || (HKDEF[hk] && GROUP[HKDEF[hk].target] ? { p: GROUP[HKDEF[hk].target], s: [] } : null);
+/* weight of one set of hk for category c: 1, 0.5 or 0 */
+const wOf = (hk, c) => { const t = tagOf(hk); return !t ? 0 : t.p === c ? 1 : t.s.includes(c) ? 0.5 : 0; };
+const rh = x => Math.floor(x + 0.5);   /* round half up, display only */
 
 /* ================= STATE ================= */
 const KEY = 'sculpt_v3';
-const fresh = () => ({ view: 'mon', viewDate: '', hr: {}, missing: {}, plans: {}, basePlan: null, statTab: 'week', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, cin: {}, calm: {}, lastExport: '' });
+const fresh = () => ({ view: 'mon', viewDate: '', hr: {}, missing: {}, plans: {}, basePlan: null, statTab: 'week', statRange: '1m', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, cin: {}, calm: {}, order: {}, extra: {}, lastExport: '' });
 let S = load();
 /* fill fields an older backup may lack or hold as null */
-function norm(s) { const f = fresh(); ['hr','missing','plans','sets','classes','swaps','sel','history','profile','start','cin','calm'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; }); ['sessions','body'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; }); if (typeof s.lastExport !== 'string') s.lastExport = ''; return s; }
+function norm(s) { const f = fresh(); ['hr','missing','plans','sets','classes','swaps','sel','history','profile','start','cin','calm','order','extra'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; });
+  for (const d in s.extra) { const v = s.extra[d]; if (!Array.isArray(v)) { delete s.extra[d]; continue; } s.extra[d] = v.filter(x => x && typeof x.id === 'string' && x.id.slice(0, 2) === 'x_' && HKDEF[x.hk]).slice(0, 3); }
+  for (const d in s.order) { const v = s.order[d]; if (!v || typeof v.d !== 'string' || !Array.isArray(v.ids)) delete s.order[d]; }
+  if (s.statRange !== '1m' && s.statRange !== '3m') s.statRange = '1m'; ['sessions','body'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; }); if (typeof s.lastExport !== 'string') s.lastExport = ''; return s; }
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
@@ -938,8 +1092,8 @@ function asSwap(ex) { const s = ex.swap; return Object.assign({}, s, { id: ex.id
 const cur = ex => (isSwapped(ex) ? asSwap(ex) : ex);
 const skey = ex => ex.id + (isSwapped(ex) ? '~s' : '');
 /* the version not on screen (main or swap): its done sets are kept and counted */
-const otherCur = ex => (isSwapped(ex) ? ex : asSwap(ex));
-const otherDone = ex => (ex.cls ? [] : (S.sets[ex.id + (isSwapped(ex) ? '' : '~s')] || []).filter(s => s.done));
+const otherCur = ex => (isSwapped(ex) || !ex.swap ? ex : asSwap(ex));
+const otherDone = ex => (ex.cls || !ex.swap ? [] : (S.sets[ex.id + (isSwapped(ex) ? '' : '~s')] || []).filter(s => s.done));
 const hrNow = () => (S.hr && S.hr.d === todayStr() ? S.hr.v : '');
 const HKASSIST = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.assist) HKASSIST[it.hk] = 1; if (it.swap && it.swap.assist) HKASSIST[it.swap.hk] = 1; }));
 const repUnit = c => c.unit || 'reps';
@@ -984,15 +1138,205 @@ function setVol(c, s) { if (c.noW || c.assist) return 0; return s.w * s.r * (c.s
 /* a day can mix class cards (count 1 each) and exercises (count sets) */
 function dayProgress(day) {
   let t = 0, d = 0;
-  day.items.forEach(e => {
+  dayItems(day).forEach(e => {
     if (e.cls) { t++; if (S.classes[e.id]) d++; return; }
     const ss = sets(e), od = otherDone(e).length; t += ss.length + od; d += ss.filter(s => s.done).length + od;
   });
   return { t, d };
 }
 function dayVolume(day) {
-  return day.items.filter(e => !e.cls).reduce((a, e) => { const c = cur(e), oc = otherCur(e);
+  return dayItems(day).filter(e => !e.cls).reduce((a, e) => { const c = cur(e), oc = otherCur(e);
     return a + sets(e).filter(s => s.done).reduce((b, s) => b + setVol(c, s), 0) + otherDone(e).reduce((b, s) => b + setVol(oc, s), 0); }, 0);
+}
+
+
+/* ================= TODAY'S LIST: program items + added cards, in the user's order ================= */
+const XC = {};
+let lastLayout = 0;   /* time of the last list change under the finger (double-tap guard) */
+function xItem(dayId, hk) {
+  const id = 'x_' + dayId + '_' + hk;
+  if (!XC[id]) { const d = HKDEF[hk]; XC[id] = Object.assign({}, d, { id, hk, sets: Math.min(3, d.sets), added: true, swap: null, swapAsk: null }); }
+  return XC[id];
+}
+const xItems = dayId => (S.extra[dayId] || []).filter(x => HKDEF[x.hk]).map(x => xItem(dayId, x.hk));
+/* any card by id: program item or added card (hk can contain "_", so read it from S.extra) */
+function getEx(id) {
+  if (EX[id]) return EX[id];
+  if (!id || id.slice(0, 2) !== 'x_') return null;
+  for (const d in S.extra) { const x = (S.extra[d] || []).find(y => y.id === id); if (x && HKDEF[x.hk]) return xItem(d, x.hk); }
+  return null;
+}
+const mainOf = day => day.items.find(it => it.main) || null;
+/* class cards that follow the main class directly (Combat walk-down) move with it as one block */
+function attachedIds(day) {
+  const i = day.items.findIndex(it => it.main), out = []; if (i < 0) return out;
+  for (let j = i + 1; j < day.items.length && day.items[j].cls && !day.items[j].main; j++) out.push(day.items[j].id);
+  return out;
+}
+/* other cool-down cards on a class day always stay last */
+function tailIds(day) { const m = mainOf(day); if (!m) return []; const att = attachedIds(day); return day.items.filter(it => it.cls && !it.main && !att.includes(it.id)).map(it => it.id); }
+function fixOrder(day, ids) {
+  const m = mainOf(day); if (!m) return ids;
+  const att = attachedIds(day), tail = tailIds(day), rest = ids.filter(id => id !== m.id && !att.includes(id) && !tail.includes(id));
+  const k = ids.slice(0, ids.indexOf(m.id)).filter(id => rest.includes(id)).length;
+  return rest.slice(0, k).concat([m.id], att, rest.slice(k), tail);
+}
+function dayItems(day) {
+  const all = day.items.concat(xItems(day.id)), by = {}; all.forEach(it => by[it.id] = it);
+  const o = S.order[day.id], ids = o && Array.isArray(o.ids) ? o.ids.filter((id, i, a) => by[id] && a.indexOf(id) === i) : [];
+  all.forEach((it, i) => { if (ids.includes(it.id)) return;
+    /* missing id: put it after the last listed id that comes before it in program order */
+    let at = 0; for (let j = i - 1; j >= 0; j--) { const p = ids.indexOf(all[j].id); if (p >= 0) { at = p + 1; break; } }
+    ids.splice(at, 0, it.id); });
+  return fixOrder(day, ids).map(id => by[id]);
+}
+const hasPending = it => !it.cls && sets(it).some(s => !s.done);
+const hasDone = it => !it.cls && (sets(it).some(s => s.done) || otherDone(it).length > 0);
+/* delete yesterday's order and added cards when nothing was done on them */
+function dropStale(day) {
+  const today = todayStr(), o = S.order[day.id], x = S.extra[day.id] || [];
+  const stale = (o && o.d !== today) || x.some(e => e.d !== today); if (!stale) return;
+  if (dayItems(day).some(hasDone) || day.items.some(it => it.cls && S.classes[it.id])) return;
+  if (o && o.d !== today) delete S.order[day.id];
+  x.filter(e => e.d !== today).forEach(e => { delete S.sets[e.id]; delete S.sel[e.id]; });
+  S.extra[day.id] = x.filter(e => e.d === today); if (!S.extra[day.id].length) delete S.extra[day.id];
+  save();
+}
+/* reorder units: an exercise card, the main class block (class + walk-down), or a pinned cool-down */
+function units(day) {
+  const m = mainOf(day), att = attachedIds(day), tail = tailIds(day), out = [];
+  dayItems(day).forEach(it => {
+    if (att.includes(it.id)) { if (out.length && out[out.length - 1].kind === 'class') out[out.length - 1].items.push(it); return; }
+    if (m && it.id === m.id) { const st = S.cin[it.id] ? 'Class started' : S.classes[it.id] ? 'Done' : ''; out.push({ kind: 'class', items: [it], pin: st, lock: !!st }); return; }
+    if (tail.includes(it.id)) { out.push({ kind: 'tail', items: [it], pin: 'Stays last', lock: true }); return; }
+    if (it.cls) { const d = !!S.classes[it.id]; out.push({ kind: 'yoga', items: [it], pin: d ? 'Done' : '' }); return; }
+    out.push({ kind: 'ex', items: [it], pin: hasPending(it) ? '' : 'Done' });
+  });
+  return out;
+}
+const canMove = u => !u.pin;
+/* an arrow may swap with a neighbour unless that neighbour is a started/done class or a pinned cool-down */
+const canPass = u => !(u.kind === 'tail' || (u.kind === 'class' && u.lock));
+function saveOrder(day, us) { S.order[day.id] = { d: todayStr(), ids: us.flatMap(u => u.items.map(it => it.id)) }; }
+function relabelTimer() {
+  const r = S.timer && S.timer.ref, ex = r && getEx(r.id);
+  if (ex && S.view !== 'stats' && dayItems(DAYS[S.view]).includes(ex)) { S.timer.name = nextLabel(ex, r.k); $('#tN').textContent = S.timer.name; }
+}
+function moveUnit(i, dir) {
+  const day = DAYS[S.view], us = units(day), j = i + dir;
+  if (!us[i] || !us[j] || !canMove(us[i]) || !canPass(us[j])) return;
+  [us[i], us[j]] = [us[j], us[i]]; saveOrder(day, us); relabelTimer(); save(); buzz(10); render(true);
+}
+/* 1 tap: pending exercises below the class move above it (or back below it) */
+function classLater(day, first) {
+  const us = units(day), ci = us.findIndex(u => u.kind === 'class'); if (ci < 0) return;
+  const pend = u => u.kind === 'ex' && !u.pin;
+  let out;
+  if (!first) { const mv = us.filter((u, i) => i > ci && pend(u)); out = us.filter(u => !mv.includes(u)); out.splice(out.indexOf(us[ci]), 0, ...mv); }
+  else { const mv = us.filter((u, i) => i < ci && pend(u)); out = us.filter(u => !mv.includes(u)); out.splice(out.indexOf(us[ci]) + 1, 0, ...mv); }
+  saveOrder(day, out); relabelTimer(); save(); buzz([20, 40, 20]); lastLayout = Date.now(); render(true); toast(first ? 'Class first' : 'Exercises first. Class after.');
+}
+/* where pending exercises sit relative to the class: { above, below } counts */
+function aroundClass(day) {
+  const m = mainOf(day); if (!m) return { above: 0, below: 0, doneAbove: 0 };
+  const items = dayItems(day), mi = items.indexOf(m); let above = 0, below = 0, doneAbove = 0;
+  items.forEach((it, i) => { if (it.cls) return; if (hasPending(it)) { if (i < mi) above++; else below++; } if (i < mi && hasDone(it)) doneAbove++; });
+  return { above, below, doneAbove };
+}
+/* set lock for one card: '' = open, else the toast text */
+function gate(day, ex) {
+  const hr = hrNow(), ok = hr === 'low' || hr === 'mid';
+  if (hr === 'high') return 'HR too high today';
+  const m = mainOf(day);
+  if (!m) return ok ? '' : 'Tap resting HR first';
+  if (S.classes[m.id]) return S.calm[day.id] === todayStr() ? '' : 'Tap HR under 120 first';
+  if (S.cin[m.id]) return 'Class in progress';
+  const items = dayItems(day);
+  if (items.indexOf(ex) < items.indexOf(m)) return ok ? '' : 'Tap resting HR first';
+  return 'Class first, then HR under 120';
+}
+
+/* ================= MUSCLE COUNTS ================= */
+const plannedSets = (id, c) => (id === 'rest' || !DAYS[id] ? 0 : DAYS[id].items.reduce((a, it) => a + (it.cls ? 0 : it.sets * wOf(it.hk, c)), 0));
+const zeroCats = () => { const r = {}; CATS_R.forEach(c => r[c] = 0); return r; };
+/* weighted logged sets per category between two dates (inclusive) */
+function histCat(a, b) {
+  const r = zeroCats();
+  for (const hk in S.history) { const t = tagOf(hk); if (!t) continue;
+    (S.history[hk] || []).forEach(e => { if (e.date < a || e.date > b) return; const n = e.sets.length; r[t.p] = (r[t.p] || 0) + n; t.s.forEach(x => r[x] = (r[x] || 0) + n * 0.5); }); }
+  return r;
+}
+/* today's open day, not yet logged: done and pending weighted sets */
+function liveCat(day) {
+  const done = zeroCats(), pend = zeroCats(); if (!day) return { done, pend };
+  dayItems(day).forEach(it => { if (it.cls) return; const c0 = cur(it), ss = sets(it), od = otherDone(it), oc = otherCur(it);
+    const nd = ss.filter(s => s.done).length, np = ss.length - nd;
+    CATS_R.forEach(c => { done[c] += nd * wOf(c0.hk, c) + od.length * wOf(oc.hk, c); pend[c] += np * wOf(c0.hk, c); }); });
+  return { done, pend };
+}
+/* target, done, still planned and gap per category for week ws; day = today's open day (picker) or null (Stats) */
+function weekCat(ws, day) {
+  const we = addDays(ws, 6), plan = planFor(ws), st = planStatus(ws), cw = weekStart(), ti = todayIdx();
+  const T = zeroCats(), D = histCat(ws, we), L = zeroCats(), G = zeroCats(), live = day && ws === cw ? liveCat(day) : null;
+  let fut = [];
+  if (ws === cw) { for (let j = day ? ti + 1 : ti; j < 7; j++) if (plan[j] !== 'rest' && !st.done[j]) fut.push(plan[j]); if (day) { const k = fut.indexOf(day.id); if (k >= 0) fut.splice(k, 1); } }
+  else if (ws > cw) fut = plan.filter(x => x !== 'rest');
+  CATS_R.forEach(c => {
+    T[c] = plan.reduce((a, id) => a + plannedSets(id, c), 0);
+    if (live) D[c] += live.done[c];
+    L[c] = fut.reduce((a, id) => a + plannedSets(id, c), 0) + (live ? live.pend[c] : 0);
+    G[c] = T[c] - D[c] - L[c];
+  });
+  return { T, D, L, G };
+}
+
+/* ================= ADD EXERCISE ================= */
+const canon = hk => (TAGS[hk] && TAGS[hk].to) || hk;
+/* movements already in today's list (main and swap) */
+function todaySet(day) { const s = new Set(); dayItems(day).forEach(it => { if (it.cls) return; s.add(canon(it.hk)); if (it.swap) s.add(canon(it.swap.hk)); }); return s; }
+/* 'mon' or 'thu' when Glutes A or B is planned tomorrow, else null */
+function glutesTomorrow() {
+  const ws = weekStart(), ti = todayIdx(); let id;
+  if (ti < 6) { const st = planStatus(ws); id = st.done[ti + 1] ? null : st.plan[ti + 1]; } else id = planFor(addDays(ws, 7))[0];
+  return ['mon', 'thu'].includes(id) ? id : null;
+}
+const lightOnly = day => day.type === 'class';
+/* short lift names, and the lift not yet done this week that trains category c most */
+const LIFTNAME = { mon: 'Glutes A', tue: 'Push', thu: 'Glutes B', fri: 'Pull' };
+function liftFor(c) {
+  const ws = weekStart(), doneIds = new Set(S.sessions.filter(x => x.date >= ws).map(x => x.day)); let best = null, bv = 0;
+  LIFTS.forEach(id => { if (doneIds.has(id)) return; const v = plannedSets(id, c); if (v > bv) { bv = v; best = id; } });
+  return best;
+}
+/* the hk each picker row adds, in program order; light-only days use light moves or light twins */
+function rowsFor(c, lo) {
+  const out = [];
+  Object.keys(HKDEF).forEach(hk => { const t = TAGS[hk]; if (!t || t.old || t.to || t.p !== c) return;
+    const use = !lo ? hk : t.l ? hk : t.lv || null; if (use && !out.includes(use)) out.push(use); });
+  return out;
+}
+/* weighted sets per category logged on one date (+ live sets when that date is today) */
+function dayCat(date, day) { const r = histCat(date, date); if (date === todayStr() && day) { const l = liveCat(day).done; CATS_R.forEach(c => r[c] += l[c]); } return r; }
+function recommend(day) {
+  const hr = hrNow(), ws = weekStart(), wc = weekCat(ws, day), today = todayStr();
+  const tod = dayCat(today, day), yes = dayCat(addDays(today, -1), null), gt = glutesTomorrow(), have = todaySet(day);
+  const info = {};
+  CATS.forEach(c => {
+    const lo = lightOnly(day), rows = rowsFor(c, lo), free = rows.filter(hk => !have.has(canon(hk))), rest = c === 'Glutes' && !!gt, lf = liftFor(c);
+    const hint = rest ? LIFTNAME[gt] + ' tomorrow. Rest them.' : lo && !rows.length ? (wc.G[c] >= 2 && lf ? 'Do ' + LIFTNAME[lf] + ' day next' : 'No light moves today')
+      : tod[c] >= 3 ? 'Done today' : yes[c] >= 3 ? 'Done yesterday' : wc.G[c] >= 2 ? 'Short ' + rh(wc.G[c]) + ' sets' : 'On track';
+    info[c] = { T: wc.T[c], D: wc.D[c], L: wc.L[c], G: wc.G[c], R: tod[c] + yes[c], lo, rows, free, hint, off: hr === 'high' || rest || (lo && !rows.length) };
+  });
+  let cat = null, line = '';
+  if (hr === 'high') line = 'HR high. Yoga or walk.';
+  else {
+    const cand = CATS.filter(c => { const i = info[c]; return i.T > 0 && i.G >= 2 && i.R < 3 && !i.off && i.free.length; });
+    cand.forEach(c => { if (!cat || info[c].G / info[c].T > info[cat].G / info[cat].T + 1e-9) cat = c; });
+    if (!S.sessions.length && !Object.keys(S.history).length) { cat = null; line = 'No data yet. Pick any.'; }
+    else if (!cat) { const tired = CATS.filter(c => info[c].T > 0 && info[c].G >= 2 && info[c].R >= 3 && !info[c].off).sort((x, y) => info[y].G - info[x].G)[0];
+      line = tired ? tired + ' ' + (info[tired].hint === 'Done today' ? 'done today' : 'done yesterday') + '. Rest it.' : 'All on track.'; }
+  }
+  return { cat, line, info };
 }
 
 /* ================= RENDER ================= */
@@ -1009,15 +1353,22 @@ function renderTabs() {
 function centerTab() { const a = tabsEl.querySelector('.active') || tabsEl.querySelector('.next') || tabsEl.firstElementChild; if (a) tabsEl.scrollLeft = a.offsetLeft - (tabsEl.clientWidth - a.offsetWidth) / 2; }
 function render(keepScroll) { renderTabs(); centerTab(); if (S.view === 'stats') renderStats(); else renderDay(); updateHUD(); if (!keepScroll) window.scrollTo({ top: 0 }); }
 
+/* reorder mode is screen state only; it is on for one day view */
+let reorderDay = null;
 function renderDay() {
   const day = DAYS[S.view], lift = day.type === 'lift', hr = hrNow();
-  const wc = weekCount(day.id);
-  const exMin = day.items.filter(e => !e.cls).reduce((a, e) => { const c = cur(e); return a + c.sets * (c.rest + 45 * (c.side ? 2 : 1)); }, 0) / 60;
+  dropStale(day);
+  if (reorderDay !== day.id) reorderDay = null;
+  const items = dayItems(day), exs = items.filter(e => !e.cls), wc = weekCount(day.id), m = mainOf(day);
+  const exMin = exs.reduce((a, e) => { const c = cur(e); return a + c.sets * (c.rest + 45 * (c.side ? 2 : 1)); }, 0) / 60;
   const est = lift ? Math.round((exMin + 7) / 5) * 5 : 0;
   const clsMin = day.items.filter(e => e.cls && e.main).reduce((a, e) => a + clsLen(e), 0);
   const afterMin = Math.round((day.items.filter(e => e.cls && !e.main).reduce((a, e) => a + clsLen(e), 0) + exMin) / 5) * 5;
   const total = Math.round((clsMin + afterMin + (day.warmMin || 0)) / 5) * 5;
-  const sub = lift ? `${day.items.length} exercises · ~${est} min · <span class="ex">exhale every rep</span>` : clsMin ? `${clsMin} min class${afterMin ? ' + ' + afterMin + ' min after' : ''} · ~${total} min` : day.sub;
+  const first = m && !S.cin[m.id] && !S.classes[m.id] && aroundClass(day).above > 0;
+  const sub = lift ? `${exs.length} exercises · ~${est} min · <span class="ex">exhale every rep</span>`
+    : clsMin ? (first ? `Exercises first · ${clsMin} min class · ~${total} min` : `${clsMin} min class${afterMin ? ' + ' + afterMin + ' min after' : ''} · ~${total} min`) : day.sub;
+  const us = units(day), movable = us.filter(canMove).length, ro = reorderDay === day.id;
   let h = `<section class="day-head"><div class="kicker">${lift ? 'Lift' : 'Class'}${wc ? ' · done ' + wc + '× this week' : ''}</div><h2>${day.title}</h2>
     <p>${sub}</p>
     ${day.id === 'sat' ? `<div class="chips"><span class="chip ${wc ? 'red' : ''}">${wc ? 'Combat done this week' : 'Max 1× per week'}</span></div>` : ''}</section>
@@ -1025,12 +1376,39 @@ function renderDay() {
       <div class="opts">${[['low', '< 90'], ['mid', '90–100'], ['high', '> 100']].map(([k, l]) => `<button class="opt ${hr === k ? 'on' : ''} ${k === 'high' ? 'bad' : ''}" data-hr="${k}">${l}</button>`).join('')}</div>
       ${hr === 'low' || hr === 'mid' ? '' : `<div class="msg">${hr === 'high' ? (lift ? 'Too high. Sets locked. Do Yoga or walk.' : 'Too high. Skip the class. Do the swap.') : (lift ? 'Tap one to unlock your sets.' : 'Tap one before class.')}</div>`}</div>
     ${/^None/.test(day.warm) ? '' : `<div class="lbl">Warm-up</div><div class="warm"><span>${day.warm}</span>${WARMVID[day.id] ? `<a class="wlink" href="${ytUrl(WARMVID[day.id])}" target="_blank" rel="noopener">${IC.play}Video</a>` : ''}</div>`}
-    <div class="lbl">${lift ? 'Workout' : 'Session'}</div>`;
-  day.items.forEach((it, i) => h += it.cls ? cardClass(it) : cardEx(it, i));
+    <div class="lblrow"><div class="lbl">${lift ? 'Workout' : 'Session'}</div>${ro ? '<button class="rbtn on" data-reorder>Done</button>' : movable >= 2 ? `<button class="rbtn" data-reorder>${IC.sort}Reorder</button>` : ''}</div>`;
+  if (ro) {
+    const ci = us.findIndex(u => u.kind === 'class');
+    h += us.map((u, i) => rowReorder(u, i, us, ci)).join('') + '<button class="btn btn-p rdone" data-reorder>Done</button>';
+    mainEl.innerHTML = h; applyLock(); return;
+  }
+  /* Yoga day: one add row, above Yoga until it is done, then at the end */
+  const yoga = !m ? items.find(it => it.cls) : null, yogaOpen = yoga && !S.classes[yoga.id];
+  items.forEach((it, i) => {
+    if ((m && it === m && !S.cin[m.id] && !S.classes[m.id]) || (yogaOpen && it === yoga)) h += addRow(day, 'pre');
+    h += it.cls ? cardClass(it) : cardEx(it, i);
+  });
+  if (!yogaOpen) h += addRow(day, 'end');
   const p = dayProgress(day);
   h += `<div class="foot"><button class="btn btn-g" id="btnReset">Reset</button><button class="btn btn-p" id="btnFinish" ${p.d ? '' : 'disabled'}>Finish + log</button></div>`;
   mainEl.innerHTML = h;
   applyLock();
+}
+function addRow(day, pos) {
+  const full = (S.extra[day.id] || []).length >= 3;
+  const label = full ? 'Max 3 added today' : pos === 'pre' && mainOf(day) ? 'Add before class' : 'Add exercise';
+  return `<button class="addrow" data-addx="${pos}" ${full ? 'disabled' : ''}>${IC.plus}<span>${label}</span></button>`;
+}
+function rowReorder(u, i, us, ci) {
+  const it = u.items[0], c = it.cls ? it : cur(it);
+  const name = u.items.map(x => x.cls && clsSwapped(x) ? x.alt.name : x.cls ? x.name : cur(x).name).join(' + ');
+  const fig = it.move ? moveSVG(c.move || it.move, false) : ICONS[it.icon] || '';
+  const sub = u.kind === 'class' ? 'Class · ' + clsLen(it) + ' min' : u.kind === 'tail' || u.kind === 'yoga' ? it.vn
+    : `${sets(it).length} sets${c.side ? ' / side' : ''}${ci >= 0 && i < ci ? ' · before class' : ''}`;
+  const up = canMove(u) && i > 0 && canPass(us[i - 1]), dn = canMove(u) && i < us.length - 1 && canPass(us[i + 1]);
+  const right = u.pin ? `<span class="pin">${u.lock ? IC.lock : ''}${u.pin}</span>`
+    : `<button class="mvb" data-mv="${i}:-1" aria-label="Move up" ${up ? '' : 'disabled'}>${IC.up}</button><button class="mvb" data-mv="${i}:1" aria-label="Move down" ${dn ? '' : 'disabled'}>${IC.down}</button>`;
+  return `<div class="rrow ${u.pin ? 'pinned' : ''}"><div class="rfig">${fig}</div><div class="rtx"><b>${name}</b><small>${sub}</small></div><div class="rbtns">${right}</div></div>`;
 }
 
 function cardEx(ex, i) {
@@ -1039,13 +1417,14 @@ function cardEx(ex, i) {
   const sg = suggest(c), od = otherDone(ex);
   const differs = !c.noW && !ss.some(s => s.done) && ss.some(s => s.w !== sg.w || s.r !== sg.r);
   const arrow = sg.t === 'up' ? '▲ ' : sg.t === 'down' ? '▼ ' : '';
-  const swapLine = c.isSwap
+  const swapLine = ex.added ? (ss.some(s => s.done) ? '' : `<button class="swap" data-xrm="${ex.id}"><span class="z">${IC.x}</span><span class="tx">Remove from today</span><span class="chev">›</span></button>`)
+    : c.isSwap
     ? `<button class="swap on" data-swap="${ex.id}"><span class="z">${IC.back}</span><span class="tx">Back to <b>${ex.name}</b></span><span class="chev">›</span></button>`
     : `<button class="swap" data-swap="${ex.id}"><span class="z">${IC.swap}</span><span class="tx">${ex.swapAsk || 'Busy?'} Swap to <b>${ex.swap.name}</b></span><span class="chev">›</span></button>`;
   return `<article class="card ${done ? 'complete' : ''}" data-ex="${ex.id}">
     <div class="ch"><button class="thumb" data-guide="${ex.id}" aria-label="Show how">${moveSVG(c.move, false)}</button>
       <div><h3>${c.name}</h3>
-        <div class="meta">${c.isSwap ? '<span class="sw down">Swap</span> · ' : ''}<b>${c.muscle}</b> · ${c.vn}</div></div>
+        <div class="meta">${ex.added ? '<span class="badge">Added</span> ' : ''}${c.isSwap ? '<span class="sw down">Swap</span> · ' : ''}<b>${c.muscle}</b> · ${c.vn}</div></div>
       <button class="gbtn" data-guide="${ex.id}" aria-label="How to">i</button></div>
     <div class="sug"><div>
       <div class="sv">${c.noW ? c.noW : fmtW(sg.w) + ' ' + wUnit(c)} × ${sg.r}${c.unit ? ' ' + c.unit : ''}${c.side ? ' / side' : ''}</div>
@@ -1079,20 +1458,24 @@ function cardClass(it) {
   const rules = sw ? it.alt.cue.split('. ').map(x => x.replace(/\.$/, '') + '.') : it.rules;
   const inMin = live ? Math.max(0, Math.round((Date.now() - S.cin[it.id]) / 60000)) : 0;
   const meta = done ? '✓ Done · ' + min + ' min' : live ? 'In progress · ' + inMin + ' min' : vn + ' · ' + min + ' min';
+  const ac = it.main ? aroundClass(day) : null;
   const btn = it.main
-    ? (done ? '' : `<button class="big ${live ? 'live' : ''}" data-clschk="${it.id}">${live ? 'Class done' : 'Start'}</button>`)
+    ? (done ? '' : `<button class="big ${live ? 'live' : ''}" data-clschk="${it.id}">${live ? 'Class done' : ac.doneAbove ? 'HR under 120? Start class' : 'Start'}</button>`)
     : `<button class="big ${done ? 'on' : ''}" data-clschk="${it.id}">${done ? '✓ Done' : 'Done'}</button>`;
   const undo = `<button class="btn-q" data-clschk="${it.id}">undo</button>`;
-  const calm = it.main && done ? (hrNow() === 'high'
+  const pendAny = it.main && dayItems(day).some(hasPending);
+  const calm = it.main && done && !pendAny ? `<div class="calmok">✓ Class done ${undo}</div>` : it.main && done ? (hrNow() === 'high'
     ? `<div class="calmok red">HR over 100 today. No ${day.after}. ${undo}</div>`
     : S.calm[day.id] === todayStr()
     ? `<div class="calmok">✓ HR under 120 · ${day.after} unlocked ${undo}</div>`
     : `<button class="big calm" data-calm="${day.id}">HR under 120? Start ${day.after}</button><div class="calmok">&nbsp;${undo}</div>`) : '';
+  const later = it.main && !done && !live && hrNow() !== 'high' ? (ac.below ? `<button class="swap" data-clslater="later"><span class="z">${IC.down}</span><span class="tx">Class late? <b>Exercises first</b></span><span class="chev">›</span></button>`
+    : ac.above ? `<button class="swap" data-clslater="first"><span class="z">${IC.up}</span><span class="tx">Back to <b>class first</b></span><span class="chev">›</span></button>` : '') : '';
   const swapBtn = done ? '' : `<button class="swap ${sw ? 'on' : ''}" data-clsswap="${it.id}"><span class="z">${sw ? IC.back : IC.swap}</span><span class="tx">${sw ? 'Back to <b>' + it.name + '</b>' : 'No class or HR high? Swap to <b>' + it.alt.name + '</b>'}</span><span class="chev">›</span></button>`;
   return `<article class="card ccard ${done ? 'complete' : ''}" data-cls="${it.id}">
     <div class="ch"><div class="thumb static">${it.move ? moveSVG(it.move, false) : ICONS[it.icon]}</div><div><h3>${name}</h3><div class="meta">${meta}</div></div><div></div></div>
     ${done ? '' : `<div class="body"><ul>${rules.map((r, i) => `<li class="${it.main && !sw && i === 0 ? 'hrr' : ''}">${r}</li>`).join('')}</ul></div>`}
-    ${swapBtn}
+    ${later}${swapBtn}
     <div class="body">${btn}${calm}</div>
   </article>`;
 }
@@ -1125,7 +1508,7 @@ function showTimer() {
 }
 function paintFeel() {
   const ref = curRef(); let f = null;
-  if (ref && EX[ref.id]) { const s = (S.sets[ref.key] || [])[ref.k]; f = s && s.f; }
+  if (ref && getEx(ref.id)) { const s = (S.sets[ref.key] || [])[ref.k]; f = s && s.f; }
   $('#feel').style.display = ref ? '' : 'none';
   document.querySelectorAll('#feel [data-feel]').forEach(b => b.classList.toggle('on', b.dataset.feel === f));
 }
@@ -1145,24 +1528,26 @@ function finishTimer() {
   setTimeout(() => { if (S.timer && !timerActive()) endTimer(); }, 4000);
 }
 function endTimer() { clearInterval(tick); tick = null; S.timer = null; save(); hud.classList.remove('timer', 'go', 'rate'); document.body.classList.remove('tm-on'); applyLock(); }
-function hrBlocked() {
-  const day = DAYS[S.view]; if (!day || !day.items.some(it => !it.cls)) return false;
-  if (day.type === 'class') return hrNow() === 'high' || S.calm[day.id] !== todayStr();
-  return !['low', 'mid'].includes(hrNow());
-}
 function scrollNextCard(dayId) {
-  const cards = [...mainEl.querySelectorAll('.card')], i = cards.findIndex(c => c.dataset.cls && EX[c.dataset.cls] && EX[c.dataset.cls].main), nx = cards[i + 1]; if (!nx) return;
-  const top = $('.hdr').getBoundingClientRect().bottom + 8, r = nx.getBoundingClientRect(); if (r.top > top) window.scrollBy({ top: r.top - top, behavior: 'smooth' });
+  const day = DAYS[dayId], items = dayItems(day), i = items.indexOf(mainOf(day)), nx = items.slice(i + 1).find(hasPending) || items.find(hasPending); if (!nx) return;
+  const el = mainEl.querySelector(`[data-ex="${nx.id}"]`); if (!el) return;
+  const top = $('.hdr').getBoundingClientRect().bottom + 8, r = el.getBoundingClientRect(); if (r.top > top) window.scrollBy({ top: r.top - top, behavior: 'smooth' });
 }
+/* lock set buttons per card: rest timer, or the heart-rate gate for that card's place in the list */
 function applyLock() {
-  const l = timerActive() || hrBlocked();
-  document.querySelectorAll('.ok').forEach(b => { const lk = l && !b.classList.contains('on'); b.classList.toggle('locked', lk); b.setAttribute('aria-disabled', lk); });
+  const day = DAYS[S.view], t = timerActive();
+  document.querySelectorAll('.card[data-ex]').forEach(card => {
+    const ex = day && getEx(card.dataset.ex), l = t || !!(day && ex && gate(day, ex));
+    card.querySelectorAll('.ok').forEach(b => { const lk = l && !b.classList.contains('on'); b.classList.toggle('locked', lk); b.setAttribute('aria-disabled', lk); });
+  });
 }
 function nextLabel(ex, k) {
   const c = cur(ex), nx = sets(ex)[k + 1];
   if (nx && !nx.done) return 'Next: set ' + (k + 2) + ' · ' + (c.noW ? c.noW : fmtW(nx.w) + ' kg') + ' × ' + nx.r;
-  const items = DAYS[S.view].items, i = items.indexOf(ex);
-  for (let j = 1; j < items.length; j++) { const it = items[(i + j) % items.length]; if (!it.cls && sets(it).some(s => !s.done)) return 'Next: ' + cur(it).name; }
+  const day = DAYS[S.view], items = dayItems(day), m = mainOf(day), i = items.indexOf(ex);
+  for (let j = 1; j < items.length; j++) { const it = items[(i + j + items.length) % items.length];
+    if (!it.cls) { if (sets(it).some(s => !s.done)) return 'Next: ' + cur(it).name; continue; }
+    if ((it.main || !m) && !S.classes[it.id]) return 'Next: ' + (clsSwapped(it) ? it.alt.name : it.name); }
   return 'Next: finish';
 }
 function scrollNext(exId) {
@@ -1216,7 +1601,7 @@ $('#btnSkip').addEventListener('click', () => {
 $('#feel').addEventListener('click', e => {
   const b = e.target.closest('[data-feel]'), ref = curRef(); if (!b || !ref) return;
   buzz(15);
-  const ex = EX[ref.id], ss = S.sets[ref.key]; if (!ex || !ss || !ss[ref.k]) return;
+  const ex = getEx(ref.id), ss = S.sets[ref.key]; if (!ex || !ss || !ss[ref.k]) return;
   const c = ref.key.endsWith('~s') ? asSwap(ex) : ex;
   const f = b.dataset.feel, prevF = ss[ref.k].f; ss[ref.k].f = f;
   const nx = ss[ref.k + 1];
@@ -1228,7 +1613,7 @@ $('#feel').addEventListener('click', e => {
     if (f === 'h') { nx.w = wNext(c, base, -1); msg = 'Next set ' + fmtW(nx.w) + ' kg'; }
   }
   if (f === 'h' && prevF !== 'h' && timerActive()) { addRest(30); msg += ' · +30s rest'; }
-  const onDay = S.view !== 'stats' && DAYS[S.view].items.includes(ex);
+  const onDay = S.view !== 'stats' && dayItems(DAYS[S.view]).some(it => it.id === ex.id);
   if (S.timer && onDay) { S.timer.name = nextLabel(ex, ref.k); $('#tN').textContent = S.timer.name; }
   save(); paintFeel(); if (onDay) refreshCard(ex); toast(msg, f === 'h');
   if (S.rate && !S.timer) setTimeout(hideRate, 700);
@@ -1240,7 +1625,13 @@ tabsEl.addEventListener('click', e => { const b = e.target.closest('.tab'); if (
 mainEl.addEventListener('click', e => {
   if (S.view === 'stats') { statsClick(e); return; }
   const t = e.target;
-  const card = t.closest('[data-ex]'); const ex = card ? EX[card.dataset.ex] : null;
+  const card = t.closest('[data-ex]'); const ex = card ? getEx(card.dataset.ex) : null;
+  if (Date.now() - lastLayout < 600 && !t.closest('[data-mv]')) return;
+  if (t.closest('[data-reorder]')) { buzz(10); reorderDay = reorderDay === S.view ? null : S.view; render(true); return; }
+  const mv = t.closest('[data-mv]'); if (mv) { const [i, d] = mv.dataset.mv.split(':').map(Number); moveUnit(i, d); return; }
+  const cly = t.closest('[data-clslater]'); if (cly) { classLater(DAYS[S.view], cly.dataset.clslater === 'first'); return; }
+  const ax = t.closest('[data-addx]'); if (ax) { buzz(10); openAdd(ax.dataset.addx); return; }
+  const xr = t.closest('[data-xrm]'); if (xr) { const x = getEx(xr.dataset.xrm); if (x && !hasDone(x)) removeExtra(DAYS[S.view], x.id); return; }
 
   const hrb = t.closest('[data-hr]');
   if (hrb) { buzz(15); S.hr = { v: hrb.dataset.hr, d: todayStr() };
@@ -1248,7 +1639,7 @@ mainEl.addEventListener('click', e => {
     save(); render(true); if (hrb.dataset.hr === 'high') buzz([60, 60, 60]); return; }
 
   const g = t.closest('[data-guide]');
-  if (g) { buzz(15); const x = EX[g.dataset.guide]; openGuide(x, isSwapped(x)); return; }
+  if (g) { buzz(15); const x = getEx(g.dataset.guide); if (x) openGuide(x, isSwapped(x)); return; }
 
   const ap = t.closest('[data-apply]');
   if (ap && ex) { buzz(15); const sg = suggest(cur(ex)); sets(ex).forEach(s => { if (!s.done) { s.w = sg.w; s.r = sg.r; } }); save(); refreshCard(ex); toast('Applied'); return; }
@@ -1263,13 +1654,13 @@ mainEl.addEventListener('click', e => {
 
   const pill = t.closest('[data-add]');
   if (pill && ex) { buzz(15); const c = cur(ex), ss = sets(ex); let k = S.sel[ex.id]; if (k === undefined || !ss[k] || ss[k].done) k = ss.findIndex(s => !s.done); if (k < 0) return;
-    ss[k].w = rnd(ss[k].w + parseFloat(pill.dataset.add)); S.sel[ex.id] = k; save(); refreshRow(ex, k); return; }
+    { const w0 = rnd(ss[k].w + parseFloat(pill.dataset.add)); ss[k].w = c.max ? Math.min(c.max, w0) : w0; if (c.max && w0 > c.max) toast('Max safe load ' + fmtW(c.max) + ' kg', true); } S.sel[ex.id] = k; save(); refreshRow(ex, k); return; }
 
   const st = t.closest('[data-st]');
   if (st && ex) { const row = st.closest('.set'), k = +row.dataset.set, c = cur(ex), s = sets(ex)[k];
     if (s.done) return; buzz(15);
     const op = st.dataset.st;
-    if (op === 'w+') s.w = rnd(s.w + c.step);
+    if (op === 'w+') { const w0 = rnd(s.w + c.step); s.w = c.max ? Math.min(c.max, w0) : w0; if (c.max && w0 > c.max) toast('Max safe load ' + fmtW(c.max) + ' kg', true); }
     if (op === 'w-') s.w = rnd(s.w - c.step);
     if (op === 'r+') s.r = Math.min(120, s.r + repStep(c));
     if (op === 'r-') s.r = Math.max(1, s.r - repStep(c));
@@ -1283,15 +1674,16 @@ mainEl.addEventListener('click', e => {
       if (Date.now() - (s.t || 0) < 1200) return; /* ignore a shaky double tap */
       s.done = false; delete s.f; delete s.pb; S.sel[ex.id] = k;
       const r0 = curRef(); if (r0 && r0.id === ex.id && r0.k === k) { if (S.timer) endTimer(); hideRate(); }
-      save(); refreshCard(ex); return;
+      save(); if (mainOf(DAYS[S.view])) render(true); else refreshCard(ex); return;
     }
-    if (hrBlocked()) { nope(hrNow() === 'high' ? 'HR too high today' : DAYS[S.view].type === 'class' ? 'Class first, then HR under 120' : 'Tap resting HR first'); const hb = $('.hr'); if (hb) hb.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+    const gt = gate(DAYS[S.view], ex);
+    if (gt) { nope(gt); if (/resting HR|too high/.test(gt)) { const hb = $('.hr'); if (hb) hb.scrollIntoView({ behavior: 'smooth', block: 'center' }); } return; }
     if (timerActive()) { nope('Rest first'); return; }
     s.done = true; s.t = Date.now(); buzz([30, 50, 30]); hideRate();
     if (!S.start[S.view]) S.start[S.view] = Date.now();
     const pb = !c.noW && !c.assist && (S.history[c.hk] || []).some(e => e.sets.length) && s.w > histMax(c.hk) && !ss.some(x => x !== s && x.done && x.pb && x.w >= s.w); if (pb) s.pb = true;
     if (ss[k + 1] && !ss[k + 1].done) { ss[k + 1].w = s.w; ss[k + 1].r = s.r; S.sel[ex.id] = k + 1; } else delete S.sel[ex.id];
-    save(); refreshCard(ex);
+    save(); if (mainOf(DAYS[S.view])) render(true); else refreshCard(ex);
     const ref = { id: ex.id, key: skey(ex), k }, p = dayProgress(DAYS[S.view]);
     if (p.d < p.t) { startTimer(c.rest, nextLabel(ex, k), ref); setTimeout(() => scrollNext(ex.id), 350); }
     else { showRate(ref); if (!pb) toast('All done. Rate it, then Finish.'); }
@@ -1310,7 +1702,7 @@ mainEl.addEventListener('click', e => {
   if (cl) {
     const id = cl.dataset.clschk, it = EX[id], now = Date.now();
     if (S.classes[id]) { if (now - S.classes[id] < 1200) return; delete S.classes[id]; delete S.calm[S.view]; }
-    else if (it.main && !S.cin[id]) { S.cin[id] = now; if (!S.start[S.view]) S.start[S.view] = now; }
+    else if (it.main && !S.cin[id]) { if (timerActive()) endTimer(); S.cin[id] = now; if (!S.start[S.view]) S.start[S.view] = now; }
     else if (it.main && now - S.cin[id] < 1200) return; /* shaky double tap on Start */
     else { S.classes[id] = now; delete S.cin[id]; if (!S.start[S.view]) S.start[S.view] = now - clsLen(it) * 60000; }
     buzz([30, 50, 30]); save(); render(true); afterChange(); return; }
@@ -1340,7 +1732,8 @@ function afterChange() { renderTabs(); updateHUD(); applyLock(); const f = $('#b
 
 function resetDay() {
   const day = DAYS[S.view]; if (!confirm('Clear ' + day.title + '?')) return;
-  day.items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
+  dayItems(day).forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
+  delete S.order[day.id]; delete S.extra[day.id]; reorderDay = null;
   delete S.start[day.id]; delete S.calm[day.id]; day.items.forEach(it => delete S.cin[it.id]); if (S.timer) endTimer(); hideRate(); save(); render(); toast('Reset');
 }
 
@@ -1360,8 +1753,8 @@ function openGuide(ex, showSwap) {
     <h4>Setup</h4><ol>${g.guide.setup.map(s => `<li>${s}</li>`).join('')}</ol>
     <h4 class="red">Avoid</h4><div class="avoid"><ul>${g.guide.avoid.map(s => `<li>${s}</li>`).join('')}</ul></div>
     <h4>Feel it here</h4><div class="target">${figure(g.target)}<div><div class="tn">${g.muscle}</div><div class="ts">Slow. Squeeze. Exhale.</div></div></div>
-    <button class="btn btn-g" data-gother="${ex.id}" data-which="${showSwap ? 'main' : 'swap'}">${showSwap ? 'Main: ' + ex.name : 'Swap: ' + ex.swap.name}</button>
-    <button class="btn btn-q" data-missing="${ex.id}">${S.missing[ex.id] ? 'My gym has ' + ex.name + ' again' : 'My gym has no ' + ex.name}</button>
+    ${ex.swap ? `<button class="btn btn-g" data-gother="${ex.id}" data-which="${showSwap ? 'main' : 'swap'}">${showSwap ? 'Main: ' + ex.name : 'Swap: ' + ex.swap.name}</button>
+    <button class="btn btn-q" data-missing="${ex.id}">${S.missing[ex.id] ? 'My gym has ' + ex.name + ' again' : 'My gym has no ' + ex.name}</button>` : ''}
     <button class="btn btn-p" data-close>Got it</button>`;
   $('#guideBox').scrollTop = 0;
   openModal('mGuide');
@@ -1382,25 +1775,25 @@ const sessMin = id => { const t = S.start[id]; if (!t) return 0; const m = Math.
 /* class days: at least the minutes of the class cards marked done */
 const dayMin = day => Math.max(sessMin(day.id), day.items.filter(it => it.cls && S.classes[it.id]).reduce((a, it) => a + clsLen(it), 0));
 /* exercises with a new-best set today: [{ name, w }] */
-const dayPbs = day => day.items.filter(it => !it.cls).flatMap(it => {
+const dayPbs = day => dayItems(day).filter(it => !it.cls).flatMap(it => {
   const a = sets(it).filter(s => s.done && s.pb), b = otherDone(it).filter(s => s.pb), out = [];
   if (a.length) out.push({ name: cur(it).name, w: Math.max(...a.map(s => s.w)) });
   if (b.length) out.push({ name: otherCur(it).name, w: Math.max(...b.map(s => s.w)) });
   return out; });
 function openFinish(editIdx) {
   finEdit = editIdx ?? null;
-  let vol, setsN, title, date, min, pbs;
+  let vol, setsN, title, date, min, pbs, addN = 0;
   if (finEdit !== null) { const s = S.sessions[finEdit]; vol = s.vol; setsN = s.sets; title = s.title; date = s.date; min = s.min || 0; pbs = (s.pbs || []).map(n => ({ name: n })); }
-  else { const day = DAYS[S.view], p = dayProgress(day); vol = dayVolume(day); setsN = p.d; title = day.title; date = todayStr(); min = dayMin(day); pbs = dayPbs(day); if (day.type === 'class') setsN = day.items.filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0); }
+  else { const day = DAYS[S.view], p = dayProgress(day); vol = dayVolume(day); setsN = p.d; title = day.title; date = todayStr(); min = dayMin(day); pbs = dayPbs(day); if (day.type === 'class') setsN = dayItems(day).filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0); addN = dayItems(day).filter(e => e.added && hasDone(e)).length; }
   const pbLine = pbs.length ? `<p class="note lime">New best: ${pbs.slice(0, 3).map(o => o.name + (o.w ? ' ' + fmtW(o.w) + ' kg' : '')).join(', ')}${pbs.length > 3 ? ' +' + (pbs.length - 3) : ''}</p>` : '';
   $('#finishBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
     <div class="kicker">${finEdit !== null ? 'Edit session' : 'Finish'} · ${date}</div><h2>${title}</h2>
     ${(() => { const tiles = []; const u = x => `<small style="font-size:11px;color:var(--dim)">${x}</small>`;
       if (vol) tiles.push(['Volume', Math.round(vol).toLocaleString() + ' ' + u('kg')]);
-      if (setsN) tiles.push([vol ? 'Sets' : 'Finisher sets', setsN]);
+      if (setsN) tiles.push([!vol && finEdit === null && S.view !== 'stats' && mainOf(DAYS[S.view]) ? 'Finisher sets' : 'Sets', setsN]);
       if (min) tiles.push(['Time', min + ' ' + u('min')]);
       if (!tiles.length) tiles.push(['Done', '✓']);
-      return `<div class="kv ${tiles.length === 3 ? 'three' : ''}">${tiles.map(([k, v]) => `<div><div class="k">${k}</div><div class="v">${v}</div></div>`).join('')}</div>`; })()}${pbLine}
+      return `<div class="kv ${tiles.length === 3 ? 'three' : ''}">${tiles.map(([k, v]) => `<div><div class="k">${k}</div><div class="v">${v}</div></div>`).join('')}</div>`; })()}${pbLine}${addN ? `<p class="note">Includes ${addN} added exercise${addN > 1 ? 's' : ''}</p>` : ''}
     ${finEdit !== null ? '<button class="btn btn-r" id="btnDel">Delete session</button>' : '<button class="btn btn-p" id="btnSave">Log session</button>'}
     <button class="btn btn-g" data-close>Cancel</button>`;
   openModal('mFinish');
@@ -1410,8 +1803,8 @@ $('#finishBox').addEventListener('click', e => {
   if (e.target.id === 'btnDel') { if (confirm('Delete this session?')) { S.sessions.splice(finEdit, 1); save(); closeAll(); render(true); toast('Deleted', true); } }
 });
 function logSession() {
-  const day = DAYS[S.view], date = todayStr(); let n = 0;
-  day.items.forEach(it => {
+  const day = DAYS[S.view], date = todayStr(), items = dayItems(day); let n = 0;
+  items.forEach(it => {
     if (it.cls) { if (S.classes[it.id]) n++; return; }
     const put = (c, done) => { if (!done.length) return; const tr = suggest(c).r;
       (S.history[c.hk] = S.history[c.hk] || []).push({ date, tr, swap: !!c.isSwap, sets: done.map(s => ({ w: s.w, r: s.r, f: s.f })) });
@@ -1420,11 +1813,14 @@ function logSession() {
   });
   if (!n) { toast('Nothing to log', true); return; }
   const p = dayProgress(day), swapped = day.items.some(it => it.cls && it.main && S.classes[it.id] && clsSwapped(it));
-  const exSets = day.items.filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0);
+  const exSets = items.filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0);
   const sess = { date, day: day.id, title: day.title + (swapped ? ' · swap' : ''), type: day.type, vol: Math.round(dayVolume(day)), sets: day.type === 'class' ? exSets : p.d };
   const min = dayMin(day), pbs = dayPbs(day); if (min) sess.min = min; if (pbs.length) sess.pbs = pbs.map(o => o.name);
+  const xn = items.filter(e => e.added && hasDone(e)).length; if (xn) sess.extra = xn;
+  if (day.type === 'class') { const m0 = mainOf(day), cm = day.items.filter(it => it.cls && S.classes[it.id] && (it.main || !m0)).reduce((a, it) => a + (clsLen(it) || CLSMIN[day.id] || 0), 0); if (cm) sess.cmin = cm; }
   S.sessions.push(sess); delete S.start[day.id]; delete S.calm[day.id]; day.items.forEach(it => delete S.cin[it.id]);
-  day.items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
+  items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
+  delete S.order[day.id]; delete S.extra[day.id]; reorderDay = null;
   if (S.timer) endTimer(); hideRate(); releaseWake();
   save(); closeAll(); buzz([30, 50, 30, 50, 60]); render(); toast('Logged · ' + date);
 }
@@ -1441,29 +1837,33 @@ function weeksOf(k) {
     out.push({ a: ds(a), b: ds(b), la: a.getDate(), lb: b.getDate() }); d.setDate(d.getDate() + 7); }
   return out;
 }
-let statMonth = null, statWeek = 0;
-const delta = (a, b) => (b ? Math.round((a - b) / b * 100) : null);
-const tile = (k, v, d, unit, vs) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d ${!d ? '' : d > 0 ? 'up' : 'dn'}">${d === null ? unit : d === 0 ? '= ' + vs.replace('vs ', '') : (d > 0 ? '▲ ' : '▼ ') + Math.abs(d) + '% ' + vs}</div></div>`;
-const aggRange = (a, b) => { const r = { vol: 0, n: 0 }; S.sessions.forEach(x => { if (x.date >= a && x.date <= b) { r.vol += x.vol || 0; r.n++; } }); return r; };
+let statWeek = 0, stat4 = 0, liftsAll = false;
 const rangeLabel = (a, b) => MON[+a.slice(5, 7) - 1] + ' ' + (+a.slice(8)) + ' – ' + (a.slice(5, 7) === b.slice(5, 7) ? '' : MON[+b.slice(5, 7) - 1] + ' ') + (+b.slice(8));
-/* single-series bar chart: one hue, selected bar solid + labelled, tap a bar to select */
-function barChart(items, attr) {
-  const W = 320, H = 150, pB = 20, pT = 18, bw = W / items.length, gap = Math.max(8, bw * 0.3), max = Math.max(1, ...items.map(i => i.v));
-  let g = [0.5, 1].map(f => `<line class="grid" x1="0" x2="${W}" y1="${H - pB - (H - pB - pT) * f}" y2="${H - pB - (H - pB - pT) * f}"/>`).join('');
-  items.forEach((it, i) => {
-    const bh = Math.round((H - pB - pT) * it.v / max), x = i * bw + gap / 2, w = bw - gap, y = H - pB - bh, cx = x + w / 2;
-    g += `<g data-${attr}="${it.key}"><rect class="hit" x="${i * bw}" y="0" width="${bw}" height="${H}"/>`
-      + `<rect class="bar ${it.v ? '' : 'zero'} ${it.sel ? 'sel' : ''}" x="${x}" y="${it.v ? y : H - pB - 2}" width="${w}" height="${it.v ? bh : 2}" rx="3"/>`
-      + (it.v && it.sel ? `<text class="bl" x="${cx}" y="${y - 6}">${kfmt(it.v)}</text>` : '')
-      + `<text class="ax ${it.sel ? 'sel' : ''}" x="${cx}" y="${H - 5}" text-anchor="middle">${it.label}</text></g>`;
-  });
-  return `<svg viewBox="0 0 ${W} ${H}" class="bchart">${g}</svg>`;
+/* lift metric: heaviest kg; reps for bodyweight; least assist for assisted moves (lower = stronger) */
+const met = (d, e) => d.noW ? Math.max(...e.sets.map(x => x.r)) : d.assist ? Math.min(...e.sets.map(x => x.w)) : Math.max(...e.sets.map(x => x.w));
+const better = (d, a, b) => (d.assist ? a < b : a > b);
+const pctOf = (d, t) => (t ? Math.round(d / t * 100) : 0);
+/* program moves only: no light twins, no swap-only or added-only moves (fair strength trend) */
+const MAINHK = new Set(); PROGRAM.forEach(d => d.items.forEach(it => { if (!it.cls && it.hk && !(TAGS[it.hk] && TAGS[it.hk].to)) MAINHK.add(it.hk); }));
+const firstLog = () => { let f = ''; Object.values(S.history).forEach(h => h.forEach(e => { if (e.sets.length && (!f || e.date < f)) f = e.date; })); return f; };
+/* raw logged sets (not weighted) between two dates */
+const rawSets = (a, b) => Object.values(S.history).reduce((t, h) => t + h.reduce((u, e) => u + (e.date >= a && e.date <= b ? e.sets.length : 0), 0), 0);
+/* planned weighted sets per category for the plan days from a to b (inclusive) */
+function plannedRange(a, b) {
+  const P = zeroCats();
+  for (let d = a; d <= b; d = addDays(d, 1)) { const slot = planFor(wsOf(d))[(new Date(d + 'T12:00:00').getDay() + 6) % 7]; CATS_R.forEach(c => P[c] += plannedSets(slot, c)); }
+  return P;
+}
+function clsLine(a, b) {
+  const ss = S.sessions.filter(x => x.type === 'class' && x.date >= a && x.date <= b), m = ss.reduce((t, x) => t + (x.cmin || CLSMIN[x.day] || 0), 0);
+  return `<div class="note">Classes · ${ss.length} · ${m} min</div>`;
 }
 function renderStats() {
-  const tab = S.statTab || 'week';
+  const tab = S.statTab || 'week', rng = S.statRange === '3m' ? '3m' : '1m';
   mainEl.innerHTML = `<section class="day-head"><h2>Stats</h2></section>
     <div class="seg">${[['week', 'Week'], ['month', 'Month'], ['lifts', 'Lifts']].map(([k, l]) => `<button class="${tab === k ? 'on' : ''}" data-stab="${k}">${l}</button>`).join('')}</div>
-    ${tab === 'week' ? statsWeek() : tab === 'month' ? statsMonth() : statsLifts()}`;
+    ${tab === 'month' ? `<div class="seg sm rng">${[['1m', '4 wk'], ['3m', '12 wk']].map(([k, l]) => `<button class="${rng === k ? 'on' : ''}" data-rng="${k}">${l}</button>`).join('')}</div>` : ''}
+    ${tab === 'week' ? statsWeek() : tab === 'month' ? (rng === '3m' ? stats3M() : statsMonth()) : statsLifts()}`;
 }
 function planWarn(plan) {
   const w = [], a = plan.indexOf('mon'), b = plan.indexOf('thu'), lifts = plan.filter(x => LIFTS.includes(x)).length;
@@ -1472,8 +1872,9 @@ function planWarn(plan) {
   if (lifts < 4) w.push(lifts + ' of 4 lifts planned.');
   return w;
 }
+/* Week: which muscle is behind this week? */
 function statsWeek() {
-  const ws = addDays(weekStart(), 7 * statWeek), we = addDays(ws, 6), today = todayStr();
+  const ws = addDays(weekStart(), 7 * statWeek), we = addDays(ws, 6), today = todayStr(), cw = weekStart();
   const st = planStatus(ws), plan = st.plan, custom = !!(S.plans && S.plans[ws]);
   const label = statWeek === 0 ? 'This week' : statWeek === 1 ? 'Next week' : statWeek === -1 ? 'Last week' : rangeLabel(ws, we);
   const slots = plan.map((id, i) => {
@@ -1485,61 +1886,111 @@ function statsWeek() {
   const cp = plan.filter(isC).length, cd = plan.filter((x, i) => isC(x) && st.done[i]).length;
   const nx = statWeek === 0 ? nextUp() : null;
   const warns = planWarn(plan).map(t => `<div class="pwarn">${t}</div>`).join('');
-  /* this week so far vs last week up to the same weekday (fair mid-week comparison) */
-  const upTo = statWeek === 0 ? todayIdx() : 6;
-  const cw = aggRange(ws, we), pw = aggRange(addDays(ws, -7), addDays(ws, -7 + upTo));
-  /* sets per muscle: done (from history) vs planned (from this week's plan) */
-  const done = {}, planned = {};
-  Object.keys(S.history).forEach(hk => {
-    const d = HKDEF[hk]; if (!d) return; const g = GROUP[d.target];
-    S.history[hk].forEach(e => { if (e.date >= ws && e.date <= we) done[g] = (done[g] || 0) + e.sets.length; });
-  });
-  plan.forEach(id => { if (id !== 'rest') DAYS[id].items.forEach(it => { if (it.cls) return; const g = GROUP[it.target]; planned[g] = (planned[g] || 0) + it.sets; }); });
-  const msets = GROUPS.filter(g => planned[g] || done[g]).map(g => {
-    const p0 = planned[g] || 0, d0 = done[g] || 0, pct = p0 ? Math.min(100, Math.round(d0 / p0 * 100)) : 100;
-    return `<div class="mset"><span class="mg">${g}</span><span class="mb"><i style="width:${pct}%"></i></span><span class="mv">${d0}<small> / ${p0}</small></span></div>`;
+  const past = ws < cw, future = ws > cw, k = weekCat(ws, null);
+  let ans = '';
+  if (past) {
+    /* a past week: name the workouts that were missed; else the biggest gap in sets */
+    const missed = plan.filter((id, i) => id !== 'rest' && !st.done[i]).map(id => DAYS[id].title);
+    let big = null; CATS.forEach(c => { const g = k.T[c] - k.D[c]; if (g >= 2 && (!big || g > k.T[big] - k.D[big])) big = c; });
+    ans = missed.length ? `Missed: <b>${missed.join(', ')}</b>` : big ? `Short: <b>${big}</b> · ${rh(k.T[big] - k.D[big])} sets` : '<b>All on track</b>';
+  } else if (!future) {
+    let worst = null; CATS.forEach(c => { if (k.T[c] > 0 && k.G[c] >= 2 && (!worst || k.G[c] / k.T[c] > k.G[worst] / k.T[worst] + 1e-9)) worst = c; });
+    const lf = worst && liftFor(worst);
+    ans = worst ? `Behind: <b>${worst}</b> · ${rh(k.G[worst])} short${lf ? ' · do ' + LIFTNAME[lf] + ' next' : ''}` : '<b>All on track</b>';
+  }
+  const rows = CATS_R.map(c => {
+    const T = k.T[c], D = k.D[c], L = past ? 0 : k.L[c], g = past ? T - D : k.G[c], mx = Math.max(T, D + L, 1), dw = Math.min(100, D / mx * 100), lw = Math.min(100 - dw, L / mx * 100);
+    return `<div class="cset ${c === 'Legs' ? 'dimrow' : ''}"><span class="mg">${c}</span><span class="cbar"><i style="width:${dw}%"></i>${L ? `<i class="lt" style="width:${lw}%"></i>` : ''}</span><span class="mv">${rh(D)}<small> / ${rh(T)}</small>${!future && c !== 'Legs' && g >= 2 ? `<em>Short ${rh(g)}</em>` : ''}</span></div>`;
   }).join('');
-  const weeks = Array.from({ length: 8 }, (_, k) => ({ off: k - 7, ws: addDays(weekStart(), -7 * (7 - k)) }));
-  const chart = barChart(weeks.map(w => { const a = aggRange(w.ws, addDays(w.ws, 6)); return { key: w.off, label: (+w.ws.slice(8)) + '/' + (+w.ws.slice(5, 7)), v: a.vol, sel: w.off === statWeek }; }), 'wbar');
   return `
     <div class="wnav"><button data-wk="-1" aria-label="Previous week">‹</button><div><b>${label}</b><small>${rangeLabel(ws, we)}</small></div><button data-wk="1" aria-label="Next week">›</button></div>
     <div class="plan">${slots}</div>
     <div class="psum"><span>Lifts <b>${ld}/${lp}</b> · Classes <b>${cd}/${cp}</b></span>${nx ? `<span>Next <b>${DAYS[nx].title}</b></span>` : ''}</div>
     ${warns}${st.extra.length ? `<div class="note">Also done: ${st.extra.join(', ')}</div>` : ''}
     ${custom ? `<div class="pbtns"><button class="btn-q" data-plan="reset">Reset to standard</button><button class="btn-q" data-plan="base">Make this my standard</button></div>` : `<div class="note">Tap a day to change it.</div>`}
-    <div class="hero">${tile('Volume kg', kfmt(cw.vol), delta(cw.vol, pw.vol), 'kg lifted', 'vs last wk')}${tile('Workouts', cw.n, delta(cw.n, pw.n), 'done', 'vs last wk')}</div>
-    <div class="lbl">Sets per muscle · done / planned</div>
-    <div class="msets">${msets || '<div class="note">No lifts planned this week.</div>'}</div>
-    <div class="lbl">Last 8 weeks</div>
-    <div class="chart"><div class="ct"><span>Volume kg</span></div>${chart}</div>`;
+    ${ans ? `<div class="shead">${ans}</div>` : ''}
+    <div class="lbl">Muscle sets · done / target</div>
+    <div class="msets">${past ? '' : '<div class="clg"><span><i></i>Done</span><span><i class="lt"></i>Still planned</span></div>'}${rows}</div>
+    ${clsLine(ws, we)}`;
 }
+/* 4 weeks (rolling, step back 4 weeks at a time): done vs plan, stronger or not, weeks pattern, workouts */
 function statsMonth() {
-  const months = lastMonths(6); if (!statMonth || !months.includes(statMonth)) statMonth = months[5];
-  const agg = k => aggRange(k + '-01', k + '-31');
-  const A = {}; months.forEach(m => A[m] = agg(m));
-  const cm = A[statMonth], pm = agg(prevMonth(statMonth)), mName = MON[+statMonth.slice(5, 7) - 1], today = todayStr();
-  const chart = barChart(months.map(m => ({ key: m, label: MON[+m.slice(5, 7) - 1], v: A[m].vol, sel: m === statMonth })), 'mi');
-  const weeks = weeksOf(statMonth).filter(w => w.a <= today).map(w => {
-    const ss = S.sessions.filter(x => x.date >= w.a && x.date <= w.b), cnt = {}; ss.forEach(x => cnt[x.day] = (cnt[x.day] || 0) + 1);
-    return Object.assign(w, { cnt, vol: ss.reduce((a, x) => a + (x.vol || 0), 0), lifts: LIFTS.filter(id => cnt[id]).length });
-  });
-  const wmax = Math.max(1, ...weeks.map(w => w.vol));
-  const rows = weeks.map(w => `<div class="wk"><div class="wl">${w.la === w.lb ? w.la : w.la + '–' + w.lb}<small class="${w.lifts >= 4 ? 'ok4' : ''}">${w.lifts}/4 lifts</small></div>
+  const today = todayStr(), b = addDays(today, 28 * stat4), a = addDays(b, -27), pa = addDays(a, -28);
+  const P = plannedRange(a, b), D = histCat(a, b);
+  const low = CATS.filter(c => P[c] > 0 && D[c] / P[c] < 0.9).sort((x, y) => D[x] / P[x] - D[y] / P[y])[0];
+  const head = !CATS.some(c => P[c] > 0) ? '' : low ? `Lowest: <b>${low}</b> ${pctOf(D[low], P[low])}%` : '<b>All on plan</b>';
+  const hit = CATS.map(c => `<div class="cset"><span class="mg">${c}</span><span class="cbar"><i style="width:${P[c] ? Math.min(100, D[c] / P[c] * 100) : 0}%"></i></span><span class="mv">${P[c] ? pctOf(D[c], P[c]) + '%' : '—'}<small> ${rh(D[c])}/${rh(P[c])}</small></span></div>`).join('');
+  const strong = CATS.map(c => {
+    let up = 0, same = 0, down = 0;
+    Object.keys(S.history).forEach(hk => { const d = HKDEF[hk], t = tagOf(hk); if (!d || !t || t.p !== c || !MAINHK.has(hk)) return;
+      const ent = S.history[hk].filter(e => e.sets.length), inW = ent.filter(e => e.date >= a && e.date <= b), bef = ent.filter(e => e.date >= pa && e.date < a);
+      if (!inW.length || !bef.length) return;
+      const m1 = met(d, inW[inW.length - 1]), m0 = met(d, bef[bef.length - 1]);
+      if (better(d, m1, m0)) up++; else if (better(d, m0, m1)) down++; else same++; });
+    const n = up + same + down, txt = n ? [up && up + ' up', same && same + ' same', down && down + ' down'].filter(Boolean).join(' · ') : 'No repeat lifts yet';
+    return `<div class="srow"><span class="mg">${c}</span><span class="sv2">${txt}</span><span class="up">${up > down ? IC.up : ''}</span></div>`;
+  }).join('');
+  const weeks = [];
+  for (let ws = wsOf(a); ws <= b; ws = addDays(ws, 7)) {
+    const wa = ws < a ? a : ws, wb = addDays(ws, 6) > b ? b : addDays(ws, 6);
+    const ss = S.sessions.filter(x => x.date >= wa && x.date <= wb), cnt = {}; ss.forEach(x => cnt[x.day] = (cnt[x.day] || 0) + 1);
+    weeks.push({ wa, wb, cnt, n: rawSets(wa, wb), lifts: LIFTS.filter(id => cnt[id]).length });
+  }
+  const wmax = Math.max(1, ...weeks.map(w => w.n));
+  const rows = weeks.map(w => `<div class="wk"><div class="wl">${+w.wa.slice(8)}–${+w.wb.slice(8)}<small class="${w.lifts >= 4 ? 'ok4' : ''}">${MON[+w.wa.slice(5, 7) - 1]} · ${w.lifts}/4</small></div>
       ${ORDER.map(id => { const n = w.cnt[id] || 0; return `<div class="cell ${n ? 'on' : ''} ${DAYS[id].type === 'class' ? 'cl' : ''}">${n > 1 ? n : n ? '✓' : ''}</div>`; }).join('')}
-      <div class="wv">${w.vol ? kfmt(w.vol) : '—'}<small>${Object.values(w.cnt).reduce((a, n) => a + n, 0)} workouts</small><div class="vb"><i style="width:${Math.round(w.vol / wmax * 100)}%"></i></div></div></div>`).join('');
-  const list = S.sessions.map((x, i) => ({ x, i })).filter(o => o.x.date.slice(0, 7) === statMonth).reverse();
+      <div class="wv">${w.n || '—'}<small>${Object.values(w.cnt).reduce((t, n) => t + n, 0)} workouts</small><div class="vb"><i style="width:${Math.round(w.n / wmax * 100)}%"></i></div></div></div>`).join('');
+  const list = S.sessions.map((x, i) => ({ x, i })).filter(o => o.x.date >= a && o.x.date <= b).reverse();
   return `
-    <div class="shead"><b>${monthLabel(statMonth)}</b> · tap a bar for another month</div>
-    <div class="hero">${tile('Volume kg', kfmt(cm.vol), delta(cm.vol, pm.vol), 'kg lifted', 'vs prev')}${tile('Workouts', cm.n, delta(cm.n, pm.n), 'this month', 'vs prev')}</div>
-    <div class="chart" style="margin-top:8px"><div class="ct"><span>Volume kg</span><span>6 months</span></div>${chart}</div>
-    <div class="lbl">Weeks in ${mName}</div>
+    <div class="wnav"><button data-mnav="-1" aria-label="Earlier 4 weeks" ${stat4 <= -12 ? 'disabled' : ''}>‹</button><div><b>${stat4 === 0 ? 'Last 4 weeks' : '4 weeks'}</b><small>${rangeLabel(a, b)}</small></div><button data-mnav="1" aria-label="Later 4 weeks" ${stat4 >= 0 ? 'disabled' : ''}>›</button></div>
+    ${head ? `<div class="shead">${head}</div>` : ''}
+    <div class="lbl">Done vs plan · so far</div>
+    <div class="msets">${hit}</div>
+    <div class="lbl">Stronger? · vs 4 weeks before</div>
+    <div class="msets">${strong}</div>
+    <div class="lbl">Weeks</div>
     <div class="wkbox">
-      <div class="wk head"><span class="wh" style="text-align:left">Days</span>${ORDER.map(id => `<span class="wh">${ABBR[id]}</span>`).join('')}<span class="wh r">kg</span></div>
-      ${rows || '<div class="note">No weeks yet.</div>'}
+      <div class="wk head"><span class="wh" style="text-align:left">Days</span>${ORDER.map(id => `<span class="wh">${ABBR[id]}</span>`).join('')}<span class="wh r">sets</span></div>
+      ${rows}
       <div class="legend"><b>GA</b> Glutes A · <b>PU</b> Push · <b>GB</b> Glutes B · <b>PL</b> Pull · <b>PM</b> Pump · <b>CB</b> Combat · <b>YG</b> Yoga</div>
     </div>
-    <div class="lbl">Workouts in ${mName}</div>
-    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.x.title}</div><div class="b">${o.x.date} · ${o.x.sets} sets${o.x.min ? ' · ' + o.x.min + ' min' : ''}</div></div><div class="c">${o.x.vol ? kfmt(o.x.vol) : '—'}<small>kg</small></div><div class="c">${o.x.min ? o.x.min : '—'}<small>min</small></div></div>`).join('') : '<div class="empty">No workouts this month.</div>'}`;
+    ${clsLine(a, b)}
+    <div class="lbl">Workouts</div>
+    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.x.title}</div><div class="b">${o.x.date} · ${o.x.sets} sets${o.x.extra ? ' · ' + o.x.extra + ' added' : ''}</div></div><div class="c">${o.x.vol ? kfmt(o.x.vol) : '—'}<small>kg</small></div><div class="c">${o.x.min ? o.x.min : '—'}<small>min</small></div></div>`).join('') : '<div class="empty">No workouts in these 4 weeks.</div>'}`;
+}
+/* 12 weeks, starting at the first logged week when that is later: balance and strength */
+function stats3M() {
+  const cw = weekStart(), today = todayStr(), f = firstLog(), start0 = addDays(cw, -77), start = f && wsOf(f) > start0 ? wsOf(f) : start0;
+  const wks = []; for (let ws = start; ws <= cw; ws = addDays(ws, 7)) wks.push(ws);
+  const a = wks[0], b = addDays(cw, 6), n = wks.length;
+  /* current week is judged on what was planned up to today */
+  const wc = wks.map(ws => { const k = weekCat(ws, null); return { D: k.D, T: ws === cw ? plannedRange(ws, today) : k.T }; });
+  const lvl = p => (p <= 0 ? '' : p < 0.5 ? 'l1' : p < 0.9 ? 'l2' : 'l3');
+  const grid = CATS.map(c => `<span class="gl">${c}</span>` + wc.map((k, i) => `<span class="gc ${lvl(k.T[c] ? k.D[c] / k.T[c] : 0)} ${i === n - 1 ? 'now' : ''}" title="${rh(k.D[c])}/${rh(k.T[c])}"></span>`).join('')).join('');
+  const marks = n <= 4 ? wks.map((_, i) => i) : [0, Math.round((n - 1) / 3), Math.round(2 * (n - 1) / 3), n - 1];
+  const lab = wks.map((ws, i) => `<span class="gx">${marks.includes(i) ? MON[+ws.slice(5, 7) - 1] + ' ' + (+ws.slice(8)) : ''}</span>`).join('');
+  const tot = CATS.map(c => { const T = wc.reduce((t, k) => t + k.T[c], 0), D = wc.reduce((t, k) => t + k.D[c], 0);
+    return `<div class="cset"><span class="mg">${c}</span><span class="cbar"><i style="width:${T ? Math.min(100, D / T * 100) : 0}%"></i></span><span class="mv">${T ? pctOf(D, T) + '%' : '—'}<small> ${rh(D)}/${rh(T)}</small></span></div>`; }).join('');
+  const str = CATS.map(c => {
+    const ser = Object.keys(S.history).filter(hk => HKDEF[hk] && MAINHK.has(hk) && tagOf(hk) && tagOf(hk).p === c)
+      .map(hk => ({ d: HKDEF[hk], ent: S.history[hk].filter(e => e.sets.length && e.date >= a && e.date <= b) })).filter(x => x.ent.length >= 3);
+    if (!ser.length) return `<div class="srow"><span class="mg">${c}</span><span class="sv2">Not enough data</span><span></span></div>`;
+    const pts = []; let idx = null;
+    wks.forEach(ws => { const we = addDays(ws, 6);
+      const vals = ser.map(x => { const upto = x.ent.filter(e => e.date <= we); if (!upto.length) return null; const f0 = met(x.d, x.ent[0]), v = met(x.d, upto[upto.length - 1]); return x.d.assist ? f0 / v : v / f0; }).filter(v => v != null && isFinite(v) && v > 0);
+      if (vals.length) idx = vals.reduce((s, v) => s + v, 0) / vals.length; if (idx != null) pts.push(idx); });
+    const p = Math.round((pts[pts.length - 1] - 1) * 100);
+    return `<div class="srow"><span class="mg">${c}</span>${spark(pts)}<span class="${p > 0 ? 'up' : 'sv2'}">${p > 0 ? '+' : ''}${p}% · ${ser.length} lift${ser.length > 1 ? 's' : ''}</span></div>`;
+  }).join('');
+  return `
+    <div class="lbl">${n < 12 ? 'Since ' + MON[+a.slice(5, 7) - 1] + ' ' + (+a.slice(8)) : 'Last 12 weeks'} · % of plan</div>
+    <div class="msets"><div class="g12" style="grid-template-columns:64px repeat(${n}, 1fr)">${grid}<span></span>${lab}</div>
+      <div class="glg"><span><i></i>0</span><span><i style="background:rgba(204,255,0,0.18)"></i>&lt;50%</span><span><i style="background:rgba(204,255,0,0.45)"></i>50-89%</span><span><i style="background:var(--lime)"></i>90%+</span></div></div>
+    <div class="lbl">Total · ${n} week${n > 1 ? 's' : ''}</div>
+    <div class="msets">${tot}</div>
+    <div class="lbl">Strength · moves done 3+ times</div>
+    <div class="msets">${str}</div>
+    ${clsLine(a, b)}`;
 }
 function spark(pts, invert) {
   const W = 64, H = 24, q = pts.slice(-12);
@@ -1549,21 +2000,29 @@ function spark(pts, invert) {
   const last = xy[xy.length - 1];
   return `<svg class="spark" viewBox="0 0 ${W} ${H}"><polyline points="${xy.map(p0 => p0[0].toFixed(1) + ',' + p0[1].toFixed(1)).join(' ')}"/><circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="3"/></svg>`;
 }
+/* Lifts: which lifts went up, grouped by muscle; moves done 3+ times first, the rest behind a tap */
 function statsLifts() {
   const rows = Object.keys(S.history).filter(hk => HKDEF[hk] && S.history[hk].some(e => e.sets.length)).map(hk => {
-    const d = HKDEF[hk], ent = S.history[hk].filter(e => e.sets.length);
-    const pts = ent.map(e => d.noW ? Math.max(...e.sets.map(x => x.r)) : d.assist ? Math.min(...e.sets.map(x => x.w)) : Math.max(...e.sets.map(x => x.w)));
-    const first = pts[0], last = pts[pts.length - 1], gain = d.assist ? first - last : last - first;
-    return { d, pts, first, last, gain, pct: first ? Math.round(gain / first * 100) : 0, n: ent.length, lastDate: ent[ent.length - 1].date };
-  }).sort((a, b) => b.lastDate.localeCompare(a.lastDate) || b.n - a.n);
+    const d = HKDEF[hk], ent = S.history[hk].filter(e => e.sets.length), pts = ent.map(e => met(d, e));
+    const first = pts[0], last = pts[pts.length - 1], gain = d.assist ? first - last : last - first, t = tagOf(hk);
+    return { d, pts, first, last, gain, pct: first ? Math.round(gain / first * 100) : 0, n: ent.length, lastDate: ent[ent.length - 1].date, cat: t && CATS.includes(t.p) ? t.p : 'Other' };
+  }).sort((x, y) => y.lastDate.localeCompare(x.lastDate) || y.n - x.n);
   if (!rows.length) return '<div class="empty" style="margin-top:14px">Finish a workout to see your lifts here.</div>';
-  const multi = rows.filter(r => r.n >= 2), up = multi.filter(r => r.gain > 0).length;
-  const head = multi.length ? `<div class="shead">Stronger on <b>${up} of ${multi.length}</b> lifts since your first session.</div>` : '<div class="shead">Do each workout twice to see progress.</div>';
-  return head + rows.map(r => {
+  const main = rows.filter(r => r.n >= 3), rest = rows.filter(r => r.n < 3), up = main.filter(r => r.gain > 0).length;
+  const head = main.length ? `<div class="shead">Up on <b>${up} of ${main.length}</b> lifts.</div>` : '<div class="shead">Do a move 3 times to see progress.</div>';
+  const row = r => {
     const unit = r.d.noW ? ' reps' : r.d.assist ? ' kg assist' : ' kg';
     const ch = r.n < 2 ? '<span class="lc">new</span>' : r.gain > 0 ? `<span class="lc up">▲ ${r.pct}%</span>` : r.gain < 0 ? `<span class="lc dn">▼ ${Math.abs(r.pct)}%</span>` : '<span class="lc">same</span>';
     return `<div class="lift"><div><div class="a">${r.d.name}</div><div class="b">${r.n < 2 ? '' : fmtW(r.first) + ' → '}<b>${fmtW(r.last)}</b>${unit} · ${r.n}×</div></div>${spark(r.pts, r.d.assist)}${ch}</div>`;
+  };
+  const shown = liftsAll ? rows : main;
+  const groups = CATS.concat('Other').map(c => {
+    const g = shown.filter(r => r.cat === c); if (!g.length) return '';
+    const gm = g.filter(r => r.n >= 3), gu = gm.filter(r => r.gain > 0).length;
+    return `<div class="lbl">${c}${gm.length ? ' · ' + gu + ' of ' + gm.length + ' up' : ''}</div>` + g.map(row).join('');
   }).join('');
+  const more = rest.length ? `<button class="btn btn-g" data-more style="width:100%;margin-top:12px">${liftsAll ? 'Show fewer' : rest.length + ' more · tap to show'}</button>` : '';
+  return head + groups + more;
 }
 /* plan editing */
 let planEdit = null;
@@ -1581,6 +2040,79 @@ $('#planBox').addEventListener('click', e => {
   if (id === 'sat' && plan.some((x, j) => x === 'sat' && j !== i)) { toast('Combat max 1× per week', true); buzz([40, 40, 40]); return; }
   plan[i] = id; S.plans[ws] = plan; save(); buzz(15); closeAll(); renderTabs(); renderStats();
 });
+/* ================= ADD EXERCISE PICKER ================= */
+let addPos = 'end', addCat = null;
+function openAdd(pos) { addPos = pos; addCat = null; renderAdd(); openModal('mAdd'); }
+function lastTxt(hk) {
+  const l = lastSession(hk), d = HKDEF[hk]; if (!l || !l.sets.length) return 'New';
+  if (d.noW) return 'Last ' + Math.max(...l.sets.map(s => s.r)) + ' ' + repUnit(d);
+  if (d.assist) return 'Last ' + fmtW(Math.min(...l.sets.map(s => s.w))) + ' kg assist';
+  return 'Last ' + fmtW(Math.max(...l.sets.map(s => s.w))) + ' kg' + (d.pair ? ' each' : '');
+}
+/* "Done today" / "Done yesterday" for any version of this movement */
+function recentTxt(hk) {
+  const today = todayStr(), y = addDays(today, -1); let t = '';
+  Object.keys(S.history).filter(k => canon(k) === canon(hk)).forEach(k => S.history[k].forEach(e => { if (e.date === today) t = 'Done today'; else if (e.date === y && !t) t = 'Done yesterday'; }));
+  return t;
+}
+const ADDGROUPS = [['Machine', ['Machine']], ['Cable', ['Cable']], ['Dumbbell', ['Dumbbell']], ['Band and mat', ['Band', 'Mat']]];
+function renderAdd() {
+  const day = DAYS[S.view], hr = hrNow(), rec = recommend(day);
+  let h = '<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>';
+  if (!addCat) {
+    /* up to 2 short lines: the safety line, then the answer */
+    const lines = [];
+    if (hr === 'high') lines.push(['red', 'HR high. Yoga or walk.']);
+    else {
+      if (!hr) lines.push(['', 'Tap resting HR first.']);
+      if (day.type === 'class') lines.push(['', 'Light only today.']);
+      if (rec.line) lines.push(['', rec.line === 'All on track.' && day.type === 'class' ? 'All on track. Any light move is fine.' : rec.line]);
+      else if (rec.cat) lines.push(['', rec.cat + ' is behind this week.']);
+    }
+    h += `<div class="kicker">Add to ${day.title}</div><h2>What do you want to train?</h2><p class="note">This week · done / target</p>
+      ${lines.slice(0, 2).map(l => `<p class="abanner ${l[0]}">${l[1]}</p>`).join('')}
+      <div class="mlist">${CATS.map(c => { const i = rec.info[c], mx = Math.max(i.T, i.D + i.L, 1), dw = Math.min(100, i.D / mx * 100), lw = Math.min(100 - dw, i.L / mx * 100);
+        return `<button class="crow" data-cat="${c}" ${i.off ? 'disabled' : ''}><span class="cn">${c}${rec.cat === c ? '<span class="badge">Recommended</span>' : ''}</span><span class="cv">${rh(i.D)} / ${rh(i.T)}</span><span class="chev">›</span><span class="cb"><i style="width:${dw}%"></i>${i.L ? `<i class="lt" style="width:${lw}%"></i>` : ''}</span><span class="ch2">${i.hint}</span></button>`; }).join('')}</div>
+      <div class="clg"><span><i></i>Done</span><span><i class="lt"></i>Still planned</span></div>`;
+  } else {
+    const c = addCat, i = rec.info[c], have = todaySet(day);
+    const why = i.lo ? 'Light only: class day.' : 'Pick one. Max 3 sets.';
+    h += `<div class="ahead"><button class="bk" data-back aria-label="Back to muscles">${IC.left}</button><h2>${c}</h2></div><p class="note">${why}</p>`;
+    ADDGROUPS.forEach(([lab, pls]) => {
+      const rows = i.rows.filter(hk => pls.includes((TAGS[hk] || {}).pl)); if (!rows.length) return;
+      h += `<div class="lbl">${lab}</div><div class="mlist">` + rows.map(hk => {
+        const d = HKDEF[hk], tod = have.has(canon(hk)), chip = tod ? 'Today' : recentTxt(hk);
+        return `<button class="xrow" data-addhk="${hk}" ${tod || hr === 'high' ? 'disabled' : ''}><span class="xf">${moveSVG(d.move, false)}</span><span class="xt"><b>${d.name}</b><small>${TAGS[hk].pl} · ${lastTxt(hk)}</small></span>${chip ? `<span class="badge ${tod ? 'gray' : ''}">${chip}</span>` : '<span></span>'}<span class="chev">›</span></button>`;
+      }).join('') + '</div>';
+    });
+    if (!i.rows.length) h += '<div class="empty">No light moves today.</div>';
+  }
+  $('#addBox').innerHTML = h;
+}
+$('#addBox').addEventListener('click', e => {
+  const t = e.target;
+  const c = t.closest('[data-cat]'); if (c) { buzz(10); addCat = c.dataset.cat; renderAdd(); $('#addBox').scrollTop = 0; return; }
+  if (t.closest('[data-back]')) { buzz(10); addCat = null; renderAdd(); return; }
+  const x = t.closest('[data-addhk]'); if (x) addExtra(DAYS[S.view], x.dataset.addhk, addPos);
+});
+function addExtra(day, hk, pos) {
+  if (hrNow() === 'high') { toast('HR high. Yoga or walk.', true); return; }
+  const x = S.extra[day.id] || [];
+  if (x.length >= 3) { toast('Max 3 added today', true); return; }
+  if (todaySet(day).has(canon(hk))) { toast("Already in today's list", true); return; }
+  const ids = dayItems(day).map(it => it.id), id = 'x_' + day.id + '_' + hk, tail = tailIds(day);
+  const anchor = pos === 'pre' ? (mainOf(day) || day.items.find(it => it.cls)) : null;
+  let at = anchor ? ids.indexOf(anchor.id) : ids.findIndex(i0 => tail.includes(i0)); if (at < 0) at = ids.length;
+  ids.splice(at, 0, id);
+  S.extra[day.id] = x.concat({ id, hk, d: todayStr() }); S.order[day.id] = { d: todayStr(), ids };
+  delete S.sets[id]; delete S.sel[id]; save(); buzz(15); lastLayout = Date.now(); closeAll(); render(true); toast('Added · ' + HKDEF[hk].name);
+  setTimeout(() => { const el = mainEl.querySelector(`[data-ex="${id}"]`); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 300);
+}
+function removeExtra(day, id) {
+  S.extra[day.id] = (S.extra[day.id] || []).filter(x => x.id !== id); if (!S.extra[day.id].length) delete S.extra[day.id];
+  if (S.order[day.id]) S.order[day.id].ids = S.order[day.id].ids.filter(i => i !== id);
+  delete S.sets[id]; delete S.sel[id]; save(); buzz(15); lastLayout = Date.now(); render(true); toast('Removed');
+}
 /* before changing the standard week, pin past weeks to the old plan so history does not change */
 function freezePast() {
   const cw = weekStart(), old = (S.basePlan || STANDARD).slice();
@@ -1591,7 +2123,6 @@ function statsClick(e) {
   let b;
   if ((b = hit('[data-stab]'))) { buzz(10); S.statTab = b.dataset.stab; save(); renderStats(); return; }
   if ((b = hit('[data-wk]'))) { buzz(10); statWeek = Math.min(4, Math.max(-12, statWeek + +b.dataset.wk)); renderStats(); return; }
-  if ((b = hit('[data-wbar]'))) { buzz(10); statWeek = +b.dataset.wbar; renderStats(); return; }
   if ((b = hit('[data-pday]'))) { buzz(15); openPlan(addDays(weekStart(), 7 * statWeek), +b.dataset.pday); return; }
   if ((b = hit('[data-plan]'))) {
     buzz(15); const ws = addDays(weekStart(), 7 * statWeek);
@@ -1599,7 +2130,9 @@ function statsClick(e) {
     else { freezePast(); S.basePlan = planFor(ws).slice(); delete S.plans[ws]; toast('Saved as your standard week'); }
     save(); renderTabs(); renderStats(); return;
   }
-  if ((b = hit('[data-mi]'))) { buzz(10); statMonth = b.dataset.mi; renderStats(); return; }
+  if ((b = hit('[data-rng]'))) { buzz(10); S.statRange = b.dataset.rng; save(); renderStats(); return; }
+  if ((b = hit('[data-mnav]'))) { buzz(10); stat4 = Math.min(0, Math.max(-12, stat4 + +b.dataset.mnav)); renderStats(); return; }
+  if ((b = hit('[data-more]'))) { buzz(10); liftsAll = !liftsAll; renderStats(); return; }
   if ((b = hit('[data-sess]'))) { buzz(15); openFinish(+b.dataset.sess); }
 }
 function exportData() {
@@ -1736,7 +2269,7 @@ S.rate = null;
 render(); resumeTimer();
 if (!localStorage.getItem(KEY + '_seen')) { openModal('mHow'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
 /* keep APP_VER in step with VERSION in sw.js */
-const APP_VER = '3.5.0';
+const APP_VER = '3.6.0';
 $('#appVer').textContent = 'SCULPT v' + APP_VER;
 if ('serviceWorker' in navigator) {
   const hadCtrl = !!navigator.serviceWorker.controller;
