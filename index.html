@@ -270,10 +270,9 @@
   .kv .v { font-family: var(--head); font-size: 20px; font-weight: 700; margin-top: 2px; }
   .big-num { font-family: var(--head); font-size: 44px; font-weight: 700; line-height: 1; text-align: center; margin: 8px 0 2px; }
   .big-num small { font-size: 14px; color: var(--dim); letter-spacing: 0.12em; }
-  .calrow { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-top: 8px; }
 
   /* ---------- STATS ---------- */
-  .hero { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .hero { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; margin-top: 12px; }
   .tile { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 10px; min-width: 0; }
   .tile .k { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-weight: 700; }
   .tile .v { font-family: var(--head); font-size: 22px; font-weight: 700; margin-top: 4px; line-height: 1; }
@@ -325,7 +324,8 @@
   .note { font-size: 12px; color: var(--dim); margin-top: 8px; }
   .note.red { color: var(--red); }
   .note.lime { color: var(--lime); }
-  .kv.three { grid-template-columns: 1fr 1fr 1fr; }
+  .kv.three { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .kv.three .v { font-size: 17px; }
 
   .toast { position: fixed; left: 50%; bottom: calc(120px + env(safe-area-inset-bottom)); transform: translateX(-50%) translateY(20px); z-index: 70; background: var(--lime); color: #09090B; font-family: var(--head); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 18px; border-radius: var(--r); opacity: 0; pointer-events: none; transition: var(--t); white-space: nowrap; }
   body.tm-on .toast { bottom: calc(270px + env(safe-area-inset-bottom)); }
@@ -484,7 +484,7 @@
     <ol class="steps">
       <li><b>Plan</b><span>Your week has 4 lifts, 2 classes and 1 rest day. Tap a day to change it.</span><button class="btn-q" data-go="plan">Open my week</button></li>
       <li><b>Train</b><span>Open today's workout. Tap your resting heart rate, then go top to bottom.</span><button class="btn-q" data-go="today">Today's workout</button></li>
-      <li><b>Record</b><span>Tap the circle after each set and rate it. Finish + log, add calories from your watch.</span></li>
+      <li><b>Record</b><span>Tap the circle after each set and rate it. Then Finish + log.</span></li>
       <li><b>Review</b><span>Stats shows your week, month and lifts. The app sets your next weights.</span><button class="btn-q" data-go="lifts">See my lifts</button></li>
     </ol>
     <div class="loop"><svg class="ic" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg>Repeat every week</div>
@@ -864,7 +864,7 @@ const KEY = 'sculpt_v3';
 const fresh = () => ({ view: 'mon', viewDate: '', hr: {}, missing: {}, plans: {}, basePlan: null, statTab: 'week', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, lastExport: '' });
 let S = load();
 /* fill fields an older backup may lack or hold as null */
-const norm = s => { const f = fresh(); ['hr','missing','plans','sets','classes','swaps','sel','history','profile','start'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; }); ['sessions','body'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; }); if (typeof s.lastExport !== 'string') s.lastExport = ''; return s; };
+function norm(s) { const f = fresh(); ['hr','missing','plans','sets','classes','swaps','sel','history','profile','start'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; }); ['sessions','body'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; }); if (typeof s.lastExport !== 'string') s.lastExport = ''; return s; }
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
@@ -1298,7 +1298,7 @@ $('#guideBox').addEventListener('click', e => {
 });
 
 /* ================= FINISH ================= */
-let finCal = 0, finEdit = null;
+let finEdit = null;
 /* heaviest set ever logged for a history key; -Infinity when nothing logged */
 const histMax = hk => Math.max(...(S.history[hk] || []).flatMap(e => e.sets.map(x => x.w)));
 /* minutes since the first set of the day was done; 0 when unknown, under 1 or over 4 h */
@@ -1312,27 +1312,20 @@ const dayPbs = day => day.type === 'class' ? [] : day.items.filter(it => !it.cls
 function openFinish(editIdx) {
   finEdit = editIdx ?? null;
   let vol, setsN, title, date, min, pbs;
-  if (finEdit !== null) { const s = S.sessions[finEdit]; vol = s.vol; setsN = s.sets; title = s.title; date = s.date; finCal = s.cal || 0; min = s.min || 0; pbs = (s.pbs || []).map(n => ({ name: n })); }
-  else { const day = DAYS[S.view], p = dayProgress(day); vol = dayVolume(day); setsN = p.d; title = day.title; date = todayStr(); finCal = 0; min = sessMin(day.id); pbs = dayPbs(day); }
+  if (finEdit !== null) { const s = S.sessions[finEdit]; vol = s.vol; setsN = s.sets; title = s.title; date = s.date; min = s.min || 0; pbs = (s.pbs || []).map(n => ({ name: n })); }
+  else { const day = DAYS[S.view], p = dayProgress(day); vol = dayVolume(day); setsN = p.d; title = day.title; date = todayStr(); min = sessMin(day.id); pbs = dayPbs(day); }
   const pbLine = pbs.length ? `<p class="note lime">New best: ${pbs.slice(0, 3).map(o => o.name + (o.w ? ' ' + fmtW(o.w) + ' kg' : '')).join(', ')}${pbs.length > 3 ? ' +' + (pbs.length - 3) : ''}</p>` : '';
   $('#finishBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
     <div class="kicker">${finEdit !== null ? 'Edit session' : 'Finish'} · ${date}</div><h2>${title}</h2>
     <div class="kv ${min ? 'three' : ''}"><div><div class="k">Volume</div><div class="v">${Math.round(vol).toLocaleString()} <small style="font-size:11px;color:var(--dim)">kg</small></div></div><div><div class="k">Sets</div><div class="v">${setsN}</div></div>${min ? `<div><div class="k">Time</div><div class="v">${min} <small style="font-size:11px;color:var(--dim)">min</small></div></div>` : ''}</div>${pbLine}
-    <h4>Calories from your watch</h4>
-    <div class="big-num" id="calNum">${finCal} <small>KCAL</small></div>
-    <div class="calrow"><button class="pill neg" data-cal="-25">−25</button><button class="pill" data-cal="25">+25</button><button class="pill" data-cal="50">+50</button><button class="pill" data-cal="100">+100</button></div>
-    <button class="btn btn-p" id="btnSave">${finEdit !== null ? 'Save' : 'Log session'}</button>
-    ${finEdit !== null ? '<button class="btn btn-r" id="btnDel">Delete session</button>' : ''}
+    ${finEdit !== null ? '<button class="btn btn-r" id="btnDel">Delete session</button>' : '<button class="btn btn-p" id="btnSave">Log session</button>'}
     <button class="btn btn-g" data-close>Cancel</button>`;
   openModal('mFinish');
 }
 $('#finishBox').addEventListener('click', e => {
-  const c = e.target.closest('[data-cal]');
-  if (c) { buzz(15); finCal = Math.max(0, finCal + parseInt(c.dataset.cal, 10)); $('#calNum').innerHTML = finCal + ' <small>KCAL</small>'; return; }
-  if (e.target.id === 'btnSave') { finEdit !== null ? saveEdit() : logSession(); return; }
+  if (e.target.id === 'btnSave') { logSession(); return; }
   if (e.target.id === 'btnDel') { if (confirm('Delete this session?')) { S.sessions.splice(finEdit, 1); save(); closeAll(); render(true); toast('Deleted', true); } }
 });
-function saveEdit() { S.sessions[finEdit].cal = finCal; save(); closeAll(); render(true); toast('Saved'); }
 function logSession() {
   const day = DAYS[S.view], date = todayStr(); let n = 0;
   day.items.forEach(it => {
@@ -1343,7 +1336,7 @@ function logSession() {
     put(cur(it), sets(it).filter(s => s.done)); put(otherCur(it), otherDone(it));
   });
   if (!n) { toast('Nothing to log', true); return; }
-  const p = dayProgress(day), sess = { date, day: day.id, title: day.title, type: day.type, vol: Math.round(dayVolume(day)), sets: p.d, cal: finCal };
+  const p = dayProgress(day), sess = { date, day: day.id, title: day.title, type: day.type, vol: Math.round(dayVolume(day)), sets: p.d };
   const min = sessMin(day.id), pbs = dayPbs(day); if (min) sess.min = min; if (pbs.length) sess.pbs = pbs.map(o => o.name);
   S.sessions.push(sess); delete S.start[day.id];
   day.items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
@@ -1363,10 +1356,10 @@ function weeksOf(k) {
     out.push({ a: ds(a), b: ds(b), la: a.getDate(), lb: b.getDate() }); d.setDate(d.getDate() + 7); }
   return out;
 }
-let statMode = 'vol', statMonth = null, statWeek = 0;
+let statMonth = null, statWeek = 0;
 const delta = (a, b) => (b ? Math.round((a - b) / b * 100) : null);
 const tile = (k, v, d, unit, vs) => `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d ${!d ? '' : d > 0 ? 'up' : 'dn'}">${d === null ? unit : d === 0 ? '= ' + vs.replace('vs ', '') : (d > 0 ? '▲ ' : '▼ ') + Math.abs(d) + '% ' + vs}</div></div>`;
-const aggRange = (a, b) => { const r = { vol: 0, cal: 0, n: 0 }; S.sessions.forEach(x => { if (x.date >= a && x.date <= b) { r.vol += x.vol || 0; r.cal += x.cal || 0; r.n++; } }); return r; };
+const aggRange = (a, b) => { const r = { vol: 0, n: 0 }; S.sessions.forEach(x => { if (x.date >= a && x.date <= b) { r.vol += x.vol || 0; r.n++; } }); return r; };
 const rangeLabel = (a, b) => MON[+a.slice(5, 7) - 1] + ' ' + (+a.slice(8)) + ' – ' + (a.slice(5, 7) === b.slice(5, 7) ? '' : MON[+b.slice(5, 7) - 1] + ' ') + (+b.slice(8));
 /* single-series bar chart: one hue, selected bar solid + labelled, tap a bar to select */
 function barChart(items, attr) {
@@ -1422,46 +1415,46 @@ function statsWeek() {
     return `<div class="mset"><span class="mg">${g}</span><span class="mb"><i style="width:${pct}%"></i></span><span class="mv">${d0}<small> / ${p0}</small></span></div>`;
   }).join('');
   const weeks = Array.from({ length: 8 }, (_, k) => ({ off: k - 7, ws: addDays(weekStart(), -7 * (7 - k)) }));
-  const chart = barChart(weeks.map(w => { const a = aggRange(w.ws, addDays(w.ws, 6)); return { key: w.off, label: (+w.ws.slice(8)) + '/' + (+w.ws.slice(5, 7)), v: statMode === 'vol' ? a.vol : a.cal, sel: w.off === statWeek }; }), 'wbar');
+  const chart = barChart(weeks.map(w => { const a = aggRange(w.ws, addDays(w.ws, 6)); return { key: w.off, label: (+w.ws.slice(8)) + '/' + (+w.ws.slice(5, 7)), v: a.vol, sel: w.off === statWeek }; }), 'wbar');
   return `
     <div class="wnav"><button data-wk="-1" aria-label="Previous week">‹</button><div><b>${label}</b><small>${rangeLabel(ws, we)}</small></div><button data-wk="1" aria-label="Next week">›</button></div>
     <div class="plan">${slots}</div>
     <div class="psum"><span>Lifts <b>${ld}/${lp}</b> · Classes <b>${cd}/${cp}</b></span>${nx ? `<span>Next <b>${DAYS[nx].title}</b></span>` : ''}</div>
     ${warns}${st.extra.length ? `<div class="note">Also done: ${st.extra.join(', ')}</div>` : ''}
     ${custom ? `<div class="pbtns"><button class="btn-q" data-plan="reset">Reset to standard</button><button class="btn-q" data-plan="base">Make this my standard</button></div>` : `<div class="note">Tap a day to change it.</div>`}
-    <div class="hero">${tile('Volume kg', kfmt(cw.vol), delta(cw.vol, pw.vol), 'kg lifted', 'vs last wk')}${tile('Workouts', cw.n, delta(cw.n, pw.n), 'done', 'vs last wk')}${tile('Calories', kfmt(cw.cal), delta(cw.cal, pw.cal), 'kcal', 'vs last wk')}</div>
+    <div class="hero">${tile('Volume kg', kfmt(cw.vol), delta(cw.vol, pw.vol), 'kg lifted', 'vs last wk')}${tile('Workouts', cw.n, delta(cw.n, pw.n), 'done', 'vs last wk')}</div>
     <div class="lbl">Sets per muscle · done / planned</div>
     <div class="msets">${msets || '<div class="note">No lifts planned this week.</div>'}</div>
     <div class="lbl">Last 8 weeks</div>
-    <div class="chart"><div class="seg sm"><button class="${statMode === 'vol' ? 'on' : ''}" data-mode="vol">kg</button><button class="${statMode === 'cal' ? 'on' : ''}" data-mode="cal">kcal</button></div>${chart}</div>`;
+    <div class="chart"><div class="ct"><span>Volume kg</span></div>${chart}</div>`;
 }
 function statsMonth() {
   const months = lastMonths(6); if (!statMonth || !months.includes(statMonth)) statMonth = months[5];
   const agg = k => aggRange(k + '-01', k + '-31');
   const A = {}; months.forEach(m => A[m] = agg(m));
   const cm = A[statMonth], pm = agg(prevMonth(statMonth)), mName = MON[+statMonth.slice(5, 7) - 1], today = todayStr();
-  const chart = barChart(months.map(m => ({ key: m, label: MON[+m.slice(5, 7) - 1], v: statMode === 'vol' ? A[m].vol : A[m].cal, sel: m === statMonth })), 'mi');
+  const chart = barChart(months.map(m => ({ key: m, label: MON[+m.slice(5, 7) - 1], v: A[m].vol, sel: m === statMonth })), 'mi');
   const weeks = weeksOf(statMonth).filter(w => w.a <= today).map(w => {
     const ss = S.sessions.filter(x => x.date >= w.a && x.date <= w.b), cnt = {}; ss.forEach(x => cnt[x.day] = (cnt[x.day] || 0) + 1);
-    return Object.assign(w, { cnt, vol: ss.reduce((a, x) => a + (x.vol || 0), 0), cal: ss.reduce((a, x) => a + (x.cal || 0), 0), lifts: LIFTS.filter(id => cnt[id]).length });
+    return Object.assign(w, { cnt, vol: ss.reduce((a, x) => a + (x.vol || 0), 0), lifts: LIFTS.filter(id => cnt[id]).length });
   });
   const wmax = Math.max(1, ...weeks.map(w => w.vol));
   const rows = weeks.map(w => `<div class="wk"><div class="wl">${w.la === w.lb ? w.la : w.la + '–' + w.lb}<small class="${w.lifts >= 4 ? 'ok4' : ''}">${w.lifts}/4 lifts</small></div>
       ${ORDER.map(id => { const n = w.cnt[id] || 0; return `<div class="cell ${n ? 'on' : ''} ${DAYS[id].type === 'class' ? 'cl' : ''}">${n > 1 ? n : n ? '✓' : ''}</div>`; }).join('')}
-      <div class="wv">${w.vol ? kfmt(w.vol) : '—'}<small>${w.cal ? w.cal + ' kcal' : '— kcal'}</small><div class="vb"><i style="width:${Math.round(w.vol / wmax * 100)}%"></i></div></div></div>`).join('');
+      <div class="wv">${w.vol ? kfmt(w.vol) : '—'}<small>${Object.values(w.cnt).reduce((a, n) => a + n, 0)} workouts</small><div class="vb"><i style="width:${Math.round(w.vol / wmax * 100)}%"></i></div></div></div>`).join('');
   const list = S.sessions.map((x, i) => ({ x, i })).filter(o => o.x.date.slice(0, 7) === statMonth).reverse();
   return `
     <div class="shead"><b>${monthLabel(statMonth)}</b> · tap a bar for another month</div>
-    <div class="hero">${tile('Volume kg', kfmt(cm.vol), delta(cm.vol, pm.vol), 'kg lifted', 'vs prev')}${tile('Workouts', cm.n, delta(cm.n, pm.n), 'this month', 'vs prev')}${tile('Calories', kfmt(cm.cal), delta(cm.cal, pm.cal), 'kcal', 'vs prev')}</div>
-    <div class="chart" style="margin-top:8px"><div class="seg sm"><button class="${statMode === 'vol' ? 'on' : ''}" data-mode="vol">kg</button><button class="${statMode === 'cal' ? 'on' : ''}" data-mode="cal">kcal</button></div>${chart}</div>
+    <div class="hero">${tile('Volume kg', kfmt(cm.vol), delta(cm.vol, pm.vol), 'kg lifted', 'vs prev')}${tile('Workouts', cm.n, delta(cm.n, pm.n), 'this month', 'vs prev')}</div>
+    <div class="chart" style="margin-top:8px"><div class="ct"><span>Volume kg</span><span>6 months</span></div>${chart}</div>
     <div class="lbl">Weeks in ${mName}</div>
     <div class="wkbox">
-      <div class="wk head"><span class="wh" style="text-align:left">Days</span>${ORDER.map(id => `<span class="wh">${ABBR[id]}</span>`).join('')}<span class="wh r">kg · kcal</span></div>
+      <div class="wk head"><span class="wh" style="text-align:left">Days</span>${ORDER.map(id => `<span class="wh">${ABBR[id]}</span>`).join('')}<span class="wh r">kg</span></div>
       ${rows || '<div class="note">No weeks yet.</div>'}
       <div class="legend"><b>GA</b> Glutes A · <b>PU</b> Push · <b>GB</b> Glutes B · <b>PL</b> Pull · <b>PM</b> Pump · <b>CB</b> Combat · <b>YG</b> Yoga</div>
     </div>
-    <div class="lbl">Workouts in ${mName} · tap to edit kcal</div>
-    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.x.title}</div><div class="b">${o.x.date} · ${o.x.sets} sets${o.x.min ? ' · ' + o.x.min + ' min' : ''}</div></div><div class="c">${o.x.vol ? kfmt(o.x.vol) : '—'}<small>kg</small></div><div class="c">${o.x.cal || '—'}<small>kcal</small></div></div>`).join('') : '<div class="empty">No workouts this month.</div>'}`;
+    <div class="lbl">Workouts in ${mName}</div>
+    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.x.title}</div><div class="b">${o.x.date} · ${o.x.sets} sets${o.x.min ? ' · ' + o.x.min + ' min' : ''}</div></div><div class="c">${o.x.vol ? kfmt(o.x.vol) : '—'}<small>kg</small></div><div class="c">${o.x.min ? o.x.min : '—'}<small>min</small></div></div>`).join('') : '<div class="empty">No workouts this month.</div>'}`;
 }
 function spark(pts, invert) {
   const W = 64, H = 24, q = pts.slice(-12);
@@ -1521,7 +1514,6 @@ function statsClick(e) {
     else { freezePast(); S.basePlan = planFor(ws).slice(); delete S.plans[ws]; toast('Saved as your standard week'); }
     save(); renderTabs(); renderStats(); return;
   }
-  if ((b = hit('[data-mode]'))) { buzz(10); statMode = b.dataset.mode; renderStats(); return; }
   if ((b = hit('[data-mi]'))) { buzz(10); statMonth = b.dataset.mi; renderStats(); return; }
   if ((b = hit('[data-sess]'))) { buzz(15); openFinish(+b.dataset.sess); }
 }
