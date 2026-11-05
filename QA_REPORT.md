@@ -1,3 +1,120 @@
+# QA Report · SCULPT v3.7.0 · 2026-11-05
+
+## Verdict: PASS
+
+No Blocker or Major issue. 6 small notes below (2 Minor, 3 Cosmetic, 1 Info). v3.7.0 can ship as is. N1 and N2 are worth a quick 3.7.1.
+
+## Re-test after fixes (same day)
+
+All 6 notes were fixed in v3.7.0 before deploy, with the exact fixes in the table below. N6: the "Added today" row now has a transparent border.
+Re-run after the fixes, all 0 fails and 0 console errors: m37 52, m37 rm 53, qa37 q1 37, q2 8, q3 45, q7 24, t11 57, t12 11, qa361 p1_func 84. q6 now shows no outline on focused Profile fields.
+
+## Summary
+
+- All 12 suite runs pass with the expected counts. 0 fails, 0 console errors. Width scan is CLEAN at 360, 384 and 412 px.
+- Known old failures (t9, qa36h p5, p6, p7, p11, p13) give the same FAIL lines on the v3.6.1 backup. Not regressions.
+- New probes in `qa37\` (timer, beep, reload, sheet guard, swipe, press, fast taps, no replay, hand flag, "Added today", reduced motion, widths): 205 checks, all pass.
+- Safety is unchanged. A text diff of v3.6.1 vs v3.7.0 finds 1 new UI string ("Added today") and no other change. HR gates, 90 s rest minimum, class HR cap and "Max safe load" caps have the same logic and text.
+- Haptics: 59 `buzz(` calls, all valid names, no number patterns left.
+- Version: `APP_VER` 3.7.0 = sw.js `sculpt-v3.7.0`.
+
+## Automated suites
+
+Run one at a time, each with `timeout 170`. Output: `qa37\suites\` and `qa37\run_all.log`.
+
+| Suite | Checks | Fail | Console errors |
+|---|---|---|---|
+| t6 | 33 | 0 | 0 |
+| t7 | 7 | 0 | 0 |
+| t8 | 37 | 0 | 0 |
+| qa_width | CLEAN × 3 (360 / 384 / 412) | 0 | 0 |
+| t10 | 34 | 0 | 0 |
+| t11 | 57 | 0 | 0 |
+| t12 | 11 | 0 | 0 |
+| t13 | 11 | 0 | 0 |
+| qa361 p1_func | 84 | 0 | 0 |
+| qa361 p2_width | 17 screens × 3 widths, 0 errors | 0 | 0 |
+| ux37 m37 | 52 | 0 | 0 |
+| ux37 m37 rm (forced reduced motion) | 53 | 0 | 0 |
+| qa37 q1_timer (new) | 37, plus 33 in reduced motion | 0 | 0 |
+| qa37 q2_resume (new) | 8 | 0 | 0 |
+| qa37 q3_input (new) | 45, plus 46 in reduced motion | 0 | 0 |
+| qa37 q7_width (new, iframe 360 / 384 / 412) | 12 × 3 | 0 | 0 |
+| Known old fails, v3.7.0 vs v3.6.1 backup | t9 2, p5 2, p6 3, p7 1, p11 1, p13 1 | same on both | 0 |
+
+Folder: `C:\Users\ngoho\AppData\Local\Temp\claude\52c4674560278348\97fa529f-458e-437d-a894-6259a8e77f66\scratchpad\qa37\`.
+
+## Findings
+
+| # | Severity | Where | Steps | Expected | Actual | Fix |
+|---|---|---|---|---|---|---|
+| N1 | Minor | `index.html` line 2452, `inWorkout` | Tap HR, log the session, leave the app, come back on a day tab | Screen can sleep again, as in v3.6.1 | Wake lock is taken again, because "HR tapped today" counts as a workout. The screen stays on while the app is open, all day. q1_timer: 1 lock request after log | `const inWorkout = () => S.view !== 'stats' && (!!S.timer \|\| !!S.start[S.view] \|\| (!!hrNow() && !S.sessions.some(x => x.date === todayStr())));` |
+| N2 | Minor | `index.html` line 2453, `visibilitychange` | Start a rest, turn the screen off, come back before the rest ends | Beep at 0:00 | On return the ring is re-synced but the beep is not re-scheduled. If Chrome paused the audio clock while hidden, the beep comes late, or the 4 s auto-close cuts it. Cannot be proven headless | In the handler: `if (timerActive()) { ringRun(); scheduleBeep(); }` |
+| N3 | Cosmetic | `index.html` line 523 | Menu > Profile > Add scan, tap Weight | One lime border. v3.6.1 sets `.inp { outline: none }` on line 411 | The new `:focus-visible` rule comes later and wins. The field shows the lime border plus a lime outline 2 px outside it (double ring). Shot `qa37\f_input_focus.png` | Change line 523 to `:focus-visible:not(.inp) { outline: 2px solid var(--lime); outline-offset: 2px; }` |
+| N4 | Cosmetic | `index.html` line 1840 | Do a set that is a new best, tap Hard within 420 ms | The Hard toast "Next set X kg · +30s rest" stays 2 s | The delayed "New best" toast replaces it after about 120 ms. Same for "Rest first" in that window. Shot `qa37\e_red_on.png` | `const t0 = toastT; setTimeout(() => { if (toastT === t0) toast('New best · ' + fmtW(s.w) + ' kg', false, 3000); }, 420);` |
+| N5 | Cosmetic | `index.html` line 1966, `logSession` | Log with nothing done | Every refusal uses `block` | "Nothing to log" red toast has no haptic. Rare: Finish is disabled at 0 sets | Add `buzz('block');` before `return` |
+| N6 | Info, owner call | `index.html` line 519, `.swap.fixed` | Added card, do its first set | Row reads as a label | Same height (52 px), set rows move 0 px, tap does nothing. It looks neat. The border and "+" icon still look a little like a disabled button | Optional: `border-color: transparent` (height stays) |
+
+Not from v3.7.0: the HUD blur shows a done lime circle under it as a soft glow (`e_red_on.png`, right of Skip). Same CSS as v3.6.1.
+
+## Checked and OK
+
+**A. Safety**
+- Text diff `index.v361.html` vs `index.html`: only "Added today" is new. No safety line changed or dropped.
+- HR "> 100" keeps sets locked and gets `pick` only (no alarm buzz), as decided.
+- Skip before 90 s: refused, red toast, `block`. Skip after 90 s needs 2 taps. Same as v3.6.1.
+- Stepper and pills still cap at "Max safe load" (t12: 60 kg). Cap gives `block`.
+
+**B. Rest timer (q1_timer, q2_resume)**
+- Ring is 1 WAAPI animation. Duration = time left, ends at full offset (empty) when GO shows.
+- Hard adds 30 s once. Old beep stopped (2 oscillators), new beep scheduled, ring re-run.
+- Undo the set that started rest, Skip, and Log during rest: timer ends, beep stopped, ring animation gone.
+- Rest end on time: 1 `restEnd` buzz, scheduled beep kept, refill and GO fade once. Back from hidden: no second buzz, refill or breath.
+- +30 s after GO: rest restarts, beep and ring re-run, the 4 s auto-close does not end it.
+- Late end (10 s): no buzz, beep cancelled, GO shown, HUD closes 4 s later.
+- Reload during rest: timer, HUD and ring come back. No audio until a tap, no error. Breath runs once on the next circle.
+- `buzz` does nothing while the page is hidden.
+
+**C. One-shot effects**
+- Every `fx()` call is followed by `render()`, `refreshCard()` or `renderStats()`. `fxQ` is empty after every action tested.
+- No replay of set, complete, unlock, breath or flip after: stepper on another card, HR tap again, Easy, swap, tab away and back, rest ticks, Stats and back, Reorder on/off.
+
+**D. Taps and sheets (q3_input)**
+- Sheet guard lets real taps through after 350 ms: Import opens the file picker (click not prevented), "Open my week", plan pick. A second tap at 80 ms on Add and at 100 ms after a category swap is dropped.
+- Swipe: 70 px slow drag snaps back. 160 px drag closes and the box only moves down (100 → 432 px). 60 px flick closes. touchcancel resets box and scrim. Up then down does not close.
+- Press: on at pointerdown, instant (0 s), off on pointerup, pointercancel and scroll. None on disabled buttons. None stuck after a rebuild.
+- 10 fast taps all count (reps 12 → 22, kg 20 → 60 cap). Max 1 tick per number.
+- Hand flag: pill or stepper edit keeps its kg after Easy (toast "Saved"). Copy forward and "Use X kg" clear it. Easy still raises an unedited next set.
+- "Added today": same height, rows do not move, inert, no press state. Undo brings "Remove from today" back.
+
+**E. Reduced motion**
+- m37 rm 53 pass. q3_rmcheck: 25 WAAPI calls, 0 with transform keyframes. Guide figures have 0 `<animate>`. Ring steps by the 250 ms tick. GO and ticks fade only.
+
+**F. Widths**
+- 360, 384, 412 px (iframe): no page overflow and no element outside the screen with a pressed pill, kg tick, set done + rest, long toasts, Easy, reorder FLIP, sheet open, Stats bars, class "Exercises first" FLIP.
+
+**G. Screens at 412 px** (`qa37\a_lift_rest.png`, `b_added.png`, `c_red_toast.png`, `d_stats_week.png`, `e_red_on.png`)
+- Glutes A in rest: neat. Done row tint and check, next circles dim, red ring, rate row clear.
+- Red toast and red "on" states (HR "> 100", Hard): dark text #09090B on red reads well (5.1:1).
+- Stats week: bars full after the grow, no clipping.
+
+**H. Wording**
+- "Added today" is short, clear and matches "Remove from today". No other visible text change.
+
+## Check on the phone
+
+Headless cannot run CSS transitions in `--dump-dom` (probe q4_timeline: values stay at the start). Please check on the S24 Ultra:
+
+1. Press shows within 1 frame on a set circle, a stepper and an HR button. Start a scroll on a button: the press clears.
+2. Settings > Accessibility > Visibility enhancements > Remove animations: sheets fade with no slide, ring moves in steps, guide figures are still.
+3. Start a 90 s rest, lock the screen, wait: beep at 0:00. Repeat with YouTube open on top.
+4. Haptics: tick, pick, done and block feel different. Rest end buzzes only when the screen is on.
+5. Swipe a sheet down 150 px and let go: it keeps going down and fades, never jumps up. A short drag snaps back.
+6. Rest ring is smooth at 120 Hz, also while the page scrolls after a set.
+7. Open a video, come back mid-rest: the screen stays on.
+
+---
+
 # QA Report · SCULPT v3.6.1 · 2026-11-04
 
 ## Verdict: PASS

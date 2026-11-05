@@ -25,11 +25,14 @@
     --red: #FF0050; --red-dim: rgba(255,0,80,0.12);
     --head: 'Space Grotesk', system-ui, sans-serif;
     --data: 'Inter', system-ui, sans-serif;
-    --t: all 0.3s ease; --r: 4px;
+    --d1: 120ms; --d2: 200ms; --d3: 320ms; --d4: 520ms;
+    --e-out: cubic-bezier(0.2, 0.8, 0.2, 1); --e-in: cubic-bezier(0.4, 0, 1, 1); --e-std: cubic-bezier(0.4, 0, 0.2, 1);
+    --t: color var(--d2) var(--e-std), background-color var(--d2) var(--e-std), border-color var(--d2) var(--e-std), opacity var(--d2) var(--e-std), transform var(--d2) var(--e-out), filter var(--d2) var(--e-std);
+    --r: 4px;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
   html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; overscroll-behavior-y: none; }
-  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--data); font-size: 15px; line-height: 1.4; -webkit-font-smoothing: antialiased; overscroll-behavior-y: contain; padding-bottom: calc(110px + env(safe-area-inset-bottom)); transition: padding-bottom 0.3s ease; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--data); font-size: 15px; line-height: 1.4; -webkit-font-smoothing: antialiased; overscroll-behavior-y: contain; padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
   body.tm-on { padding-bottom: calc(260px + env(safe-area-inset-bottom)); }
   button, a { font-family: inherit; cursor: pointer; color: inherit; touch-action: manipulation; }
   h1,h2,h3,h4 { font-family: var(--head); margin: 0; letter-spacing: -0.01em; }
@@ -74,7 +77,7 @@
   .hr .opts { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 8px; }
   .opt { min-height: 52px; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 14px; font-weight: 700; transition: var(--t); }
   .opt.on { background: var(--lime); border-color: var(--lime); color: #09090B; }
-  .opt.on.bad { background: var(--red); border-color: var(--red); color: #fff; }
+  .opt.on.bad { background: var(--red); border-color: var(--red); color: #09090B; }
   .hr .msg { font-size: 13px; color: var(--dim); margin-top: 8px; }
   .hr.bad { border-color: var(--red); } .hr.bad .msg { color: var(--red); }
   .warm { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 8px 8px 8px 12px; font-size: 14px; color: var(--muted); min-height: 56px; }
@@ -147,7 +150,6 @@
   .ok svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 3.5; }
   .ok.on { background: var(--lime); border-color: var(--lime); color: #09090B; }
   .set.sel:not(.done) .ok:not(.locked) { border-color: var(--lime); color: var(--lime); }
-  .ok:active { transform: scale(0.9); }
   .ok.locked { opacity: 0.3; }
   .ok.hit { border-color: var(--red) !important; animation: shake 0.3s ease; }
   @keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
@@ -171,7 +173,6 @@
   .foot { display: grid; grid-template-columns: 1fr 2fr; gap: 8px; margin-top: 18px; }
   .btn { min-height: 56px; padding: 0 14px; border-radius: var(--r); font-family: var(--head); font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; transition: var(--t); }
   .btn-p { background: var(--lime); color: #09090B; border: 1px solid var(--lime); }
-  .btn-p:active { filter: brightness(0.85); }
   .btn-g { background: transparent; color: var(--muted); border: 1px solid var(--line-2); }
   .btn-g:active { color: var(--lime); border-color: var(--lime); }
   .btn-r { background: transparent; color: var(--red); border: 1px solid var(--red); }
@@ -205,7 +206,7 @@
   .prog b { color: var(--text); font-size: 18px; letter-spacing: 0.02em; }
   .prog .pct { color: var(--lime); font-size: 18px; }
   .pbar { height: 10px; background: var(--line); border-radius: 5px; overflow: hidden; margin-top: 8px; }
-  .pbar i { display: block; height: 100%; width: 0; background: var(--lime); transition: width 0.4s ease; border-radius: 5px; }
+  .pbar i { display: block; height: 100%; width: 100%; background: var(--lime); transform: scaleX(0); transform-origin: left center; transition: transform var(--d4) var(--e-std); }
   .tmw { display: none; }
   .hud.rate .tm { display: none; }
   .hud.rate { border-top-color: var(--lime); }
@@ -213,16 +214,16 @@
   .hud.idle .prog, .hud.idle .pbar { display: none; }
   .hud.timer { border-top: 2px solid var(--red); }
   .hud.timer.go { border-top-color: var(--lime); }
-  .hud.timer .tmw { display: block; animation: rise 0.3s ease; }
+  .hud.timer .tmw { display: block; animation: rise var(--d3) var(--e-out); }
   .hud.timer .prog { font-size: 10px; } .hud.timer .prog b, .hud.timer .prog .pct { font-size: 12px; }
   .hud.timer .pbar { height: 4px; margin-top: 4px; }
-  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
   .tm { display: grid; grid-template-columns: 96px 1fr; gap: 14px; align-items: center; margin-bottom: 10px; }
   .ring { width: 96px; height: 96px; position: relative; }
   .ring svg { width: 96px; height: 96px; transform: rotate(-90deg); }
   .ring circle { fill: none; stroke-width: 7; }
   .ring .tr { stroke: var(--line-2); }
-  .ring .br { stroke: var(--red); stroke-dasharray: 263.89; stroke-dashoffset: 0; transition: stroke-dashoffset 0.25s linear, stroke 0.3s ease; }
+  .ring .br { stroke: var(--red); stroke-dasharray: 263.89; stroke-dashoffset: 0; transition: stroke var(--d3) var(--e-std); }
   .hud.go .ring .br { stroke: var(--lime); }
   .ring .num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--head); font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
   .tt1 { font-family: var(--head); font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--red); font-weight: 700; line-height: 1; transition: var(--t); }
@@ -238,16 +239,14 @@
   .feel button small { display: block; font-family: var(--data); font-size: 9px; color: var(--dim); font-weight: 600; letter-spacing: 0.06em; margin-top: 2px; }
   .feel button.on { background: var(--lime); border-color: var(--lime); color: #09090B; }
   .feel button.on small { color: rgba(9,9,11,0.7); }
-  .feel button[data-feel="h"].on { background: var(--red); border-color: var(--red); color: #fff; }
-  .feel button[data-feel="h"].on small { color: rgba(255,255,255,0.8); }
-  .hud.go { animation: pulse 0.6s ease 3; }
-  @keyframes pulse { 50% { box-shadow: inset 0 0 0 3px rgba(204,255,0,0.6); } }
+  .feel button[data-feel="h"].on { background: var(--red); border-color: var(--red); color: #09090B; }
+  .feel button[data-feel="h"].on small { color: rgba(9,9,11,0.7); }
 
   /* ---------- MODALS ---------- */
-  .modal { position: fixed; inset: 0; z-index: 60; display: flex; align-items: flex-end; justify-content: center; background: rgba(9,9,11,0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-  .modal.show { opacity: 1; pointer-events: auto; }
-  .box { width: 100%; max-width: 640px; max-height: 90vh; max-height: 90dvh; overflow-y: auto; overscroll-behavior: contain; background: rgba(24,24,27,0.95); border: 1px solid var(--line-2); border-bottom: none; border-radius: 10px 10px 0 0; padding: 10px 16px calc(18px + env(safe-area-inset-bottom)); transform: translateY(60px); transition: transform 0.3s ease; }
-  .modal.show .box { transform: translateY(0); }
+  .modal { position: fixed; inset: 0; z-index: 60; display: flex; align-items: flex-end; justify-content: center; background: rgba(9,9,11,0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); opacity: 0; pointer-events: none; transition: opacity var(--d2) var(--e-in); }
+  .modal.show { opacity: 1; pointer-events: auto; transition: opacity var(--d3) var(--e-out); }
+  .box { width: 100%; max-width: 640px; max-height: 90vh; max-height: 90dvh; overflow-y: auto; overscroll-behavior: contain; background: rgba(24,24,27,0.95); border: 1px solid var(--line-2); border-bottom: none; border-radius: 10px 10px 0 0; padding: 10px 16px calc(18px + env(safe-area-inset-bottom)); transform: translateY(48px); transition: transform var(--d2) var(--e-in); }
+  .modal.show .box { transform: none; transition: transform var(--d3) var(--e-out); }
   .grab { width: 40px; height: 4px; background: var(--line-3); border-radius: 2px; margin: 0 auto 12px; }
   .xbtn { position: sticky; top: 0; float: right; z-index: 2; width: 48px; height: 48px; margin: -6px -8px 0 8px; border-radius: 50%; border: 1px solid var(--line-2); background: var(--panel); font-size: 22px; line-height: 1; color: var(--muted); }
   .xbtn:active { border-color: var(--lime); color: var(--lime); }
@@ -334,10 +333,10 @@
   .kv.three { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
   .kv.three .v { font-size: 17px; }
 
-  .toast { position: fixed; left: 50%; bottom: calc(120px + env(safe-area-inset-bottom)); transform: translateX(-50%) translateY(20px); z-index: 70; background: var(--lime); color: #09090B; font-family: var(--head); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 18px; border-radius: var(--r); opacity: 0; pointer-events: none; transition: var(--t); white-space: nowrap; }
+  .toast { position: fixed; left: 50%; bottom: calc(120px + env(safe-area-inset-bottom)); transform: translate(-50%, 8px); z-index: 70; background: var(--lime); color: #09090B; font-family: var(--head); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 18px; border-radius: var(--r); opacity: 0; pointer-events: none; transition: opacity var(--d2) var(--e-in), transform var(--d2) var(--e-in); white-space: nowrap; }
   body.tm-on .toast { bottom: calc(270px + env(safe-area-inset-bottom)); }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .toast.red { background: var(--red); color: #fff; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); transition: opacity var(--d2) var(--e-out), transform var(--d3) var(--e-out); }
+  .toast.red { background: var(--red); color: #09090B; }
   input[type=file] { display: none; }
 
   /* header buttons + menu */
@@ -515,6 +514,34 @@
     .stp .v small { font-size: 9px; letter-spacing: 0; }
     .ok { width: 52px; height: 52px; }
   }
+
+  /* ---------- MOTION + PRESS ---------- */
+  .swap.fixed { background: transparent; border-color: transparent; color: var(--dim); }
+  .swap.fixed .z { color: var(--dim); }
+  .cbar i { transform-origin: left center; }
+  .wv .vb i { transform-origin: right center; }
+  :focus-visible:not(.inp) { outline: 2px solid var(--lime); outline-offset: 2px; }
+  /* press: shows on the first frame of a touch (.is-pressed is set on pointerdown), eases out on release */
+  :where(button, a.btn, a.wlink, .set, .row.tap) { transition: var(--t); }
+  .is-pressed { transition-duration: 0s !important; }
+  :is(.ok, .mvb, .gbtn, .xbtn, .bk, .ibtn, .tab, .thumb, .pday, .wnav button, .pill).is-pressed { transform: scale(0.96); }
+  :is(.btn, .big, .swap, .addrow, .apply, .opt, .feel button, .wlink).is-pressed { transform: scale(0.98); }
+  :is(.opt:not(.on), .feel button:not(.on), .big:not(.on):not(.calm), .btn-g, .ibtn:not(.warn), .tab:not(.active), .bk, .mvb, .gbtn, .xbtn, .thumb, .wnav button, .apply, .swap, .addrow, .wlink).is-pressed { border-color: var(--lime); }
+  :is(.pill, .stp button).is-pressed { background: var(--lime); border-color: var(--lime); color: #09090B; }
+  :is(.btn-p, .big.on, .big.calm, .opt.on, .feel button.on, .tab.active, .seg button.on).is-pressed { filter: brightness(0.9); }
+  :is(.btn-r, .ibtn.warn, .opt.bad:not(.on)).is-pressed { border-color: var(--red); background-color: var(--red-dim); }
+  :is(.mrow, .crow, .xrow, .row.tap, .seg button:not(.on), .set:not(.done)).is-pressed { background-color: var(--panel-2); }
+  :is(.btn-q, .rbtn).is-pressed { color: var(--lime); }
+  .ok.locked.is-pressed { transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    :root { --d1: 0ms; --d2: 0ms; --d3: 0ms; --d4: 0ms; }
+    .hud.timer .tmw, .ok.hit { animation: none; }
+    .is-pressed { transform: none !important; }
+    .modal, .modal.show { transition: opacity 120ms linear; }
+    .box, .modal.show .box { transform: none; transition: none; }
+    .toast, .toast.show { transform: translate(-50%, 0); }
+    html { scroll-behavior: auto; }
+  }
 </style>
 </head>
 <body>
@@ -542,7 +569,7 @@
           <div class="num" id="tNum">0:00</div>
         </div>
         <div>
-          <div class="tt1" id="tL">Rest</div>
+          <div class="tt1" id="tL" aria-live="polite">Rest</div>
           <div class="tt2" id="tN">—</div>
           <div class="tbtns"><button class="ibtn" id="btnPlus">+30s</button><button class="ibtn" id="btnSkip">Skip</button></div>
         </div>
@@ -635,7 +662,7 @@
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <input type="file" id="fileIn" accept=".json,application/json,text/plain">
 
 <script>
@@ -1080,7 +1107,9 @@ function nextUp() {
   for (const id of LIFTS) if (!weekCount(id)) return id;
   return st.plan.find(x => x !== 'rest') || 'mon';
 }
-function buzz(p) { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) {} }
+/* haptics by rhythm: 1 short, 1 firm, 2, 3 quick (refused), long pair (rest over) */
+const HAPTIC = { tick: 12, pick: 24, done: [30, 50, 30], logged: [30, 50, 30, 50, 60], block: [20, 40, 20, 40, 20], restEnd: [180, 90, 180] };
+function buzz(name) { if (document.hidden) return; try { if (navigator.vibrate) navigator.vibrate(HAPTIC[name] || 0); } catch (e) {} }
 const fmtW = w => (w % 1 === 0 ? String(w) : String(Math.round(w * 100) / 100));
 const rnd = w => Math.max(0, Math.round(w * 4) / 4);
 const kfmt = v => v >= 10000 ? Math.round(v / 1000) + 'k' : v >= 1000 ? (v / 1000).toFixed(1) + 'k' : String(Math.round(v));
@@ -1224,16 +1253,19 @@ function relabelTimer() {
 function moveUnit(i, dir) {
   const day = DAYS[S.view], us = units(day), j = i + dir;
   if (!us[i] || !us[j] || !canMove(us[i]) || !canPass(us[j])) return;
-  [us[i], us[j]] = [us[j], us[i]]; saveOrder(day, us); relabelTimer(); save(); buzz(10); render(true);
+  const snap = flipSnap('.rrow'), moved = us[i].items[0].id;
+  [us[i], us[j]] = [us[j], us[i]]; saveOrder(day, us); relabelTimer(); save(); buzz('pick');
+  fx('flip', { snap, sel: '.rrow', moved }); render(true);
 }
 /* 1 tap: pending exercises below the class move above it (or back below it) */
 function classLater(day, first) {
   const us = units(day), ci = us.findIndex(u => u.kind === 'class'); if (ci < 0) return;
+  const snap = flipSnap('.card');
   const pend = u => u.kind === 'ex' && !u.pin;
   let out;
   if (!first) { const mv = us.filter((u, i) => i > ci && pend(u)); out = us.filter(u => !mv.includes(u)); out.splice(out.indexOf(us[ci]), 0, ...mv); }
   else { const mv = us.filter((u, i) => i < ci && pend(u)); out = us.filter(u => !mv.includes(u)); out.splice(out.indexOf(us[ci]) + 1, 0, ...mv); }
-  saveOrder(day, out); relabelTimer(); save(); buzz([20, 40, 20]); lastLayout = Date.now(); render(true); toast(first ? 'Class first' : 'Exercises first');
+  saveOrder(day, out); relabelTimer(); save(); buzz('pick'); lastLayout = Date.now(); fx('flip', { snap, sel: '.card', dur: MO.d3 }); render(true); toast(first ? 'Class first' : 'Exercises first');
 }
 /* where pending exercises sit relative to the class: { above, below } counts */
 function aroundClass(day) {
@@ -1342,15 +1374,83 @@ function recommend(day) {
 const $ = s => document.querySelector(s);
 const tabsEl = $('#tabs'), mainEl = $('#main');
 
+/* ================= MOTION ================= */
+/* One-shot effects. A handler queues an effect, the next render runs it once on the new node.
+   Lists are rebuilt with innerHTML, so CSS entry animations would replay on every rebuild. */
+const MO = { d1: 120, d2: 200, d3: 320, d4: 520, out: 'cubic-bezier(0.2,0.8,0.2,1)', in: 'cubic-bezier(0.4,0,1,1)', std: 'cubic-bezier(0.4,0,0.2,1)' };
+const RM = matchMedia('(prefers-reduced-motion: reduce)');
+const SM = () => (RM.matches ? 'auto' : 'smooth');
+let sheetT = 0; const sheetMark = () => { sheetT = Date.now(); };
+let fxQ = [];
+const fx = (kind, o) => fxQ.push(Object.assign({ kind }, o));
+/* run one animation on el; cancels the same key still running there; never blocks input.
+   o.rm = opacity-only fallback for reduced motion; o.safe = color only, runs as is under reduced motion */
+function fxOnce(el, kf, o = {}) {
+  if (!el || !el.animate) return null;
+  let { rm, safe, key = 'fx', ...opt } = o;
+  if (RM.matches && !safe) { if (!rm) return null; kf = rm; opt = { duration: MO.d1, easing: MO.std }; }
+  el.getAnimations().forEach(a => { if (a.id === key) a.cancel(); });
+  try { return el.animate(kf, Object.assign({ duration: MO.d2, easing: MO.std, fill: 'none', id: key }, opt)); } catch (e) { return null; }
+}
+function fxFlush() { const q = fxQ; fxQ = []; q.forEach(f => { try { if (FX[f.kind]) FX[f.kind](f); } catch (e) {} }); }
+const exEl = id => mainEl.querySelector(`[data-ex="${id}"]`);
+const rowEl = (id, k) => mainEl.querySelector(`[data-ex="${id}"] .set[data-set="${k}"]`);
+const inView = el => { const r = el.getBoundingClientRect(), b = hud.getBoundingClientRect().top; return r.top > 0 && r.bottom < b; };
+/* a number that changed: up comes from below, down from above */
+function tickEl(el, dir) {
+  if (!el || !dir) return;
+  fxOnce(el, [{ transform: `translateY(${dir * 5}px)`, opacity: 0.35 }, { transform: 'none', opacity: 1 }],
+    { duration: MO.d1, easing: MO.out, key: 'tick', rm: [{ opacity: 0.5 }, { opacity: 1 }] });
+}
+const lockedIds = () => [...mainEl.querySelectorAll('.card[data-ex]')].filter(c => c.querySelector('.ok.locked')).map(c => c.dataset.ex);
+const fkey = el => el.dataset.u || el.dataset.ex || el.dataset.cls;
+function flipSnap(sel) { const m = new Map(); mainEl.querySelectorAll(sel).forEach(el => m.set(fkey(el), el.getBoundingClientRect().top)); return m; }
+const FX = {
+  /* set done: circle settles from its pressed size, the check draws, the row tints */
+  set: f => {
+    const row = rowEl(f.id, f.k), ok = row && row.querySelector('.ok'); if (!ok) return;
+    fxOnce(ok, [{ transform: 'scale(0.96)' }, { transform: 'none' }], { duration: MO.d2, easing: MO.out });
+    fxOnce(ok.querySelector('polyline'), [{ strokeDasharray: '25px', strokeDashoffset: '25px' }, { strokeDasharray: '25px', strokeDashoffset: '0px' }],
+      { duration: MO.d2, delay: 40, easing: MO.out, fill: 'backwards' });
+    fxOnce(row, [{ backgroundColor: 'rgba(204,255,0,0)' }, { backgroundColor: 'rgba(204,255,0,0.12)' }], { duration: MO.d3, easing: MO.std });
+  },
+  tick: f => { const r = rowEl(f.id, f.k); tickEl(r && r.querySelector(f.w ? '[data-vw]' : '[data-vr]'), f.dir); },
+  /* all sets of a card done: the border turns lime slowly */
+  complete: f => fxOnce(mainEl.querySelector(f.sel), [{ borderColor: '#27272A' }, { borderColor: '#CCFF00' }],
+    { duration: MO.d4, delay: MO.d2, easing: MO.std, fill: 'backwards', key: 'complete' }),
+  /* heart rate tapped: circles that were locked fade in */
+  unlock: f => f.ids.forEach(id => { const c = exEl(id); if (!c || c.querySelector('.ok.locked')) return;
+    c.querySelectorAll('.ok:not(.on)').forEach(o => fxOnce(o, [{ opacity: 0.3 }, { opacity: 1 }], { duration: MO.d3, easing: MO.std, key: 'unlock' })); }),
+  /* reorder: each item slides from its old place */
+  flip: f => {
+    const els = [...mainEl.querySelectorAll(f.sel)], lim = innerHeight * 1.5;
+    const d = els.map(el => { const y = f.snap.get(fkey(el)); return y == null ? 0 : y - el.getBoundingClientRect().top; });
+    els.forEach((el, i) => { if (Math.abs(d[i]) < 1 || Math.abs(d[i]) > lim) return;
+      fxOnce(el, [{ transform: `translateY(${d[i]}px)` }, { transform: 'none' }],
+        { duration: f.dur || MO.d2, easing: MO.std, key: 'flip', rm: fkey(el) === f.moved ? [{ opacity: 0.5 }, { opacity: 1 }] : null }); });
+  },
+  /* stats: done bars grow from the left, planned bars fade in after */
+  bars: () => {
+    [...mainEl.querySelectorAll('.cbar')].slice(0, 12).forEach((b, i) => { const t = i * 30;
+      fxOnce(b.querySelector('i:not(.lt)'), [{ transform: 'scaleX(0)' }, { transform: 'none' }], { duration: MO.d4, delay: t, easing: MO.out, fill: 'backwards', key: 'bar' });
+      fxOnce(b.querySelector('i.lt'), [{ opacity: 0 }, { opacity: 1 }], { duration: MO.d3, delay: t + MO.d3, easing: MO.std, fill: 'backwards', key: 'bar' }); });
+    [...mainEl.querySelectorAll('.wv .vb i')].slice(0, 12).forEach((v, i) =>
+      fxOnce(v, [{ transform: 'scaleX(0)' }, { transform: 'none' }], { duration: MO.d4, delay: i * 30, easing: MO.out, fill: 'backwards', key: 'bar' }));
+  },
+  /* session logged: "Done" settles into the day tab */
+  saved: f => fxOnce(tabsEl.querySelector(`[data-day="${f.day}"] .tt`), [{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
+    { duration: MO.d3, delay: MO.d2, easing: MO.out, fill: 'backwards', rm: [{ opacity: 0 }, { opacity: 1 }] })
+};
+
 function renderTabs() {
   const nx = nextUp(), tp = planFor(weekStart())[todayIdx()];
   tabsEl.innerHTML = ORDER.map(id => { const d = DAYS[id], n = weekCount(id);
     const tt = n ? (n > 1 ? 'Done ' + n + '×' : 'Done') : id === nx ? (id === tp ? 'Today' : 'Next') : '';
-    return `<button class="tab ${id === S.view ? 'active' : ''} ${d.type === 'class' ? 'cls' : ''} ${n ? 'done' : ''} ${id === nx && !n ? 'next' : ''}" data-day="${id}"><span>${d.tab}</span>${tt ? `<span class="tt">${tt}</span>` : ''}</button>`; }).join('');
+    return `<button class="tab ${id === S.view ? 'active' : ''} ${d.type === 'class' ? 'cls' : ''} ${n ? 'done' : ''} ${id === nx && !n ? 'next' : ''}" data-day="${id}"${id === S.view ? ' aria-current="page"' : ''}><span>${d.tab}</span>${tt ? `<span class="tt">${tt}</span>` : ''}</button>`; }).join('');
   $('#btnStats').classList.toggle('on', S.view === 'stats');
 }
 function centerTab() { const a = tabsEl.querySelector('.active') || tabsEl.querySelector('.next') || tabsEl.firstElementChild; if (a) tabsEl.scrollLeft = a.offsetLeft - (tabsEl.clientWidth - a.offsetWidth) / 2; }
-function render(keepScroll) { renderTabs(); centerTab(); if (S.view === 'stats') renderStats(); else renderDay(); updateHUD(); if (!keepScroll) window.scrollTo({ top: 0 }); }
+function render(keepScroll) { renderTabs(); if (!keepScroll) centerTab(); if (S.view === 'stats') renderStats(); else renderDay(); updateHUD(); fxFlush(); if (!keepScroll) window.scrollTo({ top: 0 }); }
 
 /* reorder mode is screen state only; it is on for one day view */
 let reorderDay = null;
@@ -1372,7 +1472,7 @@ function renderDay() {
     <p>${sub}</p>
     ${day.id === 'sat' ? `<div class="chips"><span class="chip ${wc ? 'red' : ''}">${wc ? 'Combat done this week' : 'Max 1× per week'}</span></div>` : ''}</section>
     <div class="hr ${hr === 'high' ? 'bad' : ''}"><div class="q">Resting heart rate${lift ? '' : ' before class'}</div>
-      <div class="opts">${[['low', '< 90'], ['mid', '90–100'], ['high', '> 100']].map(([k, l]) => `<button class="opt ${hr === k ? 'on' : ''} ${k === 'high' ? 'bad' : ''}" data-hr="${k}">${l}</button>`).join('')}</div>
+      <div class="opts">${[['low', '< 90'], ['mid', '90–100'], ['high', '> 100']].map(([k, l]) => `<button class="opt ${hr === k ? 'on' : ''} ${k === 'high' ? 'bad' : ''}" data-hr="${k}" aria-pressed="${hr === k}">${l}</button>`).join('')}</div>
       ${hr === 'low' || hr === 'mid' ? '' : `<div class="msg">${hr === 'high' ? (lift ? 'Too high. Sets locked. Do Yoga or walk.' : 'Too high. Skip the class. Do the swap.') : (lift ? 'Tap one to unlock your sets.' : 'Tap one before class.')}</div>`}</div>
     ${/^None/.test(day.warm) ? '' : `<div class="lbl">Warm-up</div><div class="warm"><span>${day.warm}</span>${WARMVID[day.id] ? `<a class="wlink" href="${ytUrl(WARMVID[day.id])}" target="_blank" rel="noopener">${IC.play}Video</a>` : ''}</div>`}
     <div class="lblrow"><div class="lbl">${lift ? 'Workout' : 'Session'}</div>${ro ? '' : movable >= 2 ? `<button class="rbtn" data-reorder>${IC.sort}Reorder</button>` : ''}</div>`;
@@ -1408,7 +1508,7 @@ function rowReorder(u, i, us, ci) {
   const up = canMove(u) && i > 0 && canPass(us[i - 1]), dn = canMove(u) && i < us.length - 1 && canPass(us[i + 1]);
   const right = u.pin ? `<span class="pin">${u.lock ? IC.lock : ''}${u.pin}</span>`
     : `<button class="mvb" data-mv="${i}:-1" aria-label="Move up" ${up ? '' : 'disabled'}>${IC.up}</button><button class="mvb" data-mv="${i}:1" aria-label="Move down" ${dn ? '' : 'disabled'}>${IC.down}</button>`;
-  return `<div class="rrow ${u.pin ? 'pinned' : ''}"><div class="rfig">${fig}</div><div class="rtx"><b>${name}</b><small>${sub}</small></div><div class="rbtns">${right}</div></div>`;
+  return `<div class="rrow ${u.pin ? 'pinned' : ''}" data-u="${it.id}"><div class="rfig">${fig}</div><div class="rtx"><b>${name}</b><small>${sub}</small></div><div class="rbtns">${right}</div></div>`;
 }
 
 function cardEx(ex, i) {
@@ -1417,7 +1517,7 @@ function cardEx(ex, i) {
   const sg = suggest(c), od = otherDone(ex);
   const differs = !c.noW && !ss.some(s => s.done) && ss.some(s => s.w !== sg.w || s.r !== sg.r);
   const arrow = sg.t === 'up' ? '▲ ' : sg.t === 'down' ? '▼ ' : '';
-  const swapLine = ex.added ? (ss.some(s => s.done) ? '' : `<button class="swap" data-xrm="${ex.id}"><span class="z">${IC.x}</span><span class="tx">Remove from today</span><span class="chev">›</span></button>`)
+  const swapLine = ex.added ? (ss.some(s => s.done) ? `<div class="swap fixed"><span class="z">${IC.plus}</span><span class="tx">Added today</span></div>` : `<button class="swap" data-xrm="${ex.id}"><span class="z">${IC.x}</span><span class="tx">Remove from today</span><span class="chev">›</span></button>`)
     : c.isSwap
     ? `<button class="swap on" data-swap="${ex.id}"><span class="z">${IC.back}</span><span class="tx">Back to <b>${ex.name}</b></span><span class="chev">›</span></button>`
     : `<button class="swap" data-swap="${ex.id}"><span class="z">${IC.swap}</span><span class="tx">${ex.swapAsk || 'Busy?'} Swap to <b>${ex.swap.name}</b></span><span class="chev">›</span></button>`;
@@ -1487,17 +1587,45 @@ function updateHUD() {
   if (stats) return;
   const p = dayProgress(DAYS[S.view]);
   $('#progN').textContent = p.d + ' / ' + p.t;
-  $('#progBar').style.width = (p.t ? p.d / p.t * 100 : 0) + '%';
+  $('#progBar').style.transform = 'scaleX(' + (p.t ? p.d / p.t : 0) + ')';
 }
 
 /* ================= TIMER ================= */
 const hud = $('#hud'), ringBar = $('#ringBar'), CIRC = 2 * Math.PI * 42;
 let tick = null, buzzed = false, skipArmed = 0;
 const timerActive = () => !!(S.timer && S.timer.end > Date.now());
+/* the rest ring is one linear animation per rest: smooth at 120 Hz, no work per frame */
+let ringA = null;
+function ringRun() {
+  ringBar.getAnimations().forEach(a => a.cancel()); ringA = null;
+  if (!S.timer || RM.matches) return;
+  const total = S.timer.total * 1000, left = Math.max(0, S.timer.end - Date.now()); if (!left) return;
+  ringA = ringBar.animate([{ strokeDashoffset: (CIRC * (1 - Math.min(1, left / total))) + 'px' }, { strokeDashoffset: CIRC + 'px' }],
+    { duration: left, easing: 'linear', fill: 'forwards', id: 'ring' });
+}
+/* rest over: one breath on the circle to tap next */
+function breathNext() {
+  const r = S.timer && S.timer.ref, card = r && exEl(r.id); if (!card) return;
+  let ok = card.querySelector('.set.sel:not(.done) .ok:not(.locked)');
+  for (let n = card.nextElementSibling; !ok && n; n = n.nextElementSibling) if (n.matches('.card[data-ex]')) ok = n.querySelector('.set.sel:not(.done) .ok:not(.locked)');
+  if (!ok || !inView(ok)) return;
+  fxOnce(ok, [{ transform: 'none' }, { transform: 'scale(1.06)' }, { transform: 'none' }], { duration: MO.d4, delay: MO.d2, easing: MO.std, key: 'breath' });
+}
+/* the end beep is scheduled on the audio clock, so it still plays when timers are slowed (screen off) */
+let beepAt = [];
+function scheduleBeep() {
+  cancelBeep(); if (!actx || !timerActive()) return;
+  try { const t0 = actx.currentTime + (S.timer.end - Date.now()) / 1000;
+    [0, 0.3].forEach(o => { const os = actx.createOscillator(), g = actx.createGain(); os.frequency.value = 880;
+      g.gain.setValueAtTime(0.0001, t0 + o); g.gain.exponentialRampToValueAtTime(0.35, t0 + o + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + o + 0.2);
+      os.connect(g).connect(actx.destination); os.start(t0 + o); os.stop(t0 + o + 0.22); beepAt.push(os); });
+  } catch (e) {}
+}
+function cancelBeep() { beepAt.forEach(o => { try { o.stop(); } catch (e) {} }); beepAt = []; }
 function startTimer(sec, name, ref) {
   S.rate = null; hud.classList.remove('rate'); keepAwake(); unlockAudio();
   S.timer = { end: Date.now() + sec * 1000, total: sec, name, ref }; buzzed = false; save();
-  showTimer(); clearInterval(tick); tick = setInterval(runTick, 250); runTick(); applyLock();
+  showTimer(); clearInterval(tick); tick = setInterval(runTick, 250); runTick(); applyLock(); ringRun(); scheduleBeep();
 }
 function showTimer() {
   hud.classList.add('timer'); hud.classList.remove('go'); document.body.classList.add('tm-on');
@@ -1509,28 +1637,36 @@ function paintFeel() {
   const ref = curRef(); let f = null;
   if (ref && getEx(ref.id)) { const s = (S.sets[ref.key] || [])[ref.k]; f = s && s.f; }
   $('#feel').style.display = ref ? '' : 'none';
-  document.querySelectorAll('#feel [data-feel]').forEach(b => b.classList.toggle('on', b.dataset.feel === f));
+  document.querySelectorAll('#feel [data-feel]').forEach(b => { b.classList.toggle('on', b.dataset.feel === f); b.setAttribute('aria-pressed', b.dataset.feel === f); });
 }
 function runTick() {
   if (!S.timer) { endTimer(); return; }
   const left = Math.max(0, S.timer.end - Date.now()), sec = Math.ceil(left / 1000);
   $('#btnSkip').classList.toggle('dim', left > 0 && S.timer.total * 1000 - left < 90000);
-  $('#tNum').textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
-  ringBar.style.strokeDashoffset = (CIRC * (1 - Math.min(1, left / (S.timer.total * 1000)))).toFixed(2);
+  const tn = $('#tNum'), tx = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); if (tn.textContent !== tx) tn.textContent = tx;
+  if (!ringA) ringBar.style.strokeDashoffset = (CIRC * (1 - Math.min(1, left / (S.timer.total * 1000)))).toFixed(2);
   if (left <= 0) finishTimer();
 }
 function finishTimer() {
   clearInterval(tick); tick = null;
+  if (ringA) { ringA.cancel(); ringA = null; }
   hud.classList.add('go'); $('#tL').textContent = 'Rest done'; $('#tNum').textContent = 'GO'; ringBar.style.strokeDashoffset = 0;
-  if (!buzzed) { buzzed = true; buzz([180, 90, 180]); beep(); }
   applyLock();
+  if (!buzzed) { buzzed = true;
+    /* a cue that comes late (screen was off) only startles: skip it */
+    const late = Date.now() - S.timer.end;
+    if (late > 3000) cancelBeep(); else if (!beepAt.length) beep();
+    if (late < 3000) buzz('restEnd');
+    fxOnce(ringBar, [{ strokeDashoffset: CIRC + 'px' }, { strokeDashoffset: '0px' }], { duration: MO.d4, easing: MO.out, key: 'ring' });
+    fxOnce($('#tNum'), [{ opacity: 0, transform: 'scale(0.96)' }, { opacity: 1, transform: 'none' }], { duration: MO.d3, easing: MO.out, rm: [{ opacity: 0 }, { opacity: 1 }] });
+    breathNext(); }
   setTimeout(() => { if (S.timer && !timerActive()) endTimer(); }, 4000);
 }
-function endTimer() { clearInterval(tick); tick = null; S.timer = null; save(); hud.classList.remove('timer', 'go', 'rate'); document.body.classList.remove('tm-on'); applyLock(); }
+function endTimer() { clearInterval(tick); tick = null; if (ringA) { ringA.cancel(); ringA = null; } cancelBeep(); S.timer = null; save(); hud.classList.remove('timer', 'go', 'rate'); document.body.classList.remove('tm-on'); applyLock(); }
 function scrollNextCard(dayId) {
   const day = DAYS[dayId], items = dayItems(day), i = items.indexOf(mainOf(day)), nx = items.slice(i + 1).find(hasPending) || items.find(hasPending); if (!nx) return;
   const el = mainEl.querySelector(`[data-ex="${nx.id}"]`); if (!el) return;
-  const top = $('.hdr').getBoundingClientRect().bottom + 8, r = el.getBoundingClientRect(); if (r.top > top) window.scrollBy({ top: r.top - top, behavior: 'smooth' });
+  const top = $('.hdr').getBoundingClientRect().bottom + 8, r = el.getBoundingClientRect(); if (r.top > top) window.scrollBy({ top: r.top - top, behavior: SM() });
 }
 /* lock set buttons per card: rest timer, or the heart-rate gate for that card's place in the list */
 function applyLock() {
@@ -1555,17 +1691,21 @@ function scrollNext(exId) {
   if (!tg) { let n = card.nextElementSibling; while (n && !n.matches('.card')) n = n.nextElementSibling; tg = n; isCard = true; }
   if (!tg) return;
   const top = $('.hdr').getBoundingClientRect().bottom + 8, bot = hud.getBoundingClientRect().top - 16, r = tg.getBoundingClientRect();
-  if (isCard) { if (r.top > top) window.scrollBy({ top: r.top - top, behavior: 'smooth' }); return; }
-  if (r.bottom > bot) window.scrollBy({ top: Math.min(r.bottom - bot, r.top - top), behavior: 'smooth' });
-  else if (r.top < top) window.scrollBy({ top: r.top - top, behavior: 'smooth' });
+  if (isCard) { if (r.top > top) window.scrollBy({ top: r.top - top, behavior: SM() }); return; }
+  if (r.bottom > bot) window.scrollBy({ top: Math.min(r.bottom - bot, r.top - top), behavior: SM() });
+  else if (r.top < top) window.scrollBy({ top: r.top - top, behavior: SM() });
 }
 /* rate the final set of the day (no rest timer after it) */
 const curRef = () => (S.timer && S.timer.ref) || S.rate || null;
 function showRate(ref) { S.rate = ref; save(); hud.classList.add('timer', 'rate'); hud.classList.remove('go'); document.body.classList.add('tm-on'); paintFeel(); }
 function hideRate() { if (!S.rate) return; S.rate = null; save(); hud.classList.remove('rate'); if (!S.timer) { hud.classList.remove('timer', 'go'); document.body.classList.remove('tm-on'); } }
 /* keep screen on during a workout + beep at end of rest */
-let wake = null, actx = null;
-async function keepAwake() { try { if ('wakeLock' in navigator && !wake) { wake = await navigator.wakeLock.request('screen'); wake.addEventListener('release', () => { wake = null; }); } } catch (e) {} }
+let wake = null, actx = null, wakeBusy = false;
+async function keepAwake() {
+  if (wake || wakeBusy || !('wakeLock' in navigator)) return; wakeBusy = true;
+  try { wake = await navigator.wakeLock.request('screen'); wake.addEventListener('release', () => { wake = null; }); } catch (e) {}
+  wakeBusy = false;
+}
 function releaseWake() { try { if (wake) wake.release(); } catch (e) {} wake = null; }
 function unlockAudio() { try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); if (actx.state === 'suspended') actx.resume(); } catch (e) {} }
 function beep() {
@@ -1577,7 +1717,7 @@ function beep() {
 }
 function resumeTimer() {
   if (!S.timer) return;
-  if (S.timer.end > Date.now()) { showTimer(); runTick(); tick = setInterval(runTick, 250); } else { S.timer = null; save(); }
+  if (S.timer.end > Date.now()) { showTimer(); runTick(); tick = setInterval(runTick, 250); ringRun(); scheduleBeep(); } else { S.timer = null; save(); }
   applyLock();
 }
 function addRest(sec) {
@@ -1585,27 +1725,28 @@ function addRest(sec) {
   if (!timerActive()) S.timer.end = Date.now();
   S.timer.end += sec * 1000; S.timer.total += sec; buzzed = false; save();
   hud.classList.remove('go'); $('#tL').textContent = 'Rest';
-  if (!tick) tick = setInterval(runTick, 250); runTick(); applyLock();
+  if (!tick) tick = setInterval(runTick, 250); runTick(); applyLock(); ringRun(); scheduleBeep();
 }
-$('#btnPlus').addEventListener('click', () => { buzz(15); addRest(30); });
+$('#btnPlus').addEventListener('click', () => { buzz('tick'); addRest(30); });
 $('#btnSkip').addEventListener('click', () => {
-  if (!S.timer) return; buzz(15);
+  if (!S.timer) return; buzz('tick');
   if (!timerActive()) { endTimer(); return; }
   const elapsed = S.timer.total * 1000 - (S.timer.end - Date.now());
-  if (elapsed < 90000) { toast('Rest 90 s minimum', true); buzz([40, 40, 40]); return; }
+  if (elapsed < 90000) { toast('Rest 90 s minimum', true); buzz('block'); return; }
   if (skipArmed && Date.now() - skipArmed < 2500) { endTimer(); toast('Rest skipped', true); return; }
   skipArmed = Date.now(); $('#btnSkip').textContent = 'Tap again'; $('#btnSkip').classList.add('warn');
   setTimeout(() => { if (S.timer && skipArmed) { $('#btnSkip').textContent = 'Skip'; $('#btnSkip').classList.remove('warn'); skipArmed = 0; } }, 2500);
 });
 $('#feel').addEventListener('click', e => {
   const b = e.target.closest('[data-feel]'), ref = curRef(); if (!b || !ref) return;
-  buzz(15);
+  buzz('pick');
   const ex = getEx(ref.id), ss = S.sets[ref.key]; if (!ex || !ss || !ss[ref.k]) return;
   const c = ref.key.endsWith('~s') ? asSwap(ex) : ex;
   const f = b.dataset.feel, prevF = ss[ref.k].f; ss[ref.k].f = f;
-  const nx = ss[ref.k + 1];
+  const nx = ss[ref.k + 1], w0 = nx && nx.w;
   let msg = 'Saved';
-  if (nx && !nx.done && !c.noW) {
+  /* a next set the user already changed by hand keeps its kg */
+  if (nx && !nx.done && !c.noW && !nx.hand) {
     const base = ss[ref.k].w;
     if (f === 'e') { nx.w = wNext(c, base, 1); msg = 'Next set ' + fmtW(nx.w) + ' kg'; }
     if (f === 'g') { nx.w = base; msg = 'Keep ' + fmtW(base) + ' kg'; }
@@ -1614,118 +1755,130 @@ $('#feel').addEventListener('click', e => {
   if (f === 'h' && prevF !== 'h' && timerActive()) { addRest(30); msg += ' · +30s rest'; }
   const onDay = S.view !== 'stats' && dayItems(DAYS[S.view]).some(it => it.id === ex.id);
   if (S.timer && onDay) { S.timer.name = nextLabel(ex, ref.k); $('#tN').textContent = S.timer.name; }
+  if (nx && nx.w !== w0 && onDay) fx('tick', { id: ex.id, k: ref.k + 1, w: 1, dir: Math.sign(nx.w - w0) });
   save(); paintFeel(); if (onDay) refreshCard(ex); toast(msg, f === 'h');
   if (S.rate && !S.timer) setTimeout(hideRate, 700);
 });
 
 /* ================= EVENTS ================= */
-tabsEl.addEventListener('click', e => { const b = e.target.closest('.tab'); if (!b) return; buzz(10); S.view = b.dataset.day; S.viewDate = todayStr(); save(); render(); });
+tabsEl.addEventListener('click', e => { const b = e.target.closest('.tab'); if (!b) return; buzz('tick'); S.view = b.dataset.day; S.viewDate = todayStr(); save(); render(); });
 
 mainEl.addEventListener('click', e => {
   if (S.view === 'stats') { statsClick(e); return; }
   const t = e.target;
   const card = t.closest('[data-ex]'); const ex = card ? getEx(card.dataset.ex) : null;
   if (Date.now() - lastLayout < 600 && !t.closest('[data-mv]')) return;
-  if (t.closest('[data-reorder]')) { buzz(10); reorderDay = reorderDay === S.view ? null : S.view; render(true); return; }
+  if (t.closest('[data-reorder]')) { buzz('tick'); reorderDay = reorderDay === S.view ? null : S.view; render(true); return; }
   const mv = t.closest('[data-mv]'); if (mv) { const [i, d] = mv.dataset.mv.split(':').map(Number); moveUnit(i, d); return; }
   const cly = t.closest('[data-clslater]'); if (cly) { classLater(DAYS[S.view], cly.dataset.clslater === 'first'); return; }
-  const ax = t.closest('[data-addx]'); if (ax) { buzz(10); openAdd(ax.dataset.addx); return; }
+  const ax = t.closest('[data-addx]'); if (ax) { buzz('tick'); openAdd(ax.dataset.addx); return; }
   const xr = t.closest('[data-xrm]'); if (xr) { const x = getEx(xr.dataset.xrm); if (x && !hasDone(x)) removeExtra(DAYS[S.view], x.id); return; }
 
   const hrb = t.closest('[data-hr]');
-  if (hrb) { buzz(15); S.hr = { v: hrb.dataset.hr, d: todayStr() };
+  if (hrb) { buzz('pick'); setTimeout(unlockAudio, MO.d3); keepAwake(); const ids = lockedIds(); S.hr = { v: hrb.dataset.hr, d: todayStr() };
     if (DAYS[S.view].type === 'class') DAYS[S.view].items.forEach(it => { if (it.main && !S.classes[it.id] && !S.cin[it.id]) S.swaps[it.id] = hrb.dataset.hr === 'high' ? 'use' : 0; });
-    save(); render(true); if (hrb.dataset.hr === 'high') buzz([60, 60, 60]); return; }
+    if (hrb.dataset.hr !== 'high') fx('unlock', { ids }); save(); render(true); return; }
 
   const g = t.closest('[data-guide]');
-  if (g) { buzz(15); const x = getEx(g.dataset.guide); if (x) openGuide(x, isSwapped(x)); return; }
+  if (g) { buzz('tick'); const x = getEx(g.dataset.guide); if (x) openGuide(x, isSwapped(x)); return; }
 
   const ap = t.closest('[data-apply]');
-  if (ap && ex) { buzz(15); const sg = suggest(cur(ex)); sets(ex).forEach(s => { if (!s.done) { s.w = sg.w; s.r = sg.r; } }); save(); refreshCard(ex); return; }
+  if (ap && ex) { buzz('pick'); const sg = suggest(cur(ex));
+    sets(ex).forEach((s, k) => { if (s.done) return;
+      if (s.w !== sg.w) fx('tick', { id: ex.id, k, w: 1, dir: Math.sign(sg.w - s.w) });
+      if (s.r !== sg.r) fx('tick', { id: ex.id, k, w: 0, dir: Math.sign(sg.r - s.r) });
+      s.w = sg.w; s.r = sg.r; delete s.hand; });
+    save(); refreshCard(ex); return; }
 
   const sw = t.closest('[data-swap]');
   if (sw && ex) {
-    buzz([20, 40, 20]);
+    buzz('pick');
     const kept = sets(ex).filter(s => s.done).length;
     S.swaps[ex.id] = isSwapped(ex) ? 0 : 'use'; delete S.sel[ex.id]; save(); refreshCard(ex);
     toast((isSwapped(ex) ? 'Swapped: ' + ex.swap.name : 'Back to ' + ex.name) + (kept ? ' · ' + kept + ' kept' : '')); return;
   }
 
   const pill = t.closest('[data-add]');
-  if (pill && ex) { buzz(15); const c = cur(ex), ss = sets(ex); let k = S.sel[ex.id]; if (k === undefined || !ss[k] || ss[k].done) k = ss.findIndex(s => !s.done); if (k < 0) return;
-    { const w0 = rnd(ss[k].w + parseFloat(pill.dataset.add)); ss[k].w = c.max ? Math.min(c.max, w0) : w0; if (c.max && w0 > c.max) toast('Max safe load ' + fmtW(c.max) + ' kg', true); } S.sel[ex.id] = k; save(); refreshRow(ex, k); return; }
+  if (pill && ex) { const c = cur(ex), ss = sets(ex); let k = S.sel[ex.id]; if (k === undefined || !ss[k] || ss[k].done) k = ss.findIndex(s => !s.done); if (k < 0) return;
+    const w0 = ss[k].w, wt = rnd(w0 + parseFloat(pill.dataset.add)), cap = !!(c.max && wt > c.max); ss[k].w = cap ? c.max : wt; ss[k].hand = true;
+    buzz(cap ? 'block' : 'tick'); if (cap) toast('Max safe load ' + fmtW(c.max) + ' kg', true);
+    S.sel[ex.id] = k; save(); refreshRow(ex, k, Math.sign(ss[k].w - w0), true); return; }
 
   const st = t.closest('[data-st]');
   if (st && ex) { const row = st.closest('.set'), k = +row.dataset.set, c = cur(ex), s = sets(ex)[k];
-    if (s.done) return; buzz(15);
-    const op = st.dataset.st;
-    if (op === 'w+') { const w0 = rnd(s.w + c.step); s.w = c.max ? Math.min(c.max, w0) : w0; if (c.max && w0 > c.max) toast('Max safe load ' + fmtW(c.max) + ' kg', true); }
+    if (s.done) return;
+    const op = st.dataset.st, w0 = s.w, r0 = s.r; let cap = false;
+    if (op === 'w+') { const wt = rnd(s.w + c.step); cap = !!(c.max && wt > c.max); s.w = cap ? c.max : wt; if (cap) toast('Max safe load ' + fmtW(c.max) + ' kg', true); }
     if (op === 'w-') s.w = rnd(s.w - c.step);
     if (op === 'r+') s.r = Math.min(120, s.r + repStep(c));
     if (op === 'r-') s.r = Math.max(1, s.r - repStep(c));
-    S.sel[ex.id] = k; save(); refreshRow(ex, k); return; }
+    buzz(cap ? 'block' : 'tick'); if (op[0] === 'w') s.hand = true;
+    S.sel[ex.id] = k; save(); refreshRow(ex, k, Math.sign(op[0] === 'w' ? s.w - w0 : s.r - r0), op[0] === 'w'); return; }
 
   const ok = t.closest('.ok');
   if (ok && ex) {
     const row = ok.closest('.set'), k = +row.dataset.set, ss = sets(ex), s = ss[k], c = cur(ex);
-    const nope = msg => { ok.classList.add('hit'); setTimeout(() => ok.classList.remove('hit'), 400); toast(msg, true); buzz([40, 40, 40]); };
+    const nope = msg => { ok.classList.add('hit'); setTimeout(() => ok.classList.remove('hit'), 400); toast(msg, true); buzz('block'); };
     if (s.done) {
       if (Date.now() - (s.t || 0) < 1200) return; /* ignore a shaky double tap */
-      s.done = false; delete s.f; delete s.pb; S.sel[ex.id] = k;
+      buzz('pick'); s.done = false; delete s.f; delete s.pb; S.sel[ex.id] = k;
       const r0 = curRef(); if (r0 && r0.id === ex.id && r0.k === k) { if (S.timer) endTimer(); hideRate(); }
       save(); if (mainOf(DAYS[S.view])) render(true); else refreshCard(ex); return;
     }
     const gt = gate(DAYS[S.view], ex);
-    if (gt) { nope(gt); if (/resting HR|too high/.test(gt)) { const hb = $('.hr'); if (hb) hb.scrollIntoView({ behavior: 'smooth', block: 'center' }); } return; }
+    if (gt) { nope(gt); if (/resting HR|too high/.test(gt)) { const hb = $('.hr'); if (hb) hb.scrollIntoView({ behavior: SM(), block: 'center' }); } return; }
     if (timerActive()) { nope('Rest first'); return; }
-    s.done = true; s.t = Date.now(); buzz([30, 50, 30]); hideRate();
+    s.done = true; s.t = Date.now(); buzz('done'); hideRate();
     if (!S.start[S.view]) S.start[S.view] = Date.now();
     const pb = !c.noW && !c.assist && (S.history[c.hk] || []).some(e => e.sets.length) && s.w > histMax(c.hk) && !ss.some(x => x !== s && x.done && x.pb && x.w >= s.w); if (pb) s.pb = true;
-    if (ss[k + 1] && !ss[k + 1].done) { ss[k + 1].w = s.w; ss[k + 1].r = s.r; S.sel[ex.id] = k + 1; } else delete S.sel[ex.id];
+    if (ss[k + 1] && !ss[k + 1].done) { ss[k + 1].w = s.w; ss[k + 1].r = s.r; delete ss[k + 1].hand; S.sel[ex.id] = k + 1; } else delete S.sel[ex.id];
+    fx('set', { id: ex.id, k }); if (ss.every(x => x.done)) fx('complete', { sel: '[data-ex="' + ex.id + '"]' });
     save(); if (mainOf(DAYS[S.view])) render(true); else refreshCard(ex);
     const ref = { id: ex.id, key: skey(ex), k }, p = dayProgress(DAYS[S.view]);
     if (p.d < p.t) { startTimer(c.rest, nextLabel(ex, k), ref); setTimeout(() => scrollNext(ex.id), 350); }
     else { showRate(ref); if (!pb) toast('All done. Rate it, then Finish.'); }
-    if (pb) toast('New best · ' + fmtW(s.w) + ' kg');
+    if (pb) { const t0 = toastT; setTimeout(() => { if (toastT === t0) toast('New best · ' + fmtW(s.w) + ' kg', false, 3000); }, 420); }
     return;
   }
 
   const rowTap = t.closest('.set');
-  if (rowTap && ex) { const k = +rowTap.dataset.set; if (!sets(ex)[k].done) { S.sel[ex.id] = k; save(); selectRow(card, k); } return; }
+  if (rowTap && ex) { const k = +rowTap.dataset.set; if (!sets(ex)[k].done) { buzz('tick'); S.sel[ex.id] = k; save(); selectRow(card, k); } return; }
 
   const csw = t.closest('[data-clsswap]');
-  if (csw) { buzz([20, 40, 20]); const id = csw.dataset.clsswap; S.swaps[id] = S.swaps[id] === 'use' ? 0 : 'use'; save(); render(true); return; }
+  if (csw) { buzz('pick'); const id = csw.dataset.clsswap; S.swaps[id] = S.swaps[id] === 'use' ? 0 : 'use'; save(); render(true); return; }
   const cm = t.closest('[data-calm]');
-  if (cm) { buzz([30, 50, 30]); S.calm[cm.dataset.calm] = todayStr(); save(); render(true); toast(DAYS[S.view].after[0].toUpperCase() + DAYS[S.view].after.slice(1) + ' unlocked'); setTimeout(() => scrollNextCard(cm.dataset.calm), 350); return; }
+  if (cm) { buzz('done'); const ids = lockedIds(); S.calm[cm.dataset.calm] = todayStr(); fx('unlock', { ids }); save(); render(true); toast(DAYS[S.view].after[0].toUpperCase() + DAYS[S.view].after.slice(1) + ' unlocked'); setTimeout(() => scrollNextCard(cm.dataset.calm), 350); return; }
   const cl = t.closest('[data-clschk]');
   if (cl) {
     const id = cl.dataset.clschk, it = EX[id], now = Date.now();
-    if (S.classes[id]) { if (now - S.classes[id] < 1200) return; delete S.classes[id]; delete S.calm[S.view]; }
+    let hz = 'done';
+    if (S.classes[id]) { if (now - S.classes[id] < 1200) return; delete S.classes[id]; delete S.calm[S.view]; hz = 'pick'; }
     else if (it.main && !S.cin[id]) { if (timerActive()) endTimer(); S.cin[id] = now; if (!S.start[S.view]) S.start[S.view] = now; }
     else if (it.main && now - S.cin[id] < 1200) return; /* shaky double tap on Start */
-    else { S.classes[id] = now; delete S.cin[id]; if (!S.start[S.view]) S.start[S.view] = now - clsLen(it) * 60000; }
-    buzz([30, 50, 30]); save(); render(true); afterChange(); return; }
+    else { S.classes[id] = now; delete S.cin[id]; if (!S.start[S.view]) S.start[S.view] = now - clsLen(it) * 60000; fx('complete', { sel: '[data-cls="' + id + '"]' }); }
+    buzz(hz); save(); render(true); afterChange(); return; }
 
-  if (t.id === 'btnReset') { resetDay(); return; }
-  if (t.id === 'btnFinish') { openFinish(); return; }
+  if (t.id === 'btnReset') { buzz('tick'); resetDay(); return; }
+  if (t.id === 'btnFinish') { buzz('tick'); openFinish(); return; }
 });
 
 function selectRow(card, k) { card.querySelectorAll('.set').forEach(r => r.classList.toggle('sel', +r.dataset.set === k)); }
-function refreshRow(ex, k) {
+function refreshRow(ex, k, dir, w) {
   const card = mainEl.querySelector(`[data-ex="${ex.id}"]`); if (!card) return;
   const c = cur(ex), row = card.querySelector(`.set[data-set="${k}"]`), s = sets(ex)[k];
   const vw = row.querySelector('[data-vw]'); if (vw) vw.innerHTML = fmtW(s.w) + (k ? '' : `<small>${c.assist ? 'assist' : 'kg'}</small>`);
   row.querySelector('[data-vr]').innerHTML = s.r + (k ? '' : `<small>${repUnit(c)}</small>`);
+  tickEl(row.querySelector(w ? '[data-vw]' : '[data-vr]'), dir);
   selectRow(card, k);
   const ss = sets(ex), sg = suggest(c), differs = !c.noW && !ss.some(x => x.done) && ss.some(x => x.w !== sg.w || x.r !== sg.r);
   const ap = card.querySelector('[data-apply]'); if (ap) ap.remove();
   if (differs) card.querySelector('.sug').insertAdjacentHTML('beforeend', `<button class="apply" data-apply="${ex.id}">Use ${fmtW(sg.w)} kg</button>`);
 }
 function refreshCard(ex) {
-  const old = mainEl.querySelector(`[data-ex="${ex.id}"]`); if (!old) return;
+  const old = mainEl.querySelector(`[data-ex="${ex.id}"]`); if (!old) { fxQ = []; return; }
   const tmp = document.createElement('div'); tmp.innerHTML = cardEx(ex, 0);
   old.replaceWith(tmp.firstElementChild);
-  afterChange();
+  afterChange(); fxFlush();
 }
 function afterChange() { renderTabs(); updateHUD(); applyLock(); const f = $('#btnFinish'); if (f) f.disabled = dayProgress(DAYS[S.view]).d === 0; }
 
@@ -1745,7 +1898,7 @@ function openGuide(ex, showSwap) {
     ${g.isSwap ? `<div class="kicker">Swap for ${ex.name}</div>` : ''}
     <h2>${g.name}</h2>
     <div class="meta">${g.vn}</div>
-    <div class="mvbox">${moveSVG(g.move, true)}</div>
+    <div class="mvbox">${moveSVG(g.move, !RM.matches)}</div>
     <p class="lead">${g.what}</p>
     <div class="startbox">${(sg0 => (sg0.t === 'start' ? 'Start' : 'Today') + ' <b>' + (g.noW ? g.noW : fmtW(sg0.w) + ' ' + wUnit(g)) + ' × ' + sg0.r + ' ' + repUnit(g))(suggest(g))}${g.side ? ' / side' : ''}</b> · ${g.sets} sets · ${g.rest}s rest${g.assist ? '<br>Less assist = harder' : ''}</div>
     <a class="btn btn-g" href="${vid ? ytUrl(vid) : ytSearch(g.name)}" target="_blank" rel="noopener">${IC.play}${vid ? 'Gym video' : 'Find a video'}</a>
@@ -1760,9 +1913,9 @@ function openGuide(ex, showSwap) {
 }
 $('#guideBox').addEventListener('click', e => {
   const ms = e.target.closest('[data-missing]');
-  if (ms) { buzz([20, 40, 20]); const id = ms.dataset.missing, x = EX[id]; S.missing[id] = !S.missing[id]; S.swaps[id] = S.missing[id] ? 'use' : 0; delete S.sel[id]; save(); closeAll(); render(true);
+  if (ms) { buzz('pick'); const id = ms.dataset.missing, x = EX[id]; S.missing[id] = !S.missing[id]; S.swaps[id] = S.missing[id] ? 'use' : 0; delete S.sel[id]; save(); closeAll(); render(true);
     toast(S.missing[id] ? 'From now on: ' + x.swap.name : 'From now on: ' + x.name); return; }
-  const b = e.target.closest('[data-gother]'); if (!b) return; buzz(10); openGuide(EX[b.dataset.gother], b.dataset.which === 'swap');
+  const b = e.target.closest('[data-gother]'); if (!b) return; buzz('tick'); openGuide(EX[b.dataset.gother], b.dataset.which === 'swap');
 });
 
 /* ================= FINISH ================= */
@@ -1810,7 +1963,7 @@ function logSession() {
       if (S.history[c.hk].length > 100) S.history[c.hk].shift(); n++; };
     put(cur(it), sets(it).filter(s => s.done)); put(otherCur(it), otherDone(it));
   });
-  if (!n) { toast('Nothing to log', true); return; }
+  if (!n) { toast('Nothing to log', true); buzz('block'); return; }
   const p = dayProgress(day), swapped = day.items.some(it => it.cls && it.main && S.classes[it.id] && clsSwapped(it));
   const exSets = items.filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0);
   const sess = { date, day: day.id, title: day.title + (swapped ? ' · swap' : ''), type: day.type, vol: Math.round(dayVolume(day)), sets: day.type === 'class' ? exSets : p.d };
@@ -1821,7 +1974,12 @@ function logSession() {
   items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
   delete S.order[day.id]; delete S.extra[day.id]; reorderDay = null;
   if (S.timer) endTimer(); hideRate(); releaseWake();
-  save(); closeAll(); buzz([30, 50, 30, 50, 60]); render(); toast('Logged');
+  save(); closeAll(); buzz('logged');
+  /* the bar clears with no animation (a draining bar reads as "progress lost"); "Done" settles into the tab */
+  const pbar = $('#progBar'); pbar.style.transition = 'none';
+  fx('saved', { day: day.id }); render();
+  void pbar.offsetWidth; pbar.style.transition = '';
+  toast('Logged');
 }
 
 /* ================= STATS ================= */
@@ -1861,9 +2019,10 @@ function clsLine(a, b) {
 }
 function renderStats() {
   const tab = S.statTab || 'week', rng = S.statRange === '3m' ? '3m' : '1m';
-  mainEl.innerHTML = `<div class="seg">${[['week', 'Week'], ['month', 'Month'], ['lifts', 'Lifts']].map(([k, l]) => `<button class="${tab === k ? 'on' : ''}" data-stab="${k}">${l}</button>`).join('')}</div>
-    ${tab === 'month' ? `<div class="seg sm rng">${[['1m', '4 wk'], ['3m', '12 wk']].map(([k, l]) => `<button class="${rng === k ? 'on' : ''}" data-rng="${k}">${l}</button>`).join('')}</div>` : ''}
+  mainEl.innerHTML = `<div class="seg">${[['week', 'Week'], ['month', 'Month'], ['lifts', 'Lifts']].map(([k, l]) => `<button class="${tab === k ? 'on' : ''}" data-stab="${k}" aria-pressed="${tab === k}">${l}</button>`).join('')}</div>
+    ${tab === 'month' ? `<div class="seg sm rng">${[['1m', '4 wk'], ['3m', '12 wk']].map(([k, l]) => `<button class="${rng === k ? 'on' : ''}" data-rng="${k}" aria-pressed="${rng === k}">${l}</button>`).join('')}</div>` : ''}
     ${tab === 'week' ? statsWeek() : tab === 'month' ? (rng === '3m' ? stats3M() : statsMonth()) : statsLifts()}`;
+  fxFlush();
 }
 function planWarn(plan) {
   const w = [], a = plan.indexOf('mon'), b = plan.indexOf('thu'), lifts = plan.filter(x => LIFTS.includes(x)).length;
@@ -2035,8 +2194,8 @@ function openPlan(ws, i) {
 $('#planBox').addEventListener('click', e => {
   const b = e.target.closest('[data-pick]'); if (!b || !planEdit) return;
   const { ws, i } = planEdit, id = b.dataset.pick, plan = planFor(ws).slice();
-  if (id === 'sat' && plan.some((x, j) => x === 'sat' && j !== i)) { toast('Combat max 1× per week', true); buzz([40, 40, 40]); return; }
-  plan[i] = id; S.plans[ws] = plan; save(); buzz(15); closeAll(); renderTabs(); renderStats();
+  if (id === 'sat' && plan.some((x, j) => x === 'sat' && j !== i)) { toast('Combat max 1× per week', true); buzz('block'); return; }
+  plan[i] = id; S.plans[ws] = plan; save(); buzz('pick'); closeAll(); renderTabs(); renderStats();
 });
 /* ================= ADD EXERCISE PICKER ================= */
 let addPos = 'end', addCat = null;
@@ -2087,27 +2246,35 @@ function renderAdd() {
 }
 $('#addBox').addEventListener('click', e => {
   const t = e.target;
-  const c = t.closest('[data-cat]'); if (c) { buzz(10); addCat = c.dataset.cat; renderAdd(); $('#addBox').scrollTop = 0; return; }
-  if (t.closest('[data-back]')) { buzz(10); addCat = null; renderAdd(); return; }
+  const c = t.closest('[data-cat]'); if (c) { buzz('tick'); addCat = c.dataset.cat; renderAdd(); sheetMark(); $('#addBox').scrollTop = 0; return; }
+  if (t.closest('[data-back]')) { buzz('tick'); addCat = null; renderAdd(); sheetMark(); return; }
   const x = t.closest('[data-addhk]'); if (x) addExtra(DAYS[S.view], x.dataset.addhk, addPos);
 });
 function addExtra(day, hk, pos) {
-  if (hrNow() === 'high') { toast('HR high. Yoga or walk.', true); return; }
+  if (hrNow() === 'high') { toast('HR high. Yoga or walk.', true); buzz('block'); return; }
   const x = S.extra[day.id] || [];
-  if (x.length >= 3) { toast('Max 3 added today', true); return; }
-  if (todaySet(day).has(canon(hk))) { toast("Already in today's list", true); return; }
+  if (x.length >= 3) { toast('Max 3 added today', true); buzz('block'); return; }
+  if (todaySet(day).has(canon(hk))) { toast("Already in today's list", true); buzz('block'); return; }
   const ids = dayItems(day).map(it => it.id), id = 'x_' + day.id + '_' + hk, tail = tailIds(day);
   const anchor = pos === 'pre' ? (mainOf(day) || day.items.find(it => it.cls)) : null;
   let at = anchor ? ids.indexOf(anchor.id) : ids.findIndex(i0 => tail.includes(i0)); if (at < 0) at = ids.length;
   ids.splice(at, 0, id);
   S.extra[day.id] = x.concat({ id, hk, d: todayStr() }); S.order[day.id] = { d: todayStr(), ids };
-  delete S.sets[id]; delete S.sel[id]; save(); buzz(15); lastLayout = Date.now(); closeAll(); render(true);
-  setTimeout(() => { const el = mainEl.querySelector(`[data-ex="${id}"]`); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 300);
+  delete S.sets[id]; delete S.sel[id]; save(); buzz('pick'); lastLayout = Date.now(); closeAll(); render(true);
+  /* after the scroll, a short lime frame marks the card that was added */
+  setTimeout(() => {
+    const el = exEl(id); if (!el) return;
+    el.scrollIntoView({ behavior: SM(), block: 'center' });
+    let done = false; const go = () => { if (done) return; done = true;
+      fxOnce(el, [{ borderColor: '#27272A' }, { borderColor: '#CCFF00', offset: 0.15 }, { borderColor: '#CCFF00', offset: 0.55 }, { borderColor: '#27272A' }],
+        { duration: 1400, easing: 'linear', key: 'added', safe: true }); };
+    addEventListener('scrollend', go, { once: true }); setTimeout(go, 700);
+  }, 300);
 }
 function removeExtra(day, id) {
   S.extra[day.id] = (S.extra[day.id] || []).filter(x => x.id !== id); if (!S.extra[day.id].length) delete S.extra[day.id];
   if (S.order[day.id]) S.order[day.id].ids = S.order[day.id].ids.filter(i => i !== id);
-  delete S.sets[id]; delete S.sel[id]; save(); buzz(15); lastLayout = Date.now(); render(true);
+  delete S.sets[id]; delete S.sel[id]; save(); buzz('pick'); lastLayout = Date.now(); render(true);
 }
 /* before changing the standard week, pin past weeks to the old plan so history does not change */
 function freezePast() {
@@ -2117,19 +2284,19 @@ function freezePast() {
 function statsClick(e) {
   const t = e.target, hit = sel => t.closest(sel);
   let b;
-  if ((b = hit('[data-stab]'))) { buzz(10); S.statTab = b.dataset.stab; save(); renderStats(); return; }
-  if ((b = hit('[data-wk]'))) { buzz(10); statWeek = Math.min(4, Math.max(-12, statWeek + +b.dataset.wk)); renderStats(); return; }
-  if ((b = hit('[data-pday]'))) { buzz(15); openPlan(addDays(weekStart(), 7 * statWeek), +b.dataset.pday); return; }
+  if ((b = hit('[data-stab]'))) { buzz('tick'); S.statTab = b.dataset.stab; save(); fx('bars'); renderStats(); return; }
+  if ((b = hit('[data-wk]'))) { buzz('tick'); statWeek = Math.min(4, Math.max(-12, statWeek + +b.dataset.wk)); renderStats(); return; }
+  if ((b = hit('[data-pday]'))) { buzz('tick'); openPlan(addDays(weekStart(), 7 * statWeek), +b.dataset.pday); return; }
   if ((b = hit('[data-plan]'))) {
-    buzz(15); const ws = addDays(weekStart(), 7 * statWeek);
+    buzz('pick'); const ws = addDays(weekStart(), 7 * statWeek);
     if (b.dataset.plan === 'reset') { delete S.plans[ws]; toast('Back to standard'); }
     else { freezePast(); S.basePlan = planFor(ws).slice(); delete S.plans[ws]; toast('Saved as your standard week'); }
     save(); renderTabs(); renderStats(); return;
   }
-  if ((b = hit('[data-rng]'))) { buzz(10); S.statRange = b.dataset.rng; save(); renderStats(); return; }
-  if ((b = hit('[data-mnav]'))) { buzz(10); stat4 = Math.min(0, Math.max(-12, stat4 + +b.dataset.mnav)); renderStats(); return; }
-  if ((b = hit('[data-more]'))) { buzz(10); liftsAll = !liftsAll; renderStats(); return; }
-  if ((b = hit('[data-sess]'))) { buzz(15); openFinish(+b.dataset.sess); }
+  if ((b = hit('[data-rng]'))) { buzz('tick'); S.statRange = b.dataset.rng; save(); fx('bars'); renderStats(); return; }
+  if ((b = hit('[data-mnav]'))) { buzz('tick'); stat4 = Math.min(0, Math.max(-12, stat4 + +b.dataset.mnav)); renderStats(); return; }
+  if ((b = hit('[data-more]'))) { buzz('tick'); liftsAll = !liftsAll; renderStats(); return; }
+  if ((b = hit('[data-sess]'))) { buzz('tick'); openFinish(+b.dataset.sess); }
 }
 function exportData() {
   S.lastExport = todayStr(); save();
@@ -2191,70 +2358,99 @@ function profileForm() {
 }
 function saveBody() {
   const d = $('#bfD').value, w = numIn($('#bfW').value, 20, 300), m = numIn($('#bfM').value, 0, 100), f = numIn($('#bfF').value, 0, 70), s = numIn($('#bfS').value, 0, 100);
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || w === null || [w, m, f, s].some(Number.isNaN)) { toast('Check the numbers', true); buzz([40, 40, 40]); return; }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || w === null || [w, m, f, s].some(Number.isNaN)) { toast('Check the numbers', true); buzz('block'); return; }
   if (bodyEdit >= 0) S.body.splice(bodyEdit, 1);
   S.body = S.body.filter(x => x.d !== d).concat({ d, w, m, f, s }).sort((a, b) => a.d.localeCompare(b.d));
   save(); renderProfile(); toast('Saved');
 }
 $('#profileBox').addEventListener('click', e => {
   const t = e.target, r = t.closest('[data-body]');
-  if (t.id === 'bfAdd' || r) { buzz(10); bodyEdit = r ? +r.dataset.body : -1; renderProfile(true); $('#profileBox').scrollTop = 0; return; }
-  if (t.id === 'bfCancel') { buzz(10); renderProfile(); return; }
-  if (t.id === 'bfSave') { buzz(15); saveBody(); return; }
+  if (t.id === 'bfAdd' || r) { buzz('tick'); bodyEdit = r ? +r.dataset.body : -1; renderProfile(true); $('#profileBox').scrollTop = 0; return; }
+  if (t.id === 'bfCancel') { buzz('tick'); renderProfile(); return; }
+  if (t.id === 'bfSave') { buzz('pick'); saveBody(); return; }
   if (t.id === 'bfDel' && confirm('Delete this scan?')) { S.body.splice(bodyEdit, 1); save(); renderProfile(); toast('Deleted', true); }
 });
 $('#profileBox').addEventListener('change', e => {
   if (e.target.id !== 'pfH') return;
   const h = numIn(e.target.value, 100, 250);
-  if (Number.isNaN(h)) { toast('Check the numbers', true); buzz([40, 40, 40]); e.target.value = S.profile.h || ''; return; }
+  if (Number.isNaN(h)) { toast('Check the numbers', true); buzz('block'); e.target.value = S.profile.h || ''; return; }
   S.profile.h = h || 0; save(); setTimeout(renderProfile, 0);
 });
 
 /* ================= MODAL / TOAST ================= */
 /* sheets push a history entry so the Android back gesture closes the sheet, not the app */
-function openModal(id) { const m = $('#' + id); if (m.classList.contains('show')) return; m.classList.add('show'); try { history.pushState({ m: id }, ''); } catch (e) {} }
+function openModal(id) { const m = $('#' + id); if (m.classList.contains('show')) return; m.classList.add('show'); sheetMark(); try { history.pushState({ m: id }, ''); } catch (e) {} }
 function closeAll(fromPop) {
-  const open = [...document.querySelectorAll('.modal.show')]; open.forEach(m => m.classList.remove('show'));
+  const open = [...document.querySelectorAll('.modal.show')]; open.forEach(m => m.classList.remove('show')); if (open.length) sheetMark();
   if (fromPop !== true && open.length && history.state && history.state.m) history.back();
 }
 window.addEventListener('popstate', () => closeAll(true));
-document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) { buzz(10); closeAll(); } }));
+document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) { buzz('tick'); closeAll(); } }));
 $('#btnStats').addEventListener('click', () => {
-  buzz(10);
-  if (S.view === 'stats') S.view = DAYS[S.lastView] ? S.lastView : nextUp(); else { S.lastView = S.view; S.view = 'stats'; }
+  buzz('tick');
+  if (S.view === 'stats') S.view = DAYS[S.lastView] ? S.lastView : nextUp(); else { S.lastView = S.view; S.view = 'stats'; fx('bars'); }
   S.viewDate = todayStr(); save(); render();
 });
-$('#btnMenu').addEventListener('click', () => { buzz(10); paintBackup(); openModal('mMenu'); });
+$('#btnMenu').addEventListener('click', () => { buzz('tick'); paintBackup(); openModal('mMenu'); });
 /* Guide shortcuts: jump to the week plan, today's workout, or lift progress */
 $('#mHow').addEventListener('click', e => {
-  const g = e.target.closest('[data-go]'); if (!g) return; buzz(10); closeAll();
+  const g = e.target.closest('[data-go]'); if (!g) return; buzz('tick'); closeAll();
   if (g.dataset.go === 'today') S.view = nextUp();
-  else { if (S.view !== 'stats') S.lastView = S.view; S.view = 'stats'; S.statTab = g.dataset.go === 'lifts' ? 'lifts' : 'week'; statWeek = 0; }
+  else { if (S.view !== 'stats') S.lastView = S.view; S.view = 'stats'; S.statTab = g.dataset.go === 'lifts' ? 'lifts' : 'week'; statWeek = 0; fx('bars'); }
   S.viewDate = todayStr(); save(); render();
 });
 /* swap one open sheet for another without touching history (back still closes it) */
-function switchModal(id) { document.querySelectorAll('.modal.show').forEach(m => m.classList.remove('show')); $('#' + id).classList.add('show'); try { history.replaceState({ m: id }, ''); } catch (e) {} }
-$('#btnExport').addEventListener('click', exportData);
-$('#btnImport').addEventListener('click', () => $('#fileIn').click());
+function switchModal(id) { document.querySelectorAll('.modal.show').forEach(m => m.classList.remove('show')); $('#' + id).classList.add('show'); sheetMark(); try { history.replaceState({ m: id }, ''); } catch (e) {} }
+$('#btnExport').addEventListener('click', () => { buzz('tick'); exportData(); });
+$('#btnImport').addEventListener('click', () => { buzz('tick'); $('#fileIn').click(); });
 /* swipe a sheet down from its top to close it */
 document.querySelectorAll('.modal .box').forEach(box => {
-  let y0 = null, dy = 0;
-  box.addEventListener('touchstart', e => { y0 = box.scrollTop <= 0 ? e.touches[0].clientY : null; dy = 0; }, { passive: true });
+  const m = box.parentElement;
+  box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true');
+  let y0 = null, dy = 0, lastY = 0, lastT = 0, v = 0, armed = false;
+  const closeAt = () => Math.min(110, box.offsetHeight * 0.25);
+  const reset = () => { box.style.transition = ''; box.style.transform = ''; m.style.transition = ''; m.style.opacity = ''; };
+  box.addEventListener('touchstart', e => { y0 = box.scrollTop <= 0 ? e.touches[0].clientY : null; dy = 0; v = 0; armed = false; lastY = y0; lastT = e.timeStamp; }, { passive: true });
   box.addEventListener('touchmove', e => {
-    if (y0 === null) return; dy = e.touches[0].clientY - y0;
-    if (dy > 0) { box.style.transition = 'none'; box.style.transform = `translateY(${dy}px)`; }
-    else { y0 = null; box.style.transition = ''; box.style.transform = ''; }
+    if (y0 === null) return; const y = e.touches[0].clientY; dy = y - y0;
+    v = (y - lastY) / Math.max(1, e.timeStamp - lastT); lastY = y; lastT = e.timeStamp; /* px per ms */
+    if (dy <= 0) { y0 = null; reset(); return; }
+    box.style.transition = 'none'; box.style.transform = `translateY(${dy}px)`;
+    m.style.transition = 'none'; m.style.opacity = Math.max(0.4, 1 - dy / 500);
+    const a = dy > closeAt(); if (a && !armed) buzz('tick'); armed = a;
   }, { passive: true });
   box.addEventListener('touchend', () => {
-    if (y0 === null) return; box.style.transition = ''; box.style.transform = '';
-    if (dy > 110) { buzz(10); closeAll(); } y0 = null;
+    if (y0 === null) return; y0 = null;
+    if (dy > closeAt() || (dy > 40 && v > 0.6)) {
+      /* keep moving down while the sheet fades: never jump back up */
+      if (!armed) buzz('tick');
+      m.style.transition = ''; m.style.opacity = '';
+      box.style.transition = RM.matches ? 'none' : `transform ${MO.d2}ms ${MO.in}`; box.style.transform = `translateY(${box.offsetHeight}px)`;
+      closeAll();
+      setTimeout(() => { box.style.transition = 'none'; box.style.transform = ''; void box.offsetHeight; box.style.transition = ''; }, MO.d2 + 40);
+    } else reset();
   });
+  box.addEventListener('touchcancel', () => { if (y0 !== null) { y0 = null; reset(); } });
 });
 let toastT = null;
-function toast(msg, red) { const t = $('#toast'); t.textContent = msg; t.classList.toggle('red', !!red); t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2000); }
+function toast(msg, red, ms) { const t = $('#toast'), was = t.classList.contains('show');
+  t.textContent = msg; t.classList.toggle('red', !!red); t.classList.add('show');
+  if (was) fxOnce(t, [{ opacity: 0.4 }, { opacity: 1 }], { duration: MO.d1, key: 'toast' }); /* text swap: no second slide */
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), ms || 2000); }
+/* press state on the first frame of a touch (Android sets :active late) */
+const PRESS = 'button, a.btn, a.wlink, .row.tap, .set';
+let pressed = null;
+const unpress = () => { if (pressed) { pressed.classList.remove('is-pressed'); pressed = null; } };
+document.addEventListener('pointerdown', e => { const el = e.target.closest && e.target.closest(PRESS); if (!el || el.disabled) return; unpress(); pressed = el; el.classList.add('is-pressed'); }, { passive: true });
+['pointerup', 'pointercancel'].forEach(n => document.addEventListener(n, unpress, { passive: true }));
+document.addEventListener('scroll', unpress, { passive: true, capture: true });
+/* a shaky double tap must not act inside or through a sheet that just opened, closed or changed */
+document.addEventListener('click', e => { if (Date.now() - sheetT < 350) { e.stopPropagation(); e.preventDefault(); } }, true);
 
 /* ================= BOOT ================= */
-document.addEventListener('visibilitychange', () => { if (!document.hidden && S.timer) { runTick(); keepAwake(); } });
+/* back in the app: catch up the ring, and keep the screen on again (a video releases the lock) */
+const inWorkout = () => S.view !== 'stats' && (!!S.timer || !!S.start[S.view] || (!!hrNow() && !S.sessions.some(x => x.date === todayStr())));
+document.addEventListener('visibilitychange', () => { if (document.hidden) return; if (S.timer) { runTick(); if (timerActive()) { ringRun(); scheduleBeep(); } } if (inWorkout()) keepAwake(); });
 if (S.viewDate !== todayStr() && S.view !== 'stats') { S.view = nextUp(); S.viewDate = todayStr(); save(); }
 /* home-screen shortcuts: long-press the app icon -> ?go=next or ?go=stats */
 const GO = new URLSearchParams(location.search).get('go');
@@ -2264,7 +2460,7 @@ S.rate = null;
 render(); resumeTimer();
 if (!localStorage.getItem(KEY + '_seen')) { openModal('mHow'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
 /* keep APP_VER in step with VERSION in sw.js */
-const APP_VER = '3.6.1';
+const APP_VER = '3.7.0';
 $('#appVer').textContent = 'SCULPT v' + APP_VER;
 if ('serviceWorker' in navigator) {
   const hadCtrl = !!navigator.serviceWorker.controller;
@@ -2274,7 +2470,7 @@ if ('serviceWorker' in navigator) {
 let installEvt = null;
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; $('#rowInstall').style.display = ''; });
 $('#mMenu').addEventListener('click', async e => {
-  const r = e.target.closest('[data-menu]'); if (!r) return; buzz(10);
+  const r = e.target.closest('[data-menu]'); if (!r) return; buzz('tick');
   if (r.dataset.menu === 'rules') switchModal('mRules');
   if (r.dataset.menu === 'guide') switchModal('mHow');
   if (r.dataset.menu === 'profile') { renderProfile(); switchModal('mProfile'); }
