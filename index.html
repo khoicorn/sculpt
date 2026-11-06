@@ -122,6 +122,11 @@
   .swap .chev { flex: 0 0 auto; font-size: 20px; color: var(--lime); }
   .swap.on { border-color: var(--lime); background: var(--lime-dim); }
   .swap.off { opacity: 0.4; }
+  /* alt on screen with 2+ alts: Back to main + a narrow Change button */
+  .swrow { display: flex; gap: 8px; margin: 0 12px 10px; }
+  .swrow .swap { flex: 1 1 auto; width: auto; min-width: 0; margin: 0; }
+  .swch { flex: 0 0 auto; min-height: 52px; padding: 0 14px; background: var(--panel-2); border: 1px solid var(--line-3); border-radius: var(--r); font-family: var(--data); font-size: 13px; font-weight: 600; color: var(--text); transition: var(--t); }
+  .swch:active { border-color: var(--lime); }
 
   /* pills */
   .pills { display: flex; gap: 6px; padding: 0 12px 10px; }
@@ -506,6 +511,8 @@
     main { padding: 12px 8px; }
     .ch, .sug { padding-left: 8px; padding-right: 8px; }
     .swap { width: calc(100% - 16px); margin: 0 8px 10px; }
+    .swrow { margin: 0 8px 10px; }
+    .swch { padding: 0 10px; }
     .pills { gap: 4px; padding: 0 8px 10px; }
     .set { grid-template-columns: 1fr 1fr 58px; gap: 5px; padding: 6px 8px; }
     .stp { grid-template-columns: 44px 1fr 44px; }
@@ -524,8 +531,8 @@
   :where(button, a.btn, a.wlink, .set, .row.tap) { transition: var(--t); }
   .is-pressed { transition-duration: 0s !important; }
   :is(.ok, .mvb, .gbtn, .xbtn, .bk, .ibtn, .tab, .thumb, .pday, .wnav button, .pill).is-pressed { transform: scale(0.96); }
-  :is(.btn, .big, .swap, .addrow, .apply, .opt, .feel button, .wlink).is-pressed { transform: scale(0.98); }
-  :is(.opt:not(.on), .feel button:not(.on), .big:not(.on), .btn-g, .ibtn:not(.warn), .tab:not(.active), .bk, .mvb, .gbtn, .xbtn, .thumb, .wnav button, .apply, .swap, .addrow, .wlink).is-pressed { border-color: var(--lime); }
+  :is(.btn, .big, .swap, .swch, .addrow, .apply, .opt, .feel button, .wlink).is-pressed { transform: scale(0.98); }
+  :is(.opt:not(.on), .feel button:not(.on), .big:not(.on), .btn-g, .ibtn:not(.warn), .tab:not(.active), .bk, .mvb, .gbtn, .xbtn, .thumb, .wnav button, .apply, .swap, .swch, .addrow, .wlink).is-pressed { border-color: var(--lime); }
   :is(.pill, .stp button).is-pressed { background: var(--lime); border-color: var(--lime); color: #09090B; }
   :is(.btn-p, .big.on, .opt.on, .feel button.on, .tab.active, .seg button.on).is-pressed { filter: brightness(0.9); }
   :is(.btn-r, .ibtn.warn).is-pressed { border-color: var(--red); background-color: var(--red-dim); }
@@ -589,6 +596,7 @@
 <div class="modal" id="mFinish"><div class="box" id="finishBox"></div></div>
 <div class="modal" id="mPlan"><div class="box" id="planBox"></div></div>
 <div class="modal" id="mAdd"><div class="box" id="addBox"></div></div>
+<div class="modal" id="mSwap"><div class="box" id="swapBox"></div></div>
 <div class="modal" id="mHow">
   <div class="box">
     <div class="grab"></div>
@@ -917,94 +925,93 @@ const PROGRAM = [
   { id: 'mon', tab: 'GLU A', tt: 'Lift', type: 'lift', title: 'Glutes A', sub: 'Hip thrust day. Round, lifted glutes.', warm: 'Bike 8 min, easy. Can chat.', items: [
     { id: 'mon_thrustm', hp: 1, hk: 'thrust_m', name: 'Hip Thrust Machine', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 4, reps: 12, w: 20, step: 5, max: 60, rest: 120,
       guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat. Shins straight up at the top.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Pushing through the toes.'] },
-      swap: { hk: 'thrust', name: 'DB Hip Thrust', what: 'Upper back on a bench. Lift hips with a dumbbell on them.', vn: 'Bench + 1 dumbbell', move: 'hipthrust', muscle: 'Glute max', target: 'glute_max', reps: 12, w: 10, step: 2, rest: 120,
-        guide: { setup: ['Upper back on bench edge. Feet flat.', 'Dumbbell on hip bones. Hold both ends.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Feet too close: thighs take over.'] } } },
+      grp: 'Hip thrust', alts: [{ hk: 'thrust', name: 'DB Hip Thrust', what: 'Upper back on a bench. Lift hips with a dumbbell on them.', vn: 'Bench + 1 dumbbell', move: 'hipthrust', muscle: 'Glute max', target: 'glute_max', reps: 12, w: 10, step: 2, rest: 120,
+        guide: { setup: ['Upper back on bench edge. Feet flat.', 'Dumbbell on hip bones. Hold both ends.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Feet too close: thighs take over.'] } }, 'bridge', 'bandbridge', 'slbridge'] },
     { id: 'mon_legpress', hk: 'legpress', name: 'Leg Press · Half Range', what: 'Sit and push the plate away with your feet.', vn: 'Máy đạp chân ngang', move: 'legpress', muscle: 'Glutes', target: 'glute_max', sets: 3, reps: 12, w: 40, step: 5, max: 60, rest: 120,
       guide: { setup: ['Feet high and wide on the plate.', 'Lower until knees reach 90°. Stop.', 'Exhale. Push through heels.'], avoid: ['Going deep: knees to chest.', 'Heavy load or holding breath.', 'Locking knees straight.'] },
-      swap: { hk: 'gobletsq', name: 'DB Goblet Box Squat', what: 'Hold a dumbbell at chest. Sit to a box, stand up.', vn: 'Box + 1 dumbbell', move: 'gobletsq', muscle: 'Glutes', target: 'glute_max', reps: 12, w: 8, step: 2, rest: 120,
-        guide: { setup: ['Box behind you. Feet shoulder width.', 'Dumbbell at chest, elbows down.', 'Sit back to touch box. Exhale up.'], avoid: ['Dropping onto the box.', 'Knees caving in.', 'Holding breath.'] } } },
+      grp: 'Leg press', alts: [{ hk: 'gobletsq', name: 'DB Goblet Box Squat', what: 'Hold a dumbbell at chest. Sit to a box, stand up.', vn: 'Box + 1 dumbbell', move: 'gobletsq', muscle: 'Glutes', target: 'glute_max', reps: 12, w: 8, step: 2, rest: 120,
+        guide: { setup: ['Box behind you. Feet shoulder width.', 'Dumbbell at chest, elbows down.', 'Sit back to touch box. Exhale up.'], avoid: ['Dropping onto the box.', 'Knees caving in.', 'Holding breath.'] } }, 'anglepress'] },
     { id: 'mon_kickm', hp: 1, hk: 'glutemach', name: 'Glute Kickback Machine', what: 'Chest on the pad. Push the foot plate back with one leg.', vn: 'Máy tập mông', move: 'glutemach', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, repTop: 15, w: 10, step: 2.5, rest: 90, side: true,
       guide: { setup: ['Chest or forearms on the pad.', 'Foot on the plate, knee under hip.', 'Push back with the heel. Squeeze 1 s.'], avoid: ['Arching the lower back.', 'Swinging the leg.'] },
-      swap: { hk: 'kick', name: 'Cable Kickback', what: 'Kick one leg straight back against a cable.', vn: 'Cable + ankle strap', move: 'kickback', muscle: 'Glute max', target: 'glute_max', reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90, side: true,
-        guide: { setup: ['Strap on ankle. Cable at lowest point.', 'Hold frame. Lean forward a little.', 'Kick back. Squeeze glute 1 s.'], avoid: ['Swinging the leg.', 'Arching the lower back.'] } } },
+      grp: 'Kickback', alts: [{ hk: 'kick', name: 'Cable Kickback', what: 'Kick one leg straight back against a cable.', vn: 'Cable + ankle strap', move: 'kickback', muscle: 'Glute max', target: 'glute_max', reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90, side: true,
+        guide: { setup: ['Strap on ankle. Cable at lowest point.', 'Hold frame. Lean forward a little.', 'Kick back. Squeeze glute 1 s.'], avoid: ['Swinging the leg.', 'Arching the lower back.'] } }, 'bandkick'] },
     { id: 'mon_abdm', hk: 'abductor', name: 'Abductor Machine', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', sets: 4, reps: 15, repTop: 20, w: 20, step: 5, rest: 90,
       guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little for more glute.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Bouncing with the hips.'] },
-      swap: { hk: 'abd', name: 'Seated Band Abduction', what: 'Sit with a band above knees. Push knees apart.', vn: 'Bench + mini band', move: 'bandabd', muscle: 'Glute med (side)', target: 'glute_med', reps: 20, noW: 'Band', rest: 90,
-        guide: { setup: ['Band just above knees.', 'Sit on bench edge. Lean forward 30°.', 'Push knees out. Pause 1 s.'], avoid: ['Bouncing fast.', 'Sitting straight up.'] } } },
+      grp: 'Side glutes', alts: [{ hk: 'abd', name: 'Seated Band Abduction', what: 'Sit with a band above knees. Push knees apart.', vn: 'Bench + mini band', move: 'bandabd', muscle: 'Glute med (side)', target: 'glute_med', reps: 20, noW: 'Band', rest: 90,
+        guide: { setup: ['Band just above knees.', 'Sit on bench edge. Lean forward 30°.', 'Push knees out. Pause 1 s.'], avoid: ['Bouncing fast.', 'Sitting straight up.'] } }, 'cableabd', 'latwalk', 'hydrant', 'clamshell'] },
     { id: 'mon_abs', hk: 'deadbug', name: 'Dead Bug', what: 'On your back. Lower opposite arm and leg slowly.', vn: 'Mat', move: 'deadbug', muscle: 'Deep abs', target: 'abs', sets: 3, reps: 10, noW: 'Body', rest: 90, side: true,
       guide: { setup: ['Back flat. Arms up. Knees at 90°.', 'Exhale. Lower one arm and opposite leg.', 'Return. Switch sides.'], avoid: ['Lower back lifting off the floor.', 'Moving fast.'] },
-      swap: { hk: 'pallof', name: 'Cable Pallof Press', what: 'Side-on to a cable. Push the handle straight out. Do not twist.', vn: 'Cable, chest height', move: 'pallof', muscle: 'Deep abs', target: 'abs', reps: 10, w: 5, step: 2.5, rest: 90, side: true,
-        guide: { setup: ['Cable at chest height. Stand side-on.', 'Exhale. Press handle straight out.', 'Hold 2 s. Keep breathing. Return.'], avoid: ['Turning toward the cable.', 'Holding breath.'] } } }
+      grp: 'Core', alts: [{ hk: 'pallof', name: 'Cable Pallof Press', what: 'Side-on to a cable. Push the handle straight out. Do not twist.', vn: 'Cable, chest height', move: 'pallof', muscle: 'Deep abs', target: 'abs', reps: 10, w: 5, step: 2.5, rest: 90, side: true,
+        guide: { setup: ['Cable at chest height. Stand side-on.', 'Exhale. Press handle straight out.', 'Hold 2 s. Keep breathing. Return.'], avoid: ['Turning toward the cable.', 'Holding breath.'] } }, 'birddog', 'sideplank'] }
   ]},
   { id: 'tue', tab: 'PUSH', tt: 'Lift', type: 'lift', title: 'Upper Push', sub: 'Upper chest line + shoulders.', warm: 'Elliptical 6 min, easy. Can chat.', items: [
     { id: 'tue_cpress', hp: 1, hk: 'chestpress', name: 'Chest Press Machine', what: 'Sit and push handles forward.', vn: 'Máy đẩy ngực', move: 'chestpress', muscle: 'Upper chest', target: 'upper_chest', sets: 3, reps: 12, w: 15, step: 2.5, rest: 90,
       guide: { setup: ['Set seat so handles sit just above nipple line.', 'Elbows 45° from body.', 'Exhale and push. No lockout.'], avoid: ['Handles below nipple line: works lower chest.', 'Flaring elbows out.', 'Holding breath.'] },
-      swap: { hk: 'incpress', name: 'Incline DB Press', what: 'On a tilted bench, press dumbbells up.', vn: 'Bench 30° + 2 dumbbells', move: 'incpress', muscle: 'Upper chest', target: 'upper_chest', reps: 12, w: 6, pair: true, step: 1, rest: 90,
-        guide: { setup: ['Bench at 30°.', 'Dumbbells at chest. Elbows 45°.', 'Exhale. Press up.'], avoid: ['Bouncing at the bottom.', 'Arching the back.'] } } },
+      grp: 'Chest press', alts: [{ hk: 'incpress', name: 'Incline DB Press', what: 'On a tilted bench, press dumbbells up.', vn: 'Bench 30° + 2 dumbbells', move: 'incpress', muscle: 'Upper chest', target: 'upper_chest', reps: 12, w: 6, pair: true, step: 1, rest: 90,
+        guide: { setup: ['Bench at 30°.', 'Dumbbells at chest. Elbows 45°.', 'Exhale. Press up.'], avoid: ['Bouncing at the bottom.', 'Arching the back.'] } }, 'bandpress', 'kneepush'] },
     { id: 'tue_pec', hk: 'pecdeck', name: 'Chest Fly Machine', what: 'Sit and hug the handles together in front of your chest.', vn: 'Máy ép ngực', move: 'pecdeck', muscle: 'Inner chest', target: 'inner_chest', sets: 4, reps: 12, repTop: 15, w: 15, step: 2.5, rest: 90,
       guide: { setup: ['Seat so handles are at chest height.', 'Back on pad. Slight elbow bend.', 'Exhale. Hug handles together. Squeeze 1 s.'], avoid: ['Shoulders rolling forward.', 'Arms going too far back.'] },
-      swap: { hk: 'incfly', name: 'Incline DB Fly', what: 'On a tilted bench, open arms wide, then hug in.', vn: 'Bench 30° + 2 dumbbells', move: 'incfly', muscle: 'Inner + upper chest', target: 'inner_chest', reps: 12, repTop: 15, w: 4, pair: true, step: 1, rest: 90,
-        guide: { setup: ['Bench at 30°. Dumbbells above chest.', 'Slight elbow bend. Open wide to stretch.', 'Hug back in. Squeeze 1 s.'], avoid: ['Straight arms (elbow strain).', 'Going too heavy.'] } } },
+      grp: 'Chest fly', alts: [{ hk: 'incfly', name: 'Incline DB Fly', what: 'On a tilted bench, open arms wide, then hug in.', vn: 'Bench 30° + 2 dumbbells', move: 'incfly', muscle: 'Inner + upper chest', target: 'inner_chest', reps: 12, repTop: 15, w: 4, pair: true, step: 1, rest: 90,
+        guide: { setup: ['Bench at 30°. Dumbbells above chest.', 'Slight elbow bend. Open wide to stretch.', 'Hug back in. Squeeze 1 s.'], avoid: ['Straight arms (elbow strain).', 'Going too heavy.'] } }, 'cablefly_lh_l'] },
     { id: 'tue_spress', hk: 'shoulderpress', name: 'Shoulder Press Machine', what: 'Sit and push handles overhead.', vn: 'Máy đẩy vai', move: 'shoulderpress', muscle: 'Shoulders', target: 'side_delt', sets: 3, reps: 10, w: 10, step: 2.5, rest: 120,
       guide: { setup: ['Seat: handles at ear height.', 'Back flat on pad.', 'Exhale and press up.'], avoid: ['Holding breath.', 'Arching off the pad.'] },
-      swap: { hk: 'dbspress', name: 'Seated DB Shoulder Press', what: 'Sit upright. Press dumbbells overhead.', vn: 'Bench upright + 2 dumbbells', move: 'dbspress', muscle: 'Shoulders', target: 'side_delt', reps: 10, w: 4, pair: true, step: 1, rest: 120,
-        guide: { setup: ['Bench upright. Back on pad.', 'Dumbbells at ear height.', 'Exhale. Press up.'], avoid: ['Arching the back.', 'Banging dumbbells together.'] } } },
+      grp: 'Shoulder press', alts: [{ hk: 'dbspress', name: 'Seated DB Shoulder Press', what: 'Sit upright. Press dumbbells overhead.', vn: 'Bench upright + 2 dumbbells', move: 'dbspress', muscle: 'Shoulders', target: 'side_delt', reps: 10, w: 4, pair: true, step: 1, rest: 120,
+        guide: { setup: ['Bench upright. Back on pad.', 'Dumbbells at ear height.', 'Exhale. Press up.'], avoid: ['Arching the back.', 'Banging dumbbells together.'] } }] },
     { id: 'tue_latm', hp: 1, hk: 'latmach', name: 'Lateral Raise Machine', what: 'Sit and lift the arm pads out to the sides.', vn: 'Máy tập vai', move: 'latmach', muscle: 'Side shoulder', target: 'side_delt', sets: 4, reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90,
       guide: { setup: ['Seat so shoulders line up with the pivot.', 'Pads on the outside of the elbows.', 'Lift to shoulder height. Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Leaning back.'] },
-      swap: { hk: 'latraise', name: 'DB Lateral Raise', what: 'Lift dumbbells out to the sides.', vn: '2 light dumbbells', move: 'latraise', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
-        guide: { setup: ['Stand tall. Slight forward lean.', 'Lead with elbows to shoulder height.', 'Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Swinging the body.'] } } },
+      grp: 'Side delts', alts: [{ hk: 'latraise', name: 'DB Lateral Raise', what: 'Lift dumbbells out to the sides.', vn: '2 light dumbbells', move: 'latraise', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
+        guide: { setup: ['Stand tall. Slight forward lean.', 'Lead with elbows to shoulder height.', 'Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Swinging the body.'] } }, 'cablelat', 'bandlat'] },
     { id: 'tue_face', hk: 'facepull', name: 'Cable Face Pull', what: 'Pull a rope toward your face, elbows high.', vn: 'Cable + rope, high', move: 'facepull', muscle: 'Rear shoulder', target: 'rear_delt', sets: 3, reps: 15, w: 10, step: 2.5, rest: 90,
       guide: { setup: ['Rope at forehead height.', 'Pull to forehead. Elbows high.', 'Thumbs back. Squeeze 1 s.'], avoid: ['Leaning back.', 'Elbows dropping low.'] },
-      swap: { hk: 'reardelt', name: 'Rear-Delt DB Fly', what: 'Chest on a bench. Lift dumbbells out to the sides.', vn: 'Incline bench + 2 dumbbells', move: 'reardelt', muscle: 'Rear shoulder', target: 'rear_delt', reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
-        guide: { setup: ['Chest on incline bench.', 'Arms hang. Slight elbow bend.', 'Lift out to shoulder height.'], avoid: ['Swinging.', 'Shrugging.'] } } }
+      grp: 'Rear delts', alts: [{ hk: 'reardelt', name: 'Rear-Delt DB Fly', what: 'Chest on a bench. Lift dumbbells out to the sides.', vn: 'Incline bench + 2 dumbbells', move: 'reardelt', muscle: 'Rear shoulder', target: 'rear_delt', reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
+        guide: { setup: ['Chest on incline bench.', 'Arms hang. Slight elbow bend.', 'Lift out to shoulder height.'], avoid: ['Swinging.', 'Shrugging.'] } }, 'pullapart', 'proney', 'bander'] }
   ]},
   { id: 'thu', tab: 'GLU B', tt: 'Lift', type: 'lift', title: 'Glutes B', sub: 'Side glutes + hamstrings.', warm: 'Rowing 5 min, damper 3. Can chat.', items: [
     { id: 'thu_rdl', hk: 'rdl', name: 'DB Romanian Deadlift', what: 'Hold dumbbells. Push hips back, then stand tall.', vn: '2 dumbbells', move: 'rdl', muscle: 'Hamstring + glute', target: 'hams', sets: 3, reps: 12, w: 8, pair: true, step: 2, rest: 120,
       guide: { setup: ['Dumbbells on front of thighs.', 'Soft knees. Push hips back, back flat.', 'Feel hamstring stretch. Exhale, stand.'], avoid: ['Rounding the back.', 'Heavy weight. Stay light.', 'Holding breath.'] },
-      swap: { hk: 'pullthrough', name: 'Cable Pull-Through', what: 'Back to a low cable. Push hips back, then drive them forward.', vn: 'Cable + rope, low', move: 'pullthrough', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 10, step: 2.5, rest: 120,
-        guide: { setup: ['Rope at lowest point. Face away.', 'Rope between legs. Walk 2 steps out.', 'Hips back, then drive hips forward. Squeeze.'], avoid: ['Pulling with the arms.', 'Squatting down instead of hinging.'] } } },
+      grp: 'Hinge', alts: [{ hk: 'pullthrough', name: 'Cable Pull-Through', what: 'Back to a low cable. Push hips back, then drive them forward.', vn: 'Cable + rope, low', move: 'pullthrough', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 10, step: 2.5, rest: 120,
+        guide: { setup: ['Rope at lowest point. Face away.', 'Rope between legs. Walk 2 steps out.', 'Hips back, then drive hips forward. Squeeze.'], avoid: ['Pulling with the arms.', 'Squatting down instead of hinging.'] } }, 'bandrdl'] },
     { id: 'thu_bss', hk: 'bss', name: 'Bulgarian Split Squat', what: 'Back foot on a bench. Squat down on the front leg.', vn: 'Bench + 2 dumbbells', move: 'bss', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 10, w: 2, pair: true, step: 1, rest: 120, side: true,
       guide: { setup: ['Back foot laces on bench.', 'Big step forward. Lean slightly forward.', 'Lower slow. Exhale up.'], avoid: ['Short stance: knee strain.', 'Wobbling: use bodyweight first.'] },
-      swap: { hk: 'revlunge', name: 'Reverse Lunge', what: 'Step one leg back, drop the knee, step back up.', vn: 'Bodyweight', move: 'revlunge', muscle: 'Glutes', target: 'glute_max', reps: 12, noW: 'Body', rest: 90, side: true,
-        guide: { setup: ['Stand tall. Hands on hips.', 'Big step back. Back knee near floor.', 'Push through front heel to stand.'], avoid: ['Front knee caving in.', 'Short step.'] } } },
+      grp: 'Lunge', alts: [{ hk: 'revlunge', name: 'Reverse Lunge', what: 'Step one leg back, drop the knee, step back up.', vn: 'Bodyweight', move: 'revlunge', muscle: 'Glutes', target: 'glute_max', reps: 12, noW: 'Body', rest: 90, side: true,
+        guide: { setup: ['Stand tall. Hands on hips.', 'Big step back. Back knee near floor.', 'Push through front heel to stand.'], avoid: ['Front knee caving in.', 'Short step.'] } }, 'stepup'] },
     { id: 'thu_alp', hk: 'anglepress', name: 'Angled Leg Press · Half Range', what: 'Lie back. Push the sled up with your feet.', vn: 'Máy đạp đùi xiên · kg = plates', move: 'anglepress', muscle: 'Glutes', target: 'glute_max', sets: 3, reps: 12, w: 20, step: 5, max: 40, rest: 120,
       guide: { setup: ['Feet high on plate, hip width.', 'Unlock. Lower to 90° knees only.', 'Exhale. Push through heels.'], avoid: ['Deep range: hips curl up.', 'Heavy load or breath hold.', 'Locking knees.'] },
-      swap: { hk: 'stepup', name: 'DB Step-Up', what: 'Step up onto a box, stand tall, step down.', vn: 'Box + 2 dumbbells', move: 'stepup', muscle: 'Glutes', target: 'glute_max', reps: 10, w: 4, pair: true, step: 1, rest: 120, side: true,
-        guide: { setup: ['Box at knee height or lower.', 'Whole foot on the box.', 'Push through heel. Exhale up.'], avoid: ['Pushing off the back foot.', 'Box too high.'] } } },
+      grp: 'Leg press', alts: ['legpress', 'gobletsq', { hk: 'stepup', name: 'DB Step-Up', what: 'Step up onto a box, stand tall, step down.', vn: 'Box + 2 dumbbells', move: 'stepup', muscle: 'Glutes', target: 'glute_max', reps: 10, w: 4, pair: true, step: 1, rest: 120, side: true,
+        guide: { setup: ['Box at knee height or lower.', 'Whole foot on the box.', 'Push through heel. Exhale up.'], avoid: ['Pushing off the back foot.', 'Box too high.'] } }] },
     { id: 'thu_hipabd', hp: 1, hk: 'cableabd', name: 'Cable Hip Abduction', what: 'Lift one leg out to the side against a cable.', vn: 'Cable + ankle strap', move: 'cableabd', muscle: 'Glute med (side)', target: 'glute_med', sets: 4, reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90, side: true,
       guide: { setup: ['Strap on the outer ankle.', 'Hold frame. Stand tall.', 'Lift leg out, toes forward. Pause.'], avoid: ['Leaning away.', 'Toes turning up.'] },
-      swap: { hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', reps: 15, unit: 'steps', side: true, noW: 'Band', rest: 90,
-        guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', 'Step right, then the same back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] } } },
+      grp: 'Side glutes', alts: [{ hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', reps: 15, unit: 'steps', side: true, noW: 'Band', rest: 90,
+        guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', 'Step right, then the same back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] } }, 'abductor', 'abd', 'sidelying', 'hydrant'] },
     { id: 'thu_backext', hp: 1, hk: 'backext', name: 'Back Extension · Glute Focus', what: 'Hips on the pad. Bend forward, then lift to a straight line.', vn: 'Máy gập cơ lưng', move: 'backext', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, noW: 'Body', rest: 90,
       guide: { setup: ['Pad just below the hip bones. Feet locked.', 'Toes turned out a little. Upper back slightly round.', 'Exhale. Squeeze glutes to lift to a straight line.'], avoid: ['Arching past straight.', 'Jerking up fast.', 'Holding breath.'] },
-      swap: { hk: 'bridge', name: 'DB Glute Bridge', what: 'Lie on your back. Lift hips with a dumbbell on them.', vn: 'Floor + 1 dumbbell', move: 'bridge', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 12, step: 2, rest: 90,
-        guide: { setup: ['Lie on back, knees bent, feet flat.', 'Dumbbell on hip bones.', 'Exhale, lift hips. Hold 2 s.'], avoid: ['Arching the back.', 'Pushing through the neck.'] } } }
+      grp: 'Hip thrust', alts: [{ hk: 'bridge', name: 'DB Glute Bridge', what: 'Lie on your back. Lift hips with a dumbbell on them.', vn: 'Floor + 1 dumbbell', move: 'bridge', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 12, step: 2, rest: 90,
+        guide: { setup: ['Lie on back, knees bent, feet flat.', 'Dumbbell on hip bones.', 'Exhale, lift hips. Hold 2 s.'], avoid: ['Arching the back.', 'Pushing through the neck.'] } }, 'thrust', 'bandbridge', 'slbridge'] }
   ]},
   { id: 'fri', tab: 'PULL', tt: 'Lift', type: 'lift', title: 'Upper Pull', sub: 'Posture + back width.', warm: 'Bike 6 min, easy. Can chat.', items: [
     { id: 'fri_lpd', hp: 1, hk: 'latpull', name: 'Lat Pulldown', what: 'Sit and pull a wide bar down to your chest.', vn: 'Máy kéo lưng xô', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
       guide: { setup: ['Knees locked under the pad.', 'Grip wider than shoulders.', 'Pull to upper chest. Exhale.'], avoid: ['Leaning far back.', 'Pulling behind the neck.'] },
-      swap: { hk: 'cablepd1', name: '1-Arm Cable Pulldown', what: 'Half kneel. Pull one handle to your side.', vn: 'Cable + single handle, high', move: 'kneelpd1', muscle: 'Lats (back width)', target: 'lats', sets: 3, reps: 12, w: 7.5, step: 2.5, rest: 90, side: true,
-        guide: { setup: ['Handle on high cable. Half kneel.', 'Same-side knee down, arm reaching up.', 'Exhale. Elbow down to your ribs.'], avoid: ['Twisting toward the cable.', 'Shrugging the shoulder up.'] } } },
+      grp: 'Vertical pull', alts: [{ hk: 'cablepd1', name: '1-Arm Cable Pulldown', what: 'Half kneel. Pull one handle to your side.', vn: 'Cable + single handle, high', move: 'kneelpd1', muscle: 'Lats (back width)', target: 'lats', sets: 3, reps: 12, w: 7.5, step: 2.5, rest: 90, side: true,
+        guide: { setup: ['Handle on high cable. Half kneel.', 'Same-side knee down, arm reaching up.', 'Exhale. Elbow down to your ribs.'], avoid: ['Twisting toward the cable.', 'Shrugging the shoulder up.'] } }, 'bandpd', 'bandpu'] },
     { id: 'fri_row', hp: 1, hk: 'cablerow', name: 'Seated Cable Row', what: 'Sit and pull a handle to your belly.', vn: 'Máy ngồi kéo cáp', move: 'cablerow', muscle: 'Mid back (posture)', target: 'upper_back', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
       guide: { setup: ['Sit tall. Feet on plate. Knees soft.', 'Exhale. Pull handle to lower ribs.', 'Squeeze shoulder blades 1 s.'], avoid: ['Rounding forward.', 'Rocking back.'] },
-      swap: { hk: 'dbrow', name: 'Single-Arm DB Row', what: 'One hand on a bench. Pull a dumbbell to your hip.', vn: 'Bench + 1 dumbbell', move: 'dbrow', muscle: 'Mid back (posture)', target: 'upper_back', reps: 12, w: 10, step: 2, rest: 90, side: true,
-        guide: { setup: ['Hand on bench. Back flat.', 'Dumbbell hangs under shoulder.', 'Pull elbow to hip. Exhale.'], avoid: ['Twisting the body.', 'Jerking the weight.'] } } },
+      grp: 'Row', alts: [{ hk: 'dbrow', name: 'Single-Arm DB Row', what: 'One hand on a bench. Pull a dumbbell to your hip.', vn: 'Bench + 1 dumbbell', move: 'dbrow', muscle: 'Mid back (posture)', target: 'upper_back', reps: 12, w: 10, step: 2, rest: 90, side: true,
+        guide: { setup: ['Hand on bench. Back flat.', 'Dumbbell hangs under shoulder.', 'Pull elbow to hip. Exhale.'], avoid: ['Twisting the body.', 'Jerking the weight.'] } }, 'bandrow'] },
     { id: 'fri_apu', hk: 'assistpu', name: 'Assisted Pull Up', what: 'Kneel on a pad that helps lift you to the bar.', vn: 'Máy hít xà đơn trợ lực', move: 'assistpu', muscle: 'Lats (back width)', target: 'lats', sets: 2, reps: 8, w: 50, assist: true, step: 5, rest: 120,
       guide: { setup: ['Assist ≈ your weight − 20 kg. More = easier.', 'Knees on pad. Full hang.', 'Pull chin over bar. Exhale.'], avoid: ['Swinging.', 'Half reps.'] },
-      swap: { hk: 'bandpu', name: 'Band-Assisted Pull Up', what: 'A band under your knee helps you pull up.', vn: 'Pull-up bar + thick band', move: 'bandpu', muscle: 'Lats (back width)', target: 'lats', reps: 8, noW: 'Band', rest: 120,
-        guide: { setup: ['Loop band over the bar.', 'Knee in band. Full hang.', 'Pull chin over bar. Exhale.'], avoid: ['Kicking the legs.', 'Dropping fast.'] } } },
+      grp: 'Vertical pull', alts: ['cablepd1', 'bandpd', { hk: 'bandpu', name: 'Band-Assisted Pull Up', what: 'A band under your knee helps you pull up.', vn: 'Pull-up bar + thick band', move: 'bandpu', muscle: 'Lats (back width)', target: 'lats', reps: 8, noW: 'Band', rest: 120,
+        guide: { setup: ['Loop band over the bar.', 'Knee in band. Full hang.', 'Pull chin over bar. Exhale.'], avoid: ['Kicking the legs.', 'Dropping fast.'] } }] },
     { id: 'fri_face', hk: 'facepull', name: 'Cable Face Pull', what: 'Pull a rope toward your face, elbows high.', vn: 'Cable + rope, high', move: 'facepull', muscle: 'Rear shoulder', target: 'rear_delt', sets: 3, reps: 15, w: 10, step: 2.5, rest: 90,
       guide: { setup: ['Rope at forehead height.', 'Pull to forehead. Elbows high.', 'Thumbs back. Squeeze 1 s.'], avoid: ['Leaning back.', 'Elbows dropping.'] },
-      swap: { hk: 'reardelt', name: 'Rear-Delt DB Fly', what: 'Chest on a bench. Lift dumbbells out to the sides.', vn: 'Incline bench + 2 dumbbells', move: 'reardelt', muscle: 'Rear shoulder', target: 'rear_delt', reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
-        guide: { setup: ['Chest on incline bench.', 'Arms hang. Slight elbow bend.', 'Lift out to shoulder height.'], avoid: ['Swinging.', 'Shrugging.'] } } },
+      grp: 'Rear delts', alts: ['reardelt', 'pullapart', 'proney', 'bander'] },
     { id: 'fri_fly', hk: 'incfly_l', name: 'Incline DB Fly · Easy', what: 'On a tilted bench, open arms wide, then hug in.', vn: 'Bench 30° + 2 dumbbells', move: 'incfly', muscle: 'Inner + upper chest', target: 'inner_chest', sets: 3, reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
       guide: { setup: ['Bench at 30°.', 'Lighter than Push day.', 'Squeeze at the top 1 s.'], avoid: ['Straight arms.', 'Bouncing.'] },
-      swap: { hk: 'cablefly_lh_l', name: 'Low-to-High Cable Fly', what: 'Pull low cables up and in to chin height.', vn: 'Cable, both sides low', move: 'cablefly', muscle: 'Upper chest', target: 'upper_chest', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90,
-        guide: { setup: ['Both cables at lowest point. Stand in the middle.', 'Slight elbow bend. Hands low and wide.', 'Exhale. Sweep up and in to chin. Squeeze.'], avoid: ['Bending elbows into a press.', 'Leaning back.'] } } },
+      grp: 'Chest fly', alts: [{ hk: 'cablefly_lh_l', name: 'Low-to-High Cable Fly', what: 'Pull low cables up and in to chin height.', vn: 'Cable, both sides low', move: 'cablefly', muscle: 'Upper chest', target: 'upper_chest', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90,
+        guide: { setup: ['Both cables at lowest point. Stand in the middle.', 'Slight elbow bend. Hands low and wide.', 'Exhale. Sweep up and in to chin. Squeeze.'], avoid: ['Bending elbows into a press.', 'Leaning back.'] } }] },
     { id: 'fri_lat', hk: 'latraise', name: 'DB Lateral Raise', what: 'Lift dumbbells out to the sides.', vn: '2 light dumbbells', move: 'latraise', muscle: 'Side shoulder', target: 'side_delt', sets: 3, reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
       guide: { setup: ['Slight forward lean.', 'Lead with elbows.', 'Lower in 3 s.'], avoid: ['Shrugging.', 'Swinging.'] },
-      swap: { hk: 'cablelat', name: 'Cable Lateral Raise', what: 'One arm lifts a low cable out to the side.', vn: 'Cable, low', move: 'cablelat', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90, side: true,
-        guide: { setup: ['Cable at lowest point.', 'Stand side-on. Handle in far hand.', 'Lift to shoulder height.'], avoid: ['Leaning away.', 'Shrugging.'] } } }
+      grp: 'Side delts', alts: [{ hk: 'cablelat', name: 'Cable Lateral Raise', what: 'One arm lifts a low cable out to the side.', vn: 'Cable, low', move: 'cablelat', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90, side: true,
+        guide: { setup: ['Cable at lowest point.', 'Stand side-on. Handle in far hand.', 'Lift to shoulder height.'], avoid: ['Leaning away.', 'Shrugging.'] } }, 'latmach', 'bandlat'] }
   ]},
   { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', after: 'finisher', warm: 'Walk 5 min, flat, easy.', warmMin: 5, items: [
     { id: 'wed_pump', cls: true, main: true, name: 'New Pump', vn: 'Class', min: 45, met: 3.5, icon: 'cls', move: 'pump',
@@ -1014,12 +1021,11 @@ const PROGRAM = [
     /* glute finisher after class: 2 light machine moves, mat swaps */
     { id: 'wed_ht', hk: 'thrust_mf', name: 'Hip Thrust Machine · Finisher', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 2, reps: 15, w: 15, step: 5, max: 40, rest: 90,
       guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat. Shins straight at the top.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back.', 'Going heavy: this is a finisher.'] },
-      swap: { hk: 'frogpump', name: 'Frog Pump', what: 'On your back, soles together, knees out. Pump hips up.', vn: 'Mat', move: 'frogpump', muscle: 'Glute max', target: 'glute_max', reps: 20, noW: 'Body', rest: 90,
-        guide: { setup: ['Lie back. Soles of feet together.', 'Let knees fall open.', 'Exhale, pump hips up. Squeeze.'], avoid: ['Arching the back.', 'Holding breath.'] } } },
+      grp: 'Hip thrust', alts: [{ hk: 'frogpump', name: 'Frog Pump', what: 'On your back, soles together, knees out. Pump hips up.', vn: 'Mat', move: 'frogpump', muscle: 'Glute max', target: 'glute_max', reps: 20, noW: 'Body', rest: 90,
+        guide: { setup: ['Lie back. Soles of feet together.', 'Let knees fall open.', 'Exhale, pump hips up. Squeeze.'], avoid: ['Arching the back.', 'Holding breath.'] } }, 'bandbridge'] },
     { id: 'wed_ab', hk: 'abductor_f', name: 'Abductor Machine · Finisher', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 20, w: 15, step: 5, max: 30, rest: 90,
       guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Going heavy: this is a finisher.'] },
-      swap: { hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', reps: 15, unit: 'steps', side: true, noW: 'Band', rest: 90,
-        guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', 'Step right, then the same back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] } } },
+      grp: 'Side glutes', alts: ['latwalk', 'abd', 'sidelying', 'clamshell', 'hydrant'] },
     { id: 'wed_walk', cls: true, name: 'Cool-down Walk', vn: 'Treadmill', min: 5, met: 3.5, icon: 'cardio', move: 'walk', rules: ['Flat. Speed 4.', 'Leave when you can chat.', 'Hands off the rails.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, met: 3.5, cue: 'Easy pace.' } }
   ]},
   { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', warm: 'Walk 3 min, flat.', warmMin: 3, items: [
@@ -1030,12 +1036,10 @@ const PROGRAM = [
     /* posture + glute med after the walk-down: no cardio, easy moves */
     { id: 'sat_fp', hk: 'facepull_l', name: 'Cable Face Pull', what: 'Pull a rope toward your face, elbows high.', vn: 'Cable + rope, high', move: 'facepull', muscle: 'Rear shoulder', target: 'rear_delt', sets: 2, reps: 15, w: 7.5, step: 2.5, rest: 90,
       guide: { setup: ['Rope at forehead height.', 'Pull to forehead. Elbows high.', 'Thumbs back. Squeeze 1 s.'], avoid: ['Leaning back.', 'Elbows dropping low.'] },
-      swap: { hk: 'reardelt', name: 'Rear-Delt DB Fly', what: 'Chest on a bench. Lift dumbbells out to the sides.', vn: 'Incline bench + 2 dumbbells', move: 'reardelt', muscle: 'Rear shoulder', target: 'rear_delt', reps: 15, w: 3, pair: true, step: 1, rest: 90,
-        guide: { setup: ['Chest on incline bench.', 'Arms hang. Slight elbow bend.', 'Lift out to shoulder height.'], avoid: ['Swinging.', 'Shrugging.'] } } },
-    { id: 'sat_sl', hk: 'sidelying', name: 'Side-Lying Leg Raise', what: 'Lie on your side. Lift the top leg up.', vn: 'Mat', move: 'sidelying', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 15, noW: 'Body', rest: 90, side: true, swapAsk: 'No mat?',
+      grp: 'Rear delts', alts: ['reardelt', 'pullapart', 'proney', 'bander'] },
+    { id: 'sat_sl', hk: 'sidelying', name: 'Side-Lying Leg Raise', what: 'Lie on your side. Lift the top leg up.', vn: 'Mat', move: 'sidelying', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 15, noW: 'Body', rest: 90, side: true,
       guide: { setup: ['Lie on side. Bottom knee bent.', 'Top toes point slightly down.', 'Lift slow to 45°. Pause 1 s.'], avoid: ['Rolling backward.', 'Lifting too high.'] },
-      swap: { hk: 'abductor_f', name: 'Abductor Machine · Finisher', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', reps: 20, w: 15, step: 5, max: 30, rest: 90,
-        guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Going heavy: this is a finisher.'] } } },
+      grp: 'Side glutes', alts: ['abductor_f', 'abd', 'latwalk', 'clamshell', 'hydrant'] },
     { id: 'sat_stretch', cls: true, name: 'Stretch', vn: 'Mat', min: 6, met: 2.3, icon: 'floor', move: 'stretch', rules: ['Child pose 2 min. Belly breathing.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.', 'Chest stretch on frame 30 s per side.'], alt: { name: 'Slow Walk', vn: 'Treadmill', min: 6, met: 3.5, cue: '6 min flat.' } }
   ]},
   { id: 'sun', tab: 'YOGA', tt: 'Class', type: 'class', title: 'Yoga', sub: 'Recovery. Breathe and relax.', warm: 'None.', items: [
@@ -1093,20 +1097,20 @@ const RETIRED = [
   { hk: 'cablepd', name: 'Kneeling Cable Pulldown', what: 'Kneel at a high cable. Pull the bar to your upper chest.', vn: 'Cable + bar, high', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', sets: 4, reps: 12, w: 15, step: 2.5, rest: 90,
     guide: { setup: ['Bar on high cable. Kneel facing it.', 'Grip wider than shoulders.', 'Exhale. Pull to upper chest.'], avoid: ['Leaning far back.', 'Shrugging.'] } }
 ];
-/* Mat + Band day: LIBRARY moves with this day's ids, sets and swaps. Floor, then kneeling, then standing (stand up once).
+/* Mat + Band day: LIBRARY moves with this day's ids, sets and alts. Floor, then kneeling, then standing (stand up once).
    home = Add sheet shows only band and mat moves, swap rows ask no question, Guide has no "My gym has no" button.
    keepRest = Light and Hard keep the program rest (90 s). */
 const LIBDEF = {}; LIBRARY.forEach(d => LIBDEF[d.hk] = d);
-const matItem = (id, hk, sw, sets, o) => Object.assign({}, LIBDEF[hk], { id: 'mat_' + id, sets, swap: LIBDEF[sw] }, o);
+const matItem = (id, hk, grp, alts, sets, o) => Object.assign({}, LIBDEF[hk], { id: 'mat_' + id, sets, grp, alts }, o);
 PROGRAM.push({ id: 'mat', tab: 'MAT', tt: 'Lift', type: 'lift', title: 'Mat + Band', sub: 'Gym full or home. Mat + 2 bands.', warm: 'March 4 min, easy. 5 belly breaths.', home: 1, keepRest: 1, items: [
-  matItem('bridge', 'bandbridge', 'slbridge', 3, { hp: 1 }),
-  matItem('clam', 'clamshell', 'hydrant', 2),
-  matItem('kick', 'bandkick', 'bandrdl', 3, { hp: 1 }),
-  matItem('bird', 'birddog', 'sideplank', 2),
-  matItem('pd', 'bandpd', 'bandrow', 3),
+  matItem('bridge', 'bandbridge', 'Hip thrust', ['slbridge', 'frogpump'], 3, { hp: 1 }),
+  matItem('clam', 'clamshell', 'Side glutes', ['hydrant', 'sidelying', 'latwalk', 'abd'], 2),
+  matItem('kick', 'bandkick', 'Kickback', ['bandrdl', 'slbridge'], 3, { hp: 1 }),
+  matItem('bird', 'birddog', 'Core', ['deadbug', 'sideplank'], 2),
+  matItem('pd', 'bandpd', 'Vertical pull', ['bandrow'], 3),
   /* first standing move: its first cue changes on this day only */
-  matItem('press', 'bandpress', 'kneepush', 3, { guide: { setup: ['Stand up slowly. Band across upper back.'].concat(LIBDEF.bandpress.guide.setup.slice(1)), avoid: LIBDEF.bandpress.guide.avoid } }),
-  matItem('pull', 'pullapart', 'proney', 2)
+  matItem('press', 'bandpress', 'Chest press', ['kneepush'], 3, { guide: { setup: ['Stand up slowly. Band across upper back.'].concat(LIBDEF.bandpress.guide.setup.slice(1)), avoid: LIBDEF.bandpress.guide.avoid } }),
+  matItem('pull', 'pullapart', 'Rear delts', ['proney', 'bander'], 2)
 ]});
 const ORDER = ['mon', 'tue', 'thu', 'fri', 'mat', 'wed', 'sat', 'sun', 'walk'];
 /* standard week, Mon..Sun: Glutes A, Push, Yoga, Glutes B, Pull, Pump, Rest */
@@ -1116,7 +1120,7 @@ const GROUP = { glute_max: 'Glutes', glute_med: 'Glutes', hams: 'Glutes', quads:
 /* muscle tags by history key (hk). p = primary (counts 1 set), s = secondary (0.5 set each).
    pl = place in the picker. l = light (class days, Glutes-tomorrow). lv = light twin used on light-only days.
    to = hidden in the picker, its movement row is `to`. old = legacy hk, not in PROGRAM (old history only).
-   bar = needs a pull-up bar (not a home move). */
+   bar = needs a pull-up bar (not a home move). hinge = a hip hinge: no Hard +1 set. */
 const CATS = ['Glutes', 'Chest', 'Back', 'Shoulders', 'Core'];   /* picker, reports, tie order */
 const CATS_R = CATS.concat('Legs');                               /* reports */
 const TAGS = {
@@ -1139,9 +1143,9 @@ const TAGS = {
   latmach:       { p: 'Shoulders', s: [], pl: 'Machine' },
   latraise:      { p: 'Shoulders', s: [], pl: 'Dumbbell' },
   facepull:      { p: 'Shoulders', s: ['Back'], pl: 'Cable', lv: 'facepull_l' },
-  reardelt:      { p: 'Shoulders', s: ['Back'], pl: 'Dumbbell' },
-  rdl:           { p: 'Glutes', s: ['Legs'], pl: 'Dumbbell' },
-  pullthrough:   { p: 'Glutes', s: ['Legs'], pl: 'Cable' },
+  reardelt:      { p: 'Shoulders', s: ['Back'], pl: 'Dumbbell', l: 1 },
+  rdl:           { p: 'Glutes', s: ['Legs'], pl: 'Dumbbell', hinge: 1 },
+  pullthrough:   { p: 'Glutes', s: ['Legs'], pl: 'Cable', hinge: 1 },
   bss:           { p: 'Glutes', s: ['Legs'], pl: 'Dumbbell' },
   revlunge:      { p: 'Glutes', s: ['Legs'], pl: 'Mat' },
   anglepress:    { p: 'Glutes', s: ['Legs'], pl: 'Machine' },
@@ -1165,7 +1169,7 @@ const TAGS = {
   facepull_l:    { p: 'Shoulders', s: ['Back'], pl: 'Cable', l: 1, to: 'facepull' },
   sidelying:     { p: 'Glutes', s: [], pl: 'Mat', l: 1 },
   /* mat + band library */
-  bandbridge:    { p: 'Glutes', s: [], pl: 'Long band' },
+  bandbridge:    { p: 'Glutes', s: [], pl: 'Long band', l: 1 },
   slbridge:      { p: 'Glutes', s: ['Legs'], pl: 'Mat' },
   bandkick:      { p: 'Glutes', s: [], pl: 'Long band' },
   hydrant:       { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
@@ -1194,12 +1198,54 @@ const ABBR = { mon: 'GA', tue: 'PU', thu: 'GB', fri: 'PL', mat: 'MB', wed: 'PM',
 const LIFTS = ['mon', 'tue', 'thu', 'fri'];
 const DAYS = {}; PROGRAM.forEach(d => DAYS[d.id] = d);
 const EX = {}; PROGRAM.forEach(d => d.items.forEach(it => EX[it.id] = it));
-const HKDEF = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk && !HKDEF[it.hk]) HKDEF[it.hk] = it; if (it.swap && !HKDEF[it.swap.hk]) HKDEF[it.swap.hk] = Object.assign({}, it.swap, { sets: it.swap.sets || it.sets }); }));
-/* library defs win (the Mat day uses them with its own ids, swaps and one day-only cue); retired moves fill gaps only */
+/* first def of each hk: program mains, then alts written out in full ({ hk, name, ... }) */
+const HKDEF = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk && !HKDEF[it.hk]) HKDEF[it.hk] = it;
+  (it.alts || []).forEach(a => { if (a && typeof a === 'object' && !HKDEF[a.hk]) HKDEF[a.hk] = Object.assign({}, a, { sets: a.sets || it.sets }); }); }));
+/* library defs win (the Mat day uses them with its own ids, alts and one day-only cue); retired moves fill gaps only */
 LIBRARY.forEach(d => HKDEF[d.hk] = d);
 RETIRED.forEach(d => { if (!HKDEF[d.hk]) HKDEF[d.hk] = d; });
-const HKNAME = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk) HKNAME[it.hk] = it.name; if (it.swap) HKNAME[it.swap.hk] = it.swap.name; }));
-LIBRARY.concat(RETIRED).forEach(d => { if (!HKNAME[d.hk]) HKNAME[d.hk] = d.name; });
+const canon = hk => (TAGS[hk] && TAGS[hk].to) || hk;
+const HOMEPL = ['Mini band', 'Long band', 'Mat'];
+/* the fields an alt brings into a slot (the slot gives id, sets, hp) */
+const ALTF = ['hk', 'name', 'what', 'vn', 'move', 'muscle', 'target', 'reps', 'repTop', 'w', 'step', 'max', 'pair', 'assist', 'noW', 'side', 'unit', 'hinge', 'guide', 'rest'];
+/* alts of an exercise card, best first: an hk or { hk, ...overrides }, resolved here to a copy of those fields.
+   Build check: a bad entry is dropped with a console warning (no def, the main hk, same move twice, no TAGS or figure,
+   not light on a class day, not band or mat or needs a bar on the Mat day). */
+PROGRAM.forEach(d => d.items.forEach(it => {
+  if (it.cls || !Array.isArray(it.alts)) return;
+  const seen = new Set([canon(it.hk)]), out = [];
+  it.alts.forEach(e => {
+    const hk = typeof e === 'string' ? e : e && e.hk, b = HKDEF[hk], t = TAGS[hk], m = b && Object.assign({}, b, typeof e === 'string' ? {} : e);
+    const a = m && ALTF.reduce((o, k) => { if (m[k] !== undefined) o[k] = m[k]; return o; }, {});
+    const why = !a ? 'no def' : hk === it.hk ? 'main hk' : seen.has(canon(hk)) ? 'twice' : !t ? 'no TAGS' : !MOVES[a.move] ? 'no figure'
+      : d.type === 'class' && !t.l && !t.to ? 'not light' : d.home && (!HOMEPL.includes(t.pl) || t.bar) ? 'not home' : '';
+    if (why) { console.warn('SCULPT alt dropped: ' + it.id + ' ' + hk + ' (' + why + ')'); return; }
+    seen.add(canon(hk)); out.push(a);
+  });
+  it.alts = out.length ? out : null;
+}));
+/* v3.8 had one swap per card: S.swaps 'use', rows under id + '~s', S.missing true. norm() maps them to that move */
+const SWAP38 = { mon_thrustm: 'thrust', mon_legpress: 'gobletsq', mon_kickm: 'kick', mon_abdm: 'abd', mon_abs: 'pallof',
+  tue_cpress: 'incpress', tue_pec: 'incfly', tue_spress: 'dbspress', tue_latm: 'latraise', tue_face: 'reardelt',
+  thu_rdl: 'pullthrough', thu_bss: 'revlunge', thu_alp: 'stepup', thu_hipabd: 'latwalk', thu_backext: 'bridge',
+  fri_lpd: 'cablepd1', fri_row: 'dbrow', fri_apu: 'bandpu', fri_face: 'reardelt', fri_fly: 'cablefly_lh_l', fri_lat: 'cablelat',
+  wed_ht: 'frogpump', wed_ab: 'latwalk', sat_fp: 'reardelt', sat_sl: 'abductor_f',
+  mat_bridge: 'slbridge', mat_clam: 'hydrant', mat_kick: 'bandrdl', mat_bird: 'sideplank', mat_pd: 'bandrow', mat_press: 'kneepush', mat_pull: 'proney' };
+/* hk is one of the card's alts */
+const isAlt = (it, hk) => !!it && !it.cls && !!it.alts && typeof hk === 'string' && it.alts.some(a => a.hk === hk);
+/* the alt a v3.8 swap becomes: the same move when still listed, else the first alt */
+const hk38 = it => (isAlt(it, SWAP38[it.id]) ? SWAP38[it.id] : it.alts[0].hk);
+/* safe to run twice. Old '~s' rows go to id + '~' + hk (added after rows already there); refs to them follow */
+function normSwaps(s) {
+  const exOf = id => (EX[id] && !EX[id].cls && EX[id].alts ? EX[id] : null), shift = {};
+  for (const id in s.swaps) { const it = exOf(id), v = s.swaps[id]; if (it) s.swaps[id] = v === 'use' ? hk38(it) : isAlt(it, v) ? v : 0; }
+  Object.keys(s.sets).forEach(k => { const it = k.endsWith('~s') && exOf(k.slice(0, -2)); if (!it) return;
+    const to = it.id + '~' + hk38(it), a = Array.isArray(s.sets[k]) ? s.sets[k] : [], b = Array.isArray(s.sets[to]) ? s.sets[to] : [];
+    shift[k] = b.length; s.sets[to] = b.concat(a); delete s.sets[k]; if (b.length) delete s.sel[it.id]; });
+  for (const id in s.missing) { const it = exOf(id), v = s.missing[id]; if (!it) continue; if (v === true) s.missing[id] = hk38(it); else if (!isAlt(it, v)) delete s.missing[id]; }
+  [s.timer && s.timer.ref, s.rate].forEach(r => { const it = r && typeof r.key === 'string' && r.key.endsWith('~s') && exOf(r.key.slice(0, -2)); if (!it) return;
+    if (typeof r.k === 'number') r.k += shift[r.key] || 0; r.key = it.id + '~' + hk38(it); });
+}
 /* tags for any hk: TAGS first, then the old single-group map, else null (not counted) */
 const tagOf = hk => TAGS[hk] || (HKDEF[hk] && GROUP[HKDEF[hk].target] ? { p: GROUP[HKDEF[hk].target], s: [] } : null);
 /* weight of one set of hk for category c: 1, 0.5 or 0 */
@@ -1211,9 +1257,9 @@ const KEY = 'sculpt_v3';
 const MODES = ['light', 'normal', 'hard'];
 const fresh = () => ({ view: 'mon', viewDate: '', mode: null, missing: {}, plans: {}, basePlan: null, statTab: 'week', statRange: '1m', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, cin: {}, order: {}, extra: {}, lastExport: '' });
 let S = load();
-/* fill fields an older backup may lack or hold as null; drop v3.7 heart-rate keys */
+/* fill fields an older backup may lack or hold as null; drop v3.7 heart-rate keys; map v3.8 swaps */
 function norm(s) { const f = fresh(); ['missing','plans','sets','classes','swaps','sel','history','profile','start','cin','order','extra'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; });
-  delete s.hr; delete s.calm;
+  delete s.hr; delete s.calm; normSwaps(s);
   const m = s.mode; s.mode = m && typeof m === 'object' && MODES.includes(m.v) && typeof m.d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(m.d) ? { v: m.v, d: m.d } : null;
   for (const d in s.extra) { const v = s.extra[d]; if (!Array.isArray(v)) { delete s.extra[d]; continue; } s.extra[d] = v.filter(x => x && typeof x.id === 'string' && x.id.slice(0, 2) === 'x_' && HKDEF[x.hk]).slice(0, 3); }
   for (const d in s.order) { const v = s.order[d]; if (!v || typeof v.d !== 'string' || !Array.isArray(v.ids)) delete s.order[d]; }
@@ -1256,14 +1302,29 @@ function buzz(name) { if (document.hidden) return; try { if (navigator.vibrate) 
 const fmtW = w => (w % 1 === 0 ? String(w) : String(Math.round(w * 100) / 100));
 const rnd = w => Math.max(0, Math.round(w * 4) / 4);
 
-/* effective exercise (main or swap) */
-const isSwapped = ex => !ex.cls && !!ex.swap && S.swaps[ex.id] === 'use';
-function asSwap(ex) { const s = ex.swap; return Object.assign({}, s, { id: ex.id, sets: s.sets || ex.sets, rest: s.rest || ex.rest, hp: ex.hp, isSwap: true, from: ex.name }); }
-const cur = ex => (isSwapped(ex) ? asSwap(ex) : ex);
-const skey = ex => ex.id + (isSwapped(ex) ? '~s' : '');
-/* the version not on screen (main or swap): its done sets are kept and counted */
-const otherCur = ex => (isSwapped(ex) || !ex.swap ? ex : asSwap(ex));
-const otherDone = ex => (ex.cls || !ex.swap ? [] : (S.sets[ex.id + (isSwapped(ex) ? '' : '~s')] || []).filter(s => s.done));
+/* effective exercise: the main, or the alt picked for the card (S.swaps[id] = its hk, 0 = main) */
+const altHk = ex => (isAlt(ex, S.swaps[ex.id]) ? S.swaps[ex.id] : '');
+/* an alt in this slot: the slot gives id, sets, hp; the alt gives the move, kg, reps, caps, rest and its own history.
+   A per-side alt in a two-sided slot does min(slot sets, 3) */
+function asAlt(ex, hk) {
+  const a = ex.alts.find(x => x.hk === hk), c = { id: ex.id, hp: ex.hp, from: ex.name, isSwap: true };
+  ALTF.forEach(k => { if (a[k] !== undefined) c[k] = a[k]; });
+  c.sets = a.side && !ex.side ? Math.min(ex.sets, 3) : ex.sets; c.rest = a.rest || ex.rest;
+  return c;
+}
+const cur = ex => { const h = altHk(ex); return h ? asAlt(ex, h) : ex; };
+/* rows of a version: main = S.sets[id], alt = S.sets[id + '~' + hk] */
+const vkey = (ex, hk) => ex.id + (hk ? '~' + hk : '');
+const skey = ex => vkey(ex, altHk(ex));
+/* every version of an exercise card: main (''), then the alts in PT order */
+const versions = ex => (ex.cls ? [] : [''].concat((ex.alts || []).map(a => a.hk)));
+/* the versions not on screen and their done sets: kept and counted (HUD, progress, muscle sets, kcal, log) */
+const others = ex => { const k0 = skey(ex); return versions(ex).filter(h => vkey(ex, h) !== k0).map(h => { const k = vkey(ex, h);
+  return { hk: h, k, get c() { return h ? asAlt(ex, h) : ex; }, done: (Array.isArray(S.sets[k]) ? S.sets[k] : []).filter(s => s.done) }; }); };
+const otherDone = ex => others(ex).flatMap(o => o.done);
+/* the card def of a rows key (the version a set was done on) */
+const defOfKey = (ex, key) => { const h = key.slice(ex.id.length + 1); return isAlt(ex, h) ? asAlt(ex, h) : ex; };
+const isHinge = c => !!(c.hinge || (TAGS[c.hk] || {}).hinge);
 /* today's intensity: the pick saved today, else today's suggestion */
 /* a workout started on the mode's date and still open (late session past midnight) keeps that mode */
 const modeLive = () => !!S.mode && Object.values(S.start || {}).some(t => t && ds(new Date(t)) === S.mode.d && Date.now() - t < 6 * 3600000);
@@ -1335,12 +1396,11 @@ const MCODE = { light: 'l', normal: 'n', hard: 'h' };
 const cardMode = c => modeOn(dayOfId(c.id));
 /* a program exercise on a class day (Pump finisher, Combat post-class), main or swap; added cards are not */
 const clsLift = c => !c.added && !!EX[c.id] && !EX[c.id].cls && DAYS[dayOfId(c.id)].type === 'class';
-/* Pump on Light: finisher cards are off today, unless a set on them is already done */
-const offToday = (day, it) => !!day.after && !it.cls && !it.added && modeOn(day.id) === 'light' && !['', '~s'].some(k => (S.sets[it.id + k] || []).some(s => s.done));
+/* Pump on Light: finisher cards are off today, unless a set on any version is already done */
+const offToday = (day, it) => !!day.after && !it.cls && !it.added && modeOn(day.id) === 'light' && !versions(it).some(h => (S.sets[vkey(it, h)] || []).some(s => s.done));
 /* extras allowed today: Light 0, Normal 2, Hard 1 */
 const maxExtra = day => ({ light: 0, normal: 2, hard: 1 })[modeOn(day.id)];
 const modeSfx = m => (m === 'light' ? ' · Light' : m === 'hard' ? ' · Hard' : '');
-const HKASSIST = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.assist) HKASSIST[it.hk] = 1; if (it.swap && it.swap.assist) HKASSIST[it.swap.hk] = 1; }));
 /* shown unit: 'sec' holds read as "20 s" */
 const repUnit = c => (c.unit === 'sec' ? 's' : c.unit || 'reps');
 const repStep = c => (c.unit === 'sec' || c.unit === 'steps' ? 5 : 1);
@@ -1392,7 +1452,7 @@ function planOf(c) {
   const p = { sets: c.sets, w: sg.w, r: sg.r, rest: c.rest };
   /* class days: Hard gives the program cards after class 3 sets, same kg and rest. Lift days: +1 set on Hard+ moves, never on a hinge */
   if (md === 'hard' && cl) p.sets = Math.max(3, c.sets);
-  else if (md === 'hard' && c.hp && !c.hinge) { p.sets = c.sets + 1; p.rest = keep ? c.rest : Math.max(120, c.rest); }
+  else if (md === 'hard' && c.hp && !isHinge(c)) { p.sets = c.sets + 1; p.rest = keep ? c.rest : Math.max(120, c.rest); }
   if (md === 'light') {
     p.sets = Math.max(Math.min(2, c.sets), c.sets - 1); p.rest = keep ? c.rest : Math.max(120, c.rest);
     if (c.noW) { const k = noWStep(c); p.r = Math.max(k, Math.round(sg.r * 0.8 / k) * k); }
@@ -1435,8 +1495,8 @@ function dayProgress(day) {
   return { t, d };
 }
 function dayVolume(day) {
-  return dayItems(day).filter(e => !e.cls).reduce((a, e) => { const c = cur(e), oc = otherCur(e);
-    return a + sets(e).filter(s => s.done).reduce((b, s) => b + setVol(c, s), 0) + otherDone(e).reduce((b, s) => b + setVol(oc, s), 0); }, 0);
+  return dayItems(day).filter(e => !e.cls).reduce((a, e) => { const c = cur(e);
+    return a + sets(e).filter(s => s.done).reduce((b, s) => b + setVol(c, s), 0) + others(e).reduce((b, o) => b + o.done.reduce((x, s) => x + setVol(o.c, s), 0), 0); }, 0);
 }
 
 
@@ -1445,7 +1505,7 @@ const XC = {};
 let lastLayout = 0;   /* time of the last list change under the finger (double-tap guard) */
 function xItem(dayId, hk) {
   const id = 'x_' + dayId + '_' + hk;
-  if (!XC[id]) { const d = HKDEF[hk]; XC[id] = Object.assign({}, d, { id, hk, sets: Math.min(3, d.sets), hp: 0, added: true, swap: null, swapAsk: null }); }
+  if (!XC[id]) { const d = HKDEF[hk]; XC[id] = Object.assign({}, d, { id, hk, sets: Math.min(3, d.sets), hp: 0, added: true, alts: null, grp: null, swapAsk: null }); }
   return XC[id];
 }
 const xItems = dayId => (S.extra[dayId] || []).filter(x => HKDEF[x.hk]).map(x => xItem(dayId, x.hk));
@@ -1511,7 +1571,7 @@ const canPass = u => !(u.kind === 'tail' || (u.kind === 'class' && u.lock));
 function saveOrder(day, us) { S.order[day.id] = { d: todayStr(), ids: us.flatMap(u => u.items.map(it => it.id)) }; }
 function relabelTimer() {
   const r = S.timer && S.timer.ref, ex = r && getEx(r.id);
-  if (ex && S.view !== 'stats' && dayItems(DAYS[S.view]).includes(ex)) { S.timer.name = nextLabel(ex, r.k); $('#tN').textContent = S.timer.name; }
+  if (ex && S.view !== 'stats' && dayItems(DAYS[S.view]).includes(ex)) { S.timer.name = refLabel(ex, r); $('#tN').textContent = S.timer.name; }
 }
 function moveUnit(i, dir) {
   const day = DAYS[S.view], us = units(day), j = i + dir;
@@ -1559,9 +1619,9 @@ function histCat(a, b) {
 /* today's open day, not yet logged: done and pending weighted sets */
 function liveCat(day) {
   const done = zeroCats(), pend = zeroCats(); if (!day) return { done, pend };
-  dayItems(day).forEach(it => { if (it.cls) return; const c0 = cur(it), ss = sets(it), od = otherDone(it), oc = otherCur(it);
+  dayItems(day).forEach(it => { if (it.cls) return; const c0 = cur(it), ss = sets(it), od = others(it).filter(o => o.done.length);
     const nd = ss.filter(s => s.done).length, np = ss.length - nd;
-    CATS_R.forEach(c => { done[c] += nd * wOf(c0.hk, c) + od.length * wOf(oc.hk, c); pend[c] += np * wOf(c0.hk, c); }); });
+    CATS_R.forEach(c => { done[c] += nd * wOf(c0.hk, c) + od.reduce((a, o) => a + o.done.length * wOf(o.c.hk, c), 0); pend[c] += np * wOf(c0.hk, c); }); });
   return { done, pend };
 }
 /* target, done, still planned and gap per category for week ws; day = today's open day (picker) or null (Stats) */
@@ -1606,17 +1666,17 @@ function kcSet(hk, reps, bw) {
 const kcCls = (it, alt, bw) => { const x = alt && it.alt ? it.alt : it; return kcMin(x.met || it.met || KC.LIFT, x.min || it.min, bw); };
 /* sessions and weeks: nearest 5, at least 5 when above 0 */
 const kc5 = x => (x > 0 ? Math.max(5, Math.round(x / 5) * 5) : 0);
-/* the open day: done sets of both versions of each card, and done class cards */
+/* the open day: done sets of every version of each card, and done class cards */
 function kcToday(day) {
   const bw = bwOn(todayStr());
   return dayItems(day, true).reduce((a, e) => {
     if (e.cls) return a + (S.classes[e.id] ? kcCls(e, clsSwapped(e), bw) : 0);
-    const c = cur(e), oc = otherCur(e);
-    return a + sets(e).filter(s => s.done).reduce((b, s) => b + kcSet(c.hk, s.r, bw), 0) + otherDone(e).reduce((b, s) => b + kcSet(oc.hk, s.r, bw), 0);
+    const c = cur(e);
+    return a + sets(e).filter(s => s.done).reduce((b, s) => b + kcSet(c.hk, s.r, bw), 0) + others(e).reduce((b, o) => b + o.done.reduce((x, s) => x + kcSet(o.c.hk, s.r, bw), 0), 0);
   }, 0);
 }
-/* move keys of each day (items and swaps) */
-const DAYHK = {}; PROGRAM.forEach(d => { const k = DAYHK[d.id] = new Set(); d.items.forEach(it => { if (it.hk) k.add(it.hk); if (it.swap && it.swap.hk) k.add(it.swap.hk); }); });
+/* move keys of each day (items and every alt) */
+const DAYHK = {}; PROGRAM.forEach(d => { const k = DAYHK[d.id] = new Set(); d.items.forEach(it => { if (it.hk) k.add(it.hk); (it.alts || []).forEach(a => k.add(a.hk)); }); });
 /* history entries of a session: same date. With 2+ sessions that date, an entry goes to the first one whose day has that move,
    else the first lift session, else the first session, so each set counts once */
 function sessEntries(s) {
@@ -1642,9 +1702,9 @@ function kcSession(s) {
 }
 
 /* ================= ADD EXERCISE ================= */
-const canon = hk => (TAGS[hk] && TAGS[hk].to) || hk;
-/* movements already in today's list (main and swap) */
-function todaySet(day) { const s = new Set(); dayItems(day).forEach(it => { if (it.cls) return; s.add(canon(it.hk)); if (it.swap) s.add(canon(it.swap.hk)); }); return s; }
+/* movements in use today: each card's version on screen and its versions with done sets (added cards too). but = skip that card */
+function todaySet(day, but) { const s = new Set(); dayItems(day).forEach(it => { if (it.cls || it.id === but) return;
+  s.add(canon(cur(it).hk)); others(it).forEach(o => { if (o.done.length) s.add(canon(o.c.hk)); }); }); return s; }
 /* 'mon', 'thu' or 'mat' when Glutes A, Glutes B or Mat + Band is planned tomorrow, else null */
 function glutesTomorrow() {
   const ws = weekStart(), ti = todayIdx(); let id;
@@ -1660,8 +1720,7 @@ function liftFor(c) {
   return best;
 }
 /* the hk each picker row adds, in program order; light-only days use light moves or light twins;
-   home days (Mat + Band) use band and mat moves only, never one that needs a pull-up bar */
-const HOMEPL = ['Mini band', 'Long band', 'Mat'];
+   home days (Mat + Band) use band and mat moves only (HOMEPL), never one that needs a pull-up bar */
 function rowsFor(c, lo, home) {
   const out = [];
   Object.keys(HKDEF).forEach(hk => { const t = TAGS[hk]; if (!t || t.old || t.to || t.p !== c) return;
@@ -1851,14 +1910,18 @@ function rowReorder(u, i, us, ci) {
 function cardEx(ex, i) {
   const c = cur(ex), ss = sets(ex), done = ss.every(s => s.done);
   let sel = S.sel[ex.id]; if (sel === undefined || (ss[sel] && ss[sel].done)) sel = ss.findIndex(s => !s.done);
-  const sg = suggest(c), p = planOf(c), od = otherDone(ex), light = cardMode(ex) === 'light';
+  const sg = suggest(c), p = planOf(c), light = cardMode(ex) === 'light';
+  /* other versions with done sets: one names its move, 2+ say how many */
+  const odv = others(ex).filter(o => o.done.length), odn = odv.reduce((a, o) => a + o.done.length, 0);
   const differs = !c.noW && !ss.some(s => s.done) && ss.some(s => s.w !== p.w || s.r !== p.r);
   const arrow = sg.t === 'up' ? '▲ ' : sg.t === 'down' ? '▼ ' : '';
+  /* main on screen: 1 alt = 1 tap, 2+ alts open the sheet. Alt on screen: 1 tap back, Change opens the sheet */
+  const na = ex.alts ? ex.alts.length : 0;
   const swapLine = ex.added ? (ss.some(s => s.done) ? `<div class="swap fixed"><span class="z">${IC.plus}</span><span class="tx">Added today</span></div>` : `<button class="swap" data-xrm="${ex.id}"><span class="z">${IC.x}</span><span class="tx">Remove from today</span><span class="chev">›</span></button>`)
-    : !ex.swap ? ''
+    : !na ? ''
     : c.isSwap
-    ? `<button class="swap on" data-swap="${ex.id}"><span class="z">${IC.back}</span><span class="tx">Back to <b>${ex.name}</b></span><span class="chev">›</span></button>`
-    : `<button class="swap" data-swap="${ex.id}"><span class="z">${IC.swap}</span><span class="tx">${(DAYS[dayOfId(ex.id)] || {}).home ? '' : (ex.swapAsk || 'Busy?') + ' '}Swap to <b>${ex.swap.name}</b></span><span class="chev">›</span></button>`;
+    ? (na > 1 ? '<div class="swrow">' : '') + `<button class="swap on" data-swap="${ex.id}"><span class="z">${IC.back}</span><span class="tx">Back to <b>${ex.name}</b></span><span class="chev">›</span></button>` + (na > 1 ? `<button class="swch" data-swapopen="${ex.id}">Change</button></div>` : '')
+    : `<button class="swap" data-swap="${ex.id}"><span class="z">${IC.swap}</span><span class="tx">${(DAYS[dayOfId(ex.id)] || {}).home ? '' : (ex.swapAsk || 'Busy?') + ' '}${na > 1 ? 'Swap: <b>' + na + ' options</b>' : 'Swap to <b>' + ex.alts[0].name + '</b>'}</span><span class="chev">›</span></button>`;
   return `<article class="card ${done ? 'complete' : ''}" data-ex="${ex.id}">
     <div class="ch"><button class="thumb" data-guide="${ex.id}" aria-label="Show how">${moveSVG(c.move, false)}</button>
       <div><h3>${c.name}</h3>
@@ -1867,7 +1930,7 @@ function cardEx(ex, i) {
     <div class="sug"><div>
       <div class="sv">${c.noW ? c.noW : fmtW(p.w) + ' ' + wUnit(c)} × ${p.r}${c.unit ? ' ' + repUnit(c) : ''}${c.side ? ' / side' : ''}</div>
       ${!light && ['up', 'down', 'cap'].includes(sg.t) ? `<div class="sm"><span class="sw ${sg.t}">${arrow}${sg.why}</span></div>` : ''}
-      ${od.length ? `<div class="sm"><span class="sw up">✓ ${od.length} done on ${otherCur(ex).name}</span></div>` : ''}</div>
+      ${odn ? `<div class="sm"><span class="sw up">✓ ${odn} done on ${odv.length > 1 ? odv.length + ' other moves' : odv[0].c.name}</span></div>` : ''}</div>
       ${differs ? `<button class="apply" data-apply="${ex.id}">Use ${fmtW(p.w)} kg</button>` : ''}</div>
     ${swapLine}
     ${c.noW ? '' : `<div class="pills">${[-c.step, 1, 2.5, 5, 10].map(v => `<button class="pill ${v < 0 ? 'neg' : ''}" data-add="${v}">${v < 0 ? '−' + fmtW(-v) : '+' + fmtW(v)}</button>`).join('')}</div>`}
@@ -2028,6 +2091,8 @@ function nextLabel(ex, k) {
     if ((it.main || !m) && !S.classes[it.id]) return 'Next: ' + (clsSwapped(it) ? it.alt.name : it.name); }
   return 'Next: finish';
 }
+/* rest label for a done set: the next set of its card, on the version now on screen (it may have been switched) */
+function refLabel(ex, r) { return nextLabel(ex, r.key === skey(ex) ? r.k : sets(ex).findIndex(s => !s.done) - 1); }
 function scrollNext(exId) {
   const card = mainEl.querySelector(`[data-ex="${exId}"]`); if (!card) return;
   let tg = card.querySelector('.set.sel:not(.done)'), isCard = false;
@@ -2084,7 +2149,7 @@ $('#feel').addEventListener('click', e => {
   const b = e.target.closest('[data-feel]'), ref = curRef(); if (!b || !ref) return;
   buzz('pick');
   const ex = getEx(ref.id), ss = S.sets[ref.key]; if (!ex || !ss || !ss[ref.k]) return;
-  const c = ref.key.endsWith('~s') ? asSwap(ex) : ex;
+  const c = defOfKey(ex, ref.key), shown = ref.key === skey(ex);
   const f = b.dataset.feel, prevF = ss[ref.k].f; ss[ref.k].f = f;
   const nx = ss[ref.k + 1], w0 = nx && nx.w;
   let msg = 'Saved';
@@ -2098,8 +2163,8 @@ $('#feel').addEventListener('click', e => {
   }
   if (f === 'h' && prevF !== 'h' && timerActive()) { addRest(30); msg += ' · +30s rest'; }
   const onDay = S.view !== 'stats' && dayItems(DAYS[S.view]).some(it => it.id === ex.id);
-  if (S.timer && onDay) { S.timer.name = nextLabel(ex, ref.k); $('#tN').textContent = S.timer.name; }
-  if (nx && nx.w !== w0 && onDay) fx('tick', { id: ex.id, k: ref.k + 1, w: 1, dir: Math.sign(nx.w - w0) });
+  if (S.timer && onDay) { S.timer.name = refLabel(ex, ref); $('#tN').textContent = S.timer.name; }
+  if (nx && nx.w !== w0 && onDay && shown) fx('tick', { id: ex.id, k: ref.k + 1, w: 1, dir: Math.sign(nx.w - w0) });
   save(); paintFeel(); if (onDay) refreshCard(ex); toast(msg, f === 'h');
   if (S.rate && !S.timer) setTimeout(hideRate, 700);
 });
@@ -2125,7 +2190,7 @@ mainEl.addEventListener('click', e => {
     buzz('pick'); setMode(v); return; }
 
   const g = t.closest('[data-guide]');
-  if (g) { buzz('tick'); const x = getEx(g.dataset.guide); if (x) openGuide(x, isSwapped(x)); return; }
+  if (g) { buzz('tick'); const x = getEx(g.dataset.guide); if (x) openGuide(x, altHk(x)); return; }
 
   const ap = t.closest('[data-apply]');
   if (ap && ex) { buzz('pick'); const p = planOf(cur(ex));
@@ -2135,13 +2200,12 @@ mainEl.addEventListener('click', e => {
       s.w = p.w; s.r = p.r; delete s.hand; });
     save(); refreshCard(ex); return; }
 
+  /* swap row: back to main, or the only alt; 2+ alts open the sheet */
   const sw = t.closest('[data-swap]');
-  if (sw && ex) {
-    buzz('pick');
-    const kept = sets(ex).filter(s => s.done).length;
-    S.swaps[ex.id] = isSwapped(ex) ? 0 : 'use'; delete S.sel[ex.id]; save(); refreshCard(ex);
-    toast((isSwapped(ex) ? 'Swapped: ' + ex.swap.name : 'Back to ' + ex.name) + (kept ? ' · ' + kept + ' kept' : '')); return;
-  }
+  if (sw && ex && ex.alts) { const h = altHk(ex);
+    if (!h && ex.alts.length > 1) { buzz('tick'); openSwap(ex); return; }
+    pickAlt(ex, h ? '' : ex.alts[0].hk); return; }
+  const so = t.closest('[data-swapopen]'); if (so && ex && ex.alts) { buzz('tick'); openSwap(ex); return; }
 
   const pill = t.closest('[data-add]');
   if (pill && ex) { const c = cur(ex), ss = sets(ex); let k = S.sel[ex.id]; if (k === undefined || !ss[k] || ss[k].done) k = ss.findIndex(s => !s.done); if (k < 0) return;
@@ -2167,7 +2231,7 @@ mainEl.addEventListener('click', e => {
     if (s.done) {
       if (Date.now() - (s.t || 0) < 1200) return; /* ignore a shaky double tap */
       buzz('pick'); s.done = false; delete s.f; delete s.pb; S.sel[ex.id] = k;
-      const r0 = curRef(); if (r0 && r0.id === ex.id && r0.k === k) { if (S.timer) endTimer(); hideRate(); }
+      const r0 = curRef(); if (r0 && r0.id === ex.id && r0.key === skey(ex) && r0.k === k) { if (S.timer) endTimer(); hideRate(); }
       save(); if (mainOf(DAYS[S.view])) render(true); else refreshCard(ex); return;
     }
     const gt = gate(DAYS[S.view], ex);
@@ -2233,14 +2297,15 @@ function afterChange() { renderTabs(); updateHUD(); applyLock(); const f = $('#b
 
 function resetDay() {
   const day = DAYS[S.view]; if (!confirm('Clear today\'s ' + day.title + '?')) return;
-  dayItems(day, true).forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
+  dayItems(day, true).forEach(it => { clearRows(it.id); delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = swapReset(it); });
   delete S.order[day.id]; delete S.extra[day.id]; reorderDay = null;
   delete S.start[day.id]; day.items.forEach(it => delete S.cin[it.id]); lightSwap(true); if (S.timer) endTimer(); hideRate(); save(); render();
 }
 
 /* ================= GUIDE ================= */
-function openGuide(ex, showSwap) {
-  const g = showSwap ? asSwap(ex) : ex, gp = planOf(g);
+/* hk = the alt to show ('' = main) */
+function openGuide(ex, hk) {
+  const g = isAlt(ex, hk) ? asAlt(ex, hk) : ex, gp = planOf(g), na = ex.alts ? ex.alts.length : 0;
   const vid = VIDS[g.hk];
   $('#guideBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
     ${g.isSwap ? `<div class="kicker">Swap for ${ex.name}</div>` : ''}
@@ -2253,7 +2318,7 @@ function openGuide(ex, showSwap) {
     <h4>Setup</h4><ol>${g.guide.setup.map(s => `<li>${s}</li>`).join('')}</ol>
     <h4 class="red">Avoid</h4><div class="avoid"><ul>${g.guide.avoid.map(s => `<li>${s}</li>`).join('')}</ul></div>
     <h4>Feel it here</h4><div class="target">${figure(g.target)}<div><div class="tn">${g.muscle}</div><div class="ts">Slow. Squeeze. Exhale.</div></div></div>
-    ${ex.swap ? `<button class="btn btn-g" data-gother="${ex.id}" data-which="${showSwap ? 'main' : 'swap'}">${showSwap ? 'Main: ' + ex.name : 'Swap: ' + ex.swap.name}</button>
+    ${na ? `<button class="btn btn-g" data-gother="${ex.id}" data-which="${g.isSwap ? 'main' : na > 1 ? 'sheet' : ex.alts[0].hk}">${g.isSwap ? 'Main: ' + ex.name : na > 1 ? 'Swap: ' + na + ' options' : 'Swap: ' + ex.alts[0].name}</button>
     ${(DAYS[dayOfId(ex.id)] || {}).home ? '' : `<button class="btn btn-q" data-missing="${ex.id}">${S.missing[ex.id] ? 'My gym has ' + ex.name + ' again' : 'My gym has no ' + ex.name}</button>`}` : ''}
     <button class="btn btn-p" data-close>Got it</button>`;
   $('#guideBox').scrollTop = 0;
@@ -2261,9 +2326,52 @@ function openGuide(ex, showSwap) {
 }
 $('#guideBox').addEventListener('click', e => {
   const ms = e.target.closest('[data-missing]');
-  if (ms) { buzz('pick'); const id = ms.dataset.missing, x = EX[id]; S.missing[id] = !S.missing[id]; S.swaps[id] = S.missing[id] ? 'use' : 0; delete S.sel[id]; save(); closeAll(); render(true);
-    toast(S.missing[id] ? 'From now on: ' + x.swap.name : 'From now on: ' + x.name); return; }
-  const b = e.target.closest('[data-gother]'); if (!b) return; buzz('tick'); openGuide(EX[b.dataset.gother], b.dataset.which === 'swap');
+  /* My gym has no X: the default becomes the alt on screen, or the first free alt when on main */
+  if (ms) { buzz('pick'); const id = ms.dataset.missing, x = EX[id];
+    if (S.missing[id]) { delete S.missing[id]; S.swaps[id] = 0; } else S.missing[id] = S.swaps[id] = altHk(x) || freeAlt(x);
+    delete S.sel[id]; save(); closeAll(); render(true); toast('From now on: ' + cur(x).name); return; }
+  const b = e.target.closest('[data-gother]'); if (!b) return; buzz('tick'); const x = EX[b.dataset.gother], w = b.dataset.which;
+  if (w === 'sheet') { renderSwap(x); switchModal('mSwap'); $('#swapBox').scrollTop = 0; return; }
+  openGuide(x, w === 'main' ? '' : w);
+});
+
+/* ================= SWAP SHEET ================= */
+/* rows of every version of a card */
+const clearRows = id => Object.keys(S.sets).forEach(k => { if (k === id || k.startsWith(id + '~')) delete S.sets[k]; });
+/* after Finish or Reset: exercise cards go back to their gym default (My gym has no ...), class cards to main */
+const swapReset = it => (isAlt(it, S.missing[it.id]) ? S.missing[it.id] : 0);
+/* first alt not in use on another card today and not another card's default */
+function freeAlt(ex) {
+  const day = DAYS[dayOfId(ex.id)], used = todaySet(day, ex.id);
+  day.items.forEach(it => { if (it.id !== ex.id && isAlt(it, S.missing[it.id])) used.add(canon(S.missing[it.id])); });
+  return (ex.alts.find(a => !used.has(canon(a.hk))) || ex.alts[0]).hk;
+}
+/* switch a card to main ('') or one alt. Done sets of every version stay; one move once per day */
+function pickAlt(ex, hk) {
+  if (todaySet(DAYS[dayOfId(ex.id)], ex.id).has(canon(hk || ex.hk))) { toast("Already in today's list", true); buzz('block'); return; }
+  buzz('pick');
+  const kept = sets(ex).filter(s => s.done).length;
+  S.swaps[ex.id] = hk || 0; delete S.sel[ex.id]; if (hk && S.missing[ex.id]) S.missing[ex.id] = hk;
+  save(); refreshCard(ex); relabelTimer();
+  toast((hk ? 'Swapped: ' + cur(ex).name : 'Back to ' + ex.name) + (kept ? ' · ' + kept + ' kept' : ''));
+}
+let swapFor = null;
+/* main first, then the alts in PT order. Now = on screen, Today = in use on another card, ✓ n = done on it today */
+function renderSwap(ex) {
+  swapFor = ex.id;
+  const on = altHk(ex), used = todaySet(DAYS[dayOfId(ex.id)], ex.id);
+  const rows = versions(ex).map(h => {
+    const d = h ? asAlt(ex, h) : ex, n = (S.sets[vkey(ex, h)] || []).filter(s => s.done).length, now = h === on, tod = !now && used.has(canon(d.hk));
+    const badge = now ? '<span class="badge gray">Now</span>' : tod ? '<span class="badge gray">Today</span>' : n ? `<span class="badge">✓ ${n}</span>` : '<span></span>';
+    return `<button class="xrow" data-swpick="${h || 'main'}" ${now || tod ? 'disabled' : ''}><span class="xf">${moveSVG(d.move, false)}</span><span class="xt"><b>${d.name}</b><small>${d.vn} · ${lastTxt(d.hk)}</small></span>${badge}<span class="chev">›</span></button>`;
+  }).join('');
+  $('#swapBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button><h2>Swap to</h2><p class="note">${ex.grp || ''}</p><div class="mlist">${rows}</div>`;
+}
+function openSwap(ex) { renderSwap(ex); openModal('mSwap'); $('#swapBox').scrollTop = 0; }
+$('#swapBox').addEventListener('click', e => {
+  const b = e.target.closest('[data-swpick]'), ex = swapFor && getEx(swapFor); if (!b || b.disabled || !ex || !ex.alts) return;
+  const h = b.dataset.swpick === 'main' ? '' : b.dataset.swpick; if (h && !isAlt(ex, h)) return;
+  closeAll(); pickAlt(ex, h);
 });
 
 /* ================= FINISH ================= */
@@ -2276,9 +2384,9 @@ const sessMin = id => { const t = S.start[id]; if (!t) return 0; const m = Math.
 const dayMin = day => Math.max(sessMin(day.id), day.items.filter(it => it.cls && S.classes[it.id]).reduce((a, it) => a + clsLen(it), 0));
 /* exercises with a new-best set today: [{ name, w }] */
 const dayPbs = day => dayItems(day).filter(it => !it.cls).flatMap(it => {
-  const a = sets(it).filter(s => s.done && s.pb), b = otherDone(it).filter(s => s.pb), out = [];
+  const a = sets(it).filter(s => s.done && s.pb), out = [];
   if (a.length) out.push({ name: cur(it).name, w: Math.max(...a.map(s => s.w)) });
-  if (b.length) out.push({ name: otherCur(it).name, w: Math.max(...b.map(s => s.w)) });
+  others(it).forEach(o => { const b = o.done.filter(s => s.pb); if (b.length) out.push({ name: o.c.name, w: Math.max(...b.map(s => s.w)) }); });
   return out; });
 /* the main class card is done as its swap; runDone = that swap is the Easy Run */
 const mainSwapped = day => day.items.some(it => it.cls && it.main && S.classes[it.id] && clsSwapped(it));
@@ -2317,7 +2425,8 @@ function logSession() {
       if (done.some(s => s.m === 'l')) e.mode = 'light'; else if (done.some(s => s.m === 'h')) e.mode = 'hard';
       (S.history[c.hk] = S.history[c.hk] || []).push(e);
       if (S.history[c.hk].length > 100) S.history[c.hk].shift(); n++; };
-    put(cur(it), sets(it).filter(s => s.done)); put(otherCur(it), otherDone(it));
+    /* one entry per version, each under its own hk */
+    put(cur(it), sets(it).filter(s => s.done)); others(it).forEach(o => put(o.c, o.done));
   });
   if (!n) { toast('Nothing to log', true); buzz('block'); return; }
   const p = dayProgress(day), swapped = mainSwapped(day);
@@ -2331,7 +2440,7 @@ function logSession() {
     /* class cards done, 1 = swapped (kcal uses each card's met and planned minutes) */
     sess.cls = {}; day.items.forEach(it => { if (it.cls && S.classes[it.id]) sess.cls[it.id] = clsSwapped(it) ? 1 : 0; }); }
   S.sessions.push(sess); delete S.start[day.id]; day.items.forEach(it => delete S.cin[it.id]);
-  items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
+  items.forEach(it => { clearRows(it.id); delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = swapReset(it); });
   delete S.order[day.id]; delete S.extra[day.id]; reorderDay = null;
   if (S.timer) endTimer(); hideRate(); releaseWake();
   save(); closeAll(); buzz('logged');
@@ -2816,7 +2925,7 @@ S.rate = null;
 render(); resumeTimer();
 if (!localStorage.getItem(KEY + '_seen')) { openModal('mHow'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
 /* keep APP_VER in step with VERSION in sw.js */
-const APP_VER = '3.8.0';
+const APP_VER = '3.9.0';
 $('#appVer').textContent = 'SCULPT v' + APP_VER;
 if ('serviceWorker' in navigator) {
   const hadCtrl = !!navigator.serviceWorker.controller;
