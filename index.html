@@ -878,7 +878,8 @@ function figure(key) {
 
 /* ================= PROGRAM =================
    w = suggested start kg (first session). pair = kg per hand (2 dumbbells).
-   side = reps per side. noW = bodyweight/band. assist = machine help (more = easier). */
+   side = reps per side. noW = bodyweight/band. assist = machine help (more = easier).
+   met = gross MET of a class card or its alt (kcal estimate on planned min). */
 const PROGRAM = [
   { id: 'mon', tab: 'GLU A', tt: 'Lift', type: 'lift', title: 'Glutes A', sub: 'Hip thrust day. Round, lifted glutes.', warm: 'Bike 8 min, easy. Can chat.', items: [
     { id: 'mon_thrustm', hp: 1, hk: 'thrust_m', name: 'Hip Thrust Machine', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 4, reps: 12, w: 20, step: 5, max: 60, rest: 120,
@@ -973,10 +974,10 @@ const PROGRAM = [
         guide: { setup: ['Cable at lowest point.', 'Stand side-on. Handle in far hand.', 'Lift to shoulder height.'], avoid: ['Leaning away.', 'Shrugging.'] } } }
   ]},
   { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', after: 'finisher', warm: 'Walk 5 min, flat, easy.', warmMin: 5, items: [
-    { id: 'wed_pump', cls: true, main: true, name: 'New Pump', vn: 'Class', min: 45, icon: 'cls', move: 'pump',
+    { id: 'wed_pump', cls: true, main: true, name: 'New Pump', vn: 'Class', min: 45, met: 3.5, icon: 'cls', move: 'pump',
       rules: ['Dizzy, chest tight, heart racing = stop.', 'Lightest plates. Lunges: no bar.', 'Squats half depth. Skip crunches.', 'No full sentence? Sit out one track.'],
       lightRules: ['Dizzy, chest tight, heart racing = stop.', 'No plates on squats or lunges.', 'Squats half depth. Skip crunches.', 'No full sentence? Sit out one track.'],
-      alt: { name: 'Light Circuit', vn: 'Machines', min: 40, cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press, Leg Press half range. 2 × 15 each. Rest 90 s. Exhale every rep.' } },
+      alt: { name: 'Light Circuit', vn: 'Machines', min: 40, met: 2.5, cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press, Leg Press half range. 2 × 15 each. Rest 90 s. Exhale every rep.' } },
     /* glute finisher after class: 2 light machine moves, mat swaps */
     { id: 'wed_ht', hk: 'thrust_mf', name: 'Hip Thrust Machine · Light', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 2, reps: 15, w: 15, step: 5, max: 40, rest: 90,
       guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat. Shins straight at the top.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back.', 'Going heavy: this is a finisher.'] },
@@ -986,13 +987,13 @@ const PROGRAM = [
       guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Going heavy: this is a finisher.'] },
       swap: { hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', reps: 15, unit: 'steps', side: true, noW: 'Band', rest: 90,
         guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', 'Step right, then the same back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] } } },
-    { id: 'wed_walk', cls: true, name: 'Cool-down Walk', vn: 'Treadmill', min: 5, icon: 'cardio', move: 'walk', rules: ['Flat. Speed 4.', 'Leave when breathing is calm.', 'Hands off the rails.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, cue: '5 min. Easy pace.' } }
+    { id: 'wed_walk', cls: true, name: 'Cool-down Walk', vn: 'Treadmill', min: 5, met: 3.5, icon: 'cardio', move: 'walk', rules: ['Flat. Speed 4.', 'Leave when breathing is calm.', 'Hands off the rails.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, met: 3.5, cue: '5 min. Easy pace.' } }
   ]},
   { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', warm: 'Walk 3 min, flat.', warmMin: 3, items: [
-    { id: 'sat_combat', cls: true, main: true, name: 'New Combat', vn: 'Class', min: 45, icon: 'cls', move: 'combat', lightAlt: 1,
+    { id: 'sat_combat', cls: true, main: true, name: 'New Combat', vn: 'Class', min: 45, met: 4.8, icon: 'cls', move: 'combat', lightAlt: 1,
       rules: ['Dizzy, chest tight, heart racing = stop.', 'Low option every track. No jumps.', 'Kicks knee height. Never lock knee.', 'No full sentence? March until you can.'],
-      alt: { name: 'Easy Elliptical', vn: 'Elliptical', min: 20, cue: '20 min. Can chat. Or join Yoga.' } },
-    { id: 'sat_walk', cls: true, name: 'Walk-down', vn: 'Treadmill', min: 5, icon: 'cardio', move: 'walk', rules: ['Up to 5 min. Flat. Slow.', 'Stop when breathing is calm.', 'No more cardio today.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, cue: '5 min. Easy pace.' } },
+      alt: { name: 'Easy Elliptical', vn: 'Elliptical', min: 20, met: 4.0, cue: '20 min. Can chat. Or join Yoga.' } },
+    { id: 'sat_walk', cls: true, name: 'Walk-down', vn: 'Treadmill', min: 5, met: 3.5, icon: 'cardio', move: 'walk', rules: ['Up to 5 min. Flat. Slow.', 'Stop when breathing is calm.', 'No more cardio today.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, met: 3.5, cue: '5 min. Easy pace.' } },
     /* posture + glute med after the walk-down: no cardio, easy moves */
     { id: 'sat_fp', hk: 'facepull_l', name: 'Cable Face Pull', what: 'Pull a rope toward your face, elbows high.', vn: 'Cable + rope, high', move: 'facepull', muscle: 'Rear shoulder', target: 'rear_delt', sets: 2, reps: 15, w: 7.5, step: 2.5, rest: 90,
       guide: { setup: ['Rope at forehead height.', 'Pull to forehead. Elbows high.', 'Thumbs back. Squeeze 1 s.'], avoid: ['Leaning back.', 'Elbows dropping low.'] },
@@ -1002,17 +1003,17 @@ const PROGRAM = [
       guide: { setup: ['Lie on side. Bottom knee bent.', 'Top toes point slightly down.', 'Lift slow to 45°. Pause 1 s.'], avoid: ['Rolling backward.', 'Lifting too high.'] },
       swap: { hk: 'abductor_f', name: 'Abductor Machine · Light', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', reps: 20, w: 15, step: 5, max: 30, rest: 90,
         guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Going heavy: this is a finisher.'] } } },
-    { id: 'sat_stretch', cls: true, name: 'Stretch', vn: 'Mat', min: 6, icon: 'floor', move: 'stretch', rules: ['Child pose 2 min. Belly breathing.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.', 'Chest stretch on frame 30 s per side.'], alt: { name: 'Slow Walk', vn: 'Treadmill', min: 6, cue: '6 min flat.' } }
+    { id: 'sat_stretch', cls: true, name: 'Stretch', vn: 'Mat', min: 6, met: 2.3, icon: 'floor', move: 'stretch', rules: ['Child pose 2 min. Belly breathing.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.', 'Chest stretch on frame 30 s per side.'], alt: { name: 'Slow Walk', vn: 'Treadmill', min: 6, met: 3.5, cue: '6 min flat.' } }
   ]},
   { id: 'sun', tab: 'YOGA', tt: 'Class', type: 'class', title: 'Yoga', sub: 'Recovery. Breathe and relax.', warm: 'None.', items: [
-    { id: 'sun_yoga', cls: true, name: 'Yoga', vn: 'Class', min: 60, icon: 'cls', move: 'yoga', rules: ['Recovery only. No power flow.', 'Long exhales. Belly breathing.', 'Skip inversions.', 'Light extras only.'], alt: { name: 'Home Mobility 20 min', cue: 'Cat-cow, child pose, 90/90 hips, happy baby, belly breathing.' } }
+    { id: 'sun_yoga', cls: true, name: 'Yoga', vn: 'Class', min: 60, met: 2.3, icon: 'cls', move: 'yoga', rules: ['Recovery only. No power flow.', 'Long exhales. Belly breathing.', 'Skip inversions.', 'Light extras only.'], alt: { name: 'Home Mobility 20 min', min: 20, met: 2.3, cue: 'Cat-cow, child pose, 90/90 hips, happy baby, belly breathing.' } }
   ]},
   /* easy cardio. alt.run = the Easy Run swap, allowed only when runBlock() is '' (run-walk, never faster).
      alt.rules replace the card rules when swapped; the cue shows above them. */
   { id: 'walk', tab: 'WALK', tt: 'Cardio', type: 'class', title: 'Walk', sub: 'Easy cardio. Park or treadmill.', warm: 'None.', items: [
-    { id: 'walk_walk', cls: true, main: true, name: 'Walk', vn: 'Park or treadmill', min: 30, icon: 'cardio', move: 'walk', swapAsk: 'Feel good?',
+    { id: 'walk_walk', cls: true, main: true, name: 'Walk', vn: 'Park or treadmill', min: 30, met: 3.5, icon: 'cardio', move: 'walk', swapAsk: 'Feel good?',
       rules: ['Dizzy, chest tight, heart racing = stop.', 'Easy pace. You can chat.', 'Flat route. Good shoes.', 'Tired? 20 min is enough.'],
-      alt: { name: 'Easy Run', vn: 'Park, flat path', min: 25, run: 1, cue: 'Walk 5 min. Run 1, walk 2, x5.',
+      alt: { name: 'Easy Run', vn: 'Park, flat path', min: 25, met: 4.5, run: 1, cue: 'Walk 5 min. Run 1, walk 2, x5.',
         rules: ['Dizzy, chest tight, heart racing = stop.', 'Run slow enough to talk.', 'Heaviness, leaking or pressure? Stop, walk.', 'Flat path. 2 good runs: +1 min run.'] } }
   ]}
 ];
@@ -1219,7 +1220,6 @@ const HAPTIC = { tick: 12, pick: 24, done: [30, 50, 30], logged: [30, 50, 30, 50
 function buzz(name) { if (document.hidden) return; try { if (navigator.vibrate) navigator.vibrate(HAPTIC[name] || 0); } catch (e) {} }
 const fmtW = w => (w % 1 === 0 ? String(w) : String(Math.round(w * 100) / 100));
 const rnd = w => Math.max(0, Math.round(w * 4) / 4);
-const kfmt = v => v >= 10000 ? Math.round(v / 1000) + 'k' : v >= 1000 ? (v / 1000).toFixed(1) + 'k' : String(Math.round(v));
 
 /* effective exercise (main or swap) */
 const isSwapped = ex => !ex.cls && !!ex.swap && S.swaps[ex.id] === 'use';
@@ -1535,6 +1535,67 @@ function weekCat(ws, day) {
     G[c] = T[c] - D[c] - L[c];
   });
   return { T, D, L, G };
+}
+
+/* ================= KCAL ESTIMATE =================
+   Net kcal, like a watch's "active kcal": (MET - 1) x body kg x hours x 1.05. Good enough to see a big or small day; not precise.
+   One set = reps x 4 s (x2 per side; steps 2 s; sec as given) + 60 s. Rest past 60 s, kg and mode are not counted.
+   Lift MET: MAT every noW move, BIG legs-secondary moves and hip thrusts, LIFT the rest (also unknown keys).
+   Class cards: their met on planned minutes. Computed from history and sessions, never stored. Sum unrounded, round at the end. */
+const KC = { MAT: 3.0, BIG: 5.0, LIFT: 3.5, H: 1.05, BW: 62 };
+const KC_BIG = ['thrust_m', 'thrust', 'thrust_mf'];
+const kcGroup = hk => (HKDEF[hk] && HKDEF[hk].noW ? 'MAT' : (TAGS[hk] && TAGS[hk].s.includes('Legs')) || KC_BIG.includes(hk) ? 'BIG' : 'LIFT');
+/* body kg: the latest InBody weight on or before date, else the earliest, else 62 */
+function bwOn(date) {
+  let on = null, first = null;
+  (Array.isArray(S.body) ? S.body : []).forEach(x => { if (!x || typeof x.d !== 'string' || !(+x.w > 0)) return;
+    if (!first || x.d < first.d) first = x;
+    if (x.d <= date && (!on || x.d >= on.d)) on = x; });
+  return on ? +on.w : first ? +first.w : KC.BW;
+}
+const kcMin = (met, min, bw) => Math.max(0, (met - 1) * bw * ((+min || 0) / 60) * KC.H);
+function kcSet(hk, reps, bw) {
+  const d = HKDEF[hk] || {}, r = Math.max(0, +reps || 0);
+  const t = (d.unit === 'sec' ? r : d.unit === 'steps' ? r * 2 : r * 4) * (d.side ? 2 : 1) + 60;
+  return kcMin(KC[kcGroup(hk)], t / 60, bw);
+}
+/* a class card on its planned minutes; alt = its swap was done */
+const kcCls = (it, alt, bw) => { const x = alt && it.alt ? it.alt : it; return kcMin(x.met || it.met || KC.LIFT, x.min || it.min, bw); };
+/* sessions and weeks: nearest 5, at least 5 when above 0 */
+const kc5 = x => (x > 0 ? Math.max(5, Math.round(x / 5) * 5) : 0);
+/* the open day: done sets of both versions of each card, and done class cards */
+function kcToday(day) {
+  const bw = bwOn(todayStr());
+  return dayItems(day, true).reduce((a, e) => {
+    if (e.cls) return a + (S.classes[e.id] ? kcCls(e, clsSwapped(e), bw) : 0);
+    const c = cur(e), oc = otherCur(e);
+    return a + sets(e).filter(s => s.done).reduce((b, s) => b + kcSet(c.hk, s.r, bw), 0) + otherDone(e).reduce((b, s) => b + kcSet(oc.hk, s.r, bw), 0);
+  }, 0);
+}
+/* move keys of each day (items and swaps) */
+const DAYHK = {}; PROGRAM.forEach(d => { const k = DAYHK[d.id] = new Set(); d.items.forEach(it => { if (it.hk) k.add(it.hk); if (it.swap && it.swap.hk) k.add(it.swap.hk); }); });
+/* history entries of a session: same date. With 2+ sessions that date, an entry goes to the first one whose day has that move,
+   else the first lift session, else the first session, so each set counts once */
+function sessEntries(s) {
+  const same = S.sessions.filter(x => x && x.date === s.date); if (!same.includes(s)) same.push(s);
+  const own = hk => same.length < 2 ? s : same.find(x => DAYHK[x.day] && DAYHK[x.day].has(hk)) || same.find(x => x.type === 'lift') || same[0];
+  const out = [];
+  for (const hk in S.history) { const h = S.history[hk]; if (!Array.isArray(h)) continue;
+    h.forEach(e => { if (e && e.date === s.date && Array.isArray(e.sets) && own(hk) === s) out.push([hk, e]); }); }
+  return out;
+}
+/* a logged session, new or old. cls = class cards done ({ id: 1 when swapped }); older sessions: cmin x main class MET
+   (title " · swap" = its alt, run = Easy Run) */
+function kcSession(s) {
+  if (!s || typeof s.date !== 'string') return 0;
+  const bw = bwOn(s.date), day = DAYS[s.day];
+  let k = sessEntries(s).reduce((a, [hk, e]) => a + e.sets.reduce((b, x) => b + kcSet(hk, x && x.r, bw), 0), 0);
+  if (s.cls && typeof s.cls === 'object') { for (const id in s.cls) { const it = EX[id]; if (it && it.cls) k += kcCls(it, !!s.cls[id], bw); } }
+  else if (s.type === 'class' || (day && day.type === 'class')) {
+    const m = day ? mainOf(day) || day.items.find(it => it.cls) : null, alt = !!s.run || / · swap$/.test(s.title || '');
+    k += kcMin(m ? (alt && m.alt ? m.alt.met : m.met) : KC.LIFT, +s.cmin || CLSMIN[s.day] || 0, bw);
+  }
+  return k;
 }
 
 /* ================= ADD EXERCISE ================= */
@@ -2135,7 +2196,7 @@ function openGuide(ex, showSwap) {
     <div class="meta">${g.vn}</div>
     <div class="mvbox">${moveSVG(g.move, !RM.matches)}</div>
     <p class="lead">${g.what}</p>
-    <div class="startbox">${(suggest(g).t === 'start' ? 'Start' : 'Today') + ' <b>' + (g.noW ? g.noW : fmtW(gp.w) + ' ' + wUnit(g)) + ' × ' + gp.r + ' ' + repUnit(g)}${g.side ? ' / side' : ''}</b> · ${gp.sets} sets · ${gp.rest}s rest${g.assist ? '<br>Less assist = harder' : ''}</div>
+    <div class="startbox">${(suggest(g).t === 'start' ? 'Start' : 'Today') + ' <b>' + (g.noW ? g.noW : fmtW(gp.w) + ' ' + wUnit(g)) + ' × ' + gp.r + ' ' + repUnit(g)}${g.side ? ' / side' : ''}</b> · ${gp.sets} sets · ${gp.rest}s rest${g.assist ? '<br>Less assist = harder' : ''}<br>≈ ${Math.round(kcSet(g.hk, gp.r, bwOn(todayStr())))} kcal / set</div>
     <a class="btn btn-g" href="${vid ? ytUrl(vid) : ytSearch(g.name)}" target="_blank" rel="noopener">${IC.play}${vid ? 'Gym video' : 'Find a video'}</a>
     <h4>Setup</h4><ol>${g.guide.setup.map(s => `<li>${s}</li>`).join('')}</ol>
     <h4 class="red">Avoid</h4><div class="avoid"><ul>${g.guide.avoid.map(s => `<li>${s}</li>`).join('')}</ul></div>
@@ -2169,14 +2230,14 @@ const dayPbs = day => dayItems(day).filter(it => !it.cls).flatMap(it => {
   return out; });
 function openFinish(editIdx) {
   finEdit = editIdx ?? null;
-  let vol, setsN, title, date, min, pbs, md;
-  if (finEdit !== null) { const s = S.sessions[finEdit]; vol = s.vol; setsN = s.sets; title = s.title; date = s.date; min = s.min || 0; pbs = (s.pbs || []).map(n => ({ name: n })); md = s.mode; }
-  else { const day = DAYS[S.view], p = dayProgress(day); vol = dayVolume(day); setsN = p.d; title = day.title; date = todayStr(); min = dayMin(day); pbs = dayPbs(day); md = modeOn(day.id); if (day.type === 'class') setsN = dayItems(day).filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0); }
+  let kc, setsN, title, date, min, pbs, md;
+  if (finEdit !== null) { const s = S.sessions[finEdit]; kc = kcSession(s); setsN = s.sets; title = s.title; date = s.date; min = s.min || 0; pbs = (s.pbs || []).map(n => ({ name: n })); md = s.mode; }
+  else { const day = DAYS[S.view], p = dayProgress(day); kc = kcToday(day); setsN = p.d; title = day.title; date = todayStr(); min = dayMin(day); pbs = dayPbs(day); md = modeOn(day.id); if (day.type === 'class') setsN = dayItems(day).filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0); }
   const pbLine = pbs.length ? `<p class="note lime">New best: ${pbs.slice(0, 3).map(o => o.name + (o.w ? ' ' + fmtW(o.w) + ' kg' : '')).join(', ')}${pbs.length > 3 ? ' +' + (pbs.length - 3) : ''}</p>` : '';
   $('#finishBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
     <div class="kicker">${finEdit !== null ? 'Edit · ' : ''}${niceDate(date)}${modeSfx(md)}</div><h2>${title}</h2>
     ${(() => { const tiles = []; const u = x => `<small style="font-size:11px;color:var(--dim)">${x}</small>`;
-      if (vol) tiles.push(['Lifted', Math.round(vol).toLocaleString() + ' ' + u('kg')]);
+      if (kc5(kc)) tiles.push(['kcal', '≈ ' + kc5(kc)]);
       if (setsN) tiles.push(['Sets', setsN]);
       if (min) tiles.push(['Time', min + ' ' + u('min')]);
       if (!tiles.length) tiles.push(['Done', '✓']);
@@ -2209,7 +2270,9 @@ function logSession() {
   const xn = items.filter(e => e.added && hasDone(e)).length; if (xn) sess.extra = xn;
   /* Easy Run done in place of the Walk */
   if (swapped && mainOf(day).alt.run) sess.run = 1;
-  if (day.type === 'class') { const m0 = mainOf(day), cm = day.items.filter(it => it.cls && S.classes[it.id] && (it.main || !m0)).reduce((a, it) => a + (clsLen(it) || CLSMIN[day.id] || 0), 0); if (cm) sess.cmin = cm; }
+  if (day.type === 'class') { const m0 = mainOf(day), cm = day.items.filter(it => it.cls && S.classes[it.id] && (it.main || !m0)).reduce((a, it) => a + (clsLen(it) || CLSMIN[day.id] || 0), 0); if (cm) sess.cmin = cm;
+    /* class cards done, 1 = swapped (kcal uses each card's met and planned minutes) */
+    sess.cls = {}; day.items.forEach(it => { if (it.cls && S.classes[it.id]) sess.cls[it.id] = clsSwapped(it) ? 1 : 0; }); }
   S.sessions.push(sess); delete S.start[day.id]; day.items.forEach(it => delete S.cin[it.id]);
   items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
   delete S.order[day.id]; delete S.extra[day.id]; reorderDay = null;
@@ -2245,8 +2308,6 @@ const pctOf = (d, t) => (t ? Math.round(d / t * 100) : 0);
 /* program moves only: no light twins, no swap-only or added-only moves (fair strength trend) */
 const MAINHK = new Set(); PROGRAM.forEach(d => d.items.forEach(it => { if (!it.cls && it.hk && !(TAGS[it.hk] && TAGS[it.hk].to)) MAINHK.add(it.hk); }));
 const firstLog = () => { let f = ''; Object.values(S.history).forEach(h => h.forEach(e => { if (e.sets.length && (!f || e.date < f)) f = e.date; })); return f; };
-/* raw logged sets (not weighted) between two dates */
-const rawSets = (a, b) => Object.values(S.history).reduce((t, h) => t + h.reduce((u, e) => u + (e.date >= a && e.date <= b ? e.sets.length : 0), 0), 0);
 /* planned weighted sets per category for the plan days from a to b (inclusive) */
 function plannedRange(a, b) {
   const P = zeroCats();
@@ -2334,7 +2395,7 @@ function statsMonth() {
   for (let ws = wsOf(a); ws <= b; ws = addDays(ws, 7)) {
     const wa = ws < a ? a : ws, wb = addDays(ws, 6) > b ? b : addDays(ws, 6);
     const ss = S.sessions.filter(x => x.date >= wa && x.date <= wb), cnt = {}; ss.forEach(x => cnt[x.day] = (cnt[x.day] || 0) + 1);
-    weeks.push({ wa, wb, cnt, n: rawSets(wa, wb), lifts: LIFTS.filter(id => cnt[id]).length });
+    weeks.push({ wa, wb, cnt, n: kc5(ss.reduce((t, x) => t + kcSession(x), 0)), lifts: LIFTS.filter(id => cnt[id]).length });
   }
   const wmax = Math.max(1, ...weeks.map(w => w.n));
   const rows = weeks.map(w => `<div class="wk"><div class="wl">${+w.wa.slice(8)}–${+w.wb.slice(8)}<small class="${w.lifts >= 4 ? 'ok4' : ''}">${MON[+w.wa.slice(5, 7) - 1]} · ${w.lifts}/4</small></div>
@@ -2350,12 +2411,12 @@ function statsMonth() {
     <div class="msets">${strong}</div>
     <div class="lbl">Weeks</div>
     <div class="wkbox">
-      <div class="wk head"><span class="wh" style="text-align:left">Days</span>${ORDER.map(id => `<span class="wh">${ABBR[id]}</span>`).join('')}<span class="wh r">sets</span></div>
+      <div class="wk head"><span class="wh" style="text-align:left">Days</span>${ORDER.map(id => `<span class="wh">${ABBR[id]}</span>`).join('')}<span class="wh r">kcal</span></div>
       ${rows}
     </div>
     ${clsLine(a, b)}
     <div class="lbl">Workouts</div>
-    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.x.title}</div><div class="b">${niceDate(o.x.date, 1)} · ${o.x.sets} sets${modeSfx(o.x.mode)}</div></div><div class="c">${o.x.vol ? kfmt(o.x.vol) : '—'}<small>kg</small></div><div class="c">${o.x.min ? o.x.min : '—'}<small>min</small></div></div>`).join('') : '<div class="empty">No workouts in these 4 weeks.</div>'}`;
+    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.x.title}</div><div class="b">${niceDate(o.x.date, 1)} · ${o.x.sets} sets${modeSfx(o.x.mode)}</div></div><div class="c">${kc5(kcSession(o.x)) || '—'}<small>kcal</small></div><div class="c">${o.x.min ? o.x.min : '—'}<small>min</small></div></div>`).join('') : '<div class="empty">No workouts in these 4 weeks.</div>'}`;
 }
 /* 12 weeks, starting at the first logged week when that is later: balance and strength */
 function stats3M() {
