@@ -72,14 +72,13 @@
   .chip.red { border-color: var(--red); color: var(--red); }
   .lbl { font-family: var(--head); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); font-weight: 700; margin: 18px 0 8px; }
 
-  .hr { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px; margin-top: 14px; transition: var(--t); }
-  .hr .q { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-weight: 700; }
-  .hr .opts { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 8px; }
+  .mode { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px; margin-top: 14px; transition: var(--t); }
+  .mode .q { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-weight: 700; }
+  .mode .opts { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 8px; }
   .opt { min-height: 52px; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 14px; font-weight: 700; transition: var(--t); }
   .opt.on { background: var(--lime); border-color: var(--lime); color: #09090B; }
-  .opt.on.bad { background: var(--red); border-color: var(--red); color: #09090B; }
-  .hr .msg { font-size: 13px; color: var(--dim); margin-top: 8px; }
-  .hr.bad { border-color: var(--red); } .hr.bad .msg { color: var(--red); }
+  .opt.off { opacity: 0.4; }
+  .mode .msg { font-size: 13px; color: var(--dim); margin-top: 8px; }
   .warm { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 8px 8px 8px 12px; font-size: 14px; color: var(--muted); min-height: 56px; }
   .wlink { flex: 0 0 auto; min-height: 44px; padding: 0 12px; display: flex; align-items: center; gap: 6px; border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: var(--t); }
   .wlink:active { border-color: var(--lime); color: var(--lime); }
@@ -122,6 +121,7 @@
   .swap .tx b { color: var(--text); font-weight: 600; }
   .swap .chev { flex: 0 0 auto; font-size: 20px; color: var(--lime); }
   .swap.on { border-color: var(--lime); background: var(--lime-dim); }
+  .swap.off { opacity: 0.4; }
 
   /* pills */
   .pills { display: flex; gap: 6px; padding: 0 12px 10px; }
@@ -159,13 +159,12 @@
   .ccard ul { margin: 0; padding-left: 16px; color: var(--muted); font-size: 15px; }
   .ccard li { margin-bottom: 6px; }
   .ccard li.hrr { color: var(--red); font-weight: 600; }
+  .ccard .cue { margin: 0 0 8px; font-size: 15px; font-weight: 600; color: var(--text); }
   .ccard .body + .body { padding-top: 0; }
   .ccard .big { margin-top: 0; }
   .ccard .big.live { border-color: var(--lime); color: var(--lime); }
-  .ccard .big.calm { margin-top: 0; background: var(--lime); border-color: var(--lime); color: #09090B; }
-  .calmok { display: flex; align-items: center; justify-content: space-between; min-height: 44px; font-size: 13px; color: var(--lime); }
+  .calmok { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; font-size: 13px; color: var(--lime); }
   .calmok .btn-q { min-height: 44px; min-width: 48px; }
-  .calmok.red { color: var(--red); }
   .thumb.static { color: var(--dim); border-color: var(--line); }
   .big { width: 100%; min-height: 56px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; background: transparent; border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; transition: var(--t); }
   .big.on { background: var(--lime); border-color: var(--lime); color: #09090B; }
@@ -236,9 +235,9 @@
   .feel { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 10px; }
   .feel .fq { grid-column: 1 / -1; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); font-weight: 700; }
   .feel button { min-height: 48px; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 13px; font-weight: 700; line-height: 1.1; transition: var(--t); }
-  .feel button small { display: block; font-family: var(--data); font-size: 9px; color: var(--dim); font-weight: 600; letter-spacing: 0.06em; margin-top: 2px; }
+  .feel button small, .opt small { display: block; font-family: var(--data); font-size: 9px; color: var(--dim); font-weight: 600; letter-spacing: 0.06em; margin-top: 2px; }
   .feel button.on { background: var(--lime); border-color: var(--lime); color: #09090B; }
-  .feel button.on small { color: rgba(9,9,11,0.7); }
+  .feel button.on small, .opt.on small { color: rgba(9,9,11,0.7); }
   .feel button[data-feel="h"].on { background: var(--red); border-color: var(--red); color: #09090B; }
   .feel button[data-feel="h"].on small { color: rgba(9,9,11,0.7); }
 
@@ -271,7 +270,7 @@
   .hl { fill: var(--lime); opacity: 0.9; }
 
   .kv { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
-  .kv div { background: var(--bg); border: 1px solid var(--line); border-radius: var(--r); padding: 10px; }
+  .kv > div { background: var(--bg); border: 1px solid var(--line); border-radius: var(--r); padding: 10px; }
   .kv .k { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); font-weight: 700; }
   .kv .v { font-family: var(--head); font-size: 20px; font-weight: 700; margin-top: 2px; }
   .big-num { font-family: var(--head); font-size: 44px; font-weight: 700; line-height: 1; text-align: center; margin: 8px 0 2px; }
@@ -302,7 +301,7 @@
   .seg button.on { background: var(--lime); color: #09090B; }
 
   .wkbox { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 10px; }
-  .wk { display: grid; grid-template-columns: 50px repeat(7, 1fr) 76px; gap: 4px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .wk { display: grid; grid-template-columns: 50px repeat(9, 1fr) 64px; gap: 3px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); }
   .wk:last-of-type { border-bottom: none; }
   .wk.head { padding-top: 0; }
   .wk .wh { font-size: 9px; letter-spacing: 0.08em; color: var(--dim); font-weight: 700; text-align: center; }
@@ -526,10 +525,10 @@
   .is-pressed { transition-duration: 0s !important; }
   :is(.ok, .mvb, .gbtn, .xbtn, .bk, .ibtn, .tab, .thumb, .pday, .wnav button, .pill).is-pressed { transform: scale(0.96); }
   :is(.btn, .big, .swap, .addrow, .apply, .opt, .feel button, .wlink).is-pressed { transform: scale(0.98); }
-  :is(.opt:not(.on), .feel button:not(.on), .big:not(.on):not(.calm), .btn-g, .ibtn:not(.warn), .tab:not(.active), .bk, .mvb, .gbtn, .xbtn, .thumb, .wnav button, .apply, .swap, .addrow, .wlink).is-pressed { border-color: var(--lime); }
+  :is(.opt:not(.on), .feel button:not(.on), .big:not(.on), .btn-g, .ibtn:not(.warn), .tab:not(.active), .bk, .mvb, .gbtn, .xbtn, .thumb, .wnav button, .apply, .swap, .addrow, .wlink).is-pressed { border-color: var(--lime); }
   :is(.pill, .stp button).is-pressed { background: var(--lime); border-color: var(--lime); color: #09090B; }
-  :is(.btn-p, .big.on, .big.calm, .opt.on, .feel button.on, .tab.active, .seg button.on).is-pressed { filter: brightness(0.9); }
-  :is(.btn-r, .ibtn.warn, .opt.bad:not(.on)).is-pressed { border-color: var(--red); background-color: var(--red-dim); }
+  :is(.btn-p, .big.on, .opt.on, .feel button.on, .tab.active, .seg button.on).is-pressed { filter: brightness(0.9); }
+  :is(.btn-r, .ibtn.warn).is-pressed { border-color: var(--red); background-color: var(--red-dim); }
   :is(.mrow, .crow, .xrow, .row.tap, .seg button:not(.on), .set:not(.done)).is-pressed { background-color: var(--panel-2); }
   :is(.btn-q, .rbtn).is-pressed { color: var(--lime); }
   .ok.locked.is-pressed { transform: none; }
@@ -578,7 +577,7 @@
         <div class="fq">How was that set?</div>
         <button data-feel="e">Easy<small>4+ reps left</small></button>
         <button data-feel="g">Good<small>2-3 left</small></button>
-        <button data-feel="h">Hard<small>0-1 left</small></button>
+        <button data-feel="h">Too hard<small>0-1 left</small></button>
       </div>
     </div>
     <div class="prog"><span id="progL">Sets <b id="progN">0 / 0</b></span></div>
@@ -597,7 +596,7 @@
     <h2>How it works</h2>
     <ol class="steps">
       <li><b>Plan</b><span>Your week has 4 lifts, 2 classes and 1 rest day. Tap a day to change it.</span><button class="btn-q" data-go="plan">Open my week</button></li>
-      <li><b>Train</b><span>Open today's workout. Tap resting HR. Reorder if a class is late.</span><button class="btn-q" data-go="today">Today's workout</button></li>
+      <li><b>Train</b><span>Open today's workout. Pick how hard. Reorder if a class is late.</span><button class="btn-q" data-go="today">Today's workout</button></li>
       <li><b>Record</b><span>Tap the circle after each set and rate it. Then Finish + log.</span></li>
       <li><b>Review</b><span>Stats shows sets per muscle and your lifts. The app sets your next kg.</span><button class="btn-q" data-go="lifts">See my lifts</button></li>
     </ol>
@@ -611,7 +610,7 @@
     <h2>Menu</h2>
     <div class="mlist">
       <button class="mrow" data-menu="guide"><span>How it works</span><span class="chev">›</span></button>
-      <button class="mrow" data-menu="rules"><span>Rules<small>Heart and lifting safety</small></span><span class="chev">›</span></button>
+      <button class="mrow" data-menu="rules"><span>Rules<small>Safety and lifting</small></span><span class="chev">›</span></button>
       <button class="mrow" data-menu="profile"><span>Profile<small>InBody and body trend</small></span><span class="chev">›</span></button>
       <button class="mrow" data-menu="install" id="rowInstall" style="display:none"><span>Install app</span><span class="chev">›</span></button>
     </div>
@@ -632,22 +631,29 @@
       <li>4 lifts: Glutes A, Push, Glutes B, Pull.</li>
       <li>Plus 1-3 classes: Pump, Combat, Yoga.</li>
       <li>Do every exercise. Reorder if needed.</li>
-      <li>Class days: max 3 light extras.</li>
       <li>Glutes A and B: 2+ days apart.</li>
+      <li>Combat max 1x per week.</li>
+      <li>Gym full? Do Mat + Band.</li>
     </ul>
-    <h4 class="red">Heart</h4>
+    <h4>How hard</h4>
     <ul>
-      <li>No HIIT. Cardio = warm-up only.</li>
+      <li>Light: 1 set less, lighter kg.</li>
+      <li>Hard: 1 more set on 2 moves.</li>
+      <li>Hard max 2x per week.</li>
+      <li>Extras: Light 0, Normal 2, Hard 1.</li>
+    </ul>
+    <h4 class="red">Safety</h4>
+    <ul>
+      <li>No HIIT. Easy runs on Walk tab only.</li>
       <li>Stop every set with 2-3 reps left.</li>
       <li>Rest timer locks the next set. Skip only after 90 s.</li>
-      <li>Sets before class: tap resting HR first.</li>
-      <li>Resting HR over 100 = Yoga or walk.</li>
-      <li>Class: HR over 150 = walk until under 120.</li>
-      <li>Combat max 1x per week.</li>
+      <li>Tired? Pick Light, or skip today.</li>
+      <li>Can't speak a full sentence? Slow down.</li>
+      <li>Dizzy, chest tight, heart racing = stop.</li>
     </ul>
     <h4 class="red">Lifting</h4>
     <ul>
-      <li>No barbell squat. No heavy deadlift.</li>
+      <li>Gym: no barbell squat, no heavy deadlift.</li>
       <li>Leg press: light, feet high, stop at 90°.</li>
       <li>Exhale on every push. Never hold breath.</li>
       <li>Pressure or pain = stop, walk 2 min, swap.</li>
@@ -655,7 +661,7 @@
     <h4>Weights</h4>
     <ul>
       <li>App suggests today's kg for you.</li>
-      <li>After each set tap Easy, Good or Hard.</li>
+      <li>After each set tap Easy, Good or Too hard.</li>
       <li>All reps done = app adds weight next time.</li>
     </ul>
     <button class="btn btn-p" data-close>OK</button>
@@ -788,6 +794,49 @@ const MOVES = {
   cablefly: { front: true, A: [50,26, 50,54, 46,72, 46,90, 34,44, 24,62, 54,72, 54,90, 66,44, 76,62], B: [50,26, 50,54, 46,72, 46,90, 38,32, 47,22, 54,72, 54,90, 62,32, 53,22],
     props: [{ t: 'line', x1: 4, y1: 14, x2: 4, y2: 90 }, { t: 'line', x1: 96, y1: 14, x2: 96, y2: 90 }, { t: 'cable', x: 6, y: 86, j: 'W1' }, { t: 'cable', x: 94, y: 86, j: 'W2' }] }
 };
+/* ===== MAT + BAND POSES (v3.8) =====
+   Floor and band moves plus the 1-arm pulldown. Same joint order as MOVES.
+   QUAD = all fours, side view (hands under shoulders, knees under hips): start of bandkick and birddog.
+   hydrant is seen from behind. slbridge: far leg = hugged knee. sideplank: near arm = support forearm.
+   kneelpd1: near = down knee + working arm, far = front leg + free hand on the knee. */
+const QUAD = [67,66, 41,70.5, 41,89.5, 22,89.5, 67.5,78, 68,89.5, 39,89.5, 20,89.5, 65.5,78, 66,89.5];
+Object.assign(MOVES, {
+  bandbridge: { A: [20,86, 44,86, 55.5,69.5, 65,89.5, 30,88.5, 40,89.5, 52.5,70.5, 62,89.5, 33.5,88.5, 47,89.5], B: [20,86, 42,76, 60,68, 65,89.5, 30,88.5, 40,89.5, 57,69, 62,89.5, 33.5,88.5, 47,89.5],
+    props: [{ t: 'band', j1: 'W1', j2: 'P' }, { t: 'band', j1: 'W2', j2: 'P' }] },
+  slbridge: { A: [20,86, 44,86, 55,69.5, 64,89.5, 33.5,88, 33.5,74.5, 32,71.5, 50.5,68, 30,88.5, 40,89.5], B: [20,86, 42,76, 60,68, 64,89.5, 33,82.5, 26.5,71, 25,68, 40.5,57.5, 30,88.5, 40,89.5],
+    props: [] },
+  bandkick: { A: QUAD, B: [67,66, 41,70.5, 22,71, 3,71, 67.5,78, 68,89.5, 39,89.5, 20,89.5, 65.5,78, 66,89.5],
+    props: [{ t: 'band', j1: 'W1', j2: 'F1' }] },
+  hydrant: { front: true, A: [50,66, 50,72, 44,89, 42.5,90, 39.5,78, 38.5,88.5, 56,89, 57.5,90, 60.5,78, 61.5,88.5], B: [50,66, 50,72, 26,70.5, 24.5,76.5, 39.5,78, 38.5,88.5, 56,89, 57.5,90, 60.5,78, 61.5,88.5],
+    props: [{ t: 'band', j1: 'K1', j2: 'K2' }] },
+  clamshell: { A: [20,84, 45,84, 58,87, 71,86.5, 30,79, 38,87, 58,89, 71,88.5, 21,89.5, 10,83.5], B: [20,84, 45,84, 57,66, 71,86.5, 30,79, 38,87, 58,89, 71,88.5, 21,89.5, 10,83.5],
+    props: [{ t: 'band', j1: 'K1', j2: 'K2' }] },
+  bandrdl: { A: [49,25, 48,52, 51,71, 48,90, 49,38.5, 50,52], B: [59,34.5, 40,54, 49.5,70.5, 48,90, 56.5,48, 60,61],
+    props: [{ t: 'band', j1: 'F1', j2: 'W1' }] },
+  birddog: { A: QUAD, B: [67,66, 41,70.5, 41,89.5, 22,89.5, 79,64.5, 90.5,62.5, 22,70.5, 3,70.5, 65.5,78, 66,89.5],
+    props: [] },
+  sideplank: { A: [25,68, 43,84.5, 62,89.5, 74.5,79.5, 24,89.5, 12,89.5, 61,87.5, 73.5,77.5, 38.5,66.5, 37,80], B: [25,68, 45.5,80, 62,89.5, 74.5,79.5, 24,89.5, 12,89.5, 61,87.5, 73.5,77.5, 37,62, 39.5,75.5],
+    props: [] },
+  bandpd: { front: true, A: [50,43, 50,70.5, 44,89, 38,89.5, 34.5,33, 28.5,21, 56,89, 62,89.5, 65.5,33, 71.5,21], B: [50,43, 50,70.5, 44,89, 38,89.5, 33,57, 28,46, 56,89, 62,89.5, 67,57, 72,46],
+    props: [{ t: 'band', j1: 'W1', j2: 'W2' }] },
+  bandrow: { A: [38,59, 40,86, 59,89, 78,88.5, 50,66, 63,68], B: [38,59, 40,86, 59,89, 78,88.5, 27.5,67.5, 41,69],
+    props: [{ t: 'band', j1: 'F1', j2: 'W1' }] },
+  proney: { A: [66,86, 40,86.5, 21,88, 3,89.5, 79.5,87, 93,88.5], B: [66,86, 40,86.5, 21,88, 3,89.5, 78.5,81.5, 91.5,77],
+    props: [] },
+  pullapart: { front: true, A: [50,26, 50,54, 46,72, 46,90, 42,33, 45,37, 54,72, 54,90, 58,33, 55,37], B: [50,26, 50,54, 46,72, 46,90, 28,32, 15,36.5, 54,72, 54,90, 72,32, 85,36.5],
+    props: [{ t: 'band', j1: 'W1', j2: 'W2' }] },
+  bandlat: { front: true, A: [50,26, 50,54, 46,72, 46,90, 39,41, 38,54, 54,72, 54,90, 61,41, 62,54], B: [50,26, 50,54, 46,72, 46,90, 28,30, 16,34, 54,72, 54,90, 72,30, 84,34],
+    props: [{ t: 'band', j1: 'F1', j2: 'W1' }, { t: 'band', j1: 'F2', j2: 'W2' }] },
+  bander: { front: true, A: [50,26, 50,54, 46,72, 46,90, 39,41, 44,46, 54,72, 54,90, 61,41, 56,46], B: [50,26, 50,54, 46,72, 46,90, 39,41, 28,36, 54,72, 54,90, 61,41, 72,36],
+    props: [{ t: 'band', j1: 'W1', j2: 'W2' }] },
+  kneepush: { A: [65,62.5, 43.5,78.5, 28,89.5, 11.5,80, 64,76.5, 69,89.5], B: [73.5,82, 46.5,86.5, 28,89.5, 11.5,80, 59.5,79, 69,89.5],
+    props: [] },
+  bandpress: { A: [49,26, 47,53, 55.5,70, 64,90, 45,39, 56,31, 39.5,70.5, 30,90], B: [49,26, 47,53, 55.5,70, 64,90, 61,19.5, 72.5,13.5, 39.5,70.5, 30,90],
+    props: [{ t: 'cable', x: 44, y: 38, j: 'W1', c: 'bdn' }] },
+  kneelpd1: { A: [41,43.5, 42,70.5, 42,89.5, 23,89.5, 43,30, 51.5,20, 61,70.5, 61,90, 49,55.5, 58,68.5], B: [41,43.5, 42,70.5, 42,89.5, 23,89.5, 37,56.5, 46,46.5, 61,70.5, 61,90, 49,55.5, 58,68.5],
+    props: [{ t: 'line', x1: 90, y1: 6, x2: 90, y2: 90 }, { t: 'cable', x: 87, y: 8, j: 'W1' }] }
+});
+/* ===== END MAT + BAND POSES ===== */
 const JN = ['N','P','K1','F1','E1','W1','K2','F2','E2','W2'];
 function mkPose(a, front) {
   const p = {};
@@ -862,10 +911,11 @@ function figure(key) {
 
 /* ================= PROGRAM =================
    w = suggested start kg (first session). pair = kg per hand (2 dumbbells).
-   side = reps per side. noW = bodyweight/band. assist = machine help (more = easier). */
+   side = reps per side. noW = bodyweight/band. assist = machine help (more = easier).
+   met = gross MET of a class card or its alt (kcal estimate on planned min). */
 const PROGRAM = [
-  { id: 'mon', tab: 'GLU A', tt: 'Lift', type: 'lift', title: 'Glutes A', sub: 'Hip thrust day. Round, lifted glutes.', warm: 'Bike 8 min, easy. HR under 120.', items: [
-    { id: 'mon_thrustm', hk: 'thrust_m', name: 'Hip Thrust Machine', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 4, reps: 12, w: 20, step: 5, max: 60, rest: 120,
+  { id: 'mon', tab: 'GLU A', tt: 'Lift', type: 'lift', title: 'Glutes A', sub: 'Hip thrust day. Round, lifted glutes.', warm: 'Bike 8 min, easy. Can chat.', items: [
+    { id: 'mon_thrustm', hp: 1, hk: 'thrust_m', name: 'Hip Thrust Machine', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 4, reps: 12, w: 20, step: 5, max: 60, rest: 120,
       guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat. Shins straight up at the top.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Pushing through the toes.'] },
       swap: { hk: 'thrust', name: 'DB Hip Thrust', what: 'Upper back on a bench. Lift hips with a dumbbell on them.', vn: 'Bench + 1 dumbbell', move: 'hipthrust', muscle: 'Glute max', target: 'glute_max', reps: 12, w: 10, step: 2, rest: 120,
         guide: { setup: ['Upper back on bench edge. Feet flat.', 'Dumbbell on hip bones. Hold both ends.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Feet too close: thighs take over.'] } } },
@@ -873,7 +923,7 @@ const PROGRAM = [
       guide: { setup: ['Feet high and wide on the plate.', 'Lower until knees reach 90°. Stop.', 'Exhale. Push through heels.'], avoid: ['Going deep: knees to chest.', 'Heavy load or holding breath.', 'Locking knees straight.'] },
       swap: { hk: 'gobletsq', name: 'DB Goblet Box Squat', what: 'Hold a dumbbell at chest. Sit to a box, stand up.', vn: 'Box + 1 dumbbell', move: 'gobletsq', muscle: 'Glutes', target: 'glute_max', reps: 12, w: 8, step: 2, rest: 120,
         guide: { setup: ['Box behind you. Feet shoulder width.', 'Dumbbell at chest, elbows down.', 'Sit back to touch box. Exhale up.'], avoid: ['Dropping onto the box.', 'Knees caving in.', 'Holding breath.'] } } },
-    { id: 'mon_kickm', hk: 'glutemach', name: 'Glute Kickback Machine', what: 'Chest on the pad. Push the foot plate back with one leg.', vn: 'Máy tập mông', move: 'glutemach', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, repTop: 15, w: 10, step: 2.5, rest: 90, side: true,
+    { id: 'mon_kickm', hp: 1, hk: 'glutemach', name: 'Glute Kickback Machine', what: 'Chest on the pad. Push the foot plate back with one leg.', vn: 'Máy tập mông', move: 'glutemach', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, repTop: 15, w: 10, step: 2.5, rest: 90, side: true,
       guide: { setup: ['Chest or forearms on the pad.', 'Foot on the plate, knee under hip.', 'Push back with the heel. Squeeze 1 s.'], avoid: ['Arching the lower back.', 'Swinging the leg.'] },
       swap: { hk: 'kick', name: 'Cable Kickback', what: 'Kick one leg straight back against a cable.', vn: 'Cable + ankle strap', move: 'kickback', muscle: 'Glute max', target: 'glute_max', reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90, side: true,
         guide: { setup: ['Strap on ankle. Cable at lowest point.', 'Hold frame. Lean forward a little.', 'Kick back. Squeeze glute 1 s.'], avoid: ['Swinging the leg.', 'Arching the lower back.'] } } },
@@ -886,8 +936,8 @@ const PROGRAM = [
       swap: { hk: 'pallof', name: 'Cable Pallof Press', what: 'Side-on to a cable. Push the handle straight out. Do not twist.', vn: 'Cable, chest height', move: 'pallof', muscle: 'Deep abs', target: 'abs', reps: 10, w: 5, step: 2.5, rest: 90, side: true,
         guide: { setup: ['Cable at chest height. Stand side-on.', 'Exhale. Press handle straight out.', 'Hold 2 s. Keep breathing. Return.'], avoid: ['Turning toward the cable.', 'Holding breath.'] } } }
   ]},
-  { id: 'tue', tab: 'PUSH', tt: 'Lift', type: 'lift', title: 'Upper Push', sub: 'Upper chest line + shoulders.', warm: 'Elliptical 6 min, easy. HR under 120.', items: [
-    { id: 'tue_cpress', hk: 'chestpress', name: 'Chest Press Machine', what: 'Sit and push handles forward.', vn: 'Máy đẩy ngực', move: 'chestpress', muscle: 'Upper chest', target: 'upper_chest', sets: 3, reps: 12, w: 15, step: 2.5, rest: 90,
+  { id: 'tue', tab: 'PUSH', tt: 'Lift', type: 'lift', title: 'Upper Push', sub: 'Upper chest line + shoulders.', warm: 'Elliptical 6 min, easy. Can chat.', items: [
+    { id: 'tue_cpress', hp: 1, hk: 'chestpress', name: 'Chest Press Machine', what: 'Sit and push handles forward.', vn: 'Máy đẩy ngực', move: 'chestpress', muscle: 'Upper chest', target: 'upper_chest', sets: 3, reps: 12, w: 15, step: 2.5, rest: 90,
       guide: { setup: ['Set seat so handles sit just above nipple line.', 'Elbows 45° from body.', 'Exhale and push. No lockout.'], avoid: ['Handles below nipple line: works lower chest.', 'Flaring elbows out.', 'Holding breath.'] },
       swap: { hk: 'incpress', name: 'Incline DB Press', what: 'On a tilted bench, press dumbbells up.', vn: 'Bench 30° + 2 dumbbells', move: 'incpress', muscle: 'Upper chest', target: 'upper_chest', reps: 12, w: 6, pair: true, step: 1, rest: 90,
         guide: { setup: ['Bench at 30°.', 'Dumbbells at chest. Elbows 45°.', 'Exhale. Press up.'], avoid: ['Bouncing at the bottom.', 'Arching the back.'] } } },
@@ -899,7 +949,7 @@ const PROGRAM = [
       guide: { setup: ['Seat: handles at ear height.', 'Back flat on pad.', 'Exhale and press up.'], avoid: ['Holding breath.', 'Arching off the pad.'] },
       swap: { hk: 'dbspress', name: 'Seated DB Shoulder Press', what: 'Sit upright. Press dumbbells overhead.', vn: 'Bench upright + 2 dumbbells', move: 'dbspress', muscle: 'Shoulders', target: 'side_delt', reps: 10, w: 4, pair: true, step: 1, rest: 120,
         guide: { setup: ['Bench upright. Back on pad.', 'Dumbbells at ear height.', 'Exhale. Press up.'], avoid: ['Arching the back.', 'Banging dumbbells together.'] } } },
-    { id: 'tue_latm', hk: 'latmach', name: 'Lateral Raise Machine', what: 'Sit and lift the arm pads out to the sides.', vn: 'Máy tập vai', move: 'latmach', muscle: 'Side shoulder', target: 'side_delt', sets: 4, reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90,
+    { id: 'tue_latm', hp: 1, hk: 'latmach', name: 'Lateral Raise Machine', what: 'Sit and lift the arm pads out to the sides.', vn: 'Máy tập vai', move: 'latmach', muscle: 'Side shoulder', target: 'side_delt', sets: 4, reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90,
       guide: { setup: ['Seat so shoulders line up with the pivot.', 'Pads on the outside of the elbows.', 'Lift to shoulder height. Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Leaning back.'] },
       swap: { hk: 'latraise', name: 'DB Lateral Raise', what: 'Lift dumbbells out to the sides.', vn: '2 light dumbbells', move: 'latraise', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
         guide: { setup: ['Stand tall. Slight forward lean.', 'Lead with elbows to shoulder height.', 'Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Swinging the body.'] } } },
@@ -908,7 +958,7 @@ const PROGRAM = [
       swap: { hk: 'reardelt', name: 'Rear-Delt DB Fly', what: 'Chest on a bench. Lift dumbbells out to the sides.', vn: 'Incline bench + 2 dumbbells', move: 'reardelt', muscle: 'Rear shoulder', target: 'rear_delt', reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
         guide: { setup: ['Chest on incline bench.', 'Arms hang. Slight elbow bend.', 'Lift out to shoulder height.'], avoid: ['Swinging.', 'Shrugging.'] } } }
   ]},
-  { id: 'thu', tab: 'GLU B', tt: 'Lift', type: 'lift', title: 'Glutes B', sub: 'Side glutes + hamstrings.', warm: 'Rowing 5 min, damper 3. HR under 120.', items: [
+  { id: 'thu', tab: 'GLU B', tt: 'Lift', type: 'lift', title: 'Glutes B', sub: 'Side glutes + hamstrings.', warm: 'Rowing 5 min, damper 3. Can chat.', items: [
     { id: 'thu_rdl', hk: 'rdl', name: 'DB Romanian Deadlift', what: 'Hold dumbbells. Push hips back, then stand tall.', vn: '2 dumbbells', move: 'rdl', muscle: 'Hamstring + glute', target: 'hams', sets: 3, reps: 12, w: 8, pair: true, step: 2, rest: 120,
       guide: { setup: ['Dumbbells on front of thighs.', 'Soft knees. Push hips back, back flat.', 'Feel hamstring stretch. Exhale, stand.'], avoid: ['Rounding the back.', 'Heavy weight. Stay light.', 'Holding breath.'] },
       swap: { hk: 'pullthrough', name: 'Cable Pull-Through', what: 'Back to a low cable. Push hips back, then drive them forward.', vn: 'Cable + rope, low', move: 'pullthrough', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 10, step: 2.5, rest: 120,
@@ -921,21 +971,21 @@ const PROGRAM = [
       guide: { setup: ['Feet high on plate, hip width.', 'Unlock. Lower to 90° knees only.', 'Exhale. Push through heels.'], avoid: ['Deep range: hips curl up.', 'Heavy load or breath hold.', 'Locking knees.'] },
       swap: { hk: 'stepup', name: 'DB Step-Up', what: 'Step up onto a box, stand tall, step down.', vn: 'Box + 2 dumbbells', move: 'stepup', muscle: 'Glutes', target: 'glute_max', reps: 10, w: 4, pair: true, step: 1, rest: 120, side: true,
         guide: { setup: ['Box at knee height or lower.', 'Whole foot on the box.', 'Push through heel. Exhale up.'], avoid: ['Pushing off the back foot.', 'Box too high.'] } } },
-    { id: 'thu_hipabd', hk: 'cableabd', name: 'Cable Hip Abduction', what: 'Lift one leg out to the side against a cable.', vn: 'Cable + ankle strap', move: 'cableabd', muscle: 'Glute med (side)', target: 'glute_med', sets: 4, reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90, side: true,
+    { id: 'thu_hipabd', hp: 1, hk: 'cableabd', name: 'Cable Hip Abduction', what: 'Lift one leg out to the side against a cable.', vn: 'Cable + ankle strap', move: 'cableabd', muscle: 'Glute med (side)', target: 'glute_med', sets: 4, reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90, side: true,
       guide: { setup: ['Strap on the outer ankle.', 'Hold frame. Stand tall.', 'Lift leg out, toes forward. Pause.'], avoid: ['Leaning away.', 'Toes turning up.'] },
       swap: { hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', reps: 15, unit: 'steps', side: true, noW: 'Band', rest: 90,
         guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', 'Step right, then the same back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] } } },
-    { id: 'thu_backext', hk: 'backext', name: 'Back Extension · Glute Focus', what: 'Hips on the pad. Bend forward, then lift to a straight line.', vn: 'Máy gập cơ lưng', move: 'backext', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, noW: 'Body', rest: 90,
+    { id: 'thu_backext', hp: 1, hk: 'backext', name: 'Back Extension · Glute Focus', what: 'Hips on the pad. Bend forward, then lift to a straight line.', vn: 'Máy gập cơ lưng', move: 'backext', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, noW: 'Body', rest: 90,
       guide: { setup: ['Pad just below the hip bones. Feet locked.', 'Toes turned out a little. Upper back slightly round.', 'Exhale. Squeeze glutes to lift to a straight line.'], avoid: ['Arching past straight.', 'Jerking up fast.', 'Holding breath.'] },
       swap: { hk: 'bridge', name: 'DB Glute Bridge', what: 'Lie on your back. Lift hips with a dumbbell on them.', vn: 'Floor + 1 dumbbell', move: 'bridge', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 12, step: 2, rest: 90,
         guide: { setup: ['Lie on back, knees bent, feet flat.', 'Dumbbell on hip bones.', 'Exhale, lift hips. Hold 2 s.'], avoid: ['Arching the back.', 'Pushing through the neck.'] } } }
   ]},
-  { id: 'fri', tab: 'PULL', tt: 'Lift', type: 'lift', title: 'Upper Pull', sub: 'Posture + back width.', warm: 'Bike 6 min, easy. HR under 120.', items: [
-    { id: 'fri_lpd', hk: 'latpull', name: 'Lat Pulldown', what: 'Sit and pull a wide bar down to your chest.', vn: 'Máy kéo lưng xô', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
+  { id: 'fri', tab: 'PULL', tt: 'Lift', type: 'lift', title: 'Upper Pull', sub: 'Posture + back width.', warm: 'Bike 6 min, easy. Can chat.', items: [
+    { id: 'fri_lpd', hp: 1, hk: 'latpull', name: 'Lat Pulldown', what: 'Sit and pull a wide bar down to your chest.', vn: 'Máy kéo lưng xô', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
       guide: { setup: ['Knees locked under the pad.', 'Grip wider than shoulders.', 'Pull to upper chest. Exhale.'], avoid: ['Leaning far back.', 'Pulling behind the neck.'] },
-      swap: { hk: 'cablepd', name: 'Kneeling Cable Pulldown', what: 'Kneel at a high cable. Pull the bar to your upper chest.', vn: 'Cable + bar, high', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', reps: 12, w: 15, step: 2.5, rest: 90,
-        guide: { setup: ['Bar on high cable. Kneel facing it.', 'Grip wider than shoulders.', 'Exhale. Pull to upper chest.'], avoid: ['Leaning far back.', 'Shrugging.'] } } },
-    { id: 'fri_row', hk: 'cablerow', name: 'Seated Cable Row', what: 'Sit and pull a handle to your belly.', vn: 'Máy ngồi kéo cáp', move: 'cablerow', muscle: 'Mid back (posture)', target: 'upper_back', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
+      swap: { hk: 'cablepd1', name: '1-Arm Cable Pulldown', what: 'Half kneel. Pull one handle to your side.', vn: 'Cable + single handle, high', move: 'kneelpd1', muscle: 'Lats (back width)', target: 'lats', sets: 3, reps: 12, w: 7.5, step: 2.5, rest: 90, side: true,
+        guide: { setup: ['Handle on high cable. Half kneel.', 'Same-side knee down, arm reaching up.', 'Exhale. Elbow down to your ribs.'], avoid: ['Twisting toward the cable.', 'Shrugging the shoulder up.'] } } },
+    { id: 'fri_row', hp: 1, hk: 'cablerow', name: 'Seated Cable Row', what: 'Sit and pull a handle to your belly.', vn: 'Máy ngồi kéo cáp', move: 'cablerow', muscle: 'Mid back (posture)', target: 'upper_back', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
       guide: { setup: ['Sit tall. Feet on plate. Knees soft.', 'Exhale. Pull handle to lower ribs.', 'Squeeze shoulder blades 1 s.'], avoid: ['Rounding forward.', 'Rocking back.'] },
       swap: { hk: 'dbrow', name: 'Single-Arm DB Row', what: 'One hand on a bench. Pull a dumbbell to your hip.', vn: 'Bench + 1 dumbbell', move: 'dbrow', muscle: 'Mid back (posture)', target: 'upper_back', reps: 12, w: 10, step: 2, rest: 90, side: true,
         guide: { setup: ['Hand on bench. Back flat.', 'Dumbbell hangs under shoulder.', 'Pull elbow to hip. Exhale.'], avoid: ['Twisting the body.', 'Jerking the weight.'] } } },
@@ -947,7 +997,7 @@ const PROGRAM = [
       guide: { setup: ['Rope at forehead height.', 'Pull to forehead. Elbows high.', 'Thumbs back. Squeeze 1 s.'], avoid: ['Leaning back.', 'Elbows dropping.'] },
       swap: { hk: 'reardelt', name: 'Rear-Delt DB Fly', what: 'Chest on a bench. Lift dumbbells out to the sides.', vn: 'Incline bench + 2 dumbbells', move: 'reardelt', muscle: 'Rear shoulder', target: 'rear_delt', reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
         guide: { setup: ['Chest on incline bench.', 'Arms hang. Slight elbow bend.', 'Lift out to shoulder height.'], avoid: ['Swinging.', 'Shrugging.'] } } },
-    { id: 'fri_fly', hk: 'incfly_l', name: 'Incline DB Fly · Light', what: 'On a tilted bench, open arms wide, then hug in.', vn: 'Bench 30° + 2 dumbbells', move: 'incfly', muscle: 'Inner + upper chest', target: 'inner_chest', sets: 3, reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
+    { id: 'fri_fly', hk: 'incfly_l', name: 'Incline DB Fly · Easy', what: 'On a tilted bench, open arms wide, then hug in.', vn: 'Bench 30° + 2 dumbbells', move: 'incfly', muscle: 'Inner + upper chest', target: 'inner_chest', sets: 3, reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
       guide: { setup: ['Bench at 30°.', 'Lighter than Push day.', 'Squeeze at the top 1 s.'], avoid: ['Straight arms.', 'Bouncing.'] },
       swap: { hk: 'cablefly_lh_l', name: 'Low-to-High Cable Fly', what: 'Pull low cables up and in to chin height.', vn: 'Cable, both sides low', move: 'cablefly', muscle: 'Upper chest', target: 'upper_chest', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90,
         guide: { setup: ['Both cables at lowest point. Stand in the middle.', 'Slight elbow bend. Hands low and wide.', 'Exhale. Sweep up and in to chin. Squeeze.'], avoid: ['Bending elbows into a press.', 'Leaning back.'] } } },
@@ -956,49 +1006,117 @@ const PROGRAM = [
       swap: { hk: 'cablelat', name: 'Cable Lateral Raise', what: 'One arm lifts a low cable out to the side.', vn: 'Cable, low', move: 'cablelat', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90, side: true,
         guide: { setup: ['Cable at lowest point.', 'Stand side-on. Handle in far hand.', 'Lift to shoulder height.'], avoid: ['Leaning away.', 'Shrugging.'] } } }
   ]},
-  { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', after: 'finisher', warm: 'Walk 5 min, flat. HR under 110.', warmMin: 5, items: [
-    { id: 'wed_pump', cls: true, main: true, name: 'New Pump', vn: 'Class', min: 45, icon: 'cls', move: 'pump',
-      rules: ['HR over 150 = sit out one track.', 'Lightest plates. Add nothing mid-class.', 'Squat track: half depth. Exhale up.', 'Lunge track: no bar. Core: keep breathing.'],
-      alt: { name: 'Light Circuit', vn: 'Machines', min: 40, cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press, Leg Press half range. 2 × 15 each. Rest 90 s. Exhale every rep.' } },
+  { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', after: 'finisher', warm: 'Walk 5 min, flat, easy.', warmMin: 5, items: [
+    { id: 'wed_pump', cls: true, main: true, name: 'New Pump', vn: 'Class', min: 45, met: 3.5, icon: 'cls', move: 'pump',
+      rules: ['Dizzy, chest tight, heart racing = stop.', 'Lightest plates. Lunges: no bar.', 'Half squats, exhale up. Skip crunches.', 'No full sentence? Sit out one track.'],
+      lightRules: ['Dizzy, chest tight, heart racing = stop.', 'No plates on squats or lunges.', 'Half squats, exhale up. Skip crunches.', 'No full sentence? Sit out one track.'],
+      alt: { name: 'Light Circuit', vn: 'Machines', min: 40, met: 2.5, cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press, Leg Press half range. 2 × 15 each. Rest 90 s. Exhale every rep.' } },
     /* glute finisher after class: 2 light machine moves, mat swaps */
-    { id: 'wed_ht', hk: 'thrust_mf', name: 'Hip Thrust Machine · Light', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 2, reps: 15, w: 15, step: 5, max: 40, rest: 90,
+    { id: 'wed_ht', hk: 'thrust_mf', name: 'Hip Thrust Machine · Finisher', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 2, reps: 15, w: 15, step: 5, max: 40, rest: 90,
       guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat. Shins straight at the top.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back.', 'Going heavy: this is a finisher.'] },
       swap: { hk: 'frogpump', name: 'Frog Pump', what: 'On your back, soles together, knees out. Pump hips up.', vn: 'Mat', move: 'frogpump', muscle: 'Glute max', target: 'glute_max', reps: 20, noW: 'Body', rest: 90,
         guide: { setup: ['Lie back. Soles of feet together.', 'Let knees fall open.', 'Exhale, pump hips up. Squeeze.'], avoid: ['Arching the back.', 'Holding breath.'] } } },
-    { id: 'wed_ab', hk: 'abductor_f', name: 'Abductor Machine · Light', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 20, w: 15, step: 5, max: 30, rest: 90,
+    { id: 'wed_ab', hk: 'abductor_f', name: 'Abductor Machine · Finisher', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 20, w: 15, step: 5, max: 30, rest: 90,
       guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Going heavy: this is a finisher.'] },
       swap: { hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', reps: 15, unit: 'steps', side: true, noW: 'Band', rest: 90,
         guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', 'Step right, then the same back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] } } },
-    { id: 'wed_walk', cls: true, name: 'Cool-down Walk', vn: 'Treadmill', min: 5, icon: 'cardio', move: 'walk', rules: ['Flat. Speed 4.', 'Leave with HR under 110.', 'Hands off the rails.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, cue: '5 min. HR under 110.' } }
+    { id: 'wed_walk', cls: true, name: 'Cool-down Walk', vn: 'Treadmill', min: 5, met: 3.5, icon: 'cardio', move: 'walk', rules: ['Flat. Speed 4.', 'Leave when you can chat.', 'Hands off the rails.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, met: 3.5, cue: 'Easy pace.' } }
   ]},
-  { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', after: 'extras', warm: 'Walk 3 min, flat.', warmMin: 3, items: [
-    { id: 'sat_combat', cls: true, main: true, name: 'New Combat', vn: 'Class', min: 45, icon: 'cls', move: 'combat',
-      rules: ['HR over 150 = march until under 130.', 'Low option every track. No jumps.', 'Kicks knee height. Never lock the knee.', 'Dizzy, shaky or chest tight = stop.'],
-      alt: { name: 'Easy Elliptical', vn: 'Elliptical', min: 20, cue: '20 min. HR under 125. Or join Yoga.' } },
-    { id: 'sat_walk', cls: true, name: 'Walk-down', vn: 'Treadmill', min: 5, icon: 'cardio', move: 'walk', rules: ['Up to 5 min. Flat. Slow.', 'Stop when HR is under 110.', 'No more cardio today.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, cue: '5 min. HR under 110.' } },
-    /* posture + glute med after the walk-down: no cardio, low HR moves */
+  { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', warm: 'Walk 3 min, flat.', warmMin: 3, items: [
+    { id: 'sat_combat', cls: true, main: true, name: 'New Combat', vn: 'Class', min: 45, met: 4.8, icon: 'cls', move: 'combat', lightAlt: 1,
+      rules: ['Dizzy, chest tight, heart racing = stop.', 'Low option every track. No jumps.', 'Kicks knee height. Never lock knee.', 'No full sentence? March until you can.'],
+      alt: { name: 'Easy Elliptical', vn: 'Elliptical', min: 20, met: 4.0, cue: 'Can chat. Or join Yoga.' } },
+    { id: 'sat_walk', cls: true, name: 'Walk-down', vn: 'Treadmill', min: 5, met: 3.5, icon: 'cardio', move: 'walk', rules: ['Up to 5 min. Flat. Slow.', 'Stop when you can chat.', 'No more cardio today.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, met: 3.5, cue: 'Easy pace.' } },
+    /* posture + glute med after the walk-down: no cardio, easy moves */
     { id: 'sat_fp', hk: 'facepull_l', name: 'Cable Face Pull', what: 'Pull a rope toward your face, elbows high.', vn: 'Cable + rope, high', move: 'facepull', muscle: 'Rear shoulder', target: 'rear_delt', sets: 2, reps: 15, w: 7.5, step: 2.5, rest: 90,
       guide: { setup: ['Rope at forehead height.', 'Pull to forehead. Elbows high.', 'Thumbs back. Squeeze 1 s.'], avoid: ['Leaning back.', 'Elbows dropping low.'] },
       swap: { hk: 'reardelt', name: 'Rear-Delt DB Fly', what: 'Chest on a bench. Lift dumbbells out to the sides.', vn: 'Incline bench + 2 dumbbells', move: 'reardelt', muscle: 'Rear shoulder', target: 'rear_delt', reps: 15, w: 3, pair: true, step: 1, rest: 90,
         guide: { setup: ['Chest on incline bench.', 'Arms hang. Slight elbow bend.', 'Lift out to shoulder height.'], avoid: ['Swinging.', 'Shrugging.'] } } },
     { id: 'sat_sl', hk: 'sidelying', name: 'Side-Lying Leg Raise', what: 'Lie on your side. Lift the top leg up.', vn: 'Mat', move: 'sidelying', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 15, noW: 'Body', rest: 90, side: true, swapAsk: 'No mat?',
       guide: { setup: ['Lie on side. Bottom knee bent.', 'Top toes point slightly down.', 'Lift slow to 45°. Pause 1 s.'], avoid: ['Rolling backward.', 'Lifting too high.'] },
-      swap: { hk: 'abductor_f', name: 'Abductor Machine · Light', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', reps: 20, w: 15, step: 5, max: 30, rest: 90,
+      swap: { hk: 'abductor_f', name: 'Abductor Machine · Finisher', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', reps: 20, w: 15, step: 5, max: 30, rest: 90,
         guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Going heavy: this is a finisher.'] } } },
-    { id: 'sat_stretch', cls: true, name: 'Stretch', vn: 'Mat', min: 6, icon: 'floor', move: 'stretch', rules: ['Child pose 2 min. Belly breathing.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.', 'Chest stretch on frame 30 s per side.'], alt: { name: 'Slow Walk', vn: 'Treadmill', min: 6, cue: '6 min flat.' } }
+    { id: 'sat_stretch', cls: true, name: 'Stretch', vn: 'Mat', min: 6, met: 2.3, icon: 'floor', move: 'stretch', rules: ['Child pose 2 min. Belly breathing.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.', 'Chest stretch on frame 30 s per side.'], alt: { name: 'Slow Walk', vn: 'Treadmill', min: 6, met: 3.5, cue: '6 min flat.' } }
   ]},
   { id: 'sun', tab: 'YOGA', tt: 'Class', type: 'class', title: 'Yoga', sub: 'Recovery. Breathe and relax.', warm: 'None.', items: [
-    { id: 'sun_yoga', cls: true, name: 'Yoga', vn: 'Class', min: 60, icon: 'cls', move: 'yoga', rules: ['Recovery only. No power flow.', 'Long exhales. Belly breathing.', 'Skip inversions.', 'Light extras only.'], alt: { name: 'Home Mobility 20 min', cue: 'Cat-cow, child pose, 90/90 hips, happy baby, belly breathing.' } }
+    { id: 'sun_yoga', cls: true, name: 'Yoga', vn: 'Class', min: 60, met: 2.3, icon: 'cls', move: 'yoga', rules: ['Recovery only. No power flow.', 'Long exhales. Belly breathing.', 'Skip inversions.', 'Easy extras only.'], alt: { name: 'Home Mobility 20 min', min: 20, met: 2.3, cue: 'Cat-cow, child pose, 90/90 hips, happy baby, belly breathing.' } }
+  ]},
+  /* easy cardio. alt.run = the Easy Run swap, allowed only when runBlock() is '' (run-walk, never faster).
+     alt.rules replace the card rules when swapped; the cue shows above them. noAdd = no Add exercise row */
+  { id: 'walk', tab: 'WALK', tt: 'Cardio', type: 'class', title: 'Walk', sub: 'Easy cardio. Park or treadmill.', warm: 'None.', noAdd: 1, items: [
+    { id: 'walk_walk', cls: true, main: true, name: 'Walk', vn: 'Park or treadmill', min: 30, met: 3.5, icon: 'cardio', move: 'walk', swapAsk: 'Feel good?',
+      rules: ['Dizzy, chest tight, heart racing = stop.', 'Easy pace. You can chat.', 'Flat route. Good shoes.', 'Tired? 20 min is enough.'],
+      alt: { name: 'Easy Run', vn: 'Park, flat path', min: 25, met: 4.5, run: 1, cue: 'Walk 5 min. Run 1, walk 2, x5. Walk 5.',
+        rules: ['Dizzy, chest tight, heart racing = stop.', 'Run slow enough to talk.', 'Heaviness, leaking or pressure? Stop, walk.', 'After 2 easy runs: run 1 min longer.'] } }
   ]}
 ];
-const ORDER = ['mon', 'tue', 'thu', 'fri', 'wed', 'sat', 'sun'];
+/* ================= MAT + BAND LIBRARY =================
+   Mat, mini loop band, long loop band. Not program items: they reach the Add sheet through HKDEF + TAGS.
+   All band or bodyweight (noW), rest 90 s, reps (or seconds) go up to repTop.
+   hinge = never gets the Hard +1 set, even as the swap of a Hard+ item. */
+const LIBRARY = [
+  { hk: 'bandbridge', name: 'Long-Band Glute Bridge', what: 'On your back. Band over hips. Lift hips.', vn: 'Mat + long band', move: 'bandbridge', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Band over hip bones, ends under hands.', 'Heels near hips, feet hip width.', 'Exhale, lift hips. Hold 2 s.'], avoid: ['Arching the lower back on top.', 'Holding breath at the top.', 'Pushing through the toes.'] } },
+  { hk: 'slbridge', name: 'Single-Leg Glute Bridge', what: 'One foot down, one knee hugged. Lift hips.', vn: 'Mat', move: 'slbridge', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 10, repTop: 15, noW: 'Body', rest: 90, side: true,
+    guide: { setup: ['Hug one knee to your chest.', 'Other heel flat, close to hip.', 'Exhale. Push heel down, lift hips.'], avoid: ['Hips dropping to one side.', 'Pushing through the toes.'] } },
+  { hk: 'bandkick', name: 'Kneeling Band Kickback', what: 'On all fours. Push one foot back.', vn: 'Mat + long band', move: 'bandkick', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, repTop: 15, noW: 'Band', rest: 90, side: true,
+    guide: { setup: ['Band around one foot, ends under hands.', 'Hands under shoulders, knees under hips.', 'Exhale. Push heel back to hip height.'], avoid: ['Arching the lower back.', 'Kicking above hip height.'] } },
+  { hk: 'hydrant', name: 'Banded Fire Hydrant', what: 'On all fours. Lift one knee out sideways.', vn: 'Mat + mini band', move: 'hydrant', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 12, repTop: 15, noW: 'Band', rest: 90, side: true,
+    guide: { setup: ['Mini band just above knees.', 'Hands under shoulders, knees under hips.', 'Lift knee out to hip height. Pause.'], avoid: ['Leaning away from the moving leg.', 'Twisting the hips open.'] } },
+  { hk: 'clamshell', name: 'Banded Clamshell', what: 'On your side. Open the top knee.', vn: 'Mat + mini band', move: 'clamshell', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 15, repTop: 20, noW: 'Band', rest: 90, side: true,
+    guide: { setup: ['Band just above knees.', 'Hips and knees bent. Feet together.', 'Open top knee. Pause 1 s.'], avoid: ['Top hip rolling backward.', 'Feet coming apart.'] } },
+  { hk: 'bandrdl', name: 'Band Romanian Deadlift', what: 'Stand on band. Hips back, stand tall.', vn: 'Long band', move: 'bandrdl', muscle: 'Hamstring + glute', target: 'hams', sets: 3, reps: 15, repTop: 20, noW: 'Band', rest: 90, hinge: 1,
+    guide: { setup: ['Stand on band, feet hip width.', 'Hold top of loop, arms long.', 'Hips back. Exhale, stand, squeeze.'], avoid: ['Rounding the back.', 'Squatting instead of hinging.', 'Leaning back at the top.'] } },
+  { hk: 'birddog', name: 'Bird Dog', what: 'On all fours. Reach opposite arm and leg.', vn: 'Mat', move: 'birddog', muscle: 'Deep abs + low back', target: 'abs', sets: 2, reps: 8, repTop: 10, noW: 'Body', rest: 90, side: true,
+    guide: { setup: ['Hands under shoulders, knees under hips.', 'Exhale. Reach arm and opposite leg.', 'Hold 2 s, keep breathing.'], avoid: ['Hips tilting to one side.', 'Leg above hip height.'] } },
+  { hk: 'sideplank', name: 'Kneeling Side Plank', what: 'On your side, knees down. Lift hips.', vn: 'Mat', move: 'sideplank', muscle: 'Side abs', target: 'abs', sets: 3, reps: 20, repTop: 30, unit: 'sec', noW: 'Body', rest: 90, side: true,
+    guide: { setup: ['Elbow under shoulder. Knees bent.', 'Lift hips to a straight line.', 'Breathe slow the whole hold.'], avoid: ['Holding your breath.', 'Hips sagging down.', 'Holding past 30 s.'] } },
+  { hk: 'bandpd', name: 'Band Overhead Pulldown', what: 'Kneel tall. Pull band from overhead to chest.', vn: 'Mat + long band', move: 'bandpd', muscle: 'Lats (back width)', target: 'lats', sets: 3, reps: 12, repTop: 15, noW: 'Band', rest: 90,
+    guide: { setup: ['Kneel tall. Band overhead, hands wide.', 'Exhale. Pull elbows down to ribs.', 'Stretch band apart to upper chest.'], avoid: ['Arching the lower back.', 'Shrugging shoulders up.'] } },
+  { hk: 'bandrow', name: 'Seated Band Row', what: 'Sit, legs long. Band around feet. Row.', vn: 'Mat + long band', move: 'bandrow', muscle: 'Mid back (posture)', target: 'upper_back', sets: 3, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Sit tall. Band around both soles.', 'Exhale. Pull hands to lower ribs.', 'Squeeze shoulder blades 1 s.'], avoid: ['Rounding the back.', 'Leaning back to pull.'] } },
+  { hk: 'proney', name: 'Face-Down Y Raise', what: 'Lie face down. Lift arms in a Y.', vn: 'Mat', move: 'proney', muscle: 'Lower traps (posture)', target: 'upper_back', sets: 2, reps: 10, repTop: 15, noW: 'Body', rest: 90,
+    guide: { setup: ['Face down. Forehead on a towel.', 'Arms overhead in a Y, thumbs up.', 'Exhale. Lift arms. Hold 2 s.'], avoid: ['Lifting the chest high.', 'Shrugging to your ears.'] } },
+  { hk: 'pullapart', name: 'Band Pull-Apart', what: 'Arms straight ahead. Pull the band apart.', vn: 'Long band', move: 'pullapart', muscle: 'Rear shoulder', target: 'rear_delt', sets: 2, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Arms straight at shoulder height.', 'Hands shoulder width. Too hard? Wider.', 'Exhale. Band to chest. Squeeze 1 s.'], avoid: ['Shrugging shoulders up.', 'Ribs flaring forward.'] } },
+  { hk: 'bandlat', name: 'Band Lateral Raise', what: 'Stand on band. Lift arms to the sides.', vn: 'Long band', move: 'bandlat', muscle: 'Side shoulder', target: 'side_delt', sets: 3, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Stand on band. One side per hand.', 'Lead with elbows to shoulder height.', 'Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Swinging the body.'] } },
+  { hk: 'bander', name: 'Band External Rotation', what: 'Elbows at sides. Rotate hands out.', vn: 'Mini band', move: 'bander', muscle: 'Rear shoulder', target: 'rear_delt', sets: 2, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Mini band around both wrists.', 'Elbows bent 90°, tucked at sides.', 'Rotate hands out. Pause 1 s.'], avoid: ['Elbows leaving your sides.', 'Leaning back to cheat.'] } },
+  { hk: 'kneepush', name: 'Knee Push-Up', what: 'Push-up with knees on the mat.', vn: 'Mat', move: 'kneepush', muscle: 'Chest', target: 'inner_chest', sets: 3, reps: 8, repTop: 12, noW: 'Body', rest: 90,
+    guide: { setup: ['Hands a bit wider than shoulders.', 'Straight line knees to head.', 'Lower slow. Exhale, push up.'], avoid: ['Hips sagging or piking up.', 'Elbows flaring out wide.', 'Holding breath at the bottom.'] } },
+  { hk: 'bandpress', name: 'Band Incline Press', what: 'Band behind back. Press up and forward.', vn: 'Long band', move: 'bandpress', muscle: 'Upper chest', target: 'upper_chest', sets: 3, reps: 12, repTop: 15, noW: 'Band', rest: 90,
+    guide: { setup: ['Band across upper back, under arms.', 'One foot forward. Elbows at 45°.', 'Exhale. Press up to eye level.'], avoid: ['Shrugging shoulders up.', 'Arching the lower back.', 'Locking the elbows hard.'] } }
+];
+/* retired moves: no longer in PROGRAM, kept so old history still shows by name (TAGS old: not pickable) */
+const RETIRED = [
+  { hk: 'cablepd', name: 'Kneeling Cable Pulldown', what: 'Kneel at a high cable. Pull the bar to your upper chest.', vn: 'Cable + bar, high', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', sets: 4, reps: 12, w: 15, step: 2.5, rest: 90,
+    guide: { setup: ['Bar on high cable. Kneel facing it.', 'Grip wider than shoulders.', 'Exhale. Pull to upper chest.'], avoid: ['Leaning far back.', 'Shrugging.'] } }
+];
+/* Mat + Band day: LIBRARY moves with this day's ids, sets and swaps. Floor, then kneeling, then standing (stand up once).
+   home = Add sheet shows only band and mat moves, swap rows ask no question, Guide has no "My gym has no" button.
+   keepRest = Light and Hard keep the program rest (90 s). */
+const LIBDEF = {}; LIBRARY.forEach(d => LIBDEF[d.hk] = d);
+const matItem = (id, hk, sw, sets, o) => Object.assign({}, LIBDEF[hk], { id: 'mat_' + id, sets, swap: LIBDEF[sw] }, o);
+PROGRAM.push({ id: 'mat', tab: 'MAT', tt: 'Lift', type: 'lift', title: 'Mat + Band', sub: 'Gym full or home. Mat + 2 bands.', warm: 'March 4 min, easy. 5 belly breaths.', home: 1, keepRest: 1, items: [
+  matItem('bridge', 'bandbridge', 'slbridge', 3, { hp: 1 }),
+  matItem('clam', 'clamshell', 'hydrant', 2),
+  matItem('kick', 'bandkick', 'bandrdl', 3, { hp: 1 }),
+  matItem('bird', 'birddog', 'sideplank', 2),
+  matItem('pd', 'bandpd', 'bandrow', 3),
+  /* first standing move: its first cue changes on this day only */
+  matItem('press', 'bandpress', 'kneepush', 3, { guide: { setup: ['Stand up slowly. Band across upper back.'].concat(LIBDEF.bandpress.guide.setup.slice(1)), avoid: LIBDEF.bandpress.guide.avoid } }),
+  matItem('pull', 'pullapart', 'proney', 2)
+]});
+const ORDER = ['mon', 'tue', 'thu', 'fri', 'mat', 'wed', 'sat', 'sun', 'walk'];
 /* standard week, Mon..Sun: Glutes A, Push, Yoga, Glutes B, Pull, Pump, Rest */
 const STANDARD = ['mon', 'tue', 'sun', 'thu', 'fri', 'wed', 'rest'];
 const DOW = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const GROUP = { glute_max: 'Glutes', glute_med: 'Glutes', hams: 'Glutes', quads: 'Legs', upper_chest: 'Chest', inner_chest: 'Chest', side_delt: 'Shoulders', rear_delt: 'Shoulders', lats: 'Back', upper_back: 'Back', abs: 'Core' };
 /* muscle tags by history key (hk). p = primary (counts 1 set), s = secondary (0.5 set each).
    pl = place in the picker. l = light (class days, Glutes-tomorrow). lv = light twin used on light-only days.
-   to = hidden in the picker, its movement row is `to`. old = legacy hk, not in PROGRAM (old history only). */
+   to = hidden in the picker, its movement row is `to`. old = legacy hk, not in PROGRAM (old history only).
+   bar = needs a pull-up bar (not a home move). */
 const CATS = ['Glutes', 'Chest', 'Back', 'Shoulders', 'Core'];   /* picker, reports, tie order */
 const CATS_R = CATS.concat('Legs');                               /* reports */
 const TAGS = {
@@ -1009,7 +1127,7 @@ const TAGS = {
   glutemach:     { p: 'Glutes', s: [], pl: 'Machine' },
   kick:          { p: 'Glutes', s: [], pl: 'Cable' },
   abductor:      { p: 'Glutes', s: [], pl: 'Machine', lv: 'abductor_f' },
-  abd:           { p: 'Glutes', s: [], pl: 'Band', l: 1 },
+  abd:           { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
   deadbug:       { p: 'Core', s: [], pl: 'Mat', l: 1 },
   pallof:        { p: 'Core', s: [], pl: 'Cable', l: 1 },
   chestpress:    { p: 'Chest', s: ['Shoulders'], pl: 'Machine' },
@@ -1029,15 +1147,15 @@ const TAGS = {
   anglepress:    { p: 'Glutes', s: ['Legs'], pl: 'Machine' },
   stepup:        { p: 'Glutes', s: ['Legs'], pl: 'Dumbbell' },
   cableabd:      { p: 'Glutes', s: [], pl: 'Cable' },
-  latwalk:       { p: 'Glutes', s: [], pl: 'Band', l: 1 },
+  latwalk:       { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
   backext:       { p: 'Glutes', s: ['Legs'], pl: 'Machine' },
   bridge:        { p: 'Glutes', s: [], pl: 'Dumbbell' },
   latpull:       { p: 'Back', s: [], pl: 'Machine' },
-  cablepd:       { p: 'Back', s: [], pl: 'Cable' },
+  cablepd1:      { p: 'Back', s: [], pl: 'Cable' },
   cablerow:      { p: 'Back', s: [], pl: 'Machine' },
   dbrow:         { p: 'Back', s: [], pl: 'Dumbbell' },
   assistpu:      { p: 'Back', s: [], pl: 'Machine' },
-  bandpu:        { p: 'Back', s: [], pl: 'Band' },
+  bandpu:        { p: 'Back', s: [], pl: 'Long band', bar: 1 },
   incfly_l:      { p: 'Chest', s: [], pl: 'Dumbbell', l: 1, to: 'incfly' },
   cablefly_lh_l: { p: 'Chest', s: [], pl: 'Cable', l: 1 },
   cablelat:      { p: 'Shoulders', s: [], pl: 'Cable' },
@@ -1046,20 +1164,42 @@ const TAGS = {
   abductor_f:    { p: 'Glutes', s: [], pl: 'Machine', l: 1, to: 'abductor' },
   facepull_l:    { p: 'Shoulders', s: ['Back'], pl: 'Cable', l: 1, to: 'facepull' },
   sidelying:     { p: 'Glutes', s: [], pl: 'Mat', l: 1 },
+  /* mat + band library */
+  bandbridge:    { p: 'Glutes', s: [], pl: 'Long band' },
+  slbridge:      { p: 'Glutes', s: ['Legs'], pl: 'Mat' },
+  bandkick:      { p: 'Glutes', s: [], pl: 'Long band' },
+  hydrant:       { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
+  clamshell:     { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
+  bandrdl:       { p: 'Glutes', s: ['Legs'], pl: 'Long band' },
+  birddog:       { p: 'Core', s: ['Glutes'], pl: 'Mat', l: 1 },
+  sideplank:     { p: 'Core', s: ['Glutes'], pl: 'Mat' },
+  bandpd:        { p: 'Back', s: [], pl: 'Long band' },
+  bandrow:       { p: 'Back', s: [], pl: 'Long band' },
+  proney:        { p: 'Back', s: ['Shoulders'], pl: 'Mat', l: 1 },
+  pullapart:     { p: 'Shoulders', s: ['Back'], pl: 'Long band', l: 1 },
+  bandlat:       { p: 'Shoulders', s: [], pl: 'Long band' },
+  bander:        { p: 'Shoulders', s: ['Back'], pl: 'Mini band', l: 1 },
+  kneepush:      { p: 'Chest', s: ['Shoulders'], pl: 'Mat' },
+  bandpress:     { p: 'Chest', s: ['Shoulders'], pl: 'Long band' },
   /* legacy keys: count old history only */
   bridge_bw:     { p: 'Glutes', s: [], old: 1 },
   abcrunch:      { p: 'Core', s: [], old: 1 },
   legext:        { p: 'Legs', s: [], old: 1 },
-  cpress_hi:     { p: 'Chest', s: ['Shoulders'], old: 1 }
+  cpress_hi:     { p: 'Chest', s: ['Shoulders'], old: 1 },
+  cablepd:       { p: 'Back', s: [], pl: 'Cable', old: 1 }
 };
 /* class minutes for old sessions that have no cmin */
 const CLSMIN = { wed: 45, sat: 45, sun: 60 };
-const ABBR = { mon: 'GA', tue: 'PU', thu: 'GB', fri: 'PL', wed: 'PM', sat: 'CB', sun: 'YG' };
+const ABBR = { mon: 'GA', tue: 'PU', thu: 'GB', fri: 'PL', mat: 'MB', wed: 'PM', sat: 'CB', sun: 'YG', walk: 'WK' };
 const LIFTS = ['mon', 'tue', 'thu', 'fri'];
 const DAYS = {}; PROGRAM.forEach(d => DAYS[d.id] = d);
 const EX = {}; PROGRAM.forEach(d => d.items.forEach(it => EX[it.id] = it));
 const HKDEF = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk && !HKDEF[it.hk]) HKDEF[it.hk] = it; if (it.swap && !HKDEF[it.swap.hk]) HKDEF[it.swap.hk] = Object.assign({}, it.swap, { sets: it.swap.sets || it.sets }); }));
+/* library defs win (the Mat day uses them with its own ids, swaps and one day-only cue); retired moves fill gaps only */
+LIBRARY.forEach(d => HKDEF[d.hk] = d);
+RETIRED.forEach(d => { if (!HKDEF[d.hk]) HKDEF[d.hk] = d; });
 const HKNAME = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk) HKNAME[it.hk] = it.name; if (it.swap) HKNAME[it.swap.hk] = it.swap.name; }));
+LIBRARY.concat(RETIRED).forEach(d => { if (!HKNAME[d.hk]) HKNAME[d.hk] = d.name; });
 /* tags for any hk: TAGS first, then the old single-group map, else null (not counted) */
 const tagOf = hk => TAGS[hk] || (HKDEF[hk] && GROUP[HKDEF[hk].target] ? { p: GROUP[HKDEF[hk].target], s: [] } : null);
 /* weight of one set of hk for category c: 1, 0.5 or 0 */
@@ -1068,10 +1208,13 @@ const rh = x => Math.floor(x + 0.5);   /* round half up, display only */
 
 /* ================= STATE ================= */
 const KEY = 'sculpt_v3';
-const fresh = () => ({ view: 'mon', viewDate: '', hr: {}, missing: {}, plans: {}, basePlan: null, statTab: 'week', statRange: '1m', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, cin: {}, calm: {}, order: {}, extra: {}, lastExport: '' });
+const MODES = ['light', 'normal', 'hard'];
+const fresh = () => ({ view: 'mon', viewDate: '', mode: null, missing: {}, plans: {}, basePlan: null, statTab: 'week', statRange: '1m', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, cin: {}, order: {}, extra: {}, lastExport: '' });
 let S = load();
-/* fill fields an older backup may lack or hold as null */
-function norm(s) { const f = fresh(); ['hr','missing','plans','sets','classes','swaps','sel','history','profile','start','cin','calm','order','extra'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; });
+/* fill fields an older backup may lack or hold as null; drop v3.7 heart-rate keys */
+function norm(s) { const f = fresh(); ['missing','plans','sets','classes','swaps','sel','history','profile','start','cin','order','extra'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; });
+  delete s.hr; delete s.calm;
+  const m = s.mode; s.mode = m && typeof m === 'object' && MODES.includes(m.v) && typeof m.d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(m.d) ? { v: m.v, d: m.d } : null;
   for (const d in s.extra) { const v = s.extra[d]; if (!Array.isArray(v)) { delete s.extra[d]; continue; } s.extra[d] = v.filter(x => x && typeof x.id === 'string' && x.id.slice(0, 2) === 'x_' && HKDEF[x.hk]).slice(0, 3); }
   for (const d in s.order) { const v = s.order[d]; if (!v || typeof v.d !== 'string' || !Array.isArray(v.ids)) delete s.order[d]; }
   if (s.statRange !== '1m' && s.statRange !== '3m') s.statRange = '1m'; ['sessions','body'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; }); if (typeof s.lastExport !== 'string') s.lastExport = ''; return s; }
@@ -1112,23 +1255,104 @@ const HAPTIC = { tick: 12, pick: 24, done: [30, 50, 30], logged: [30, 50, 30, 50
 function buzz(name) { if (document.hidden) return; try { if (navigator.vibrate) navigator.vibrate(HAPTIC[name] || 0); } catch (e) {} }
 const fmtW = w => (w % 1 === 0 ? String(w) : String(Math.round(w * 100) / 100));
 const rnd = w => Math.max(0, Math.round(w * 4) / 4);
-const kfmt = v => v >= 10000 ? Math.round(v / 1000) + 'k' : v >= 1000 ? (v / 1000).toFixed(1) + 'k' : String(Math.round(v));
 
 /* effective exercise (main or swap) */
-const isSwapped = ex => !ex.cls && S.swaps[ex.id] === 'use';
-function asSwap(ex) { const s = ex.swap; return Object.assign({}, s, { id: ex.id, sets: s.sets || ex.sets, rest: s.rest || ex.rest, isSwap: true, from: ex.name }); }
+const isSwapped = ex => !ex.cls && !!ex.swap && S.swaps[ex.id] === 'use';
+function asSwap(ex) { const s = ex.swap; return Object.assign({}, s, { id: ex.id, sets: s.sets || ex.sets, rest: s.rest || ex.rest, hp: ex.hp, isSwap: true, from: ex.name }); }
 const cur = ex => (isSwapped(ex) ? asSwap(ex) : ex);
 const skey = ex => ex.id + (isSwapped(ex) ? '~s' : '');
 /* the version not on screen (main or swap): its done sets are kept and counted */
 const otherCur = ex => (isSwapped(ex) || !ex.swap ? ex : asSwap(ex));
 const otherDone = ex => (ex.cls || !ex.swap ? [] : (S.sets[ex.id + (isSwapped(ex) ? '' : '~s')] || []).filter(s => s.done));
-const hrNow = () => (S.hr && S.hr.d === todayStr() ? S.hr.v : '');
+/* today's intensity: the pick saved today, else today's suggestion */
+/* a workout started on the mode's date and still open (late session past midnight) keeps that mode */
+const modeLive = () => !!S.mode && Object.values(S.start || {}).some(t => t && ds(new Date(t)) === S.mode.d && Date.now() - t < 6 * 3600000);
+const modeNow = () => (S.mode && (S.mode.d === todayStr() || modeLive()) ? S.mode.v : suggestMode().v);
+/* Light after Pump or Combat yesterday, or after 10+ days off; never Hard */
+function suggestMode() {
+  const t = todayStr(), y = addDays(t, -1); let pump = false, combat = false, last = '';
+  S.sessions.forEach(s => { if (!s || typeof s.date !== 'string' || s.date > t) return;
+    if (s.date === y) { if (s.day === 'wed') pump = true; if (s.day === 'sat') combat = true; }
+    if (s.date > last) last = s.date; });
+  if (pump) return { v: 'light', why: 'After Pump' };
+  if (combat) return { v: 'light', why: 'After Combat' };
+  if (last && daysAgo(last) >= 10) return { v: 'light', why: 'After a break' };
+  return { v: 'normal', why: '' };
+}
+/* why Hard is not allowed today ('' = allowed). Hard days = dates with a Hard session in the 6 days before today */
+function hardBlock() {
+  const t = todayStr(), y = addDays(t, -1), w = addDays(t, -6), ss = S.sessions.filter(s => s && typeof s.date === 'string');
+  const ys = ss.filter(s => s.date === y);
+  if (ys.some(s => s.day === 'wed')) return 'Pump yesterday. Not today.';
+  if (ys.some(s => s.day === 'sat')) return 'Combat yesterday. Not today.';
+  if (ys.some(s => s.mode === 'hard')) return 'Hard yesterday. Not today.';
+  if (new Set(ss.filter(s => s.mode === 'hard' && s.date >= w && s.date < t).map(s => s.date)).size >= 2) return '2 Hard days this week.';
+  if (suggestMode().why === 'After a break') return 'Back after a break. Not today.';
+  return '';
+}
+/* why the Easy Run swap is not allowed today ('' = allowed). Walk and Run are never Hard and never suggest Light.
+   Light today = Light picked or suggested today, or a Light session logged today */
+function runBlock() {
+  const t = todayStr(), y = addDays(t, -1), w = addDays(t, -6), ss = S.sessions.filter(s => s && typeof s.date === 'string');
+  const on = d => ss.filter(s => s.date === d), cls = s => s.day === 'wed' || s.day === 'sat';
+  if (on(t).some(cls)) return 'Class today. Walk only.';
+  if (on(t).some(s => s.mode === 'hard')) return 'Hard today. Walk only.';
+  if (on(y).some(cls)) return 'Class yesterday. Walk today.';
+  if (on(y).some(s => s.mode === 'hard')) return 'Hard yesterday. Walk today.';
+  if (on(y).some(s => s.run)) return 'Ran yesterday. Walk today.';
+  if (ss.filter(s => s.run && s.date >= w && s.date <= t).length >= 2) return '2 runs this week. Walk today.';
+  if (suggestMode().why === 'After a break') return 'Back after a break. Walk today.';
+  if (modeNow() === 'light' || on(t).some(s => s.mode === 'light')) return 'Light today. Walk only.';
+  return '';
+}
+/* first set or class done today: keep today's mode so the suggestion cannot drift */
+function freezeMode() { const t = todayStr(); if (!S.mode || S.mode.d !== t) S.mode = { v: modeNow(), d: t }; }
+/* class started or done today */
+const clsBusy = it => (!!S.cin[it.id] && Date.now() - S.cin[it.id] <= 4 * 3600000) || (!!S.classes[it.id] && ds(new Date(+S.classes[it.id] || 0)) === todayStr());
+/* Combat on Light: the class becomes its alt until it starts. 'mode' marks a swap Light made,
+   so leaving Light undoes only that one. enter = Light just began (a tap, or today's suggestion). */
+function lightSwap(enter) {
+  let ch = false;
+  PROGRAM.forEach(d => d.items.forEach(it => {
+    if (!it.lightAlt || clsBusy(it)) return;
+    const lt = modeOn(d.id) === 'light', v = S.swaps[it.id];
+    if (lt && enter && !v) { S.swaps[it.id] = 'mode'; ch = true; }
+    else if (!lt && v === 'mode') { S.swaps[it.id] = 0; ch = true; }
+  }));
+  return ch;
+}
+function setMode(v) {
+  if (!MODES.includes(v) || (v === 'hard' && hardBlock())) return;
+  const was = modeNow(); S.mode = { v, d: todayStr() }; lightSwap(was !== 'light'); save(); render(true);
+}
+/* no intensity picker on these days */
+const NOMODE = ['sun', 'walk'];
+/* the mode that applies on a day: Yoga and Walk always Normal */
+const modeOn = dayId => (NOMODE.includes(dayId) ? 'normal' : modeNow());
+/* day of a card id: 'mon_thrustm' and 'x_mon_rdl' -> 'mon'; no id -> the open day */
+const dayOfId = id => (typeof id !== 'string' || !id ? S.view : id.slice(0, 2) === 'x_' ? id.split('_')[1] : id.split('_')[0]);
+const MCODE = { light: 'l', normal: 'n', hard: 'h' };
+const cardMode = c => modeOn(dayOfId(c.id));
+/* a program exercise on a class day (Pump finisher, Combat post-class), main or swap; added cards are not */
+const clsLift = c => !c.added && !!EX[c.id] && !EX[c.id].cls && DAYS[dayOfId(c.id)].type === 'class';
+/* Pump on Light: finisher cards are off today, unless a set on them is already done */
+const offToday = (day, it) => !!day.after && !it.cls && !it.added && modeOn(day.id) === 'light' && !['', '~s'].some(k => (S.sets[it.id + k] || []).some(s => s.done));
+/* extras allowed today: Light 0, Normal 2, Hard 1 */
+const maxExtra = day => ({ light: 0, normal: 2, hard: 1 })[modeOn(day.id)];
+const modeSfx = m => (m === 'light' ? ' · Light' : m === 'hard' ? ' · Hard' : '');
 const HKASSIST = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.assist) HKASSIST[it.hk] = 1; if (it.swap && it.swap.assist) HKASSIST[it.swap.hk] = 1; }));
-const repUnit = c => c.unit || 'reps';
+/* shown unit: 'sec' holds read as "20 s" */
+const repUnit = c => (c.unit === 'sec' ? 's' : c.unit || 'reps');
 const repStep = c => (c.unit === 'sec' || c.unit === 'steps' ? 5 : 1);
 const wUnit = c => (c.assist ? 'kg assist' : c.pair ? 'kg each' : 'kg');
 
-function lastSession(hk) { const h = S.history[hk]; return h && h.length ? h[h.length - 1] : null; }
+/* newest entry that may steer kg: Light entries never do */
+function lastBase(hk) { const h = S.history[hk] || []; for (let i = h.length - 1; i >= 0; i--) if (h[i] && h[i].mode !== 'light') return h[i]; return null; }
+/* strength views use the same entries */
+const strongEnt = e => e.sets.length && e.mode !== 'light';
+const daysAgo = d => Math.round((new Date(todayStr() + 'T12:00:00') - new Date(d + 'T12:00:00')) / 864e5);
+/* rep step for band and bodyweight moves: +1 rep, or 5 s */
+const noWStep = c => (c.unit === 'sec' ? 5 : 1);
 /* next weight one step harder (dir 1) or easier (dir -1); respects caps and floors */
 function wNext(c, w, dir) {
   let n = rnd(w + (c.assist ? -dir : dir) * c.step);
@@ -1136,15 +1360,23 @@ function wNext(c, w, dir) {
   if (!c.assist) n = Math.max(c.step, n);
   return n;
 }
-/* progression: small moves add reps first (repTop), capped moves add reps at the cap */
+/* progression: small moves add reps first (repTop), capped moves add reps at the cap.
+   Mode-free: it reads the last non-Light entry; a Hard entry is judged on the program sets only. */
 function suggest(c) {
-  const l = lastSession(c.hk);
-  if (!l || !l.sets.length) return { w: c.noW ? 0 : c.w, r: c.reps, why: 'Start', t: 'start' };
-  const tr = l.tr || c.reps, ws = l.sets.map(s => s.w);
+  const l = lastBase(c.hk);
+  if (!l || !l.sets || !l.sets.length) return { w: c.noW ? 0 : c.w, r: c.reps, why: 'Start', t: 'start' };
+  const js = l.mode === 'hard' ? l.sets.slice(0, c.sets) : l.sets;
+  const tr = l.tr || c.reps, ws = js.map(s => s.w);
   const base = c.assist ? Math.min(...ws) : Math.max(...ws);
-  const allHit = l.sets.length >= c.sets && l.sets.every(s => s.r >= tr);
-  const hard = l.sets.some(s => s.f === 'h');
-  if (c.noW) return { w: 0, r: Math.max(c.reps, ...l.sets.map(s => s.r)), why: 'Same', t: 'same' };
+  const allHit = js.length >= c.sets && js.every(s => s.r >= tr);
+  const hard = js.some(s => s.f === 'h');
+  if (c.noW && !c.repTop) return { w: 0, r: Math.max(c.reps, ...js.map(s => s.r)), why: 'Same', t: 'same' };
+  if (c.noW) { const k = noWStep(c);
+    /* 21+ days since this move: 1 rep step easier, never under the program reps */
+    if (daysAgo(l.date) >= 21) { const r = Math.max(c.reps, tr - k); return r < tr ? { w: 0, r, why: '−' + k + ' ' + (k > 1 ? 's' : 'rep'), t: 'down' } : { w: 0, r, why: 'Same', t: 'same' }; }
+    return allHit && !hard && tr < c.repTop ? { w: 0, r: Math.min(c.repTop, tr + k), why: '+' + k + ' ' + (k > 1 ? 's' : 'rep'), t: 'up' } : { w: 0, r: tr, why: 'Same', t: 'same' }; }
+  /* 21+ days since this move: 1 step lighter */
+  if (daysAgo(l.date) >= 21) return { w: wNext(c, base, -1), r: tr, why: 'lighter', t: 'down' };
   if (allHit && !hard) {
     const capped = c.max && base >= c.max, top = c.repTop || (capped ? 15 : 0);
     if (top && tr < top) return { w: base, r: tr + 1, why: '+1 rep', t: 'up' };
@@ -1154,13 +1386,43 @@ function suggest(c) {
   if (hard && !allHit) return { w: wNext(c, base, -1), r: c.reps, why: 'lighter', t: 'down' };
   return { w: base, r: tr, why: 'Same', t: 'same' };
 }
-function sets(ex) {
-  const c = cur(ex), k = skey(ex), n = Math.max(0, c.sets - otherDone(ex).length);
-  if (!S.sets[k] || S.sets[k].length !== n) {
-    const prev = S.sets[k] || [], sg = suggest(c);
-    S.sets[k] = Array.from({ length: n }, (_, i) => prev[i] || { w: sg.w, r: sg.r, done: false });
+/* today's plan for a card: the mode on top of suggest(). Every shown or seeded sets/kg/reps/rest comes from here. */
+function planOf(c) {
+  const md = cardMode(c), sg = suggest(c), st = c.step || 1, cl = clsLift(c), keep = !!DAYS[dayOfId(c.id)] && !!DAYS[dayOfId(c.id)].keepRest;
+  const p = { sets: c.sets, w: sg.w, r: sg.r, rest: c.rest };
+  /* class days: Hard gives the program cards after class 3 sets, same kg and rest. Lift days: +1 set on Hard+ moves, never on a hinge */
+  if (md === 'hard' && cl) p.sets = Math.max(3, c.sets);
+  else if (md === 'hard' && c.hp && !c.hinge) { p.sets = c.sets + 1; p.rest = keep ? c.rest : Math.max(120, c.rest); }
+  if (md === 'light') {
+    p.sets = Math.max(Math.min(2, c.sets), c.sets - 1); p.rest = keep ? c.rest : Math.max(120, c.rest);
+    if (c.noW) { const k = noWStep(c); p.r = Math.max(k, Math.round(sg.r * 0.8 / k) * k); }
+    else if (c.assist) p.w = wNext(c, sg.w, -1);
+    /* 80%, down to the step, at least 1 step under; never below one step */
+    else p.w = Math.max(st, Math.min(rnd(Math.floor(sg.w * 4 / (st * 5) + 1e-9) * st), rnd(sg.w - st)));
+    /* Pump: the finisher is off today; only sets already done stay */
+    if (cl && DAYS[dayOfId(c.id)].after) p.sets = 0;
   }
-  return S.sets[k];
+  return p;
+}
+/* drop n pending rows from the end of key k; the rest timer, rating and row pick follow their sets */
+function dropPending(ex, k, a, n) {
+  const gone = []; for (let i = a.length - 1; i >= 0 && gone.length < n; i--) if (!a[i].done) gone.push(i);
+  const shift = i => i - gone.filter(g => g < i).length;
+  new Set([S.timer && S.timer.ref, S.rate]).forEach(r => { if (r && r.key === k && typeof r.k === 'number' && !gone.includes(r.k)) r.k = shift(r.k); });
+  const sl = S.sel[ex.id]; if (typeof sl === 'number') { if (gone.includes(sl)) delete S.sel[ex.id]; else S.sel[ex.id] = shift(sl); }
+  return a.filter((_, i) => !gone.includes(i));
+}
+/* rows of a card. Done sets are never removed or changed: a resize adds or drops pending rows only,
+   never below the done count. A card with no done set that was seeded in another mode starts again. */
+function sets(ex) {
+  const c = cur(ex), k = skey(ex), md = MCODE[cardMode(ex)], p = planOf(c);
+  let a = Array.isArray(S.sets[k]) ? S.sets[k] : [];
+  if (a.length && !a.some(s => s.done) && a.some(s => (s.m || 'n') !== md)) { a = []; delete S.sel[ex.id]; }
+  const want = Math.max(p.sets - otherDone(ex).length, a.filter(s => s.done).length, 0);
+  if (a.length > want) a = dropPending(ex, k, a, a.length - want);
+  while (a.length < want) a.push({ w: p.w, r: p.r, done: false, m: md });
+  S.sets[k] = a;
+  return a;
 }
 function setVol(c, s) { if (c.noW || c.assist) return 0; return s.w * s.r * (c.side ? 2 : 1) * (c.pair ? 2 : 1); }
 /* a day can mix class cards (count 1 each) and exercises (count sets) */
@@ -1183,7 +1445,7 @@ const XC = {};
 let lastLayout = 0;   /* time of the last list change under the finger (double-tap guard) */
 function xItem(dayId, hk) {
   const id = 'x_' + dayId + '_' + hk;
-  if (!XC[id]) { const d = HKDEF[hk]; XC[id] = Object.assign({}, d, { id, hk, sets: Math.min(3, d.sets), added: true, swap: null, swapAsk: null }); }
+  if (!XC[id]) { const d = HKDEF[hk]; XC[id] = Object.assign({}, d, { id, hk, sets: Math.min(3, d.sets), hp: 0, added: true, swap: null, swapAsk: null }); }
   return XC[id];
 }
 const xItems = dayId => (S.extra[dayId] || []).filter(x => HKDEF[x.hk]).map(x => xItem(dayId, x.hk));
@@ -1209,14 +1471,15 @@ function fixOrder(day, ids) {
   const k = ids.slice(0, ids.indexOf(m.id)).filter(id => rest.includes(id)).length;
   return rest.slice(0, k).concat([m.id], att, rest.slice(k), tail);
 }
-function dayItems(day) {
+/* withOff: also the cards that are off today (log and reset clear them too) */
+function dayItems(day, withOff) {
   const all = day.items.concat(xItems(day.id)), by = {}; all.forEach(it => by[it.id] = it);
   const o = S.order[day.id], ids = o && Array.isArray(o.ids) ? o.ids.filter((id, i, a) => by[id] && a.indexOf(id) === i) : [];
   all.forEach((it, i) => { if (ids.includes(it.id)) return;
     /* missing id: put it after the last listed id that comes before it in program order */
     let at = 0; for (let j = i - 1; j >= 0; j--) { const p = ids.indexOf(all[j].id); if (p >= 0) { at = p + 1; break; } }
     ids.splice(at, 0, it.id); });
-  return fixOrder(day, ids).map(id => by[id]);
+  return fixOrder(day, ids).map(id => by[id]).filter(it => withOff || !offToday(day, it));
 }
 const hasPending = it => !it.cls && sets(it).some(s => !s.done);
 const hasDone = it => !it.cls && (sets(it).some(s => s.done) || otherDone(it).length > 0);
@@ -1269,22 +1532,18 @@ function classLater(day, first) {
 }
 /* where pending exercises sit relative to the class: { above, below } counts */
 function aroundClass(day) {
-  const m = mainOf(day); if (!m) return { above: 0, below: 0, doneAbove: 0 };
-  const items = dayItems(day), mi = items.indexOf(m); let above = 0, below = 0, doneAbove = 0;
-  items.forEach((it, i) => { if (it.cls) return; if (hasPending(it)) { if (i < mi) above++; else below++; } if (i < mi && hasDone(it)) doneAbove++; });
-  return { above, below, doneAbove };
+  const m = mainOf(day); if (!m) return { above: 0, below: 0 };
+  const items = dayItems(day), mi = items.indexOf(m); let above = 0, below = 0;
+  items.forEach((it, i) => { if (it.cls || !hasPending(it)) return; if (i < mi) above++; else below++; });
+  return { above, below };
 }
 /* set lock for one card: '' = open, else the toast text */
 function gate(day, ex) {
-  const hr = hrNow(), ok = hr === 'low' || hr === 'mid';
-  if (hr === 'high') return 'HR too high today';
   const m = mainOf(day);
-  if (!m) return ok ? '' : 'Tap resting HR first';
-  if (S.classes[m.id]) return S.calm[day.id] === todayStr() ? '' : 'Tap HR under 120 first';
+  if (!m || S.classes[m.id]) return '';
   if (S.cin[m.id]) return 'Class in progress';
   const items = dayItems(day);
-  if (items.indexOf(ex) < items.indexOf(m)) return ok ? '' : 'Tap resting HR first';
-  return 'Class first, then HR under 120';
+  return items.indexOf(ex) < items.indexOf(m) ? '' : 'Class first';
 }
 
 /* ================= MUSCLE COUNTS ================= */
@@ -1321,52 +1580,115 @@ function weekCat(ws, day) {
   return { T, D, L, G };
 }
 
+/* ================= KCAL ESTIMATE =================
+   Net kcal, like a watch's "active kcal": (MET - 1) x body kg x hours x 1.05. Good enough to see a big or small day; not precise.
+   One set = reps x 4 s (x2 per side; steps 2 s; sec as given) + 60 s. Rest past 60 s, kg and mode are not counted.
+   Lift MET: MAT every noW move, BIG legs-secondary moves and hip thrusts, LIFT the rest (also unknown keys).
+   Class cards: their met on planned minutes. Computed from history and sessions, never stored. Sum unrounded, round at the end. */
+const KC = { MAT: 3.0, BIG: 5.0, LIFT: 3.5, H: 1.05, BW: 62 };
+const KC_BIG = ['thrust_m', 'thrust', 'thrust_mf'];
+const kcGroup = hk => (HKDEF[hk] && HKDEF[hk].noW ? 'MAT' : (TAGS[hk] && TAGS[hk].s.includes('Legs')) || KC_BIG.includes(hk) ? 'BIG' : 'LIFT');
+/* body kg: the latest InBody weight on or before date, else the earliest, else 62 */
+function bwOn(date) {
+  let on = null, first = null;
+  (Array.isArray(S.body) ? S.body : []).forEach(x => { if (!x || typeof x.d !== 'string' || !(+x.w > 0)) return;
+    if (!first || x.d < first.d) first = x;
+    if (x.d <= date && (!on || x.d >= on.d)) on = x; });
+  return on ? +on.w : first ? +first.w : KC.BW;
+}
+const kcMin = (met, min, bw) => Math.max(0, (met - 1) * bw * ((+min || 0) / 60) * KC.H);
+function kcSet(hk, reps, bw) {
+  const d = HKDEF[hk] || {}, r = Math.max(0, +reps || 0);
+  const t = (d.unit === 'sec' ? r : d.unit === 'steps' ? r * 2 : r * 4) * (d.side ? 2 : 1) + 60;
+  return kcMin(KC[kcGroup(hk)], t / 60, bw);
+}
+/* a class card on its planned minutes; alt = its swap was done */
+const kcCls = (it, alt, bw) => { const x = alt && it.alt ? it.alt : it; return kcMin(x.met || it.met || KC.LIFT, x.min || it.min, bw); };
+/* sessions and weeks: nearest 5, at least 5 when above 0 */
+const kc5 = x => (x > 0 ? Math.max(5, Math.round(x / 5) * 5) : 0);
+/* the open day: done sets of both versions of each card, and done class cards */
+function kcToday(day) {
+  const bw = bwOn(todayStr());
+  return dayItems(day, true).reduce((a, e) => {
+    if (e.cls) return a + (S.classes[e.id] ? kcCls(e, clsSwapped(e), bw) : 0);
+    const c = cur(e), oc = otherCur(e);
+    return a + sets(e).filter(s => s.done).reduce((b, s) => b + kcSet(c.hk, s.r, bw), 0) + otherDone(e).reduce((b, s) => b + kcSet(oc.hk, s.r, bw), 0);
+  }, 0);
+}
+/* move keys of each day (items and swaps) */
+const DAYHK = {}; PROGRAM.forEach(d => { const k = DAYHK[d.id] = new Set(); d.items.forEach(it => { if (it.hk) k.add(it.hk); if (it.swap && it.swap.hk) k.add(it.swap.hk); }); });
+/* history entries of a session: same date. With 2+ sessions that date, an entry goes to the first one whose day has that move,
+   else the first lift session, else the first session, so each set counts once */
+function sessEntries(s) {
+  const same = S.sessions.filter(x => x && x.date === s.date); if (!same.includes(s)) same.push(s);
+  const own = hk => same.length < 2 ? s : same.find(x => DAYHK[x.day] && DAYHK[x.day].has(hk)) || same.find(x => x.type === 'lift') || same[0];
+  const out = [];
+  for (const hk in S.history) { const h = S.history[hk]; if (!Array.isArray(h)) continue;
+    h.forEach(e => { if (e && e.date === s.date && Array.isArray(e.sets) && own(hk) === s) out.push([hk, e]); }); }
+  return out;
+}
+/* a logged session, new or old. cls = class cards done ({ id: 1 when swapped }); older sessions: cmin x main class MET
+   (title " · swap" = its alt, run = Easy Run) */
+function kcSession(s) {
+  if (!s || typeof s.date !== 'string') return 0;
+  const bw = bwOn(s.date), day = DAYS[s.day];
+  let k = sessEntries(s).reduce((a, [hk, e]) => a + e.sets.reduce((b, x) => b + kcSet(hk, x && x.r, bw), 0), 0);
+  if (s.cls && typeof s.cls === 'object') { for (const id in s.cls) { const it = EX[id]; if (it && it.cls) k += kcCls(it, !!s.cls[id], bw); } }
+  else if (s.type === 'class' || (day && day.type === 'class')) {
+    const m = day ? mainOf(day) || day.items.find(it => it.cls) : null, alt = !!s.run || / · swap$/.test(s.title || '');
+    k += kcMin(m ? (alt && m.alt ? m.alt.met : m.met) : KC.LIFT, +s.cmin || CLSMIN[s.day] || 0, bw);
+  }
+  return k;
+}
+
 /* ================= ADD EXERCISE ================= */
 const canon = hk => (TAGS[hk] && TAGS[hk].to) || hk;
 /* movements already in today's list (main and swap) */
 function todaySet(day) { const s = new Set(); dayItems(day).forEach(it => { if (it.cls) return; s.add(canon(it.hk)); if (it.swap) s.add(canon(it.swap.hk)); }); return s; }
-/* 'mon' or 'thu' when Glutes A or B is planned tomorrow, else null */
+/* 'mon', 'thu' or 'mat' when Glutes A, Glutes B or Mat + Band is planned tomorrow, else null */
 function glutesTomorrow() {
   const ws = weekStart(), ti = todayIdx(); let id;
   if (ti < 6) { const st = planStatus(ws); id = st.done[ti + 1] ? null : st.plan[ti + 1]; } else id = planFor(addDays(ws, 7))[0];
-  return ['mon', 'thu'].includes(id) ? id : null;
+  return ['mon', 'thu', 'mat'].includes(id) ? id : null;
 }
 const lightOnly = day => day.type === 'class';
 /* short lift names, and the lift not yet done this week that trains category c most */
-const LIFTNAME = { mon: 'Glutes A', tue: 'Push', thu: 'Glutes B', fri: 'Pull' };
+const LIFTNAME = { mon: 'Glutes A', tue: 'Push', thu: 'Glutes B', fri: 'Pull', mat: 'Mat + Band' };
 function liftFor(c) {
   const ws = weekStart(), doneIds = new Set(S.sessions.filter(x => x.date >= ws).map(x => x.day)); let best = null, bv = 0;
   LIFTS.forEach(id => { if (doneIds.has(id)) return; const v = plannedSets(id, c); if (v > bv) { bv = v; best = id; } });
   return best;
 }
-/* the hk each picker row adds, in program order; light-only days use light moves or light twins */
-function rowsFor(c, lo) {
+/* the hk each picker row adds, in program order; light-only days use light moves or light twins;
+   home days (Mat + Band) use band and mat moves only, never one that needs a pull-up bar */
+const HOMEPL = ['Mini band', 'Long band', 'Mat'];
+function rowsFor(c, lo, home) {
   const out = [];
   Object.keys(HKDEF).forEach(hk => { const t = TAGS[hk]; if (!t || t.old || t.to || t.p !== c) return;
-    const use = !lo ? hk : t.l ? hk : t.lv || null; if (use && !out.includes(use)) out.push(use); });
+    const use = !lo ? hk : t.l ? hk : t.lv || null; if (!use || out.includes(use)) return;
+    if (home && (!HOMEPL.includes(TAGS[use].pl) || TAGS[use].bar)) return;
+    out.push(use); });
   return out;
 }
 /* weighted sets per category logged on one date (+ live sets when that date is today) */
 function dayCat(date, day) { const r = histCat(date, date); if (date === todayStr() && day) { const l = liveCat(day).done; CATS_R.forEach(c => r[c] += l[c]); } return r; }
 function recommend(day) {
-  const hr = hrNow(), ws = weekStart(), wc = weekCat(ws, day), today = todayStr();
+  const ws = weekStart(), wc = weekCat(ws, day), today = todayStr();
   const tod = dayCat(today, day), yes = dayCat(addDays(today, -1), null), gt = glutesTomorrow(), have = todaySet(day);
   const info = {};
   CATS.forEach(c => {
-    const lo = lightOnly(day), rows = rowsFor(c, lo), free = rows.filter(hk => !have.has(canon(hk))), rest = c === 'Glutes' && !!gt, lf = liftFor(c);
-    const hint = rest ? LIFTNAME[gt] + ' tomorrow. Rest them.' : lo && !rows.length ? (wc.G[c] >= 2 && lf ? 'Do ' + LIFTNAME[lf] + ' day next' : 'No light moves today')
+    const lo = lightOnly(day), rows = rowsFor(c, lo, !!day.home), free = rows.filter(hk => !have.has(canon(hk))), rest = c === 'Glutes' && !!gt, lf = liftFor(c);
+    const hint = rest ? LIFTNAME[gt] + ' tomorrow. Rest them.' : lo && !rows.length ? (wc.G[c] >= 2 && lf ? 'Do ' + LIFTNAME[lf] + ' day next' : 'No easy moves today')
       : tod[c] >= 3 ? 'Done today' : yes[c] >= 3 ? 'Done yesterday' : '';
-    info[c] = { T: wc.T[c], D: wc.D[c], L: wc.L[c], G: wc.G[c], R: tod[c] + yes[c], lo, rows, free, hint, off: hr === 'high' || rest || (lo && !rows.length) };
+    info[c] = { T: wc.T[c], D: wc.D[c], L: wc.L[c], G: wc.G[c], R: tod[c] + yes[c], lo, rows, free, hint, off: rest || (lo && !rows.length) };
   });
   let cat = null, line = '';
-  if (hr === 'high') line = 'HR high. Yoga or walk.';
-  else {
-    const cand = CATS.filter(c => { const i = info[c]; return i.T > 0 && i.G >= 2 && i.R < 3 && !i.off && i.free.length; });
-    cand.forEach(c => { if (!cat || info[c].G / info[c].T > info[cat].G / info[cat].T + 1e-9) cat = c; });
-    if (!S.sessions.length && !Object.keys(S.history).length) { cat = null; line = 'No data yet. Pick any.'; }
-    else if (!cat) { const tired = CATS.filter(c => info[c].T > 0 && info[c].G >= 2 && info[c].R >= 3 && !info[c].off).sort((x, y) => info[y].G - info[x].G)[0];
-      line = tired ? tired + ' ' + (info[tired].hint === 'Done today' ? 'done today' : 'done yesterday') + '. Rest it.' : 'All on track.'; }
-  }
+  const cand = CATS.filter(c => { const i = info[c]; return i.T > 0 && i.G >= 2 && i.R < 3 && !i.off && i.free.length; });
+  cand.forEach(c => { if (!cat || info[c].G / info[c].T > info[cat].G / info[cat].T + 1e-9) cat = c; });
+  if (modeOn(day.id) === 'light') cat = null;   /* Light day: no push to add extras */
+  if (!S.sessions.length && !Object.keys(S.history).length) { cat = null; line = 'No data yet. Pick any.'; }
+  else if (!cat) { const tired = CATS.filter(c => info[c].T > 0 && info[c].G >= 2 && info[c].R >= 3 && !info[c].off).sort((x, y) => info[y].G - info[x].G)[0];
+    line = tired ? tired + ' ' + (info[tired].hint === 'Done today' ? 'done today' : 'done yesterday') + '. Rest it.' : 'All on track.'; }
   return { cat, line, info };
 }
 
@@ -1418,7 +1740,7 @@ const FX = {
   /* all sets of a card done: the border turns lime slowly */
   complete: f => fxOnce(mainEl.querySelector(f.sel), [{ borderColor: '#27272A' }, { borderColor: '#CCFF00' }],
     { duration: MO.d4, delay: MO.d2, easing: MO.std, fill: 'backwards', key: 'complete' }),
-  /* heart rate tapped: circles that were locked fade in */
+  /* class done: circles that were locked fade in */
   unlock: f => f.ids.forEach(id => { const c = exEl(id); if (!c || c.querySelector('.ok.locked')) return;
     c.querySelectorAll('.ok:not(.on)').forEach(o => fxOnce(o, [{ opacity: 0.3 }, { opacity: 1 }], { duration: MO.d3, easing: MO.std, key: 'unlock' })); }),
   /* reorder: each item slides from its old place */
@@ -1450,16 +1772,30 @@ function renderTabs() {
   $('#btnStats').classList.toggle('on', S.view === 'stats');
 }
 function centerTab() { const a = tabsEl.querySelector('.active') || tabsEl.querySelector('.next') || tabsEl.firstElementChild; if (a) tabsEl.scrollLeft = a.offsetLeft - (tabsEl.clientWidth - a.offsetWidth) / 2; }
-function render(keepScroll) { renderTabs(); if (!keepScroll) centerTab(); if (S.view === 'stats') renderStats(); else renderDay(); updateHUD(); fxFlush(); if (!keepScroll) window.scrollTo({ top: 0 }); }
+let shownDay = '';   /* date the day view was drawn for; a tap after midnight redraws first */
+function render(keepScroll) { shownDay = todayStr(); renderTabs(); if (!keepScroll) centerTab(); if (S.view === 'stats') renderStats(); else renderDay(); updateHUD(); fxFlush(); if (!keepScroll) window.scrollTo({ top: 0 }); }
 
+/* intensity picker: the old heart-rate panel and 3-column grid; a tap saves, no lock */
+function modePicker(day) {
+  if (NOMODE.includes(day.id)) return '';
+  const md = modeNow(), why = suggestMode().why, off = hardBlock();
+  /* suggested Light: small reason inside the button; Hard not allowed: greyed but tappable (tap says why) */
+  return `<div class="mode"><div class="q">How hard today?</div>
+      <div class="opts">${MODES.map(k => `<button class="opt ${md === k ? 'on' : ''} ${k === 'hard' && off ? 'off' : ''}" data-mode="${k}" aria-pressed="${md === k}"${k === 'hard' && off ? ' aria-disabled="true"' : ''}>${k[0].toUpperCase() + k.slice(1)}${k === 'light' && why ? `<small>${why}</small>` : ''}</button>`).join('')}</div>
+      ${md === 'light' ? '<div class="msg">Easier today. Progress kept.</div>' : ''}</div>`;
+}
 /* reorder mode is screen state only; it is on for one day view */
 let reorderDay = null;
 function renderDay() {
-  const day = DAYS[S.view], lift = day.type === 'lift', hr = hrNow();
+  const day = DAYS[S.view], lift = day.type === 'lift';
   dropStale(day);
+  /* no pick yet today: a suggested Light may swap the class; any day: an old Light swap is undone */
+  if (lightSwap(!(S.mode && (S.mode.d === todayStr() || modeLive())))) save();
+  /* a Run swap left from before is undone when a run is not allowed today (not once it started) */
+  day.items.forEach(it => { if (it.cls && it.alt && it.alt.run && S.swaps[it.id] === 'use' && !clsBusy(it) && runBlock()) { S.swaps[it.id] = 0; save(); } });
   if (reorderDay !== day.id) reorderDay = null;
   const items = dayItems(day), exs = items.filter(e => !e.cls), wc = weekCount(day.id), m = mainOf(day);
-  const exMin = exs.reduce((a, e) => { const c = cur(e); return a + c.sets * (c.rest + 45 * (c.side ? 2 : 1)); }, 0) / 60;
+  const exMin = exs.reduce((a, e) => { const c = cur(e), p = planOf(c); return a + p.sets * (p.rest + 45 * (c.side ? 2 : 1)); }, 0) / 60;
   const est = lift ? Math.round((exMin + 7) / 5) * 5 : 0;
   const clsMin = day.items.filter(e => e.cls && e.main).reduce((a, e) => a + clsLen(e), 0);
   const afterMin = Math.round((day.items.filter(e => e.cls && !e.main).reduce((a, e) => a + clsLen(e), 0) + exMin) / 5) * 5;
@@ -1471,9 +1807,7 @@ function renderDay() {
   let h = `<section class="day-head"><h2>${day.title}</h2>
     <p>${sub}</p>
     ${day.id === 'sat' ? `<div class="chips"><span class="chip ${wc ? 'red' : ''}">${wc ? 'Combat done this week' : 'Max 1× per week'}</span></div>` : ''}</section>
-    <div class="hr ${hr === 'high' ? 'bad' : ''}"><div class="q">Resting heart rate${lift ? '' : ' before class'}</div>
-      <div class="opts">${[['low', '< 90'], ['mid', '90–100'], ['high', '> 100']].map(([k, l]) => `<button class="opt ${hr === k ? 'on' : ''} ${k === 'high' ? 'bad' : ''}" data-hr="${k}" aria-pressed="${hr === k}">${l}</button>`).join('')}</div>
-      ${hr === 'low' || hr === 'mid' ? '' : `<div class="msg">${hr === 'high' ? (lift ? 'Too high. Sets locked. Do Yoga or walk.' : 'Too high. Skip the class. Do the swap.') : (lift ? 'Tap one to unlock your sets.' : 'Tap one before class.')}</div>`}</div>
+    ${modePicker(day)}
     ${/^None/.test(day.warm) ? '' : `<div class="lbl">Warm-up</div><div class="warm"><span>${day.warm}</span>${WARMVID[day.id] ? `<a class="wlink" href="${ytUrl(WARMVID[day.id])}" target="_blank" rel="noopener">${IC.play}Video</a>` : ''}</div>`}
     <div class="lblrow"><div class="lbl">${lift ? 'Workout' : 'Session'}</div>${ro ? '' : movable >= 2 ? `<button class="rbtn" data-reorder>${IC.sort}Reorder</button>` : ''}</div>`;
   if (ro) {
@@ -1494,9 +1828,12 @@ function renderDay() {
   mainEl.innerHTML = h;
   applyLock();
 }
+const capMsg = n => (n ? `Max ${n} added today` : 'Light day. No extras.');
+/* no add row on Walk (noAdd) or when no extra is allowed today (Light); addExtra still refuses with the toast */
 function addRow(day, pos) {
-  const full = (S.extra[day.id] || []).length >= 3;
-  const label = full ? 'Max 3 added today' : pos === 'pre' && mainOf(day) ? 'Add before class' : 'Add exercise';
+  const n = maxExtra(day), full = (S.extra[day.id] || []).length >= n;
+  if (day.noAdd || !n) return '';
+  const label = full ? capMsg(n) : pos === 'pre' && mainOf(day) ? 'Add before class' : 'Add exercise';
   return `<button class="addrow" data-addx="${pos}" ${full ? 'disabled' : ''}>${IC.plus}<span>${label}</span></button>`;
 }
 function rowReorder(u, i, us, ci) {
@@ -1514,23 +1851,24 @@ function rowReorder(u, i, us, ci) {
 function cardEx(ex, i) {
   const c = cur(ex), ss = sets(ex), done = ss.every(s => s.done);
   let sel = S.sel[ex.id]; if (sel === undefined || (ss[sel] && ss[sel].done)) sel = ss.findIndex(s => !s.done);
-  const sg = suggest(c), od = otherDone(ex);
-  const differs = !c.noW && !ss.some(s => s.done) && ss.some(s => s.w !== sg.w || s.r !== sg.r);
+  const sg = suggest(c), p = planOf(c), od = otherDone(ex), light = cardMode(ex) === 'light';
+  const differs = !c.noW && !ss.some(s => s.done) && ss.some(s => s.w !== p.w || s.r !== p.r);
   const arrow = sg.t === 'up' ? '▲ ' : sg.t === 'down' ? '▼ ' : '';
   const swapLine = ex.added ? (ss.some(s => s.done) ? `<div class="swap fixed"><span class="z">${IC.plus}</span><span class="tx">Added today</span></div>` : `<button class="swap" data-xrm="${ex.id}"><span class="z">${IC.x}</span><span class="tx">Remove from today</span><span class="chev">›</span></button>`)
+    : !ex.swap ? ''
     : c.isSwap
     ? `<button class="swap on" data-swap="${ex.id}"><span class="z">${IC.back}</span><span class="tx">Back to <b>${ex.name}</b></span><span class="chev">›</span></button>`
-    : `<button class="swap" data-swap="${ex.id}"><span class="z">${IC.swap}</span><span class="tx">${ex.swapAsk || 'Busy?'} Swap to <b>${ex.swap.name}</b></span><span class="chev">›</span></button>`;
+    : `<button class="swap" data-swap="${ex.id}"><span class="z">${IC.swap}</span><span class="tx">${(DAYS[dayOfId(ex.id)] || {}).home ? '' : (ex.swapAsk || 'Busy?') + ' '}Swap to <b>${ex.swap.name}</b></span><span class="chev">›</span></button>`;
   return `<article class="card ${done ? 'complete' : ''}" data-ex="${ex.id}">
     <div class="ch"><button class="thumb" data-guide="${ex.id}" aria-label="Show how">${moveSVG(c.move, false)}</button>
       <div><h3>${c.name}</h3>
         <div class="meta">${c.vn}</div></div>
       <button class="gbtn" data-guide="${ex.id}" aria-label="How to">i</button></div>
     <div class="sug"><div>
-      <div class="sv">${c.noW ? c.noW : fmtW(sg.w) + ' ' + wUnit(c)} × ${sg.r}${c.unit ? ' ' + c.unit : ''}${c.side ? ' / side' : ''}</div>
-      ${['up', 'down', 'cap'].includes(sg.t) ? `<div class="sm"><span class="sw ${sg.t}">${arrow}${sg.why}</span></div>` : ''}
+      <div class="sv">${c.noW ? c.noW : fmtW(p.w) + ' ' + wUnit(c)} × ${p.r}${c.unit ? ' ' + repUnit(c) : ''}${c.side ? ' / side' : ''}</div>
+      ${!light && ['up', 'down', 'cap'].includes(sg.t) ? `<div class="sm"><span class="sw ${sg.t}">${arrow}${sg.why}</span></div>` : ''}
       ${od.length ? `<div class="sm"><span class="sw up">✓ ${od.length} done on ${otherCur(ex).name}</span></div>` : ''}</div>
-      ${differs ? `<button class="apply" data-apply="${ex.id}">Use ${fmtW(sg.w)} kg</button>` : ''}</div>
+      ${differs ? `<button class="apply" data-apply="${ex.id}">Use ${fmtW(p.w)} kg</button>` : ''}</div>
     ${swapLine}
     ${c.noW ? '' : `<div class="pills">${[-c.step, 1, 2.5, 5, 10].map(v => `<button class="pill ${v < 0 ? 'neg' : ''}" data-add="${v}">${v < 0 ? '−' + fmtW(-v) : '+' + fmtW(v)}</button>`).join('')}</div>`}
     <div class="sets">${ss.map((s, k) => setRow(c, s, k, k === sel)).join('')}</div>
@@ -1538,7 +1876,7 @@ function cardEx(ex, i) {
 }
 function setRow(c, s, k, sel) {
   const wcell = c.noW
-    ? `<div class="stp static"><div class="v">${c.noW}${k ? '' : '<small>weight</small>'}</div></div>`
+    ? `<div class="stp static"><div class="v">${c.noW}${k || c.noW === 'Band' ? '' : '<small>weight</small>'}</div></div>`
     : `<div class="stp w"><button data-st="w-" aria-label="Less weight">−</button><div class="v" data-vw>${fmtW(s.w)}${k ? '' : `<small>${c.assist ? 'assist' : 'kg'}</small>`}</div><button data-st="w+" aria-label="More weight">+</button></div>`;
   return `<div class="set ${s.done ? 'done' : ''} ${sel ? 'sel' : ''}" data-set="${k}">
     ${wcell}
@@ -1547,36 +1885,44 @@ function setRow(c, s, k, sel) {
   </div>`;
 }
 /* class cards: a main class is 2-step (Start class, Class done); others are 1 tap */
-const clsSwapped = it => S.swaps[it.id] === 'use';
+/* 'use' = swapped by hand, 'mode' = swapped by Light (see lightSwap) */
+const clsSwapped = it => S.swaps[it.id] === 'use' || S.swaps[it.id] === 'mode';
 const clsLen = it => (clsSwapped(it) ? (it.alt.min || it.min) : it.min) || 0;
 function cardClass(it) {
   const day = DAYS[S.view];
   if (S.cin[it.id] && Date.now() - S.cin[it.id] > 4 * 3600000) { delete S.cin[it.id]; delete S.start[day.id]; } /* stale Start from another day */
-  if (S.classes[it.id] && ds(new Date(+S.classes[it.id] || 0)) !== todayStr()) { delete S.classes[it.id]; delete S.calm[day.id]; if (S.start[day.id] && Date.now() - S.start[day.id] > 4 * 3600000) delete S.start[day.id]; } /* class done on another day */
+  if (S.classes[it.id] && ds(new Date(+S.classes[it.id] || 0)) !== todayStr()) { delete S.classes[it.id]; if (S.start[day.id] && Date.now() - S.start[day.id] > 4 * 3600000) delete S.start[day.id]; } /* class done on another day */
   const done = !!S.classes[it.id], sw = clsSwapped(it), live = !done && !!S.cin[it.id];
   const name = sw ? it.alt.name : it.name, vn = sw ? it.alt.vn || 'Swap' : it.vn, min = clsLen(it);
-  const rules = sw ? it.alt.cue.split('. ').map(x => x.replace(/\.$/, '') + '.') : it.rules;
+  /* an alt with its own rules (Easy Run) shows its cue as one line above them; other alts show the cue as the rules,
+     after the class's red rule 1 when it is a main class (swapped by hand or by Light) */
+  const own = sw && !!it.alt.rules;
+  const cueL = sw && !own ? it.alt.cue.split('. ').map(x => x.replace(/\.$/, '') + '.') : [];
+  const rules = own ? it.alt.rules : sw ? (it.main ? [it.rules[0]].concat(cueL) : cueL) : (it.lightRules && modeOn(day.id) === 'light' ? it.lightRules : it.rules);
+  /* Pump and Combat say "Class done"; Walk (not a class) says "Done" */
+  const isCls = it.icon === 'cls';
   const inMin = live ? Math.max(0, Math.round((Date.now() - S.cin[it.id]) / 60000)) : 0;
   const meta = done ? '✓ Done · ' + min + ' min' : live ? 'In progress · ' + inMin + ' min' : (vn === 'Class' ? '' : vn + ' · ') + min + ' min';
   const ac = it.main ? aroundClass(day) : null;
   const btn = it.main
-    ? (done ? '' : `<button class="big ${live ? 'live' : ''}" data-clschk="${it.id}">${live ? 'Class done' : ac.doneAbove ? 'HR under 120? Start class' : 'Start'}</button>`)
+    ? (done ? '' : `<button class="big ${live ? 'live' : ''}" data-clschk="${it.id}">${live ? (isCls ? 'Class done' : 'Done') : 'Start'}</button>`)
     : `<button class="big ${done ? 'on' : ''}" data-clschk="${it.id}">${done ? '✓ Done' : 'Done'}</button>`;
   const undo = `<button class="btn-q" data-clschk="${it.id}">undo</button>`;
   const pendAny = it.main && dayItems(day).some(hasPending);
-  const calm = it.main && done && !pendAny ? `<div class="calmok">✓ Class done ${undo}</div>` : it.main && done ? (hrNow() === 'high'
-    ? `<div class="calmok red">HR over 100 today. No ${day.after}. ${undo}</div>`
-    : S.calm[day.id] === todayStr()
-    ? `<div class="calmok">✓ HR under 120 · ${day.after} unlocked ${undo}</div>`
-    : `<button class="big calm" data-calm="${day.id}">HR under 120? Start ${day.after}</button><div class="calmok">&nbsp;${undo}</div>`) : '';
-  const later = it.main && !done && !live && hrNow() !== 'high' ? (ac.below ? `<button class="swap" data-clslater="later"><span class="z">${IC.down}</span><span class="tx">Class late? <b>Exercises first</b></span><span class="chev">›</span></button>`
+  /* Pump (day.after) adds the walk before its finisher, while finisher sets are still pending */
+  const doneLine = it.main && done ? `<div class="calmok"><span>✓ ${isCls ? 'Class done' : 'Done'}${day.after && pendAny ? '. Walk 3 min, then ' + day.after + '.' : ''}</span>${undo}</div>` : '';
+  /* a swapped class has no class to be late for: no "Class late?" button */
+  const later = it.main && !done && !live ? (ac.below && !sw ? `<button class="swap" data-clslater="later"><span class="z">${IC.down}</span><span class="tx">Class late? <b>Exercises first</b></span><span class="chev">›</span></button>`
     : ac.above ? `<button class="swap" data-clslater="first"><span class="z">${IC.up}</span><span class="tx">Back to <b>class first</b></span><span class="chev">›</span></button>` : '') : '';
-  const swapBtn = done ? '' : `<button class="swap ${sw ? 'on' : ''}" data-clsswap="${it.id}"><span class="z">${sw ? IC.back : IC.swap}</span><span class="tx">${sw ? 'Back to <b>' + it.name + '</b>' : (it.icon === 'cls' ? 'No class or HR high? Swap to <b>' : 'Busy? Swap to <b>') + it.alt.name + '</b>'}</span><span class="chev">›</span></button>`;
+  /* Easy Run not allowed today: greyed but tappable (tap says why) */
+  const blk = !sw && it.alt.run ? runBlock() : '';
+  const ask = it.swapAsk || (it.icon === 'cls' ? 'No class?' : 'Busy?');
+  const swapBtn = done ? '' : `<button class="swap ${sw ? 'on' : ''} ${blk ? 'off' : ''}" data-clsswap="${it.id}"${blk ? ' aria-disabled="true"' : ''}><span class="z">${sw ? IC.back : IC.swap}</span><span class="tx">${sw ? 'Back to <b>' + it.name + '</b>' : ask + ' Swap to <b>' + it.alt.name + '</b>'}</span><span class="chev">›</span></button>`;
   return `<article class="card ccard ${done ? 'complete' : ''}" data-cls="${it.id}">
     <div class="ch"><div class="thumb static">${it.move ? moveSVG(it.move, false) : ICONS[it.icon]}</div><div><h3>${name}</h3><div class="meta">${meta}</div></div><div></div></div>
-    ${done ? '' : `<div class="body"><ul>${rules.map((r, i) => `<li class="${it.main && !sw && i === 0 ? 'hrr' : ''}">${r}</li>`).join('')}</ul></div>`}
+    ${done ? '' : `<div class="body">${own ? `<p class="cue">${it.alt.cue}</p>` : ''}<ul>${rules.map((r, i) => `<li class="${it.main && i === 0 ? 'hrr' : ''}">${r}</li>`).join('')}</ul></div>`}
     ${later}${swapBtn}
-    <div class="body">${btn}${calm}</div>
+    <div class="body">${btn}${doneLine}</div>
   </article>`;
 }
 
@@ -1594,6 +1940,8 @@ function updateHUD() {
 const hud = $('#hud'), ringBar = $('#ringBar'), CIRC = 2 * Math.PI * 42;
 let tick = null, buzzed = false, skipArmed = 0;
 const timerActive = () => !!(S.timer && S.timer.end > Date.now());
+/* skip unlocks after 90 s (or the whole rest when it is shorter), in ms */
+const skipFloor = () => Math.min(90, S.timer ? S.timer.total : 90) * 1000;
 /* the rest ring is one linear animation per rest: smooth at 120 Hz, no work per frame */
 let ringA = null;
 function ringRun() {
@@ -1642,7 +1990,7 @@ function paintFeel() {
 function runTick() {
   if (!S.timer) { endTimer(); return; }
   const left = Math.max(0, S.timer.end - Date.now()), sec = Math.ceil(left / 1000);
-  $('#btnSkip').classList.toggle('dim', left > 0 && S.timer.total * 1000 - left < 90000);
+  $('#btnSkip').classList.toggle('dim', left > 0 && S.timer.total * 1000 - left < skipFloor());
   const tn = $('#tNum'), tx = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); if (tn.textContent !== tx) tn.textContent = tx;
   if (!ringA) ringBar.style.strokeDashoffset = (CIRC * (1 - Math.min(1, left / (S.timer.total * 1000)))).toFixed(2);
   if (left <= 0) finishTimer();
@@ -1663,12 +2011,7 @@ function finishTimer() {
   setTimeout(() => { if (S.timer && !timerActive()) endTimer(); }, 4000);
 }
 function endTimer() { clearInterval(tick); tick = null; if (ringA) { ringA.cancel(); ringA = null; } cancelBeep(); S.timer = null; save(); hud.classList.remove('timer', 'go', 'rate'); document.body.classList.remove('tm-on'); applyLock(); }
-function scrollNextCard(dayId) {
-  const day = DAYS[dayId], items = dayItems(day), i = items.indexOf(mainOf(day)), nx = items.slice(i + 1).find(hasPending) || items.find(hasPending); if (!nx) return;
-  const el = mainEl.querySelector(`[data-ex="${nx.id}"]`); if (!el) return;
-  const top = $('.hdr').getBoundingClientRect().bottom + 8, r = el.getBoundingClientRect(); if (r.top > top) window.scrollBy({ top: r.top - top, behavior: SM() });
-}
-/* lock set buttons per card: rest timer, or the heart-rate gate for that card's place in the list */
+/* lock set buttons per card: rest timer, or the class gate for that card's place in the list */
 function applyLock() {
   const day = DAYS[S.view], t = timerActive();
   document.querySelectorAll('.card[data-ex]').forEach(card => {
@@ -1732,7 +2075,7 @@ $('#btnSkip').addEventListener('click', () => {
   if (!S.timer) return; buzz('tick');
   if (!timerActive()) { endTimer(); return; }
   const elapsed = S.timer.total * 1000 - (S.timer.end - Date.now());
-  if (elapsed < 90000) { toast('Rest 90 s minimum', true); buzz('block'); return; }
+  if (elapsed < skipFloor()) { toast('Rest 90 s minimum', true); buzz('block'); return; }
   if (skipArmed && Date.now() - skipArmed < 2500) { endTimer(); toast('Rest skipped', true); return; }
   skipArmed = Date.now(); $('#btnSkip').textContent = 'Tap again'; $('#btnSkip').classList.add('warn');
   setTimeout(() => { if (S.timer && skipArmed) { $('#btnSkip').textContent = 'Skip'; $('#btnSkip').classList.remove('warn'); skipArmed = 0; } }, 2500);
@@ -1747,9 +2090,10 @@ $('#feel').addEventListener('click', e => {
   let msg = 'Saved';
   /* a next set the user already changed by hand keeps its kg */
   if (nx && !nx.done && !c.noW && !nx.hand) {
-    const base = ss[ref.k].w;
-    if (f === 'e') { nx.w = wNext(c, base, 1); msg = 'Next set ' + fmtW(nx.w) + ' kg'; }
-    if (f === 'g') { nx.w = base; msg = 'Keep ' + fmtW(base) + ' kg'; }
+    /* Easy raises kg on Normal only (Light and Hard keep it); Too hard lowers 1 step in every mode */
+    const base = ss[ref.k].w, up = f === 'e' && cardMode(ex) === 'normal';
+    if (up) { nx.w = wNext(c, base, 1); msg = 'Next set ' + fmtW(nx.w) + ' kg'; }
+    if (f === 'g' || (f === 'e' && !up)) { nx.w = base; msg = 'Keep ' + fmtW(base) + ' kg'; }
     if (f === 'h') { nx.w = wNext(c, base, -1); msg = 'Next set ' + fmtW(nx.w) + ' kg'; }
   }
   if (f === 'h' && prevF !== 'h' && timerActive()) { addRest(30); msg += ' · +30s rest'; }
@@ -1764,6 +2108,7 @@ $('#feel').addEventListener('click', e => {
 tabsEl.addEventListener('click', e => { const b = e.target.closest('.tab'); if (!b) return; buzz('tick'); S.view = b.dataset.day; S.viewDate = todayStr(); save(); render(); });
 
 mainEl.addEventListener('click', e => {
+  if (shownDay && shownDay !== todayStr()) { buzz('block'); render(true); return; }
   if (S.view === 'stats') { statsClick(e); return; }
   const t = e.target;
   const card = t.closest('[data-ex]'); const ex = card ? getEx(card.dataset.ex) : null;
@@ -1774,20 +2119,20 @@ mainEl.addEventListener('click', e => {
   const ax = t.closest('[data-addx]'); if (ax) { buzz('tick'); openAdd(ax.dataset.addx); return; }
   const xr = t.closest('[data-xrm]'); if (xr) { const x = getEx(xr.dataset.xrm); if (x && !hasDone(x)) removeExtra(DAYS[S.view], x.id); return; }
 
-  const hrb = t.closest('[data-hr]');
-  if (hrb) { buzz('pick'); setTimeout(unlockAudio, MO.d3); keepAwake(); const ids = lockedIds(); S.hr = { v: hrb.dataset.hr, d: todayStr() };
-    if (DAYS[S.view].type === 'class') DAYS[S.view].items.forEach(it => { if (it.main && !S.classes[it.id] && !S.cin[it.id]) S.swaps[it.id] = hrb.dataset.hr === 'high' ? 'use' : 0; });
-    if (hrb.dataset.hr !== 'high') fx('unlock', { ids }); save(); render(true); return; }
+  const md = t.closest('[data-mode]');
+  if (md) { const v = md.dataset.mode, no = v === 'hard' ? hardBlock() : '';
+    if (no) { toast(no, true); buzz('block'); return; }
+    buzz('pick'); setMode(v); return; }
 
   const g = t.closest('[data-guide]');
   if (g) { buzz('tick'); const x = getEx(g.dataset.guide); if (x) openGuide(x, isSwapped(x)); return; }
 
   const ap = t.closest('[data-apply]');
-  if (ap && ex) { buzz('pick'); const sg = suggest(cur(ex));
+  if (ap && ex) { buzz('pick'); const p = planOf(cur(ex));
     sets(ex).forEach((s, k) => { if (s.done) return;
-      if (s.w !== sg.w) fx('tick', { id: ex.id, k, w: 1, dir: Math.sign(sg.w - s.w) });
-      if (s.r !== sg.r) fx('tick', { id: ex.id, k, w: 0, dir: Math.sign(sg.r - s.r) });
-      s.w = sg.w; s.r = sg.r; delete s.hand; });
+      if (s.w !== p.w) fx('tick', { id: ex.id, k, w: 1, dir: Math.sign(p.w - s.w) });
+      if (s.r !== p.r) fx('tick', { id: ex.id, k, w: 0, dir: Math.sign(p.r - s.r) });
+      s.w = p.w; s.r = p.r; delete s.hand; });
     save(); refreshCard(ex); return; }
 
   const sw = t.closest('[data-swap]');
@@ -1826,16 +2171,16 @@ mainEl.addEventListener('click', e => {
       save(); if (mainOf(DAYS[S.view])) render(true); else refreshCard(ex); return;
     }
     const gt = gate(DAYS[S.view], ex);
-    if (gt) { nope(gt); if (/resting HR|too high/.test(gt)) { const hb = $('.hr'); if (hb) hb.scrollIntoView({ behavior: SM(), block: 'center' }); } return; }
+    if (gt) { nope(gt); return; }
     if (timerActive()) { nope('Rest first'); return; }
-    s.done = true; s.t = Date.now(); buzz('done'); hideRate();
+    s.done = true; s.t = Date.now(); s.m = MCODE[cardMode(ex)]; freezeMode(); buzz('done'); hideRate();
     if (!S.start[S.view]) S.start[S.view] = Date.now();
     const pb = !c.noW && !c.assist && (S.history[c.hk] || []).some(e => e.sets.length) && s.w > histMax(c.hk) && !ss.some(x => x !== s && x.done && x.pb && x.w >= s.w); if (pb) s.pb = true;
     if (ss[k + 1] && !ss[k + 1].done) { ss[k + 1].w = s.w; ss[k + 1].r = s.r; delete ss[k + 1].hand; S.sel[ex.id] = k + 1; } else delete S.sel[ex.id];
     fx('set', { id: ex.id, k }); if (ss.every(x => x.done)) fx('complete', { sel: '[data-ex="' + ex.id + '"]' });
     save(); if (mainOf(DAYS[S.view])) render(true); else refreshCard(ex);
     const ref = { id: ex.id, key: skey(ex), k }, p = dayProgress(DAYS[S.view]);
-    if (p.d < p.t) { startTimer(c.rest, nextLabel(ex, k), ref); setTimeout(() => scrollNext(ex.id), 350); }
+    if (p.d < p.t) { startTimer(planOf(c).rest, nextLabel(ex, k), ref); setTimeout(() => scrollNext(ex.id), 350); }
     else { showRate(ref); if (!pb) toast('All done. Rate it, then Finish.'); }
     if (pb) { const t0 = toastT; setTimeout(() => { if (toastT === t0) toast('New best · ' + fmtW(s.w) + ' kg', false, 3000); }, 420); }
     return;
@@ -1845,17 +2190,21 @@ mainEl.addEventListener('click', e => {
   if (rowTap && ex) { const k = +rowTap.dataset.set; if (!sets(ex)[k].done) { buzz('tick'); S.sel[ex.id] = k; save(); selectRow(card, k); } return; }
 
   const csw = t.closest('[data-clsswap]');
-  if (csw) { buzz('pick'); const id = csw.dataset.clsswap; S.swaps[id] = S.swaps[id] === 'use' ? 0 : 'use'; save(); render(true); return; }
-  const cm = t.closest('[data-calm]');
-  if (cm) { buzz('done'); const ids = lockedIds(); S.calm[cm.dataset.calm] = todayStr(); fx('unlock', { ids }); save(); render(true); toast(DAYS[S.view].after[0].toUpperCase() + DAYS[S.view].after.slice(1) + ' unlocked'); setTimeout(() => scrollNextCard(cm.dataset.calm), 350); return; }
+  if (csw) { const id = csw.dataset.clsswap, v = S.swaps[id], it = EX[id];
+    const no = it && it.alt && it.alt.run && !clsSwapped(it) ? runBlock() : '';
+    if (no) { toast(no, true); buzz('block'); return; }
+    buzz('pick');
+    if (v === 'mode') freezeMode();   /* undoing Light's swap by hand: keep today's mode so it is not redone */
+    S.swaps[id] = v === 'use' || v === 'mode' ? 0 : 'use'; save(); render(true); return; }
   const cl = t.closest('[data-clschk]');
   if (cl) {
     const id = cl.dataset.clschk, it = EX[id], now = Date.now();
     let hz = 'done';
-    if (S.classes[id]) { if (now - S.classes[id] < 1200) return; delete S.classes[id]; delete S.calm[S.view]; hz = 'pick'; }
+    if (S.classes[id]) { if (now - S.classes[id] < 1200) return; delete S.classes[id]; hz = 'pick'; }
     else if (it.main && !S.cin[id]) { if (timerActive()) endTimer(); S.cin[id] = now; if (!S.start[S.view]) S.start[S.view] = now; }
     else if (it.main && now - S.cin[id] < 1200) return; /* shaky double tap on Start */
-    else { S.classes[id] = now; delete S.cin[id]; if (!S.start[S.view]) S.start[S.view] = now - clsLen(it) * 60000; fx('complete', { sel: '[data-cls="' + id + '"]' }); }
+    else { const ids = it.main ? lockedIds() : []; S.classes[id] = now; delete S.cin[id]; freezeMode(); if (!S.start[S.view]) S.start[S.view] = now - clsLen(it) * 60000;
+      fx('complete', { sel: '[data-cls="' + id + '"]' }); if (ids.length) fx('unlock', { ids }); /* class done: the locked circles below fade in */ }
     buzz(hz); save(); render(true); afterChange(); return; }
 
   if (t.id === 'btnReset') { buzz('tick'); resetDay(); return; }
@@ -1870,9 +2219,9 @@ function refreshRow(ex, k, dir, w) {
   row.querySelector('[data-vr]').innerHTML = s.r + (k ? '' : `<small>${repUnit(c)}</small>`);
   tickEl(row.querySelector(w ? '[data-vw]' : '[data-vr]'), dir);
   selectRow(card, k);
-  const ss = sets(ex), sg = suggest(c), differs = !c.noW && !ss.some(x => x.done) && ss.some(x => x.w !== sg.w || x.r !== sg.r);
+  const ss = sets(ex), p = planOf(c), differs = !c.noW && !ss.some(x => x.done) && ss.some(x => x.w !== p.w || x.r !== p.r);
   const ap = card.querySelector('[data-apply]'); if (ap) ap.remove();
-  if (differs) card.querySelector('.sug').insertAdjacentHTML('beforeend', `<button class="apply" data-apply="${ex.id}">Use ${fmtW(sg.w)} kg</button>`);
+  if (differs) card.querySelector('.sug').insertAdjacentHTML('beforeend', `<button class="apply" data-apply="${ex.id}">Use ${fmtW(p.w)} kg</button>`);
 }
 function refreshCard(ex) {
   const old = mainEl.querySelector(`[data-ex="${ex.id}"]`); if (!old) { fxQ = []; return; }
@@ -1884,15 +2233,14 @@ function afterChange() { renderTabs(); updateHUD(); applyLock(); const f = $('#b
 
 function resetDay() {
   const day = DAYS[S.view]; if (!confirm('Clear today\'s ' + day.title + '?')) return;
-  dayItems(day).forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
+  dayItems(day, true).forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
   delete S.order[day.id]; delete S.extra[day.id]; reorderDay = null;
-  delete S.start[day.id]; delete S.calm[day.id]; day.items.forEach(it => delete S.cin[it.id]); if (S.timer) endTimer(); hideRate(); save(); render();
+  delete S.start[day.id]; day.items.forEach(it => delete S.cin[it.id]); lightSwap(true); if (S.timer) endTimer(); hideRate(); save(); render();
 }
 
 /* ================= GUIDE ================= */
 function openGuide(ex, showSwap) {
-  const g = showSwap ? asSwap(ex) : ex;
-  const start = g.noW ? g.noW : fmtW(g.w) + ' ' + wUnit(g);
+  const g = showSwap ? asSwap(ex) : ex, gp = planOf(g);
   const vid = VIDS[g.hk];
   $('#guideBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
     ${g.isSwap ? `<div class="kicker">Swap for ${ex.name}</div>` : ''}
@@ -1900,13 +2248,13 @@ function openGuide(ex, showSwap) {
     <div class="meta">${g.vn}</div>
     <div class="mvbox">${moveSVG(g.move, !RM.matches)}</div>
     <p class="lead">${g.what}</p>
-    <div class="startbox">${(sg0 => (sg0.t === 'start' ? 'Start' : 'Today') + ' <b>' + (g.noW ? g.noW : fmtW(sg0.w) + ' ' + wUnit(g)) + ' × ' + sg0.r + ' ' + repUnit(g))(suggest(g))}${g.side ? ' / side' : ''}</b> · ${g.sets} sets · ${g.rest}s rest${g.assist ? '<br>Less assist = harder' : ''}</div>
+    <div class="startbox">${(suggest(g).t === 'start' ? 'Start' : 'Today') + ' <b>' + (g.noW ? g.noW : fmtW(gp.w) + ' ' + wUnit(g)) + ' × ' + gp.r + ' ' + repUnit(g)}${g.side ? ' / side' : ''}</b> · ${gp.sets} sets · ${gp.rest}s rest${g.assist ? '<br>Less assist = harder' : ''}<br>≈ ${Math.round(kcSet(g.hk, gp.r, bwOn(todayStr())))} kcal / set</div>
     <a class="btn btn-g" href="${vid ? ytUrl(vid) : ytSearch(g.name)}" target="_blank" rel="noopener">${IC.play}${vid ? 'Gym video' : 'Find a video'}</a>
     <h4>Setup</h4><ol>${g.guide.setup.map(s => `<li>${s}</li>`).join('')}</ol>
     <h4 class="red">Avoid</h4><div class="avoid"><ul>${g.guide.avoid.map(s => `<li>${s}</li>`).join('')}</ul></div>
     <h4>Feel it here</h4><div class="target">${figure(g.target)}<div><div class="tn">${g.muscle}</div><div class="ts">Slow. Squeeze. Exhale.</div></div></div>
     ${ex.swap ? `<button class="btn btn-g" data-gother="${ex.id}" data-which="${showSwap ? 'main' : 'swap'}">${showSwap ? 'Main: ' + ex.name : 'Swap: ' + ex.swap.name}</button>
-    <button class="btn btn-q" data-missing="${ex.id}">${S.missing[ex.id] ? 'My gym has ' + ex.name + ' again' : 'My gym has no ' + ex.name}</button>` : ''}
+    ${(DAYS[dayOfId(ex.id)] || {}).home ? '' : `<button class="btn btn-q" data-missing="${ex.id}">${S.missing[ex.id] ? 'My gym has ' + ex.name + ' again' : 'My gym has no ' + ex.name}</button>`}` : ''}
     <button class="btn btn-p" data-close>Got it</button>`;
   $('#guideBox').scrollTop = 0;
   openModal('mGuide');
@@ -1932,16 +2280,21 @@ const dayPbs = day => dayItems(day).filter(it => !it.cls).flatMap(it => {
   if (a.length) out.push({ name: cur(it).name, w: Math.max(...a.map(s => s.w)) });
   if (b.length) out.push({ name: otherCur(it).name, w: Math.max(...b.map(s => s.w)) });
   return out; });
+/* the main class card is done as its swap; runDone = that swap is the Easy Run */
+const mainSwapped = day => day.items.some(it => it.cls && it.main && S.classes[it.id] && clsSwapped(it));
+const runDone = day => mainSwapped(day) && !!mainOf(day).alt.run;
+/* a logged Easy Run is titled Easy Run (also old "Walk · swap" sessions) */
+const sessTitle = s => (s.run ? EX.walk_walk.alt.name : s.title);
 function openFinish(editIdx) {
   finEdit = editIdx ?? null;
-  let vol, setsN, title, date, min, pbs;
-  if (finEdit !== null) { const s = S.sessions[finEdit]; vol = s.vol; setsN = s.sets; title = s.title; date = s.date; min = s.min || 0; pbs = (s.pbs || []).map(n => ({ name: n })); }
-  else { const day = DAYS[S.view], p = dayProgress(day); vol = dayVolume(day); setsN = p.d; title = day.title; date = todayStr(); min = dayMin(day); pbs = dayPbs(day); if (day.type === 'class') setsN = dayItems(day).filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0); }
+  let kc, setsN, title, date, min, pbs, md;
+  if (finEdit !== null) { const s = S.sessions[finEdit]; kc = kcSession(s); setsN = s.sets; title = sessTitle(s); date = s.date; min = s.min || 0; pbs = (s.pbs || []).map(n => ({ name: n })); md = s.mode; }
+  else { const day = DAYS[S.view], p = dayProgress(day); kc = kcToday(day); setsN = p.d; title = runDone(day) ? mainOf(day).alt.name : day.title; date = todayStr(); min = dayMin(day); pbs = dayPbs(day); md = modeOn(day.id); if (day.type === 'class') setsN = dayItems(day).filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0); }
   const pbLine = pbs.length ? `<p class="note lime">New best: ${pbs.slice(0, 3).map(o => o.name + (o.w ? ' ' + fmtW(o.w) + ' kg' : '')).join(', ')}${pbs.length > 3 ? ' +' + (pbs.length - 3) : ''}</p>` : '';
   $('#finishBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
-    <div class="kicker">${finEdit !== null ? 'Edit · ' : ''}${niceDate(date)}</div><h2>${title}</h2>
+    <div class="kicker">${finEdit !== null ? 'Edit · ' : ''}${niceDate(date)}${modeSfx(md)}</div><h2>${title}</h2>
     ${(() => { const tiles = []; const u = x => `<small style="font-size:11px;color:var(--dim)">${x}</small>`;
-      if (vol) tiles.push(['Lifted', Math.round(vol).toLocaleString() + ' ' + u('kg')]);
+      if (kc5(kc)) tiles.push(['kcal', '≈ ' + kc5(kc)]);
       if (setsN) tiles.push(['Sets', setsN]);
       if (min) tiles.push(['Time', min + ' ' + u('min')]);
       if (!tiles.length) tiles.push(['Done', '✓']);
@@ -1955,22 +2308,29 @@ $('#finishBox').addEventListener('click', e => {
   if (e.target.id === 'btnDel') { if (confirm('Delete this session?')) { S.sessions.splice(finEdit, 1); save(); closeAll(); render(true); toast('Deleted', true); } }
 });
 function logSession() {
-  const day = DAYS[S.view], date = todayStr(), items = dayItems(day); let n = 0;
+  const day = DAYS[S.view], date = todayStr(), items = dayItems(day, true); let n = 0;
   items.forEach(it => {
     if (it.cls) { if (S.classes[it.id]) n++; return; }
+    /* tr stays the Normal target; mode: 'light' if any set was Light, else 'hard' if any was Hard, else no key */
     const put = (c, done) => { if (!done.length) return; const tr = suggest(c).r;
-      (S.history[c.hk] = S.history[c.hk] || []).push({ date, tr, swap: !!c.isSwap, sets: done.map(s => ({ w: s.w, r: s.r, f: s.f })) });
+      const e = { date, tr, swap: !!c.isSwap, sets: done.map(s => ({ w: s.w, r: s.r, f: s.f })) };
+      if (done.some(s => s.m === 'l')) e.mode = 'light'; else if (done.some(s => s.m === 'h')) e.mode = 'hard';
+      (S.history[c.hk] = S.history[c.hk] || []).push(e);
       if (S.history[c.hk].length > 100) S.history[c.hk].shift(); n++; };
     put(cur(it), sets(it).filter(s => s.done)); put(otherCur(it), otherDone(it));
   });
   if (!n) { toast('Nothing to log', true); buzz('block'); return; }
-  const p = dayProgress(day), swapped = day.items.some(it => it.cls && it.main && S.classes[it.id] && clsSwapped(it));
+  const p = dayProgress(day), swapped = mainSwapped(day);
   const exSets = items.filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0);
-  const sess = { date, day: day.id, title: day.title + (swapped ? ' · swap' : ''), type: day.type, vol: Math.round(dayVolume(day)), sets: day.type === 'class' ? exSets : p.d };
-  const min = dayMin(day), pbs = dayPbs(day); if (min) sess.min = min; if (pbs.length) sess.pbs = pbs.map(o => o.name);
+  const sess = { date, day: day.id, title: runDone(day) ? mainOf(day).alt.name : day.title + (swapped ? ' · swap' : ''), type: day.type, vol: Math.round(dayVolume(day)), sets: day.type === 'class' ? exSets : p.d };
+  const min = dayMin(day), pbs = dayPbs(day), md = modeOn(day.id); if (min) sess.min = min; if (pbs.length) sess.pbs = pbs.map(o => o.name); if (md !== 'normal') sess.mode = md;
   const xn = items.filter(e => e.added && hasDone(e)).length; if (xn) sess.extra = xn;
-  if (day.type === 'class') { const m0 = mainOf(day), cm = day.items.filter(it => it.cls && S.classes[it.id] && (it.main || !m0)).reduce((a, it) => a + (clsLen(it) || CLSMIN[day.id] || 0), 0); if (cm) sess.cmin = cm; }
-  S.sessions.push(sess); delete S.start[day.id]; delete S.calm[day.id]; day.items.forEach(it => delete S.cin[it.id]);
+  /* Easy Run done in place of the Walk */
+  if (swapped && mainOf(day).alt.run) sess.run = 1;
+  if (day.type === 'class') { const m0 = mainOf(day), cm = day.items.filter(it => it.cls && S.classes[it.id] && (it.main || !m0)).reduce((a, it) => a + (clsLen(it) || CLSMIN[day.id] || 0), 0); if (cm) sess.cmin = cm;
+    /* class cards done, 1 = swapped (kcal uses each card's met and planned minutes) */
+    sess.cls = {}; day.items.forEach(it => { if (it.cls && S.classes[it.id]) sess.cls[it.id] = clsSwapped(it) ? 1 : 0; }); }
+  S.sessions.push(sess); delete S.start[day.id]; day.items.forEach(it => delete S.cin[it.id]);
   items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
   delete S.order[day.id]; delete S.extra[day.id]; reorderDay = null;
   if (S.timer) endTimer(); hideRate(); releaseWake();
@@ -2005,16 +2365,15 @@ const pctOf = (d, t) => (t ? Math.round(d / t * 100) : 0);
 /* program moves only: no light twins, no swap-only or added-only moves (fair strength trend) */
 const MAINHK = new Set(); PROGRAM.forEach(d => d.items.forEach(it => { if (!it.cls && it.hk && !(TAGS[it.hk] && TAGS[it.hk].to)) MAINHK.add(it.hk); }));
 const firstLog = () => { let f = ''; Object.values(S.history).forEach(h => h.forEach(e => { if (e.sets.length && (!f || e.date < f)) f = e.date; })); return f; };
-/* raw logged sets (not weighted) between two dates */
-const rawSets = (a, b) => Object.values(S.history).reduce((t, h) => t + h.reduce((u, e) => u + (e.date >= a && e.date <= b ? e.sets.length : 0), 0), 0);
 /* planned weighted sets per category for the plan days from a to b (inclusive) */
 function plannedRange(a, b) {
   const P = zeroCats();
   for (let d = a; d <= b; d = addDays(d, 1)) { const slot = planFor(wsOf(d))[(new Date(d + 'T12:00:00').getDay() + 6) % 7]; CATS_R.forEach(c => P[c] += plannedSets(slot, c)); }
   return P;
 }
+/* classes logged between a and b; Walk is cardio, not a class */
 function clsLine(a, b) {
-  const ss = S.sessions.filter(x => x.type === 'class' && x.date >= a && x.date <= b), m = ss.reduce((t, x) => t + (x.cmin || CLSMIN[x.day] || 0), 0);
+  const ss = S.sessions.filter(x => x.type === 'class' && x.day !== 'walk' && x.date >= a && x.date <= b), m = ss.reduce((t, x) => t + (x.cmin || CLSMIN[x.day] || 0), 0);
   return ss.length ? `<div class="note">Classes: ${ss.length} · ${m} min</div>` : '';
 }
 function renderStats() {
@@ -2040,7 +2399,8 @@ function statsWeek() {
     const date = addDays(ws, i), rest = id === 'rest', cls = !rest && DAYS[id].type === 'class', miss = !rest && !st.done[i] && date < today;
     return `<button class="pday ${date === today ? 'today' : ''} ${st.done[i] ? 'done' : ''} ${rest ? 'rest' : ''} ${cls ? 'cl' : ''} ${miss ? 'miss' : ''}" data-pday="${i}"><span class="dn">${DOW[i]}</span><span class="dd">${+date.slice(8)}</span><span class="pw">${rest ? 'Rest' : (st.done[i] ? '✓' : '') + ABBR[id]}</span></button>`;
   }).join('');
-  const isL = x => LIFTS.includes(x), isC = x => x !== 'rest' && !LIFTS.includes(x);
+  /* lift or class by the day's type (Mat + Band is a lift here; Walk is neither; the "4 lifts" counts stay on LIFTS) */
+  const isL = x => !!DAYS[x] && DAYS[x].type === 'lift', isC = x => !!DAYS[x] && DAYS[x].type === 'class' && x !== 'walk';
   const lp = plan.filter(isL).length, ld = plan.filter((x, i) => isL(x) && st.done[i]).length;
   const cp = plan.filter(isC).length, cd = plan.filter((x, i) => isC(x) && st.done[i]).length;
   const nx = statWeek === 0 ? nextUp() : null;
@@ -2082,7 +2442,7 @@ function statsMonth() {
   const strong = CATS.map(c => {
     let up = 0, same = 0, down = 0;
     Object.keys(S.history).forEach(hk => { const d = HKDEF[hk], t = tagOf(hk); if (!d || !t || t.p !== c || !MAINHK.has(hk)) return;
-      const ent = S.history[hk].filter(e => e.sets.length), inW = ent.filter(e => e.date >= a && e.date <= b), bef = ent.filter(e => e.date >= pa && e.date < a);
+      const ent = S.history[hk].filter(strongEnt), inW = ent.filter(e => e.date >= a && e.date <= b), bef = ent.filter(e => e.date >= pa && e.date < a);
       if (!inW.length || !bef.length) return;
       const m1 = met(d, inW[inW.length - 1]), m0 = met(d, bef[bef.length - 1]);
       if (better(d, m1, m0)) up++; else if (better(d, m0, m1)) down++; else same++; });
@@ -2093,7 +2453,7 @@ function statsMonth() {
   for (let ws = wsOf(a); ws <= b; ws = addDays(ws, 7)) {
     const wa = ws < a ? a : ws, wb = addDays(ws, 6) > b ? b : addDays(ws, 6);
     const ss = S.sessions.filter(x => x.date >= wa && x.date <= wb), cnt = {}; ss.forEach(x => cnt[x.day] = (cnt[x.day] || 0) + 1);
-    weeks.push({ wa, wb, cnt, n: rawSets(wa, wb), lifts: LIFTS.filter(id => cnt[id]).length });
+    weeks.push({ wa, wb, cnt, n: kc5(ss.reduce((t, x) => t + kcSession(x), 0)), lifts: LIFTS.filter(id => cnt[id]).length });
   }
   const wmax = Math.max(1, ...weeks.map(w => w.n));
   const rows = weeks.map(w => `<div class="wk"><div class="wl">${+w.wa.slice(8)}–${+w.wb.slice(8)}<small class="${w.lifts >= 4 ? 'ok4' : ''}">${MON[+w.wa.slice(5, 7) - 1]} · ${w.lifts}/4</small></div>
@@ -2109,12 +2469,12 @@ function statsMonth() {
     <div class="msets">${strong}</div>
     <div class="lbl">Weeks</div>
     <div class="wkbox">
-      <div class="wk head"><span class="wh" style="text-align:left">Days</span>${ORDER.map(id => `<span class="wh">${ABBR[id]}</span>`).join('')}<span class="wh r">sets</span></div>
+      <div class="wk head"><span class="wh" style="text-align:left">Days</span>${ORDER.map(id => `<span class="wh">${ABBR[id]}</span>`).join('')}<span class="wh r">kcal</span></div>
       ${rows}
     </div>
     ${clsLine(a, b)}
     <div class="lbl">Workouts</div>
-    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.x.title}</div><div class="b">${niceDate(o.x.date, 1)} · ${o.x.sets} sets</div></div><div class="c">${o.x.vol ? kfmt(o.x.vol) : '—'}<small>kg</small></div><div class="c">${o.x.min ? o.x.min : '—'}<small>min</small></div></div>`).join('') : '<div class="empty">No workouts in these 4 weeks.</div>'}`;
+    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${sessTitle(o.x)}</div><div class="b">${niceDate(o.x.date, 1)}${o.x.sets ? ' · ' + o.x.sets + ' sets' : ''}${modeSfx(o.x.mode)}</div></div><div class="c">${kc5(kcSession(o.x)) || '—'}<small>kcal</small></div><div class="c">${o.x.min ? o.x.min : '—'}<small>min</small></div></div>`).join('') : '<div class="empty">No workouts in these 4 weeks.</div>'}`;
 }
 /* 12 weeks, starting at the first logged week when that is later: balance and strength */
 function stats3M() {
@@ -2131,7 +2491,7 @@ function stats3M() {
     return `<div class="cset"><span class="mg">${c}</span><span class="cbar"><i style="width:${T ? Math.min(100, D / T * 100) : 0}%"></i></span><span class="mv">${T ? pctOf(D, T) + '%' : '—'}</span></div>`; }).join('');
   const str = CATS.map(c => {
     const ser = Object.keys(S.history).filter(hk => HKDEF[hk] && MAINHK.has(hk) && tagOf(hk) && tagOf(hk).p === c)
-      .map(hk => ({ d: HKDEF[hk], ent: S.history[hk].filter(e => e.sets.length && e.date >= a && e.date <= b) })).filter(x => x.ent.length >= 3);
+      .map(hk => ({ d: HKDEF[hk], ent: S.history[hk].filter(e => strongEnt(e) && e.date >= a && e.date <= b) })).filter(x => x.ent.length >= 3);
     if (!ser.length) return `<div class="srow"><span class="mg">${c}</span><span class="sv2">Not enough data</span><span></span></div>`;
     const pts = []; let idx = null;
     wks.forEach(ws => { const we = addDays(ws, 6);
@@ -2159,8 +2519,8 @@ function spark(pts, invert) {
 }
 /* Lifts: which lifts went up, grouped by muscle; moves done 3+ times first, the rest behind a tap */
 function statsLifts() {
-  const rows = Object.keys(S.history).filter(hk => HKDEF[hk] && S.history[hk].some(e => e.sets.length)).map(hk => {
-    const d = HKDEF[hk], ent = S.history[hk].filter(e => e.sets.length), pts = ent.map(e => met(d, e));
+  const rows = Object.keys(S.history).filter(hk => HKDEF[hk] && S.history[hk].some(strongEnt)).map(hk => {
+    const d = HKDEF[hk], ent = S.history[hk].filter(strongEnt), pts = ent.map(e => met(d, e));
     const first = pts[0], last = pts[pts.length - 1], gain = d.assist ? first - last : last - first, t = tagOf(hk);
     return { d, pts, first, last, gain, pct: first ? Math.round(gain / first * 100) : 0, n: ent.length, lastDate: ent[ent.length - 1].date, cat: t && CATS.includes(t.p) ? t.p : 'Other' };
   }).sort((x, y) => y.lastDate.localeCompare(x.lastDate) || y.n - x.n);
@@ -2168,7 +2528,7 @@ function statsLifts() {
   const main = rows.filter(r => r.n >= 3), rest = rows.filter(r => r.n < 3), up = main.filter(r => r.gain > 0).length;
   const head = main.length ? `<div class="shead">Up on <b>${up} of ${main.length}</b> lifts.</div>` : '<div class="shead">Do a move 3 times to see progress.</div>';
   const row = r => {
-    const unit = r.d.noW ? ' reps' : r.d.assist ? ' kg assist' : ' kg';
+    const unit = r.d.noW ? ' ' + repUnit(r.d) : r.d.assist ? ' kg assist' : ' kg';
     const ch = r.n < 2 ? '<span class="lc">new</span>' : r.gain > 0 ? `<span class="lc up">▲ ${r.pct}%</span>` : r.gain < 0 ? `<span class="lc dn">▼ ${Math.abs(r.pct)}%</span>` : '<span class="lc">same</span>';
     return `<div class="lift"><div><div class="a">${r.d.name}</div><div class="b">${r.n < 2 ? '' : fmtW(r.first) + ' → '}<b>${fmtW(r.last)}</b>${unit}</div></div>${spark(r.pts, r.d.assist)}${ch}</div>`;
   };
@@ -2188,7 +2548,7 @@ function openPlan(ws, i) {
   const cur0 = planFor(ws)[i], date = addDays(ws, i);
   $('#planBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
     <div class="kicker">${DOW[i]} · ${MON[+date.slice(5, 7) - 1]} ${+date.slice(8)}</div><h2>Pick a workout</h2>
-    <div class="mlist">${[...ORDER, 'rest'].map(id => `<button class="mrow ${id === cur0 ? 'on' : ''}" data-pick="${id}"><span>${id === 'rest' ? 'Rest day' : DAYS[id].title}<small>${id === 'rest' ? 'Recover' : DAYS[id].type === 'lift' ? 'Lift' : 'Class'}</small></span><span class="chev">${id === cur0 ? '✓' : '›'}</span></button>`).join('')}</div>`;
+    <div class="mlist">${[...ORDER, 'rest'].map(id => `<button class="mrow ${id === cur0 ? 'on' : ''}" data-pick="${id}"><span>${id === 'rest' ? 'Rest day' : DAYS[id].title}<small>${id === 'rest' ? 'Recover' : DAYS[id].tt}</small></span><span class="chev">${id === cur0 ? '✓' : '›'}</span></button>`).join('')}</div>`;
   openModal('mPlan');
 }
 $('#planBox').addEventListener('click', e => {
@@ -2201,7 +2561,7 @@ $('#planBox').addEventListener('click', e => {
 let addPos = 'end', addCat = null;
 function openAdd(pos) { addPos = pos; addCat = null; renderAdd(); openModal('mAdd'); }
 function lastTxt(hk) {
-  const l = lastSession(hk), d = HKDEF[hk]; if (!l || !l.sets.length) return 'New';
+  const l = lastBase(hk), d = HKDEF[hk]; if (!l || !l.sets.length) return 'New';
   if (d.noW) return 'Last ' + Math.max(...l.sets.map(s => s.r)) + ' ' + repUnit(d) + (d.side ? ' / side' : '');
   if (d.assist) return 'Last ' + fmtW(Math.min(...l.sets.map(s => s.w))) + ' kg assist';
   return 'Last ' + fmtW(Math.max(...l.sets.map(s => s.w))) + ' kg' + (d.pair ? ' each' : '');
@@ -2212,35 +2572,31 @@ function recentTxt(hk) {
   Object.keys(S.history).filter(k => canon(k) === canon(hk)).forEach(k => S.history[k].forEach(e => { if (e.date === today) t = 'Done today'; else if (e.date === y && !t) t = 'Done yesterday'; }));
   return t;
 }
-const ADDGROUPS = [['Machine', ['Machine']], ['Cable', ['Cable']], ['Dumbbell', ['Dumbbell']], ['Band and mat', ['Band', 'Mat']]];
+const ADDGROUPS = [['Machine', ['Machine']], ['Cable', ['Cable']], ['Dumbbell', ['Dumbbell']], ['Band', ['Mini band', 'Long band']], ['Mat', ['Mat']]];
 function renderAdd() {
-  const day = DAYS[S.view], hr = hrNow(), rec = recommend(day);
+  const day = DAYS[S.view], rec = recommend(day);
   let h = '<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>';
   if (!addCat) {
-    /* one helper line: safety first, then the answer */
+    /* one helper line: class-day rule first, then the answer */
     const lines = [];
-    if (hr === 'high') lines.push(['red', 'HR high. Yoga or walk.']);
-    else {
-      if (!hr) lines.push(['', 'Tap resting HR first.']);
-      if (day.type === 'class') lines.push(['', 'Light only today.']);
-      if (rec.line && rec.line !== 'All on track.') lines.push(['', rec.line]);
-    }
+    if (day.type === 'class') lines.push(['', 'Class day. Easy moves only.']);
+    if (rec.line && rec.line !== 'All on track.') lines.push(['', rec.line]);
     h += `<h2>Pick a muscle</h2><p class="note">This week · done / target</p>
       ${lines.slice(0, 1).map(l => `<p class="abanner ${l[0]}">${l[1]}</p>`).join('')}
       <div class="mlist">${CATS.map(c => { const i = rec.info[c], dw = i.T ? Math.min(100, i.D / i.T * 100) : 0;
         return `<button class="crow" data-cat="${c}" ${i.off ? 'disabled' : ''}><span class="cn">${c}${rec.cat === c ? '<span class="badge">Recommended</span>' : ''}</span><span class="cv">${rh(i.D)} / ${rh(i.T)}</span><span class="chev">›</span><span class="cb"><i style="width:${dw}%"></i></span><span class="ch2">${i.hint}</span></button>`; }).join('')}</div>`;
   } else {
     const c = addCat, i = rec.info[c], have = todaySet(day);
-    const why = i.lo ? 'Light only today.' : '';
+    const why = i.lo ? 'Class day. Easy moves only.' : '';
     h += `<div class="ahead"><button class="bk" data-back aria-label="Back to muscles">${IC.left}</button><h2>${c}</h2></div>${why ? `<p class="note">${why}</p>` : ''}`;
     ADDGROUPS.forEach(([lab, pls]) => {
       const rows = i.rows.filter(hk => pls.includes((TAGS[hk] || {}).pl)); if (!rows.length) return;
       h += `<div class="lbl">${lab}</div><div class="mlist">` + rows.map(hk => {
         const d = HKDEF[hk], tod = have.has(canon(hk)), chip = tod ? 'Today' : recentTxt(hk);
-        return `<button class="xrow" data-addhk="${hk}" ${tod || hr === 'high' ? 'disabled' : ''}><span class="xf">${moveSVG(d.move, false)}</span><span class="xt"><b>${d.name}</b><small>${lab === 'Band and mat' ? TAGS[hk].pl + ' · ' : ''}${lastTxt(hk)}</small></span>${chip ? `<span class="badge ${tod ? 'gray' : ''}">${chip}</span>` : '<span></span>'}<span class="chev">›</span></button>`;
+        return `<button class="xrow" data-addhk="${hk}" ${tod ? 'disabled' : ''}><span class="xf">${moveSVG(d.move, false)}</span><span class="xt"><b>${d.name}</b><small>${lab === 'Band' ? TAGS[hk].pl + ' · ' : ''}${lastTxt(hk)}</small></span>${chip ? `<span class="badge ${tod ? 'gray' : ''}">${chip}</span>` : '<span></span>'}<span class="chev">›</span></button>`;
       }).join('') + '</div>';
     });
-    if (!i.rows.length) h += '<div class="empty">No light moves today.</div>';
+    if (!i.rows.length) h += '<div class="empty">No easy moves today.</div>';
   }
   $('#addBox').innerHTML = h;
 }
@@ -2251,9 +2607,9 @@ $('#addBox').addEventListener('click', e => {
   const x = t.closest('[data-addhk]'); if (x) addExtra(DAYS[S.view], x.dataset.addhk, addPos);
 });
 function addExtra(day, hk, pos) {
-  if (hrNow() === 'high') { toast('HR high. Yoga or walk.', true); buzz('block'); return; }
-  const x = S.extra[day.id] || [];
-  if (x.length >= 3) { toast('Max 3 added today', true); buzz('block'); return; }
+  if (day.noAdd) return;
+  const x = S.extra[day.id] || [], n = maxExtra(day);
+  if (x.length >= n) { toast(capMsg(n), true); buzz('block'); return; }
   if (todaySet(day).has(canon(hk))) { toast("Already in today's list", true); buzz('block'); return; }
   const ids = dayItems(day).map(it => it.id), id = 'x_' + day.id + '_' + hk, tail = tailIds(day);
   const anchor = pos === 'pre' ? (mainOf(day) || day.items.find(it => it.cls)) : null;
@@ -2449,8 +2805,8 @@ document.addEventListener('click', e => { if (Date.now() - sheetT < 350) { e.sto
 
 /* ================= BOOT ================= */
 /* back in the app: catch up the ring, and keep the screen on again (a video releases the lock) */
-const inWorkout = () => S.view !== 'stats' && (!!S.timer || !!S.start[S.view] || (!!hrNow() && !S.sessions.some(x => x.date === todayStr())));
-document.addEventListener('visibilitychange', () => { if (document.hidden) return; if (S.timer) { runTick(); if (timerActive()) { ringRun(); scheduleBeep(); } } if (inWorkout()) keepAwake(); });
+const inWorkout = () => S.view !== 'stats' && (!!S.timer || !!S.start[S.view]);
+document.addEventListener('visibilitychange', () => { if (document.hidden) return; if (shownDay && shownDay !== todayStr()) render(true); if (S.timer) { runTick(); if (timerActive()) { ringRun(); scheduleBeep(); } } if (inWorkout()) keepAwake(); });
 if (S.viewDate !== todayStr() && S.view !== 'stats') { S.view = nextUp(); S.viewDate = todayStr(); save(); }
 /* home-screen shortcuts: long-press the app icon -> ?go=next or ?go=stats */
 const GO = new URLSearchParams(location.search).get('go');
@@ -2460,7 +2816,7 @@ S.rate = null;
 render(); resumeTimer();
 if (!localStorage.getItem(KEY + '_seen')) { openModal('mHow'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
 /* keep APP_VER in step with VERSION in sw.js */
-const APP_VER = '3.7.0';
+const APP_VER = '3.8.0';
 $('#appVer').textContent = 'SCULPT v' + APP_VER;
 if ('serviceWorker' in navigator) {
   const hadCtrl = !!navigator.serviceWorker.controller;

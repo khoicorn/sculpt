@@ -1,7 +1,7 @@
 {
   "name": "SCULPT",
   "short_name": "SCULPT",
-  "description": "Tap-first workout tracker. Glutes, chest line, posture. Heart-safe rest timer.",
+  "description": "Tap-first workout tracker. Glutes, chest line, posture.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
