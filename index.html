@@ -77,6 +77,7 @@
   .mode .opts { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 8px; }
   .opt { min-height: 52px; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 14px; font-weight: 700; transition: var(--t); }
   .opt.on { background: var(--lime); border-color: var(--lime); color: #09090B; }
+  .opt.off { opacity: 0.4; }
   .mode .msg { font-size: 13px; color: var(--dim); margin-top: 8px; }
   .warm { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 8px 8px 8px 12px; font-size: 14px; color: var(--muted); min-height: 56px; }
   .wlink { flex: 0 0 auto; min-height: 44px; padding: 0 12px; display: flex; align-items: center; gap: 6px; border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: var(--t); }
@@ -232,9 +233,9 @@
   .feel { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 10px; }
   .feel .fq { grid-column: 1 / -1; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); font-weight: 700; }
   .feel button { min-height: 48px; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 13px; font-weight: 700; line-height: 1.1; transition: var(--t); }
-  .feel button small { display: block; font-family: var(--data); font-size: 9px; color: var(--dim); font-weight: 600; letter-spacing: 0.06em; margin-top: 2px; }
+  .feel button small, .opt small { display: block; font-family: var(--data); font-size: 9px; color: var(--dim); font-weight: 600; letter-spacing: 0.06em; margin-top: 2px; }
   .feel button.on { background: var(--lime); border-color: var(--lime); color: #09090B; }
-  .feel button.on small { color: rgba(9,9,11,0.7); }
+  .feel button.on small, .opt.on small { color: rgba(9,9,11,0.7); }
   .feel button[data-feel="h"].on { background: var(--red); border-color: var(--red); color: #09090B; }
   .feel button[data-feel="h"].on small { color: rgba(9,9,11,0.7); }
 
@@ -962,6 +963,7 @@ const PROGRAM = [
   { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', after: 'finisher', warm: 'Walk 5 min, flat, easy.', warmMin: 5, items: [
     { id: 'wed_pump', cls: true, main: true, name: 'New Pump', vn: 'Class', min: 45, icon: 'cls', move: 'pump',
       rules: ['Dizzy, chest tight, heart racing = stop.', 'Lightest plates. Lunges: no bar.', 'Squats half depth. Skip crunches.', 'No full sentence? Sit out one track.'],
+      lightRules: ['Dizzy, chest tight, heart racing = stop.', 'No plates on squats or lunges.', 'Squats half depth. Skip crunches.', 'No full sentence? Sit out one track.'],
       alt: { name: 'Light Circuit', vn: 'Machines', min: 40, cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press, Leg Press half range. 2 × 15 each. Rest 90 s. Exhale every rep.' } },
     /* glute finisher after class: 2 light machine moves, mat swaps */
     { id: 'wed_ht', hk: 'thrust_mf', name: 'Hip Thrust Machine · Light', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 2, reps: 15, w: 15, step: 5, max: 40, rest: 90,
@@ -975,7 +977,7 @@ const PROGRAM = [
     { id: 'wed_walk', cls: true, name: 'Cool-down Walk', vn: 'Treadmill', min: 5, icon: 'cardio', move: 'walk', rules: ['Flat. Speed 4.', 'Leave when breathing is calm.', 'Hands off the rails.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, cue: '5 min. Easy pace.' } }
   ]},
   { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', warm: 'Walk 3 min, flat.', warmMin: 3, items: [
-    { id: 'sat_combat', cls: true, main: true, name: 'New Combat', vn: 'Class', min: 45, icon: 'cls', move: 'combat',
+    { id: 'sat_combat', cls: true, main: true, name: 'New Combat', vn: 'Class', min: 45, icon: 'cls', move: 'combat', lightAlt: 1,
       rules: ['Dizzy, chest tight, heart racing = stop.', 'Low option every track. No jumps.', 'Kicks knee height. Never lock knee.', 'No full sentence? March until you can.'],
       alt: { name: 'Easy Elliptical', vn: 'Elliptical', min: 20, cue: '20 min. Can chat. Or join Yoga.' } },
     { id: 'sat_walk', cls: true, name: 'Walk-down', vn: 'Treadmill', min: 5, icon: 'cardio', move: 'walk', rules: ['Up to 5 min. Flat. Slow.', 'Stop when breathing is calm.', 'No more cardio today.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, cue: '5 min. Easy pace.' } },
@@ -1128,9 +1130,49 @@ const skey = ex => ex.id + (isSwapped(ex) ? '~s' : '');
 /* the version not on screen (main or swap): its done sets are kept and counted */
 const otherCur = ex => (isSwapped(ex) || !ex.swap ? ex : asSwap(ex));
 const otherDone = ex => (ex.cls || !ex.swap ? [] : (S.sets[ex.id + (isSwapped(ex) ? '' : '~s')] || []).filter(s => s.done));
-/* today's intensity: the pick saved today, else Normal */
-const modeNow = () => (S.mode && S.mode.d === todayStr() ? S.mode.v : 'normal');
-function setMode(v) { if (!MODES.includes(v)) return; S.mode = { v, d: todayStr() }; save(); render(true); }
+/* today's intensity: the pick saved today, else today's suggestion */
+const modeNow = () => (S.mode && S.mode.d === todayStr() ? S.mode.v : suggestMode().v);
+/* Light after Pump or Combat yesterday, or after 10+ days off; never Hard */
+function suggestMode() {
+  const t = todayStr(), y = addDays(t, -1); let pump = false, combat = false, last = '';
+  S.sessions.forEach(s => { if (!s || typeof s.date !== 'string' || s.date > t) return;
+    if (s.date === y) { if (s.day === 'wed') pump = true; if (s.day === 'sat') combat = true; }
+    if (s.date > last) last = s.date; });
+  if (pump) return { v: 'light', why: 'After Pump' };
+  if (combat) return { v: 'light', why: 'After Combat' };
+  if (last && daysAgo(last) >= 10) return { v: 'light', why: 'After a break' };
+  return { v: 'normal', why: '' };
+}
+/* why Hard is not allowed today ('' = allowed). Hard days = dates with a Hard session in the 6 days before today */
+function hardBlock() {
+  const t = todayStr(), y = addDays(t, -1), w = addDays(t, -6), ss = S.sessions.filter(s => s && typeof s.date === 'string');
+  const ys = ss.filter(s => s.date === y);
+  if (ys.some(s => s.day === 'wed')) return 'Pump yesterday. Not today.';
+  if (ys.some(s => s.day === 'sat')) return 'Combat yesterday. Not today.';
+  if (ys.some(s => s.mode === 'hard')) return 'Hard yesterday. Not today.';
+  if (new Set(ss.filter(s => s.mode === 'hard' && s.date >= w && s.date < t).map(s => s.date)).size >= 2) return '2 Hard days this week.';
+  return '';
+}
+/* first set or class done today: keep today's mode so the suggestion cannot drift */
+function freezeMode() { const t = todayStr(); if (!S.mode || S.mode.d !== t) S.mode = { v: modeNow(), d: t }; }
+/* class started or done today */
+const clsBusy = it => (!!S.cin[it.id] && Date.now() - S.cin[it.id] <= 4 * 3600000) || (!!S.classes[it.id] && ds(new Date(+S.classes[it.id] || 0)) === todayStr());
+/* Combat on Light: the class becomes its alt until it starts. 'mode' marks a swap Light made,
+   so leaving Light undoes only that one. enter = Light just began (a tap, or today's suggestion). */
+function lightSwap(enter) {
+  let ch = false;
+  PROGRAM.forEach(d => d.items.forEach(it => {
+    if (!it.lightAlt || clsBusy(it)) return;
+    const lt = modeOn(d.id) === 'light', v = S.swaps[it.id];
+    if (lt && enter && !v) { S.swaps[it.id] = 'mode'; ch = true; }
+    else if (!lt && v === 'mode') { S.swaps[it.id] = 0; ch = true; }
+  }));
+  return ch;
+}
+function setMode(v) {
+  if (!MODES.includes(v) || (v === 'hard' && hardBlock())) return;
+  const was = modeNow(); S.mode = { v, d: todayStr() }; lightSwap(was !== 'light'); save(); render(true);
+}
 /* no intensity picker on these days */
 const NOMODE = ['sun', 'walk'];
 /* the mode that applies on a day: Yoga and Walk always Normal */
@@ -1139,6 +1181,10 @@ const modeOn = dayId => (NOMODE.includes(dayId) ? 'normal' : modeNow());
 const dayOfId = id => (typeof id !== 'string' || !id ? S.view : id.slice(0, 2) === 'x_' ? id.split('_')[1] : id.split('_')[0]);
 const MCODE = { light: 'l', normal: 'n', hard: 'h' };
 const cardMode = c => modeOn(dayOfId(c.id));
+/* a program exercise on a class day (Pump finisher, Combat post-class), main or swap; added cards are not */
+const clsLift = c => !c.added && !!EX[c.id] && !EX[c.id].cls && DAYS[dayOfId(c.id)].type === 'class';
+/* Pump on Light: finisher cards are off today, unless a set on them is already done */
+const offToday = (day, it) => !!day.after && !it.cls && !it.added && modeOn(day.id) === 'light' && !['', '~s'].some(k => (S.sets[it.id + k] || []).some(s => s.done));
 /* extras allowed today: Light 0, Normal 2, Hard 1 */
 const maxExtra = day => ({ light: 0, normal: 2, hard: 1 })[modeOn(day.id)];
 const modeSfx = m => (m === 'light' ? ' · Light' : m === 'hard' ? ' · Hard' : '');
@@ -1187,15 +1233,19 @@ function suggest(c) {
 }
 /* today's plan for a card: the mode on top of suggest(). Every shown or seeded sets/kg/reps/rest comes from here. */
 function planOf(c) {
-  const md = cardMode(c), sg = suggest(c), st = c.step || 1;
+  const md = cardMode(c), sg = suggest(c), st = c.step || 1, cl = clsLift(c);
   const p = { sets: c.sets, w: sg.w, r: sg.r, rest: c.rest };
-  if (md === 'hard' && c.hp) { p.sets = c.sets + 1; p.rest = Math.max(120, c.rest); }
+  /* class days: Hard gives the program cards after class 3 sets, same kg and rest. Lift days: +1 set on Hard+ moves */
+  if (md === 'hard' && cl) p.sets = Math.max(3, c.sets);
+  else if (md === 'hard' && c.hp) { p.sets = c.sets + 1; p.rest = Math.max(120, c.rest); }
   if (md === 'light') {
     p.sets = Math.max(Math.min(2, c.sets), c.sets - 1); p.rest = Math.max(120, c.rest);
     if (c.noW) { const k = noWStep(c); p.r = Math.max(k, Math.round(sg.r * 0.8 / k) * k); }
     else if (c.assist) p.w = wNext(c, sg.w, -1);
     /* 80%, down to the step, at least 1 step under; never below one step */
     else p.w = Math.max(st, Math.min(rnd(Math.floor(sg.w * 4 / (st * 5) + 1e-9) * st), rnd(sg.w - st)));
+    /* Pump: the finisher is off today; only sets already done stay */
+    if (cl && DAYS[dayOfId(c.id)].after) p.sets = 0;
   }
   return p;
 }
@@ -1266,14 +1316,15 @@ function fixOrder(day, ids) {
   const k = ids.slice(0, ids.indexOf(m.id)).filter(id => rest.includes(id)).length;
   return rest.slice(0, k).concat([m.id], att, rest.slice(k), tail);
 }
-function dayItems(day) {
+/* withOff: also the cards that are off today (log and reset clear them too) */
+function dayItems(day, withOff) {
   const all = day.items.concat(xItems(day.id)), by = {}; all.forEach(it => by[it.id] = it);
   const o = S.order[day.id], ids = o && Array.isArray(o.ids) ? o.ids.filter((id, i, a) => by[id] && a.indexOf(id) === i) : [];
   all.forEach((it, i) => { if (ids.includes(it.id)) return;
     /* missing id: put it after the last listed id that comes before it in program order */
     let at = 0; for (let j = i - 1; j >= 0; j--) { const p = ids.indexOf(all[j].id); if (p >= 0) { at = p + 1; break; } }
     ids.splice(at, 0, it.id); });
-  return fixOrder(day, ids).map(id => by[id]);
+  return fixOrder(day, ids).map(id => by[id]).filter(it => withOff || !offToday(day, it));
 }
 const hasPending = it => !it.cls && sets(it).some(s => !s.done);
 const hasDone = it => !it.cls && (sets(it).some(s => s.done) || otherDone(it).length > 0);
@@ -1506,9 +1557,10 @@ function render(keepScroll) { renderTabs(); if (!keepScroll) centerTab(); if (S.
 /* intensity picker: the old heart-rate panel and 3-column grid; a tap saves, no lock */
 function modePicker(day) {
   if (NOMODE.includes(day.id)) return '';
-  const md = modeNow();
+  const md = modeNow(), why = suggestMode().why, off = hardBlock();
+  /* suggested Light: small reason inside the button; Hard not allowed: greyed but tappable (tap says why) */
   return `<div class="mode"><div class="q">How hard today?</div>
-      <div class="opts">${MODES.map(k => `<button class="opt ${md === k ? 'on' : ''}" data-mode="${k}" aria-pressed="${md === k}">${k[0].toUpperCase() + k.slice(1)}</button>`).join('')}</div>
+      <div class="opts">${MODES.map(k => `<button class="opt ${md === k ? 'on' : ''} ${k === 'hard' && off ? 'off' : ''}" data-mode="${k}" aria-pressed="${md === k}"${k === 'hard' && off ? ' aria-disabled="true"' : ''}>${k[0].toUpperCase() + k.slice(1)}${k === 'light' && why ? `<small>${why}</small>` : ''}</button>`).join('')}</div>
       ${md === 'light' ? '<div class="msg">Less kg. Progress kept.</div>' : ''}</div>`;
 }
 /* reorder mode is screen state only; it is on for one day view */
@@ -1516,6 +1568,8 @@ let reorderDay = null;
 function renderDay() {
   const day = DAYS[S.view], lift = day.type === 'lift';
   dropStale(day);
+  /* no pick yet today: a suggested Light may swap the class; any day: an old Light swap is undone */
+  if (lightSwap(!(S.mode && S.mode.d === todayStr()))) save();
   if (reorderDay !== day.id) reorderDay = null;
   const items = dayItems(day), exs = items.filter(e => !e.cls), wc = weekCount(day.id), m = mainOf(day);
   const exMin = exs.reduce((a, e) => { const c = cur(e), p = planOf(c); return a + p.sets * (p.rest + 45 * (c.side ? 2 : 1)); }, 0) / 60;
@@ -1605,7 +1659,8 @@ function setRow(c, s, k, sel) {
   </div>`;
 }
 /* class cards: a main class is 2-step (Start class, Class done); others are 1 tap */
-const clsSwapped = it => S.swaps[it.id] === 'use';
+/* 'use' = swapped by hand, 'mode' = swapped by Light (see lightSwap) */
+const clsSwapped = it => S.swaps[it.id] === 'use' || S.swaps[it.id] === 'mode';
 const clsLen = it => (clsSwapped(it) ? (it.alt.min || it.min) : it.min) || 0;
 function cardClass(it) {
   const day = DAYS[S.view];
@@ -1613,7 +1668,7 @@ function cardClass(it) {
   if (S.classes[it.id] && ds(new Date(+S.classes[it.id] || 0)) !== todayStr()) { delete S.classes[it.id]; if (S.start[day.id] && Date.now() - S.start[day.id] > 4 * 3600000) delete S.start[day.id]; } /* class done on another day */
   const done = !!S.classes[it.id], sw = clsSwapped(it), live = !done && !!S.cin[it.id];
   const name = sw ? it.alt.name : it.name, vn = sw ? it.alt.vn || 'Swap' : it.vn, min = clsLen(it);
-  const rules = sw ? it.alt.cue.split('. ').map(x => x.replace(/\.$/, '') + '.') : it.rules;
+  const rules = sw ? it.alt.cue.split('. ').map(x => x.replace(/\.$/, '') + '.') : (it.lightRules && modeOn(day.id) === 'light' ? it.lightRules : it.rules);
   const inMin = live ? Math.max(0, Math.round((Date.now() - S.cin[it.id]) / 60000)) : 0;
   const meta = done ? '✓ Done · ' + min + ' min' : live ? 'In progress · ' + inMin + ' min' : (vn === 'Class' ? '' : vn + ' · ') + min + ' min';
   const ac = it.main ? aroundClass(day) : null;
@@ -1828,7 +1883,9 @@ mainEl.addEventListener('click', e => {
   const xr = t.closest('[data-xrm]'); if (xr) { const x = getEx(xr.dataset.xrm); if (x && !hasDone(x)) removeExtra(DAYS[S.view], x.id); return; }
 
   const md = t.closest('[data-mode]');
-  if (md) { buzz('pick'); setMode(md.dataset.mode); return; }
+  if (md) { const v = md.dataset.mode, no = v === 'hard' ? hardBlock() : '';
+    if (no) { toast(no, true); buzz('block'); return; }
+    buzz('pick'); setMode(v); return; }
 
   const g = t.closest('[data-guide]');
   if (g) { buzz('tick'); const x = getEx(g.dataset.guide); if (x) openGuide(x, isSwapped(x)); return; }
@@ -1879,7 +1936,7 @@ mainEl.addEventListener('click', e => {
     const gt = gate(DAYS[S.view], ex);
     if (gt) { nope(gt); return; }
     if (timerActive()) { nope('Rest first'); return; }
-    s.done = true; s.t = Date.now(); s.m = MCODE[cardMode(ex)]; buzz('done'); hideRate();
+    s.done = true; s.t = Date.now(); s.m = MCODE[cardMode(ex)]; freezeMode(); buzz('done'); hideRate();
     if (!S.start[S.view]) S.start[S.view] = Date.now();
     const pb = !c.noW && !c.assist && (S.history[c.hk] || []).some(e => e.sets.length) && s.w > histMax(c.hk) && !ss.some(x => x !== s && x.done && x.pb && x.w >= s.w); if (pb) s.pb = true;
     if (ss[k + 1] && !ss[k + 1].done) { ss[k + 1].w = s.w; ss[k + 1].r = s.r; delete ss[k + 1].hand; S.sel[ex.id] = k + 1; } else delete S.sel[ex.id];
@@ -1896,7 +1953,9 @@ mainEl.addEventListener('click', e => {
   if (rowTap && ex) { const k = +rowTap.dataset.set; if (!sets(ex)[k].done) { buzz('tick'); S.sel[ex.id] = k; save(); selectRow(card, k); } return; }
 
   const csw = t.closest('[data-clsswap]');
-  if (csw) { buzz('pick'); const id = csw.dataset.clsswap; S.swaps[id] = S.swaps[id] === 'use' ? 0 : 'use'; save(); render(true); return; }
+  if (csw) { buzz('pick'); const id = csw.dataset.clsswap, v = S.swaps[id];
+    if (v === 'mode') freezeMode();   /* undoing Light's swap by hand: keep today's mode so it is not redone */
+    S.swaps[id] = v === 'use' || v === 'mode' ? 0 : 'use'; save(); render(true); return; }
   const cl = t.closest('[data-clschk]');
   if (cl) {
     const id = cl.dataset.clschk, it = EX[id], now = Date.now();
@@ -1904,7 +1963,7 @@ mainEl.addEventListener('click', e => {
     if (S.classes[id]) { if (now - S.classes[id] < 1200) return; delete S.classes[id]; hz = 'pick'; }
     else if (it.main && !S.cin[id]) { if (timerActive()) endTimer(); S.cin[id] = now; if (!S.start[S.view]) S.start[S.view] = now; }
     else if (it.main && now - S.cin[id] < 1200) return; /* shaky double tap on Start */
-    else { const ids = it.main ? lockedIds() : []; S.classes[id] = now; delete S.cin[id]; if (!S.start[S.view]) S.start[S.view] = now - clsLen(it) * 60000;
+    else { const ids = it.main ? lockedIds() : []; S.classes[id] = now; delete S.cin[id]; freezeMode(); if (!S.start[S.view]) S.start[S.view] = now - clsLen(it) * 60000;
       fx('complete', { sel: '[data-cls="' + id + '"]' }); if (ids.length) fx('unlock', { ids }); /* class done: the locked circles below fade in */ }
     buzz(hz); save(); render(true); afterChange(); return; }
 
@@ -1934,9 +1993,9 @@ function afterChange() { renderTabs(); updateHUD(); applyLock(); const f = $('#b
 
 function resetDay() {
   const day = DAYS[S.view]; if (!confirm('Clear today\'s ' + day.title + '?')) return;
-  dayItems(day).forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
+  dayItems(day, true).forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
   delete S.order[day.id]; delete S.extra[day.id]; reorderDay = null;
-  delete S.start[day.id]; day.items.forEach(it => delete S.cin[it.id]); if (S.timer) endTimer(); hideRate(); save(); render();
+  delete S.start[day.id]; day.items.forEach(it => delete S.cin[it.id]); lightSwap(true); if (S.timer) endTimer(); hideRate(); save(); render();
 }
 
 /* ================= GUIDE ================= */
@@ -2004,7 +2063,7 @@ $('#finishBox').addEventListener('click', e => {
   if (e.target.id === 'btnDel') { if (confirm('Delete this session?')) { S.sessions.splice(finEdit, 1); save(); closeAll(); render(true); toast('Deleted', true); } }
 });
 function logSession() {
-  const day = DAYS[S.view], date = todayStr(), items = dayItems(day); let n = 0;
+  const day = DAYS[S.view], date = todayStr(), items = dayItems(day, true); let n = 0;
   items.forEach(it => {
     if (it.cls) { if (S.classes[it.id]) n++; return; }
     /* tr stays the Normal target; mode: 'light' if any set was Light, else 'hard' if any was Hard, else no key */
