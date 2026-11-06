@@ -868,7 +868,7 @@ function figure(key) {
    side = reps per side. noW = bodyweight/band. assist = machine help (more = easier). */
 const PROGRAM = [
   { id: 'mon', tab: 'GLU A', tt: 'Lift', type: 'lift', title: 'Glutes A', sub: 'Hip thrust day. Round, lifted glutes.', warm: 'Bike 8 min, easy. Can chat.', items: [
-    { id: 'mon_thrustm', hk: 'thrust_m', name: 'Hip Thrust Machine', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 4, reps: 12, w: 20, step: 5, max: 60, rest: 120,
+    { id: 'mon_thrustm', hp: 1, hk: 'thrust_m', name: 'Hip Thrust Machine', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 4, reps: 12, w: 20, step: 5, max: 60, rest: 120,
       guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat. Shins straight up at the top.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Pushing through the toes.'] },
       swap: { hk: 'thrust', name: 'DB Hip Thrust', what: 'Upper back on a bench. Lift hips with a dumbbell on them.', vn: 'Bench + 1 dumbbell', move: 'hipthrust', muscle: 'Glute max', target: 'glute_max', reps: 12, w: 10, step: 2, rest: 120,
         guide: { setup: ['Upper back on bench edge. Feet flat.', 'Dumbbell on hip bones. Hold both ends.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Feet too close: thighs take over.'] } } },
@@ -876,7 +876,7 @@ const PROGRAM = [
       guide: { setup: ['Feet high and wide on the plate.', 'Lower until knees reach 90°. Stop.', 'Exhale. Push through heels.'], avoid: ['Going deep: knees to chest.', 'Heavy load or holding breath.', 'Locking knees straight.'] },
       swap: { hk: 'gobletsq', name: 'DB Goblet Box Squat', what: 'Hold a dumbbell at chest. Sit to a box, stand up.', vn: 'Box + 1 dumbbell', move: 'gobletsq', muscle: 'Glutes', target: 'glute_max', reps: 12, w: 8, step: 2, rest: 120,
         guide: { setup: ['Box behind you. Feet shoulder width.', 'Dumbbell at chest, elbows down.', 'Sit back to touch box. Exhale up.'], avoid: ['Dropping onto the box.', 'Knees caving in.', 'Holding breath.'] } } },
-    { id: 'mon_kickm', hk: 'glutemach', name: 'Glute Kickback Machine', what: 'Chest on the pad. Push the foot plate back with one leg.', vn: 'Máy tập mông', move: 'glutemach', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, repTop: 15, w: 10, step: 2.5, rest: 90, side: true,
+    { id: 'mon_kickm', hp: 1, hk: 'glutemach', name: 'Glute Kickback Machine', what: 'Chest on the pad. Push the foot plate back with one leg.', vn: 'Máy tập mông', move: 'glutemach', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, repTop: 15, w: 10, step: 2.5, rest: 90, side: true,
       guide: { setup: ['Chest or forearms on the pad.', 'Foot on the plate, knee under hip.', 'Push back with the heel. Squeeze 1 s.'], avoid: ['Arching the lower back.', 'Swinging the leg.'] },
       swap: { hk: 'kick', name: 'Cable Kickback', what: 'Kick one leg straight back against a cable.', vn: 'Cable + ankle strap', move: 'kickback', muscle: 'Glute max', target: 'glute_max', reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90, side: true,
         guide: { setup: ['Strap on ankle. Cable at lowest point.', 'Hold frame. Lean forward a little.', 'Kick back. Squeeze glute 1 s.'], avoid: ['Swinging the leg.', 'Arching the lower back.'] } } },
@@ -890,7 +890,7 @@ const PROGRAM = [
         guide: { setup: ['Cable at chest height. Stand side-on.', 'Exhale. Press handle straight out.', 'Hold 2 s. Keep breathing. Return.'], avoid: ['Turning toward the cable.', 'Holding breath.'] } } }
   ]},
   { id: 'tue', tab: 'PUSH', tt: 'Lift', type: 'lift', title: 'Upper Push', sub: 'Upper chest line + shoulders.', warm: 'Elliptical 6 min, easy. Can chat.', items: [
-    { id: 'tue_cpress', hk: 'chestpress', name: 'Chest Press Machine', what: 'Sit and push handles forward.', vn: 'Máy đẩy ngực', move: 'chestpress', muscle: 'Upper chest', target: 'upper_chest', sets: 3, reps: 12, w: 15, step: 2.5, rest: 90,
+    { id: 'tue_cpress', hp: 1, hk: 'chestpress', name: 'Chest Press Machine', what: 'Sit and push handles forward.', vn: 'Máy đẩy ngực', move: 'chestpress', muscle: 'Upper chest', target: 'upper_chest', sets: 3, reps: 12, w: 15, step: 2.5, rest: 90,
       guide: { setup: ['Set seat so handles sit just above nipple line.', 'Elbows 45° from body.', 'Exhale and push. No lockout.'], avoid: ['Handles below nipple line: works lower chest.', 'Flaring elbows out.', 'Holding breath.'] },
       swap: { hk: 'incpress', name: 'Incline DB Press', what: 'On a tilted bench, press dumbbells up.', vn: 'Bench 30° + 2 dumbbells', move: 'incpress', muscle: 'Upper chest', target: 'upper_chest', reps: 12, w: 6, pair: true, step: 1, rest: 90,
         guide: { setup: ['Bench at 30°.', 'Dumbbells at chest. Elbows 45°.', 'Exhale. Press up.'], avoid: ['Bouncing at the bottom.', 'Arching the back.'] } } },
@@ -902,7 +902,7 @@ const PROGRAM = [
       guide: { setup: ['Seat: handles at ear height.', 'Back flat on pad.', 'Exhale and press up.'], avoid: ['Holding breath.', 'Arching off the pad.'] },
       swap: { hk: 'dbspress', name: 'Seated DB Shoulder Press', what: 'Sit upright. Press dumbbells overhead.', vn: 'Bench upright + 2 dumbbells', move: 'dbspress', muscle: 'Shoulders', target: 'side_delt', reps: 10, w: 4, pair: true, step: 1, rest: 120,
         guide: { setup: ['Bench upright. Back on pad.', 'Dumbbells at ear height.', 'Exhale. Press up.'], avoid: ['Arching the back.', 'Banging dumbbells together.'] } } },
-    { id: 'tue_latm', hk: 'latmach', name: 'Lateral Raise Machine', what: 'Sit and lift the arm pads out to the sides.', vn: 'Máy tập vai', move: 'latmach', muscle: 'Side shoulder', target: 'side_delt', sets: 4, reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90,
+    { id: 'tue_latm', hp: 1, hk: 'latmach', name: 'Lateral Raise Machine', what: 'Sit and lift the arm pads out to the sides.', vn: 'Máy tập vai', move: 'latmach', muscle: 'Side shoulder', target: 'side_delt', sets: 4, reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90,
       guide: { setup: ['Seat so shoulders line up with the pivot.', 'Pads on the outside of the elbows.', 'Lift to shoulder height. Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Leaning back.'] },
       swap: { hk: 'latraise', name: 'DB Lateral Raise', what: 'Lift dumbbells out to the sides.', vn: '2 light dumbbells', move: 'latraise', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
         guide: { setup: ['Stand tall. Slight forward lean.', 'Lead with elbows to shoulder height.', 'Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Swinging the body.'] } } },
@@ -924,21 +924,21 @@ const PROGRAM = [
       guide: { setup: ['Feet high on plate, hip width.', 'Unlock. Lower to 90° knees only.', 'Exhale. Push through heels.'], avoid: ['Deep range: hips curl up.', 'Heavy load or breath hold.', 'Locking knees.'] },
       swap: { hk: 'stepup', name: 'DB Step-Up', what: 'Step up onto a box, stand tall, step down.', vn: 'Box + 2 dumbbells', move: 'stepup', muscle: 'Glutes', target: 'glute_max', reps: 10, w: 4, pair: true, step: 1, rest: 120, side: true,
         guide: { setup: ['Box at knee height or lower.', 'Whole foot on the box.', 'Push through heel. Exhale up.'], avoid: ['Pushing off the back foot.', 'Box too high.'] } } },
-    { id: 'thu_hipabd', hk: 'cableabd', name: 'Cable Hip Abduction', what: 'Lift one leg out to the side against a cable.', vn: 'Cable + ankle strap', move: 'cableabd', muscle: 'Glute med (side)', target: 'glute_med', sets: 4, reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90, side: true,
+    { id: 'thu_hipabd', hp: 1, hk: 'cableabd', name: 'Cable Hip Abduction', what: 'Lift one leg out to the side against a cable.', vn: 'Cable + ankle strap', move: 'cableabd', muscle: 'Glute med (side)', target: 'glute_med', sets: 4, reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90, side: true,
       guide: { setup: ['Strap on the outer ankle.', 'Hold frame. Stand tall.', 'Lift leg out, toes forward. Pause.'], avoid: ['Leaning away.', 'Toes turning up.'] },
       swap: { hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', reps: 15, unit: 'steps', side: true, noW: 'Band', rest: 90,
         guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', 'Step right, then the same back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] } } },
-    { id: 'thu_backext', hk: 'backext', name: 'Back Extension · Glute Focus', what: 'Hips on the pad. Bend forward, then lift to a straight line.', vn: 'Máy gập cơ lưng', move: 'backext', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, noW: 'Body', rest: 90,
+    { id: 'thu_backext', hp: 1, hk: 'backext', name: 'Back Extension · Glute Focus', what: 'Hips on the pad. Bend forward, then lift to a straight line.', vn: 'Máy gập cơ lưng', move: 'backext', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, noW: 'Body', rest: 90,
       guide: { setup: ['Pad just below the hip bones. Feet locked.', 'Toes turned out a little. Upper back slightly round.', 'Exhale. Squeeze glutes to lift to a straight line.'], avoid: ['Arching past straight.', 'Jerking up fast.', 'Holding breath.'] },
       swap: { hk: 'bridge', name: 'DB Glute Bridge', what: 'Lie on your back. Lift hips with a dumbbell on them.', vn: 'Floor + 1 dumbbell', move: 'bridge', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 12, step: 2, rest: 90,
         guide: { setup: ['Lie on back, knees bent, feet flat.', 'Dumbbell on hip bones.', 'Exhale, lift hips. Hold 2 s.'], avoid: ['Arching the back.', 'Pushing through the neck.'] } } }
   ]},
   { id: 'fri', tab: 'PULL', tt: 'Lift', type: 'lift', title: 'Upper Pull', sub: 'Posture + back width.', warm: 'Bike 6 min, easy. Can chat.', items: [
-    { id: 'fri_lpd', hk: 'latpull', name: 'Lat Pulldown', what: 'Sit and pull a wide bar down to your chest.', vn: 'Máy kéo lưng xô', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
+    { id: 'fri_lpd', hp: 1, hk: 'latpull', name: 'Lat Pulldown', what: 'Sit and pull a wide bar down to your chest.', vn: 'Máy kéo lưng xô', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
       guide: { setup: ['Knees locked under the pad.', 'Grip wider than shoulders.', 'Pull to upper chest. Exhale.'], avoid: ['Leaning far back.', 'Pulling behind the neck.'] },
       swap: { hk: 'cablepd', name: 'Kneeling Cable Pulldown', what: 'Kneel at a high cable. Pull the bar to your upper chest.', vn: 'Cable + bar, high', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', reps: 12, w: 15, step: 2.5, rest: 90,
         guide: { setup: ['Bar on high cable. Kneel facing it.', 'Grip wider than shoulders.', 'Exhale. Pull to upper chest.'], avoid: ['Leaning far back.', 'Shrugging.'] } } },
-    { id: 'fri_row', hk: 'cablerow', name: 'Seated Cable Row', what: 'Sit and pull a handle to your belly.', vn: 'Máy ngồi kéo cáp', move: 'cablerow', muscle: 'Mid back (posture)', target: 'upper_back', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
+    { id: 'fri_row', hp: 1, hk: 'cablerow', name: 'Seated Cable Row', what: 'Sit and pull a handle to your belly.', vn: 'Máy ngồi kéo cáp', move: 'cablerow', muscle: 'Mid back (posture)', target: 'upper_back', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
       guide: { setup: ['Sit tall. Feet on plate. Knees soft.', 'Exhale. Pull handle to lower ribs.', 'Squeeze shoulder blades 1 s.'], avoid: ['Rounding forward.', 'Rocking back.'] },
       swap: { hk: 'dbrow', name: 'Single-Arm DB Row', what: 'One hand on a bench. Pull a dumbbell to your hip.', vn: 'Bench + 1 dumbbell', move: 'dbrow', muscle: 'Mid back (posture)', target: 'upper_back', reps: 12, w: 10, step: 2, rest: 90, side: true,
         guide: { setup: ['Hand on bench. Back flat.', 'Dumbbell hangs under shoulder.', 'Pull elbow to hip. Exhale.'], avoid: ['Twisting the body.', 'Jerking the weight.'] } } },
@@ -1122,7 +1122,7 @@ const kfmt = v => v >= 10000 ? Math.round(v / 1000) + 'k' : v >= 1000 ? (v / 100
 
 /* effective exercise (main or swap) */
 const isSwapped = ex => !ex.cls && S.swaps[ex.id] === 'use';
-function asSwap(ex) { const s = ex.swap; return Object.assign({}, s, { id: ex.id, sets: s.sets || ex.sets, rest: s.rest || ex.rest, isSwap: true, from: ex.name }); }
+function asSwap(ex) { const s = ex.swap; return Object.assign({}, s, { id: ex.id, sets: s.sets || ex.sets, rest: s.rest || ex.rest, hp: ex.hp, isSwap: true, from: ex.name }); }
 const cur = ex => (isSwapped(ex) ? asSwap(ex) : ex);
 const skey = ex => ex.id + (isSwapped(ex) ? '~s' : '');
 /* the version not on screen (main or swap): its done sets are kept and counted */
@@ -1133,12 +1133,27 @@ const modeNow = () => (S.mode && S.mode.d === todayStr() ? S.mode.v : 'normal');
 function setMode(v) { if (!MODES.includes(v)) return; S.mode = { v, d: todayStr() }; save(); render(true); }
 /* no intensity picker on these days */
 const NOMODE = ['sun', 'walk'];
+/* the mode that applies on a day: Yoga and Walk always Normal */
+const modeOn = dayId => (NOMODE.includes(dayId) ? 'normal' : modeNow());
+/* day of a card id: 'mon_thrustm' and 'x_mon_rdl' -> 'mon'; no id -> the open day */
+const dayOfId = id => (typeof id !== 'string' || !id ? S.view : id.slice(0, 2) === 'x_' ? id.split('_')[1] : id.split('_')[0]);
+const MCODE = { light: 'l', normal: 'n', hard: 'h' };
+const cardMode = c => modeOn(dayOfId(c.id));
+/* extras allowed today: Light 0, Normal 2, Hard 1 */
+const maxExtra = day => ({ light: 0, normal: 2, hard: 1 })[modeOn(day.id)];
+const modeSfx = m => (m === 'light' ? ' · Light' : m === 'hard' ? ' · Hard' : '');
 const HKASSIST = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.assist) HKASSIST[it.hk] = 1; if (it.swap && it.swap.assist) HKASSIST[it.swap.hk] = 1; }));
 const repUnit = c => c.unit || 'reps';
 const repStep = c => (c.unit === 'sec' || c.unit === 'steps' ? 5 : 1);
 const wUnit = c => (c.assist ? 'kg assist' : c.pair ? 'kg each' : 'kg');
 
-function lastSession(hk) { const h = S.history[hk]; return h && h.length ? h[h.length - 1] : null; }
+/* newest entry that may steer kg: Light entries never do */
+function lastBase(hk) { const h = S.history[hk] || []; for (let i = h.length - 1; i >= 0; i--) if (h[i] && h[i].mode !== 'light') return h[i]; return null; }
+/* strength views use the same entries */
+const strongEnt = e => e.sets.length && e.mode !== 'light';
+const daysAgo = d => Math.round((new Date(todayStr() + 'T12:00:00') - new Date(d + 'T12:00:00')) / 864e5);
+/* rep step for band and bodyweight moves: +1 rep, or 5 s */
+const noWStep = c => (c.unit === 'sec' ? 5 : 1);
 /* next weight one step harder (dir 1) or easier (dir -1); respects caps and floors */
 function wNext(c, w, dir) {
   let n = rnd(w + (c.assist ? -dir : dir) * c.step);
@@ -1146,15 +1161,21 @@ function wNext(c, w, dir) {
   if (!c.assist) n = Math.max(c.step, n);
   return n;
 }
-/* progression: small moves add reps first (repTop), capped moves add reps at the cap */
+/* progression: small moves add reps first (repTop), capped moves add reps at the cap.
+   Mode-free: it reads the last non-Light entry; a Hard entry is judged on the program sets only. */
 function suggest(c) {
-  const l = lastSession(c.hk);
-  if (!l || !l.sets.length) return { w: c.noW ? 0 : c.w, r: c.reps, why: 'Start', t: 'start' };
-  const tr = l.tr || c.reps, ws = l.sets.map(s => s.w);
+  const l = lastBase(c.hk);
+  if (!l || !l.sets || !l.sets.length) return { w: c.noW ? 0 : c.w, r: c.reps, why: 'Start', t: 'start' };
+  const js = l.mode === 'hard' ? l.sets.slice(0, c.sets) : l.sets;
+  const tr = l.tr || c.reps, ws = js.map(s => s.w);
   const base = c.assist ? Math.min(...ws) : Math.max(...ws);
-  const allHit = l.sets.length >= c.sets && l.sets.every(s => s.r >= tr);
-  const hard = l.sets.some(s => s.f === 'h');
-  if (c.noW) return { w: 0, r: Math.max(c.reps, ...l.sets.map(s => s.r)), why: 'Same', t: 'same' };
+  const allHit = js.length >= c.sets && js.every(s => s.r >= tr);
+  const hard = js.some(s => s.f === 'h');
+  if (c.noW && !c.repTop) return { w: 0, r: Math.max(c.reps, ...js.map(s => s.r)), why: 'Same', t: 'same' };
+  if (c.noW) { const k = noWStep(c);
+    return allHit && !hard && tr < c.repTop ? { w: 0, r: Math.min(c.repTop, tr + k), why: '+' + k + ' ' + (k > 1 ? 'sec' : 'rep'), t: 'up' } : { w: 0, r: tr, why: 'Same', t: 'same' }; }
+  /* 21+ days since this move: 1 step lighter */
+  if (daysAgo(l.date) >= 21) return { w: wNext(c, base, -1), r: tr, why: 'lighter', t: 'down' };
   if (allHit && !hard) {
     const capped = c.max && base >= c.max, top = c.repTop || (capped ? 15 : 0);
     if (top && tr < top) return { w: base, r: tr + 1, why: '+1 rep', t: 'up' };
@@ -1164,13 +1185,39 @@ function suggest(c) {
   if (hard && !allHit) return { w: wNext(c, base, -1), r: c.reps, why: 'lighter', t: 'down' };
   return { w: base, r: tr, why: 'Same', t: 'same' };
 }
-function sets(ex) {
-  const c = cur(ex), k = skey(ex), n = Math.max(0, c.sets - otherDone(ex).length);
-  if (!S.sets[k] || S.sets[k].length !== n) {
-    const prev = S.sets[k] || [], sg = suggest(c);
-    S.sets[k] = Array.from({ length: n }, (_, i) => prev[i] || { w: sg.w, r: sg.r, done: false });
+/* today's plan for a card: the mode on top of suggest(). Every shown or seeded sets/kg/reps/rest comes from here. */
+function planOf(c) {
+  const md = cardMode(c), sg = suggest(c), st = c.step || 1;
+  const p = { sets: c.sets, w: sg.w, r: sg.r, rest: c.rest };
+  if (md === 'hard' && c.hp) { p.sets = c.sets + 1; p.rest = Math.max(120, c.rest); }
+  if (md === 'light') {
+    p.sets = Math.max(Math.min(2, c.sets), c.sets - 1); p.rest = Math.max(120, c.rest);
+    if (c.noW) { const k = noWStep(c); p.r = Math.max(k, Math.round(sg.r * 0.8 / k) * k); }
+    else if (c.assist) p.w = wNext(c, sg.w, -1);
+    /* 80%, down to the step, at least 1 step under; never below one step */
+    else p.w = Math.max(st, Math.min(rnd(Math.floor(sg.w * 4 / (st * 5) + 1e-9) * st), rnd(sg.w - st)));
   }
-  return S.sets[k];
+  return p;
+}
+/* drop n pending rows from the end of key k; the rest timer, rating and row pick follow their sets */
+function dropPending(ex, k, a, n) {
+  const gone = []; for (let i = a.length - 1; i >= 0 && gone.length < n; i--) if (!a[i].done) gone.push(i);
+  const shift = i => i - gone.filter(g => g < i).length;
+  new Set([S.timer && S.timer.ref, S.rate]).forEach(r => { if (r && r.key === k && typeof r.k === 'number' && !gone.includes(r.k)) r.k = shift(r.k); });
+  const sl = S.sel[ex.id]; if (typeof sl === 'number') { if (gone.includes(sl)) delete S.sel[ex.id]; else S.sel[ex.id] = shift(sl); }
+  return a.filter((_, i) => !gone.includes(i));
+}
+/* rows of a card. Done sets are never removed or changed: a resize adds or drops pending rows only,
+   never below the done count. A card with no done set that was seeded in another mode starts again. */
+function sets(ex) {
+  const c = cur(ex), k = skey(ex), md = MCODE[cardMode(ex)], p = planOf(c);
+  let a = Array.isArray(S.sets[k]) ? S.sets[k] : [];
+  if (a.length && !a.some(s => s.done) && a.some(s => (s.m || 'n') !== md)) { a = []; delete S.sel[ex.id]; }
+  const want = Math.max(p.sets - otherDone(ex).length, a.filter(s => s.done).length, 0);
+  if (a.length > want) a = dropPending(ex, k, a, a.length - want);
+  while (a.length < want) a.push({ w: p.w, r: p.r, done: false, m: md });
+  S.sets[k] = a;
+  return a;
 }
 function setVol(c, s) { if (c.noW || c.assist) return 0; return s.w * s.r * (c.side ? 2 : 1) * (c.pair ? 2 : 1); }
 /* a day can mix class cards (count 1 each) and exercises (count sets) */
@@ -1193,7 +1240,7 @@ const XC = {};
 let lastLayout = 0;   /* time of the last list change under the finger (double-tap guard) */
 function xItem(dayId, hk) {
   const id = 'x_' + dayId + '_' + hk;
-  if (!XC[id]) { const d = HKDEF[hk]; XC[id] = Object.assign({}, d, { id, hk, sets: Math.min(3, d.sets), added: true, swap: null, swapAsk: null }); }
+  if (!XC[id]) { const d = HKDEF[hk]; XC[id] = Object.assign({}, d, { id, hk, sets: Math.min(3, d.sets), hp: 0, added: true, swap: null, swapAsk: null }); }
   return XC[id];
 }
 const xItems = dayId => (S.extra[dayId] || []).filter(x => HKDEF[x.hk]).map(x => xItem(dayId, x.hk));
@@ -1367,6 +1414,7 @@ function recommend(day) {
   let cat = null, line = '';
   const cand = CATS.filter(c => { const i = info[c]; return i.T > 0 && i.G >= 2 && i.R < 3 && !i.off && i.free.length; });
   cand.forEach(c => { if (!cat || info[c].G / info[c].T > info[cat].G / info[cat].T + 1e-9) cat = c; });
+  if (modeOn(day.id) === 'light') cat = null;   /* Light day: no push to add extras */
   if (!S.sessions.length && !Object.keys(S.history).length) { cat = null; line = 'No data yet. Pick any.'; }
   else if (!cat) { const tired = CATS.filter(c => info[c].T > 0 && info[c].G >= 2 && info[c].R >= 3 && !info[c].off).sort((x, y) => info[y].G - info[x].G)[0];
     line = tired ? tired + ' ' + (info[tired].hint === 'Done today' ? 'done today' : 'done yesterday') + '. Rest it.' : 'All on track.'; }
@@ -1470,7 +1518,7 @@ function renderDay() {
   dropStale(day);
   if (reorderDay !== day.id) reorderDay = null;
   const items = dayItems(day), exs = items.filter(e => !e.cls), wc = weekCount(day.id), m = mainOf(day);
-  const exMin = exs.reduce((a, e) => { const c = cur(e); return a + c.sets * (c.rest + 45 * (c.side ? 2 : 1)); }, 0) / 60;
+  const exMin = exs.reduce((a, e) => { const c = cur(e), p = planOf(c); return a + p.sets * (p.rest + 45 * (c.side ? 2 : 1)); }, 0) / 60;
   const est = lift ? Math.round((exMin + 7) / 5) * 5 : 0;
   const clsMin = day.items.filter(e => e.cls && e.main).reduce((a, e) => a + clsLen(e), 0);
   const afterMin = Math.round((day.items.filter(e => e.cls && !e.main).reduce((a, e) => a + clsLen(e), 0) + exMin) / 5) * 5;
@@ -1503,9 +1551,10 @@ function renderDay() {
   mainEl.innerHTML = h;
   applyLock();
 }
+const capMsg = n => (n ? `Max ${n} added today` : 'Light day. No extras.');
 function addRow(day, pos) {
-  const full = (S.extra[day.id] || []).length >= 3;
-  const label = full ? 'Max 3 added today' : pos === 'pre' && mainOf(day) ? 'Add before class' : 'Add exercise';
+  const n = maxExtra(day), full = (S.extra[day.id] || []).length >= n;
+  const label = full ? capMsg(n) : pos === 'pre' && mainOf(day) ? 'Add before class' : 'Add exercise';
   return `<button class="addrow" data-addx="${pos}" ${full ? 'disabled' : ''}>${IC.plus}<span>${label}</span></button>`;
 }
 function rowReorder(u, i, us, ci) {
@@ -1523,8 +1572,8 @@ function rowReorder(u, i, us, ci) {
 function cardEx(ex, i) {
   const c = cur(ex), ss = sets(ex), done = ss.every(s => s.done);
   let sel = S.sel[ex.id]; if (sel === undefined || (ss[sel] && ss[sel].done)) sel = ss.findIndex(s => !s.done);
-  const sg = suggest(c), od = otherDone(ex);
-  const differs = !c.noW && !ss.some(s => s.done) && ss.some(s => s.w !== sg.w || s.r !== sg.r);
+  const sg = suggest(c), p = planOf(c), od = otherDone(ex), light = cardMode(ex) === 'light';
+  const differs = !c.noW && !ss.some(s => s.done) && ss.some(s => s.w !== p.w || s.r !== p.r);
   const arrow = sg.t === 'up' ? '▲ ' : sg.t === 'down' ? '▼ ' : '';
   const swapLine = ex.added ? (ss.some(s => s.done) ? `<div class="swap fixed"><span class="z">${IC.plus}</span><span class="tx">Added today</span></div>` : `<button class="swap" data-xrm="${ex.id}"><span class="z">${IC.x}</span><span class="tx">Remove from today</span><span class="chev">›</span></button>`)
     : c.isSwap
@@ -1536,10 +1585,10 @@ function cardEx(ex, i) {
         <div class="meta">${c.vn}</div></div>
       <button class="gbtn" data-guide="${ex.id}" aria-label="How to">i</button></div>
     <div class="sug"><div>
-      <div class="sv">${c.noW ? c.noW : fmtW(sg.w) + ' ' + wUnit(c)} × ${sg.r}${c.unit ? ' ' + c.unit : ''}${c.side ? ' / side' : ''}</div>
-      ${['up', 'down', 'cap'].includes(sg.t) ? `<div class="sm"><span class="sw ${sg.t}">${arrow}${sg.why}</span></div>` : ''}
+      <div class="sv">${c.noW ? c.noW : fmtW(p.w) + ' ' + wUnit(c)} × ${p.r}${c.unit ? ' ' + c.unit : ''}${c.side ? ' / side' : ''}</div>
+      ${!light && ['up', 'down', 'cap'].includes(sg.t) ? `<div class="sm"><span class="sw ${sg.t}">${arrow}${sg.why}</span></div>` : ''}
       ${od.length ? `<div class="sm"><span class="sw up">✓ ${od.length} done on ${otherCur(ex).name}</span></div>` : ''}</div>
-      ${differs ? `<button class="apply" data-apply="${ex.id}">Use ${fmtW(sg.w)} kg</button>` : ''}</div>
+      ${differs ? `<button class="apply" data-apply="${ex.id}">Use ${fmtW(p.w)} kg</button>` : ''}</div>
     ${swapLine}
     ${c.noW ? '' : `<div class="pills">${[-c.step, 1, 2.5, 5, 10].map(v => `<button class="pill ${v < 0 ? 'neg' : ''}" data-add="${v}">${v < 0 ? '−' + fmtW(-v) : '+' + fmtW(v)}</button>`).join('')}</div>`}
     <div class="sets">${ss.map((s, k) => setRow(c, s, k, k === sel)).join('')}</div>
@@ -1600,6 +1649,8 @@ function updateHUD() {
 const hud = $('#hud'), ringBar = $('#ringBar'), CIRC = 2 * Math.PI * 42;
 let tick = null, buzzed = false, skipArmed = 0;
 const timerActive = () => !!(S.timer && S.timer.end > Date.now());
+/* skip unlocks after 90 s (or the whole rest when it is shorter), in ms */
+const skipFloor = () => Math.min(90, S.timer ? S.timer.total : 90) * 1000;
 /* the rest ring is one linear animation per rest: smooth at 120 Hz, no work per frame */
 let ringA = null;
 function ringRun() {
@@ -1648,7 +1699,7 @@ function paintFeel() {
 function runTick() {
   if (!S.timer) { endTimer(); return; }
   const left = Math.max(0, S.timer.end - Date.now()), sec = Math.ceil(left / 1000);
-  $('#btnSkip').classList.toggle('dim', left > 0 && S.timer.total * 1000 - left < 90000);
+  $('#btnSkip').classList.toggle('dim', left > 0 && S.timer.total * 1000 - left < skipFloor());
   const tn = $('#tNum'), tx = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); if (tn.textContent !== tx) tn.textContent = tx;
   if (!ringA) ringBar.style.strokeDashoffset = (CIRC * (1 - Math.min(1, left / (S.timer.total * 1000)))).toFixed(2);
   if (left <= 0) finishTimer();
@@ -1733,7 +1784,7 @@ $('#btnSkip').addEventListener('click', () => {
   if (!S.timer) return; buzz('tick');
   if (!timerActive()) { endTimer(); return; }
   const elapsed = S.timer.total * 1000 - (S.timer.end - Date.now());
-  if (elapsed < 90000) { toast('Rest 90 s minimum', true); buzz('block'); return; }
+  if (elapsed < skipFloor()) { toast('Rest 90 s minimum', true); buzz('block'); return; }
   if (skipArmed && Date.now() - skipArmed < 2500) { endTimer(); toast('Rest skipped', true); return; }
   skipArmed = Date.now(); $('#btnSkip').textContent = 'Tap again'; $('#btnSkip').classList.add('warn');
   setTimeout(() => { if (S.timer && skipArmed) { $('#btnSkip').textContent = 'Skip'; $('#btnSkip').classList.remove('warn'); skipArmed = 0; } }, 2500);
@@ -1748,9 +1799,10 @@ $('#feel').addEventListener('click', e => {
   let msg = 'Saved';
   /* a next set the user already changed by hand keeps its kg */
   if (nx && !nx.done && !c.noW && !nx.hand) {
-    const base = ss[ref.k].w;
-    if (f === 'e') { nx.w = wNext(c, base, 1); msg = 'Next set ' + fmtW(nx.w) + ' kg'; }
-    if (f === 'g') { nx.w = base; msg = 'Keep ' + fmtW(base) + ' kg'; }
+    /* Light day: Easy keeps kg (no raise); Hard still lowers */
+    const base = ss[ref.k].w, up = f === 'e' && cardMode(ex) !== 'light';
+    if (up) { nx.w = wNext(c, base, 1); msg = 'Next set ' + fmtW(nx.w) + ' kg'; }
+    if (f === 'g' || (f === 'e' && !up)) { nx.w = base; msg = 'Keep ' + fmtW(base) + ' kg'; }
     if (f === 'h') { nx.w = wNext(c, base, -1); msg = 'Next set ' + fmtW(nx.w) + ' kg'; }
   }
   if (f === 'h' && prevF !== 'h' && timerActive()) { addRest(30); msg += ' · +30s rest'; }
@@ -1782,11 +1834,11 @@ mainEl.addEventListener('click', e => {
   if (g) { buzz('tick'); const x = getEx(g.dataset.guide); if (x) openGuide(x, isSwapped(x)); return; }
 
   const ap = t.closest('[data-apply]');
-  if (ap && ex) { buzz('pick'); const sg = suggest(cur(ex));
+  if (ap && ex) { buzz('pick'); const p = planOf(cur(ex));
     sets(ex).forEach((s, k) => { if (s.done) return;
-      if (s.w !== sg.w) fx('tick', { id: ex.id, k, w: 1, dir: Math.sign(sg.w - s.w) });
-      if (s.r !== sg.r) fx('tick', { id: ex.id, k, w: 0, dir: Math.sign(sg.r - s.r) });
-      s.w = sg.w; s.r = sg.r; delete s.hand; });
+      if (s.w !== p.w) fx('tick', { id: ex.id, k, w: 1, dir: Math.sign(p.w - s.w) });
+      if (s.r !== p.r) fx('tick', { id: ex.id, k, w: 0, dir: Math.sign(p.r - s.r) });
+      s.w = p.w; s.r = p.r; delete s.hand; });
     save(); refreshCard(ex); return; }
 
   const sw = t.closest('[data-swap]');
@@ -1827,14 +1879,14 @@ mainEl.addEventListener('click', e => {
     const gt = gate(DAYS[S.view], ex);
     if (gt) { nope(gt); return; }
     if (timerActive()) { nope('Rest first'); return; }
-    s.done = true; s.t = Date.now(); buzz('done'); hideRate();
+    s.done = true; s.t = Date.now(); s.m = MCODE[cardMode(ex)]; buzz('done'); hideRate();
     if (!S.start[S.view]) S.start[S.view] = Date.now();
     const pb = !c.noW && !c.assist && (S.history[c.hk] || []).some(e => e.sets.length) && s.w > histMax(c.hk) && !ss.some(x => x !== s && x.done && x.pb && x.w >= s.w); if (pb) s.pb = true;
     if (ss[k + 1] && !ss[k + 1].done) { ss[k + 1].w = s.w; ss[k + 1].r = s.r; delete ss[k + 1].hand; S.sel[ex.id] = k + 1; } else delete S.sel[ex.id];
     fx('set', { id: ex.id, k }); if (ss.every(x => x.done)) fx('complete', { sel: '[data-ex="' + ex.id + '"]' });
     save(); if (mainOf(DAYS[S.view])) render(true); else refreshCard(ex);
     const ref = { id: ex.id, key: skey(ex), k }, p = dayProgress(DAYS[S.view]);
-    if (p.d < p.t) { startTimer(c.rest, nextLabel(ex, k), ref); setTimeout(() => scrollNext(ex.id), 350); }
+    if (p.d < p.t) { startTimer(planOf(c).rest, nextLabel(ex, k), ref); setTimeout(() => scrollNext(ex.id), 350); }
     else { showRate(ref); if (!pb) toast('All done. Rate it, then Finish.'); }
     if (pb) { const t0 = toastT; setTimeout(() => { if (toastT === t0) toast('New best · ' + fmtW(s.w) + ' kg', false, 3000); }, 420); }
     return;
@@ -1868,9 +1920,9 @@ function refreshRow(ex, k, dir, w) {
   row.querySelector('[data-vr]').innerHTML = s.r + (k ? '' : `<small>${repUnit(c)}</small>`);
   tickEl(row.querySelector(w ? '[data-vw]' : '[data-vr]'), dir);
   selectRow(card, k);
-  const ss = sets(ex), sg = suggest(c), differs = !c.noW && !ss.some(x => x.done) && ss.some(x => x.w !== sg.w || x.r !== sg.r);
+  const ss = sets(ex), p = planOf(c), differs = !c.noW && !ss.some(x => x.done) && ss.some(x => x.w !== p.w || x.r !== p.r);
   const ap = card.querySelector('[data-apply]'); if (ap) ap.remove();
-  if (differs) card.querySelector('.sug').insertAdjacentHTML('beforeend', `<button class="apply" data-apply="${ex.id}">Use ${fmtW(sg.w)} kg</button>`);
+  if (differs) card.querySelector('.sug').insertAdjacentHTML('beforeend', `<button class="apply" data-apply="${ex.id}">Use ${fmtW(p.w)} kg</button>`);
 }
 function refreshCard(ex) {
   const old = mainEl.querySelector(`[data-ex="${ex.id}"]`); if (!old) { fxQ = []; return; }
@@ -1889,8 +1941,7 @@ function resetDay() {
 
 /* ================= GUIDE ================= */
 function openGuide(ex, showSwap) {
-  const g = showSwap ? asSwap(ex) : ex;
-  const start = g.noW ? g.noW : fmtW(g.w) + ' ' + wUnit(g);
+  const g = showSwap ? asSwap(ex) : ex, gp = planOf(g);
   const vid = VIDS[g.hk];
   $('#guideBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
     ${g.isSwap ? `<div class="kicker">Swap for ${ex.name}</div>` : ''}
@@ -1898,7 +1949,7 @@ function openGuide(ex, showSwap) {
     <div class="meta">${g.vn}</div>
     <div class="mvbox">${moveSVG(g.move, !RM.matches)}</div>
     <p class="lead">${g.what}</p>
-    <div class="startbox">${(sg0 => (sg0.t === 'start' ? 'Start' : 'Today') + ' <b>' + (g.noW ? g.noW : fmtW(sg0.w) + ' ' + wUnit(g)) + ' × ' + sg0.r + ' ' + repUnit(g))(suggest(g))}${g.side ? ' / side' : ''}</b> · ${g.sets} sets · ${g.rest}s rest${g.assist ? '<br>Less assist = harder' : ''}</div>
+    <div class="startbox">${(suggest(g).t === 'start' ? 'Start' : 'Today') + ' <b>' + (g.noW ? g.noW : fmtW(gp.w) + ' ' + wUnit(g)) + ' × ' + gp.r + ' ' + repUnit(g)}${g.side ? ' / side' : ''}</b> · ${gp.sets} sets · ${gp.rest}s rest${g.assist ? '<br>Less assist = harder' : ''}</div>
     <a class="btn btn-g" href="${vid ? ytUrl(vid) : ytSearch(g.name)}" target="_blank" rel="noopener">${IC.play}${vid ? 'Gym video' : 'Find a video'}</a>
     <h4>Setup</h4><ol>${g.guide.setup.map(s => `<li>${s}</li>`).join('')}</ol>
     <h4 class="red">Avoid</h4><div class="avoid"><ul>${g.guide.avoid.map(s => `<li>${s}</li>`).join('')}</ul></div>
@@ -1932,12 +1983,12 @@ const dayPbs = day => dayItems(day).filter(it => !it.cls).flatMap(it => {
   return out; });
 function openFinish(editIdx) {
   finEdit = editIdx ?? null;
-  let vol, setsN, title, date, min, pbs;
-  if (finEdit !== null) { const s = S.sessions[finEdit]; vol = s.vol; setsN = s.sets; title = s.title; date = s.date; min = s.min || 0; pbs = (s.pbs || []).map(n => ({ name: n })); }
-  else { const day = DAYS[S.view], p = dayProgress(day); vol = dayVolume(day); setsN = p.d; title = day.title; date = todayStr(); min = dayMin(day); pbs = dayPbs(day); if (day.type === 'class') setsN = dayItems(day).filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0); }
+  let vol, setsN, title, date, min, pbs, md;
+  if (finEdit !== null) { const s = S.sessions[finEdit]; vol = s.vol; setsN = s.sets; title = s.title; date = s.date; min = s.min || 0; pbs = (s.pbs || []).map(n => ({ name: n })); md = s.mode; }
+  else { const day = DAYS[S.view], p = dayProgress(day); vol = dayVolume(day); setsN = p.d; title = day.title; date = todayStr(); min = dayMin(day); pbs = dayPbs(day); md = modeOn(day.id); if (day.type === 'class') setsN = dayItems(day).filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0); }
   const pbLine = pbs.length ? `<p class="note lime">New best: ${pbs.slice(0, 3).map(o => o.name + (o.w ? ' ' + fmtW(o.w) + ' kg' : '')).join(', ')}${pbs.length > 3 ? ' +' + (pbs.length - 3) : ''}</p>` : '';
   $('#finishBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
-    <div class="kicker">${finEdit !== null ? 'Edit · ' : ''}${niceDate(date)}</div><h2>${title}</h2>
+    <div class="kicker">${finEdit !== null ? 'Edit · ' : ''}${niceDate(date)}${modeSfx(md)}</div><h2>${title}</h2>
     ${(() => { const tiles = []; const u = x => `<small style="font-size:11px;color:var(--dim)">${x}</small>`;
       if (vol) tiles.push(['Lifted', Math.round(vol).toLocaleString() + ' ' + u('kg')]);
       if (setsN) tiles.push(['Sets', setsN]);
@@ -1956,8 +2007,11 @@ function logSession() {
   const day = DAYS[S.view], date = todayStr(), items = dayItems(day); let n = 0;
   items.forEach(it => {
     if (it.cls) { if (S.classes[it.id]) n++; return; }
+    /* tr stays the Normal target; mode: 'light' if any set was Light, else 'hard' if any was Hard, else no key */
     const put = (c, done) => { if (!done.length) return; const tr = suggest(c).r;
-      (S.history[c.hk] = S.history[c.hk] || []).push({ date, tr, swap: !!c.isSwap, sets: done.map(s => ({ w: s.w, r: s.r, f: s.f })) });
+      const e = { date, tr, swap: !!c.isSwap, sets: done.map(s => ({ w: s.w, r: s.r, f: s.f })) };
+      if (done.some(s => s.m === 'l')) e.mode = 'light'; else if (done.some(s => s.m === 'h')) e.mode = 'hard';
+      (S.history[c.hk] = S.history[c.hk] || []).push(e);
       if (S.history[c.hk].length > 100) S.history[c.hk].shift(); n++; };
     put(cur(it), sets(it).filter(s => s.done)); put(otherCur(it), otherDone(it));
   });
@@ -1965,7 +2019,7 @@ function logSession() {
   const p = dayProgress(day), swapped = day.items.some(it => it.cls && it.main && S.classes[it.id] && clsSwapped(it));
   const exSets = items.filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0);
   const sess = { date, day: day.id, title: day.title + (swapped ? ' · swap' : ''), type: day.type, vol: Math.round(dayVolume(day)), sets: day.type === 'class' ? exSets : p.d };
-  const min = dayMin(day), pbs = dayPbs(day); if (min) sess.min = min; if (pbs.length) sess.pbs = pbs.map(o => o.name);
+  const min = dayMin(day), pbs = dayPbs(day), md = modeOn(day.id); if (min) sess.min = min; if (pbs.length) sess.pbs = pbs.map(o => o.name); if (md !== 'normal') sess.mode = md;
   const xn = items.filter(e => e.added && hasDone(e)).length; if (xn) sess.extra = xn;
   if (day.type === 'class') { const m0 = mainOf(day), cm = day.items.filter(it => it.cls && S.classes[it.id] && (it.main || !m0)).reduce((a, it) => a + (clsLen(it) || CLSMIN[day.id] || 0), 0); if (cm) sess.cmin = cm; }
   S.sessions.push(sess); delete S.start[day.id]; day.items.forEach(it => delete S.cin[it.id]);
@@ -2080,7 +2134,7 @@ function statsMonth() {
   const strong = CATS.map(c => {
     let up = 0, same = 0, down = 0;
     Object.keys(S.history).forEach(hk => { const d = HKDEF[hk], t = tagOf(hk); if (!d || !t || t.p !== c || !MAINHK.has(hk)) return;
-      const ent = S.history[hk].filter(e => e.sets.length), inW = ent.filter(e => e.date >= a && e.date <= b), bef = ent.filter(e => e.date >= pa && e.date < a);
+      const ent = S.history[hk].filter(strongEnt), inW = ent.filter(e => e.date >= a && e.date <= b), bef = ent.filter(e => e.date >= pa && e.date < a);
       if (!inW.length || !bef.length) return;
       const m1 = met(d, inW[inW.length - 1]), m0 = met(d, bef[bef.length - 1]);
       if (better(d, m1, m0)) up++; else if (better(d, m0, m1)) down++; else same++; });
@@ -2112,7 +2166,7 @@ function statsMonth() {
     </div>
     ${clsLine(a, b)}
     <div class="lbl">Workouts</div>
-    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.x.title}</div><div class="b">${niceDate(o.x.date, 1)} · ${o.x.sets} sets</div></div><div class="c">${o.x.vol ? kfmt(o.x.vol) : '—'}<small>kg</small></div><div class="c">${o.x.min ? o.x.min : '—'}<small>min</small></div></div>`).join('') : '<div class="empty">No workouts in these 4 weeks.</div>'}`;
+    ${list.length ? list.map(o => `<div class="row tap" data-sess="${o.i}"><div><div class="a">${o.x.title}</div><div class="b">${niceDate(o.x.date, 1)} · ${o.x.sets} sets${modeSfx(o.x.mode)}</div></div><div class="c">${o.x.vol ? kfmt(o.x.vol) : '—'}<small>kg</small></div><div class="c">${o.x.min ? o.x.min : '—'}<small>min</small></div></div>`).join('') : '<div class="empty">No workouts in these 4 weeks.</div>'}`;
 }
 /* 12 weeks, starting at the first logged week when that is later: balance and strength */
 function stats3M() {
@@ -2129,7 +2183,7 @@ function stats3M() {
     return `<div class="cset"><span class="mg">${c}</span><span class="cbar"><i style="width:${T ? Math.min(100, D / T * 100) : 0}%"></i></span><span class="mv">${T ? pctOf(D, T) + '%' : '—'}</span></div>`; }).join('');
   const str = CATS.map(c => {
     const ser = Object.keys(S.history).filter(hk => HKDEF[hk] && MAINHK.has(hk) && tagOf(hk) && tagOf(hk).p === c)
-      .map(hk => ({ d: HKDEF[hk], ent: S.history[hk].filter(e => e.sets.length && e.date >= a && e.date <= b) })).filter(x => x.ent.length >= 3);
+      .map(hk => ({ d: HKDEF[hk], ent: S.history[hk].filter(e => strongEnt(e) && e.date >= a && e.date <= b) })).filter(x => x.ent.length >= 3);
     if (!ser.length) return `<div class="srow"><span class="mg">${c}</span><span class="sv2">Not enough data</span><span></span></div>`;
     const pts = []; let idx = null;
     wks.forEach(ws => { const we = addDays(ws, 6);
@@ -2157,8 +2211,8 @@ function spark(pts, invert) {
 }
 /* Lifts: which lifts went up, grouped by muscle; moves done 3+ times first, the rest behind a tap */
 function statsLifts() {
-  const rows = Object.keys(S.history).filter(hk => HKDEF[hk] && S.history[hk].some(e => e.sets.length)).map(hk => {
-    const d = HKDEF[hk], ent = S.history[hk].filter(e => e.sets.length), pts = ent.map(e => met(d, e));
+  const rows = Object.keys(S.history).filter(hk => HKDEF[hk] && S.history[hk].some(strongEnt)).map(hk => {
+    const d = HKDEF[hk], ent = S.history[hk].filter(strongEnt), pts = ent.map(e => met(d, e));
     const first = pts[0], last = pts[pts.length - 1], gain = d.assist ? first - last : last - first, t = tagOf(hk);
     return { d, pts, first, last, gain, pct: first ? Math.round(gain / first * 100) : 0, n: ent.length, lastDate: ent[ent.length - 1].date, cat: t && CATS.includes(t.p) ? t.p : 'Other' };
   }).sort((x, y) => y.lastDate.localeCompare(x.lastDate) || y.n - x.n);
@@ -2199,7 +2253,7 @@ $('#planBox').addEventListener('click', e => {
 let addPos = 'end', addCat = null;
 function openAdd(pos) { addPos = pos; addCat = null; renderAdd(); openModal('mAdd'); }
 function lastTxt(hk) {
-  const l = lastSession(hk), d = HKDEF[hk]; if (!l || !l.sets.length) return 'New';
+  const l = lastBase(hk), d = HKDEF[hk]; if (!l || !l.sets.length) return 'New';
   if (d.noW) return 'Last ' + Math.max(...l.sets.map(s => s.r)) + ' ' + repUnit(d) + (d.side ? ' / side' : '');
   if (d.assist) return 'Last ' + fmtW(Math.min(...l.sets.map(s => s.w))) + ' kg assist';
   return 'Last ' + fmtW(Math.max(...l.sets.map(s => s.w))) + ' kg' + (d.pair ? ' each' : '');
@@ -2245,8 +2299,8 @@ $('#addBox').addEventListener('click', e => {
   const x = t.closest('[data-addhk]'); if (x) addExtra(DAYS[S.view], x.dataset.addhk, addPos);
 });
 function addExtra(day, hk, pos) {
-  const x = S.extra[day.id] || [];
-  if (x.length >= 3) { toast('Max 3 added today', true); buzz('block'); return; }
+  const x = S.extra[day.id] || [], n = maxExtra(day);
+  if (x.length >= n) { toast(capMsg(n), true); buzz('block'); return; }
   if (todaySet(day).has(canon(hk))) { toast("Already in today's list", true); buzz('block'); return; }
   const ids = dayItems(day).map(it => it.id), id = 'x_' + day.id + '_' + hk, tail = tailIds(day);
   const anchor = pos === 'pre' ? (mainOf(day) || day.items.find(it => it.cls)) : null;
