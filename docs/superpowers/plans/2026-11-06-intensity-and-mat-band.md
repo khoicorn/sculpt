@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace every heart-rate check with a Light / Normal / Hard intensity picker, add 16 mat and band moves, a "Mat + Band" workout, a "Walk" tab with an Easy Run swap, and a distinct half-kneeling 1-arm pulldown.
+**Goal:** Replace every heart-rate check with a Light / Normal / Hard intensity picker, add 16 mat and band moves, a "Mat + Band" workout, a "Walk" tab with an Easy Run swap, a distinct half-kneeling 1-arm pulldown, and a kcal estimate that replaces kg volume in reports.
 
 **Architecture:** Everything lives in the single file `index.html` (vanilla JS, state object `S` in localStorage key `sculpt_v3`). Intensity is a layer: `suggest()` stays mode-free; a new `planOf(c)` applies today's mode on top. New moves sit in a `LIBRARY` array merged into `HKDEF`. Tasks run one after another because they all edit the same file.
 
@@ -214,14 +214,48 @@ Branch: `feat/v3.8-intensity` from `main`. Commit after each task. Leave untrack
 
 ---
 
-### Task 7: Release gate
+### Task 7: Calorie estimate replaces kg volume
+
+**Files:**
+- Modify: `index.html` (`PROGRAM` class items and alts get `met`; new kcal helpers near the muscle-count code; Finish sheet tiles ≈1993; Stats workout list ≈2169; Stats weekly grid ≈2112; Guide sheet; any other user-visible use of `dayVolume` / `sess.vol`)
+- Test: `QA\p7_kcal.py`
+
+**Interfaces:**
+- Consumes: `HKDEF`, `TAGS`, `planOf`, `DAYS.mat`, `DAYS.walk`, session `run`.
+- Produces:
+  - `KC = { MAT: 3.0, BIG: 5.0, LIFT: 3.5, H: 1.05, BW: 62 }`
+  - `kcGroup(hk) -> 'MAT'|'BIG'|'LIFT'`
+  - `bwOn(date) -> number` (kg)
+  - `kcSet(hk, reps, bw) -> number` (unrounded)
+  - `kcMin(met, min, bw) -> number` (unrounded)
+  - `kcSession(sess) -> number` (unrounded; works for new and old sessions)
+  - `kcToday(day) -> number` (unrounded; done sets and done class items of the open day)
+  - `kc5(x) -> number` (nearest 5, minimum 5 when x > 0)
+
+- [ ] **Step 1: Write the failing probe `p7_kcal.py`.** Seed `S.body = [{d: <30 days ago>, w: 62}]`. Checks (values from spec "Feature 7 > Reference numbers", tolerance ±5 unless stated):
+  - `kcGroup`: `bandbridge`, `revlunge`, `backext` → `MAT`; `legpress`, `rdl`, `thrust_m`, `thrust_mf` → `BIG`; `latpull`, `chestpress`, `abductor`, `unknown_x` → `LIFT`.
+  - `kcSet('bandbridge', 15, 62)` within ±0.3 of 4.3; per-side move doubles only the rep time; `unit:'sec'` uses seconds.
+  - `bwOn`: weight on/before date; before the first entry → earliest; empty `S.body` → 62.
+  - Full Normal Glutes A logged at program sets/reps → `kc5(kcSession(sess))` = 115 ±5; Light 80 ±5; Pull 95; Mat + Band 85; Pump day Normal 165; Yoga 85; Walk 80; Run (`run:1`) 95.
+  - Old v3.7-style session with `cmin` and no item detail computes without error.
+  - Finish sheet shows a tile with `kcal` and no `Lifted` / `kg` volume tile; Stats workout rows show `kcal`, not `kg`; weekly grid right header reads `kcal`; Guide shows `≈ N kcal / set` with N = round(kcSet(...)).
+  - Per-lift kg charts and "Stronger than 4 weeks ago?" still render.
+  - Text check: no visible `Lifted`.
+- [ ] **Step 2: Run it.** Expected: FAIL (`kcSet` undefined).
+- [ ] **Step 3: Implement** per spec "Feature 7". Class kcal uses planned minutes, not session minutes.
+- [ ] **Step 4: Run `p1`-`p7`.** Expected: all PASS, `console errors: 0`.
+- [ ] **Step 5: Commit** `git commit -am "v3.8 T7: kcal estimate replaces kg volume"`
+
+---
+
+### Task 8: Release gate
 
 **Files:**
 - Modify: `sw.js` (`VERSION` line 2 → 3.8.0), `index.html` (`APP_VER` → 3.8.0)
 - Create: `QA_REPORT.md` (written by the QA agent)
 
-- [ ] **Step 1: Bump versions**, run `p1`-`p6`, commit `v3.8.0: version bump`.
+- [ ] **Step 1: Bump versions**, run `p1`-`p7`, commit `v3.8.0: version bump`.
 - [ ] **Step 2: Wording/declutter agent** (read-only): checks every new or changed UI string against the spec and the 3-8 word rule; returns a fix list. Apply fixes, rerun probes, commit.
 - [ ] **Step 3: PT check agent** (read-only): opens the built app's `PROGRAM` / `LIBRARY` / mode rules and confirms numbers and cues match the spec and the medical limits. Apply fixes, rerun probes, commit.
-- [ ] **Step 4: QA agent** (must not edit app files): runs `p1`-`p6`, writes its own probes for spec "QA must cover" 1-12 and this plan's Review Focus 1-5, checks 360 / 384 / 412 px, writes `QA_REPORT.md` with verdict PASS / PASS WITH FIXES / BLOCK. Fix and re-run until PASS.
+- [ ] **Step 4: QA agent** (must not edit app files): runs `p1`-`p7`, writes its own probes for spec "QA must cover" 1-12 and this plan's Review Focus 1-5, checks 360 / 384 / 412 px, writes `QA_REPORT.md` with verdict PASS / PASS WITH FIXES / BLOCK. Fix and re-run until PASS.
 - [ ] **Step 5: Merge and deploy on PASS only.** `git checkout main && git merge --no-ff feat/v3.8-intensity`, commit `QA_REPORT.md`, `git push origin main`. Check `gh auth status` shows khoicorn active first.

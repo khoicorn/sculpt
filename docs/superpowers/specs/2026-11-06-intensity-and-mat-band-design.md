@@ -297,6 +297,36 @@ Two-handed kneeling pulldown is the same movement as Lat Pulldown. **[my call, P
 
 ---
 
+## Feature 7: Calorie estimate replaces kg volume (user asked 2026-11-06)
+User: male, 173 cm, 62 kg, hyperthyroid ("only a small boost"). Kcal must be good enough to see "was this day / week a lot or a little", not precise. Two PTs designed it independently, then compared and agreed; where they still differed, the Compendium code was used. This reverses the 2026-11-04 "no calorie UI" decision for estimates only (no food or intake logging).
+
+### Formula
+- Net kcal, like a watch's "active kcal": `kcal = (MET - 1) × bw × hours × 1.05`.
+- One set: `t = reps × 4 s × (side ? 2 : 1) + 60 s` (`unit: 'steps'`: 2 s per step; `unit: 'sec'`: the seconds as given). Rest beyond 60 s is not counted. No kg factor. No mode factor (Light / Hard change sets and reps, kcal follows).
+- Lift groups (gross MET), checked in this order:
+  1. `MAT 3.0`: every `noW` move (band, mat, bodyweight, incl. all 16 library moves, `revlunge`, `backext`).
+  2. `BIG 5.0`: `TAGS[hk].s` includes `'Legs'`, plus `thrust_m`, `thrust`, `thrust_mf`.
+  3. `LIFT 3.5`: everything else, incl. unknown and legacy keys.
+- Time items on planned minutes (`clsLen` / item `min`), gross MET: Pump 3.5, Light Circuit 2.5, Combat 4.8, Easy Elliptical 4.0, Yoga 2.3, Home Mobility 2.3, Stretch 2.3, cool-down walks / bikes / Walk-down / Slow Walk 3.5, Walk 3.5, Easy Run 4.5. Put a `met` field on each class item and alt.
+- Pump finisher and Combat post-class lifts use the set formula. Warm-ups are not counted.
+- Body weight: latest `S.body` `w` on or before the session date; else the earliest entry; else 62.
+- Old sessions are computed the same way: lift sets from `S.history` entries of that date; class part from `cmin` × the main class MET (title ending ` · swap` → alt MET; `run: 1` → 4.5). Kcal is computed, not stored.
+- Rounding: sessions and weeks to the nearest 5 (minimum 5 when above 0). Guide per set to the nearest 1. Always sum unrounded values.
+
+### Reference numbers at 62 kg (QA checks these within ±5)
+- Lift days Normal / Light: Glutes A 115 / 80, Push 85 / 60, Glutes B 120 / 85, Pull 95 / 70, Mat + Band 85 / 60.
+- Pump class 120, Pump day Normal 165, Light 135. Combat class 185. Yoga 60: 85. Walk 30: 80. Easy Run 25: 95.
+- One band set (MAT, not per side) 15 / 20 / 25 / 30 reps: ≈ 4 / 5 / 6 / 7 kcal. Hip Thrust Machine 4×12 ≈ 30. Lat Pulldown 4×12 ≈ 20.
+
+### Where it shows (no new text on workout cards)
+- Finish sheet: the `Lifted … kg` tile becomes kcal (`≈ 115 kcal`).
+- Stats workout list: the kg column becomes kcal.
+- Stats weekly grid: the right-hand `sets` column becomes `kcal` (week total).
+- Any other user-visible kg volume number becomes kcal. The per-lift kg charts and "Stronger than 4 weeks ago?" stay (strength, not volume).
+- Exercise Guide: one line `≈ 6 kcal / set`, from `planOf` reps and today's weight.
+
+---
+
 ## Release
 - Version 3.8.0: `VERSION` in `sw.js` and `APP_VER` in `index.html`.
 - Order: build → wording/declutter review → PT check of the built app (cues, numbers) → QA agent writes `QA_REPORT.md` → deploy only on PASS.
