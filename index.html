@@ -792,6 +792,16 @@ const MOVES = {
   cablefly: { front: true, A: [50,26, 50,54, 46,72, 46,90, 34,44, 24,62, 54,72, 54,90, 66,44, 76,62], B: [50,26, 50,54, 46,72, 46,90, 38,32, 47,22, 54,72, 54,90, 62,32, 53,22],
     props: [{ t: 'line', x1: 4, y1: 14, x2: 4, y2: 90 }, { t: 'line', x1: 96, y1: 14, x2: 96, y2: 90 }, { t: 'cable', x: 6, y: 86, j: 'W1' }, { t: 'cable', x: 94, y: 86, j: 'W2' }] }
 };
+/* ===== TEMP POSES (v3.8 Task 4) =====
+   Placeholder figures for the 17 new move keys so cards and the Guide render.
+   Task 5 deletes this whole block and draws each key in MOVES above. */
+Object.entries({
+  bandbridge: 'frogpump', slbridge: 'frogpump', bandkick: 'glutemach', hydrant: 'sidelying', clamshell: 'sidelying',
+  bandrdl: 'rdl', birddog: 'deadbug', sideplank: 'sidelying', bandpd: 'latpull', bandrow: 'cablerow',
+  proney: 'deadbug', pullapart: 'latraise', bandlat: 'latraise', bander: 'latraise', kneepush: 'chestpress',
+  bandpress: 'incpress', kneelpd1: 'latpull'
+}).forEach(([k, from]) => { if (!MOVES[k]) MOVES[k] = MOVES[from]; });
+/* ===== END TEMP POSES ===== */
 const JN = ['N','P','K1','F1','E1','W1','K2','F2','E2','W2'];
 function mkPose(a, front) {
   const p = {};
@@ -937,8 +947,8 @@ const PROGRAM = [
   { id: 'fri', tab: 'PULL', tt: 'Lift', type: 'lift', title: 'Upper Pull', sub: 'Posture + back width.', warm: 'Bike 6 min, easy. Can chat.', items: [
     { id: 'fri_lpd', hp: 1, hk: 'latpull', name: 'Lat Pulldown', what: 'Sit and pull a wide bar down to your chest.', vn: 'Máy kéo lưng xô', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
       guide: { setup: ['Knees locked under the pad.', 'Grip wider than shoulders.', 'Pull to upper chest. Exhale.'], avoid: ['Leaning far back.', 'Pulling behind the neck.'] },
-      swap: { hk: 'cablepd', name: 'Kneeling Cable Pulldown', what: 'Kneel at a high cable. Pull the bar to your upper chest.', vn: 'Cable + bar, high', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', reps: 12, w: 15, step: 2.5, rest: 90,
-        guide: { setup: ['Bar on high cable. Kneel facing it.', 'Grip wider than shoulders.', 'Exhale. Pull to upper chest.'], avoid: ['Leaning far back.', 'Shrugging.'] } } },
+      swap: { hk: 'cablepd1', name: 'Half-Kneeling 1-Arm Pulldown', what: 'Half kneel. Pull one handle down to your side.', vn: 'Cable + single handle, high', move: 'kneelpd1', muscle: 'Lats (back width)', target: 'lats', sets: 3, reps: 12, w: 7.5, step: 2.5, rest: 90, side: true,
+        guide: { setup: ['Handle on high cable. Half kneel.', 'Inside knee down, arm reaching up.', 'Exhale. Elbow down to your ribs.'], avoid: ['Twisting toward the cable.', 'Shrugging the shoulder up.'] } } },
     { id: 'fri_row', hp: 1, hk: 'cablerow', name: 'Seated Cable Row', what: 'Sit and pull a handle to your belly.', vn: 'Máy ngồi kéo cáp', move: 'cablerow', muscle: 'Mid back (posture)', target: 'upper_back', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
       guide: { setup: ['Sit tall. Feet on plate. Knees soft.', 'Exhale. Pull handle to lower ribs.', 'Squeeze shoulder blades 1 s.'], avoid: ['Rounding forward.', 'Rocking back.'] },
       swap: { hk: 'dbrow', name: 'Single-Arm DB Row', what: 'One hand on a bench. Pull a dumbbell to your hip.', vn: 'Bench + 1 dumbbell', move: 'dbrow', muscle: 'Mid back (posture)', target: 'upper_back', reps: 12, w: 10, step: 2, rest: 90, side: true,
@@ -996,6 +1006,48 @@ const PROGRAM = [
     { id: 'sun_yoga', cls: true, name: 'Yoga', vn: 'Class', min: 60, icon: 'cls', move: 'yoga', rules: ['Recovery only. No power flow.', 'Long exhales. Belly breathing.', 'Skip inversions.', 'Light extras only.'], alt: { name: 'Home Mobility 20 min', cue: 'Cat-cow, child pose, 90/90 hips, happy baby, belly breathing.' } }
   ]}
 ];
+/* ================= MAT + BAND LIBRARY =================
+   Mat, mini loop band, long loop band. Not program items: they reach the Add sheet through HKDEF + TAGS.
+   All band or bodyweight (noW), rest 90 s, reps (or seconds) go up to repTop. */
+const LIBRARY = [
+  { hk: 'bandbridge', name: 'Long-Band Glute Bridge', what: 'On your back. Band over hips. Lift hips.', vn: 'Mat + long band', move: 'bandbridge', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Band over hip bones, ends under hands.', 'Heels close, feet hip width.', 'Exhale, lift hips. Hold 2 s.'], avoid: ['Arching the lower back on top.', 'Holding breath at the top.', 'Pushing through the toes.'] } },
+  { hk: 'slbridge', name: 'Single-Leg Glute Bridge', what: 'One foot down, one knee hugged. Lift hips.', vn: 'Mat', move: 'slbridge', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 10, repTop: 15, noW: 'Body', rest: 90, side: true,
+    guide: { setup: ['Hug one knee to your chest.', 'Other heel flat, close to hip.', 'Exhale. Push heel down, lift hips.'], avoid: ['Hips dropping to one side.', 'Pushing through the toes.'] } },
+  { hk: 'bandkick', name: 'Kneeling Band Kickback', what: 'On all fours. Push one foot back.', vn: 'Mat + long band', move: 'bandkick', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, repTop: 15, noW: 'Band', rest: 90, side: true,
+    guide: { setup: ['Band around one foot, ends under hands.', 'Hands under shoulders, knees under hips.', 'Exhale. Push heel back to hip height.'], avoid: ['Arching the lower back.', 'Kicking above hip height.'] } },
+  { hk: 'hydrant', name: 'Banded Fire Hydrant', what: 'On all fours. Lift one knee out sideways.', vn: 'Mat + mini band', move: 'hydrant', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 12, repTop: 15, noW: 'Band', rest: 90, side: true,
+    guide: { setup: ['Mini band just above knees.', 'Hands under shoulders, knees under hips.', 'Lift knee out to hip height. Pause.'], avoid: ['Leaning away from the moving leg.', 'Twisting the hips open.'] } },
+  { hk: 'clamshell', name: 'Banded Clamshell', what: 'On your side. Open the top knee.', vn: 'Mat + mini band', move: 'clamshell', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 15, repTop: 20, noW: 'Band', rest: 90, side: true,
+    guide: { setup: ['Band just above knees.', 'Hips and knees bent. Feet together.', 'Open top knee. Pause 1 s.'], avoid: ['Top hip rolling backward.', 'Feet coming apart.'] } },
+  { hk: 'bandrdl', name: 'Band Romanian Deadlift', what: 'Stand on band. Hips back, stand tall.', vn: 'Long band', move: 'bandrdl', muscle: 'Hamstring + glute', target: 'hams', sets: 3, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Stand on band, feet hip width.', 'Hold top of loop, arms long.', 'Hips back. Exhale, stand, squeeze.'], avoid: ['Rounding the back.', 'Squatting instead of hinging.', 'Leaning back at the top.'] } },
+  { hk: 'birddog', name: 'Bird Dog', what: 'On all fours. Reach opposite arm and leg.', vn: 'Mat', move: 'birddog', muscle: 'Deep abs + low back', target: 'abs', sets: 2, reps: 8, repTop: 10, noW: 'Body', rest: 90, side: true,
+    guide: { setup: ['Hands under shoulders, knees under hips.', 'Exhale. Reach arm and opposite leg.', 'Hold 2 s, keep breathing.'], avoid: ['Hips tilting to one side.', 'Leg above hip height.'] } },
+  { hk: 'sideplank', name: 'Kneeling Side Plank', what: 'On your side, knees down. Lift hips.', vn: 'Mat', move: 'sideplank', muscle: 'Side abs', target: 'abs', sets: 3, reps: 20, repTop: 30, unit: 'sec', noW: 'Body', rest: 90, side: true,
+    guide: { setup: ['Elbow under shoulder. Knees bent.', 'Lift hips to a straight line.', 'Breathe slow the whole hold.'], avoid: ['Holding your breath.', 'Hips sagging down.', 'Holding past 30 s.'] } },
+  { hk: 'bandpd', name: 'Band Overhead Pulldown', what: 'Kneel tall. Pull band from overhead to chest.', vn: 'Mat + long band', move: 'bandpd', muscle: 'Lats (back width)', target: 'lats', sets: 3, reps: 12, repTop: 15, noW: 'Band', rest: 90,
+    guide: { setup: ['Kneel tall. Band overhead, hands wide.', 'Exhale. Pull elbows down to ribs.', 'Stretch band apart to upper chest.'], avoid: ['Arching the lower back.', 'Shrugging shoulders up.'] } },
+  { hk: 'bandrow', name: 'Seated Band Row', what: 'Sit, legs long. Band around feet. Row.', vn: 'Mat + long band', move: 'bandrow', muscle: 'Mid back (posture)', target: 'upper_back', sets: 3, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Sit tall. Band around both soles.', 'Exhale. Pull hands to lower ribs.', 'Squeeze shoulder blades 1 s.'], avoid: ['Rounding the back.', 'Leaning back to pull.'] } },
+  { hk: 'proney', name: 'Prone Y Raise', what: 'Lie face down. Lift arms in a Y.', vn: 'Mat', move: 'proney', muscle: 'Lower traps (posture)', target: 'upper_back', sets: 2, reps: 10, repTop: 15, noW: 'Body', rest: 90,
+    guide: { setup: ['Face down. Forehead on a towel.', 'Arms overhead in a Y, thumbs up.', 'Exhale. Lift arms. Hold 2 s.'], avoid: ['Lifting the chest high.', 'Shrugging to your ears.'] } },
+  { hk: 'pullapart', name: 'Band Pull-Apart', what: 'Arms straight ahead. Pull the band apart.', vn: 'Long band', move: 'pullapart', muscle: 'Rear shoulder', target: 'rear_delt', sets: 2, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Arms straight at shoulder height.', 'Hands shoulder width. Too hard? Wider.', 'Exhale. Band to chest. Squeeze 1 s.'], avoid: ['Shrugging shoulders up.', 'Ribs flaring forward.'] } },
+  { hk: 'bandlat', name: 'Band Lateral Raise', what: 'Stand on band. Lift arms to the sides.', vn: 'Long band', move: 'bandlat', muscle: 'Side shoulder', target: 'side_delt', sets: 3, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Stand on band. One side per hand.', 'Lead with elbows to shoulder height.', 'Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Swinging the body.'] } },
+  { hk: 'bander', name: 'Band External Rotation', what: 'Elbows at sides. Rotate hands out.', vn: 'Mini band', move: 'bander', muscle: 'Rear shoulder', target: 'rear_delt', sets: 2, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Mini band around both wrists.', 'Elbows bent 90°, tucked at sides.', 'Rotate hands out. Pause 1 s.'], avoid: ['Elbows leaving your sides.', 'Leaning back to cheat.'] } },
+  { hk: 'kneepush', name: 'Knee Push-Up', what: 'Push-up with knees on the mat.', vn: 'Mat', move: 'kneepush', muscle: 'Chest', target: 'inner_chest', sets: 3, reps: 8, repTop: 12, noW: 'Body', rest: 90,
+    guide: { setup: ['Hands a bit wider than shoulders.', 'Straight line knees to head.', 'Lower slow. Exhale, push up.'], avoid: ['Hips sagging or piking up.', 'Elbows flaring out wide.', 'Holding breath at the bottom.'] } },
+  { hk: 'bandpress', name: 'Band Incline Press', what: 'Band behind back. Press up and forward.', vn: 'Long band', move: 'bandpress', muscle: 'Upper chest', target: 'upper_chest', sets: 3, reps: 12, repTop: 15, noW: 'Band', rest: 90,
+    guide: { setup: ['Band across upper back, under arms.', 'Small split stance. Elbows at 45°.', 'Exhale. Press up to eye level.'], avoid: ['Shrugging shoulders up.', 'Arching the lower back.', 'Locking the elbows hard.'] } }
+];
+/* retired moves: no longer in PROGRAM, kept so old history still shows by name (TAGS old: not pickable) */
+const RETIRED = [
+  { hk: 'cablepd', name: 'Kneeling Cable Pulldown', what: 'Kneel at a high cable. Pull the bar to your upper chest.', vn: 'Cable + bar, high', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', sets: 4, reps: 12, w: 15, step: 2.5, rest: 90,
+    guide: { setup: ['Bar on high cable. Kneel facing it.', 'Grip wider than shoulders.', 'Exhale. Pull to upper chest.'], avoid: ['Leaning far back.', 'Shrugging.'] } }
+];
 const ORDER = ['mon', 'tue', 'thu', 'fri', 'wed', 'sat', 'sun'];
 /* standard week, Mon..Sun: Glutes A, Push, Yoga, Glutes B, Pull, Pump, Rest */
 const STANDARD = ['mon', 'tue', 'sun', 'thu', 'fri', 'wed', 'rest'];
@@ -1003,7 +1055,8 @@ const DOW = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const GROUP = { glute_max: 'Glutes', glute_med: 'Glutes', hams: 'Glutes', quads: 'Legs', upper_chest: 'Chest', inner_chest: 'Chest', side_delt: 'Shoulders', rear_delt: 'Shoulders', lats: 'Back', upper_back: 'Back', abs: 'Core' };
 /* muscle tags by history key (hk). p = primary (counts 1 set), s = secondary (0.5 set each).
    pl = place in the picker. l = light (class days, Glutes-tomorrow). lv = light twin used on light-only days.
-   to = hidden in the picker, its movement row is `to`. old = legacy hk, not in PROGRAM (old history only). */
+   to = hidden in the picker, its movement row is `to`. old = legacy hk, not in PROGRAM (old history only).
+   bar = needs a pull-up bar (not a home move). */
 const CATS = ['Glutes', 'Chest', 'Back', 'Shoulders', 'Core'];   /* picker, reports, tie order */
 const CATS_R = CATS.concat('Legs');                               /* reports */
 const TAGS = {
@@ -1014,7 +1067,7 @@ const TAGS = {
   glutemach:     { p: 'Glutes', s: [], pl: 'Machine' },
   kick:          { p: 'Glutes', s: [], pl: 'Cable' },
   abductor:      { p: 'Glutes', s: [], pl: 'Machine', lv: 'abductor_f' },
-  abd:           { p: 'Glutes', s: [], pl: 'Band', l: 1 },
+  abd:           { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
   deadbug:       { p: 'Core', s: [], pl: 'Mat', l: 1 },
   pallof:        { p: 'Core', s: [], pl: 'Cable', l: 1 },
   chestpress:    { p: 'Chest', s: ['Shoulders'], pl: 'Machine' },
@@ -1034,15 +1087,15 @@ const TAGS = {
   anglepress:    { p: 'Glutes', s: ['Legs'], pl: 'Machine' },
   stepup:        { p: 'Glutes', s: ['Legs'], pl: 'Dumbbell' },
   cableabd:      { p: 'Glutes', s: [], pl: 'Cable' },
-  latwalk:       { p: 'Glutes', s: [], pl: 'Band', l: 1 },
+  latwalk:       { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
   backext:       { p: 'Glutes', s: ['Legs'], pl: 'Machine' },
   bridge:        { p: 'Glutes', s: [], pl: 'Dumbbell' },
   latpull:       { p: 'Back', s: [], pl: 'Machine' },
-  cablepd:       { p: 'Back', s: [], pl: 'Cable' },
+  cablepd1:      { p: 'Back', s: [], pl: 'Cable' },
   cablerow:      { p: 'Back', s: [], pl: 'Machine' },
   dbrow:         { p: 'Back', s: [], pl: 'Dumbbell' },
   assistpu:      { p: 'Back', s: [], pl: 'Machine' },
-  bandpu:        { p: 'Back', s: [], pl: 'Band' },
+  bandpu:        { p: 'Back', s: [], pl: 'Long band', bar: 1 },
   incfly_l:      { p: 'Chest', s: [], pl: 'Dumbbell', l: 1, to: 'incfly' },
   cablefly_lh_l: { p: 'Chest', s: [], pl: 'Cable', l: 1 },
   cablelat:      { p: 'Shoulders', s: [], pl: 'Cable' },
@@ -1051,11 +1104,29 @@ const TAGS = {
   abductor_f:    { p: 'Glutes', s: [], pl: 'Machine', l: 1, to: 'abductor' },
   facepull_l:    { p: 'Shoulders', s: ['Back'], pl: 'Cable', l: 1, to: 'facepull' },
   sidelying:     { p: 'Glutes', s: [], pl: 'Mat', l: 1 },
+  /* mat + band library */
+  bandbridge:    { p: 'Glutes', s: [], pl: 'Long band' },
+  slbridge:      { p: 'Glutes', s: ['Legs'], pl: 'Mat' },
+  bandkick:      { p: 'Glutes', s: [], pl: 'Long band' },
+  hydrant:       { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
+  clamshell:     { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
+  bandrdl:       { p: 'Glutes', s: ['Legs'], pl: 'Long band' },
+  birddog:       { p: 'Core', s: ['Glutes'], pl: 'Mat', l: 1 },
+  sideplank:     { p: 'Core', s: ['Glutes'], pl: 'Mat' },
+  bandpd:        { p: 'Back', s: [], pl: 'Long band' },
+  bandrow:       { p: 'Back', s: [], pl: 'Long band' },
+  proney:        { p: 'Back', s: ['Shoulders'], pl: 'Mat', l: 1 },
+  pullapart:     { p: 'Shoulders', s: ['Back'], pl: 'Long band', l: 1 },
+  bandlat:       { p: 'Shoulders', s: [], pl: 'Long band' },
+  bander:        { p: 'Shoulders', s: ['Back'], pl: 'Mini band', l: 1 },
+  kneepush:      { p: 'Chest', s: ['Shoulders'], pl: 'Mat' },
+  bandpress:     { p: 'Chest', s: ['Shoulders'], pl: 'Long band' },
   /* legacy keys: count old history only */
   bridge_bw:     { p: 'Glutes', s: [], old: 1 },
   abcrunch:      { p: 'Core', s: [], old: 1 },
   legext:        { p: 'Legs', s: [], old: 1 },
-  cpress_hi:     { p: 'Chest', s: ['Shoulders'], old: 1 }
+  cpress_hi:     { p: 'Chest', s: ['Shoulders'], old: 1 },
+  cablepd:       { p: 'Back', s: [], pl: 'Cable', old: 1 }
 };
 /* class minutes for old sessions that have no cmin */
 const CLSMIN = { wed: 45, sat: 45, sun: 60 };
@@ -1064,7 +1135,10 @@ const LIFTS = ['mon', 'tue', 'thu', 'fri'];
 const DAYS = {}; PROGRAM.forEach(d => DAYS[d.id] = d);
 const EX = {}; PROGRAM.forEach(d => d.items.forEach(it => EX[it.id] = it));
 const HKDEF = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk && !HKDEF[it.hk]) HKDEF[it.hk] = it; if (it.swap && !HKDEF[it.swap.hk]) HKDEF[it.swap.hk] = Object.assign({}, it.swap, { sets: it.swap.sets || it.sets }); }));
+/* library and retired moves: program defs win when an hk is in both */
+LIBRARY.concat(RETIRED).forEach(d => { if (!HKDEF[d.hk]) HKDEF[d.hk] = d; });
 const HKNAME = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk) HKNAME[it.hk] = it.name; if (it.swap) HKNAME[it.swap.hk] = it.swap.name; }));
+LIBRARY.concat(RETIRED).forEach(d => { if (!HKNAME[d.hk]) HKNAME[d.hk] = d.name; });
 /* tags for any hk: TAGS first, then the old single-group map, else null (not counted) */
 const tagOf = hk => TAGS[hk] || (HKDEF[hk] && GROUP[HKDEF[hk].target] ? { p: GROUP[HKDEF[hk].target], s: [] } : null);
 /* weight of one set of hk for category c: 1, 0.5 or 0 */
@@ -1189,7 +1263,8 @@ const offToday = (day, it) => !!day.after && !it.cls && !it.added && modeOn(day.
 const maxExtra = day => ({ light: 0, normal: 2, hard: 1 })[modeOn(day.id)];
 const modeSfx = m => (m === 'light' ? ' · Light' : m === 'hard' ? ' · Hard' : '');
 const HKASSIST = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.assist) HKASSIST[it.hk] = 1; if (it.swap && it.swap.assist) HKASSIST[it.swap.hk] = 1; }));
-const repUnit = c => c.unit || 'reps';
+/* shown unit: 'sec' holds read as "20 s" */
+const repUnit = c => (c.unit === 'sec' ? 's' : c.unit || 'reps');
 const repStep = c => (c.unit === 'sec' || c.unit === 'steps' ? 5 : 1);
 const wUnit = c => (c.assist ? 'kg assist' : c.pair ? 'kg each' : 'kg');
 
@@ -1219,7 +1294,7 @@ function suggest(c) {
   const hard = js.some(s => s.f === 'h');
   if (c.noW && !c.repTop) return { w: 0, r: Math.max(c.reps, ...js.map(s => s.r)), why: 'Same', t: 'same' };
   if (c.noW) { const k = noWStep(c);
-    return allHit && !hard && tr < c.repTop ? { w: 0, r: Math.min(c.repTop, tr + k), why: '+' + k + ' ' + (k > 1 ? 'sec' : 'rep'), t: 'up' } : { w: 0, r: tr, why: 'Same', t: 'same' }; }
+    return allHit && !hard && tr < c.repTop ? { w: 0, r: Math.min(c.repTop, tr + k), why: '+' + k + ' ' + (k > 1 ? 's' : 'rep'), t: 'up' } : { w: 0, r: tr, why: 'Same', t: 'same' }; }
   /* 21+ days since this move: 1 step lighter */
   if (daysAgo(l.date) >= 21) return { w: wNext(c, base, -1), r: tr, why: 'lighter', t: 'down' };
   if (allHit && !hard) {
@@ -1639,7 +1714,7 @@ function cardEx(ex, i) {
         <div class="meta">${c.vn}</div></div>
       <button class="gbtn" data-guide="${ex.id}" aria-label="How to">i</button></div>
     <div class="sug"><div>
-      <div class="sv">${c.noW ? c.noW : fmtW(p.w) + ' ' + wUnit(c)} × ${p.r}${c.unit ? ' ' + c.unit : ''}${c.side ? ' / side' : ''}</div>
+      <div class="sv">${c.noW ? c.noW : fmtW(p.w) + ' ' + wUnit(c)} × ${p.r}${c.unit ? ' ' + repUnit(c) : ''}${c.side ? ' / side' : ''}</div>
       ${!light && ['up', 'down', 'cap'].includes(sg.t) ? `<div class="sm"><span class="sw ${sg.t}">${arrow}${sg.why}</span></div>` : ''}
       ${od.length ? `<div class="sm"><span class="sw up">✓ ${od.length} done on ${otherCur(ex).name}</span></div>` : ''}</div>
       ${differs ? `<button class="apply" data-apply="${ex.id}">Use ${fmtW(p.w)} kg</button>` : ''}</div>
@@ -2279,7 +2354,7 @@ function statsLifts() {
   const main = rows.filter(r => r.n >= 3), rest = rows.filter(r => r.n < 3), up = main.filter(r => r.gain > 0).length;
   const head = main.length ? `<div class="shead">Up on <b>${up} of ${main.length}</b> lifts.</div>` : '<div class="shead">Do a move 3 times to see progress.</div>';
   const row = r => {
-    const unit = r.d.noW ? ' reps' : r.d.assist ? ' kg assist' : ' kg';
+    const unit = r.d.noW ? ' ' + repUnit(r.d) : r.d.assist ? ' kg assist' : ' kg';
     const ch = r.n < 2 ? '<span class="lc">new</span>' : r.gain > 0 ? `<span class="lc up">▲ ${r.pct}%</span>` : r.gain < 0 ? `<span class="lc dn">▼ ${Math.abs(r.pct)}%</span>` : '<span class="lc">same</span>';
     return `<div class="lift"><div><div class="a">${r.d.name}</div><div class="b">${r.n < 2 ? '' : fmtW(r.first) + ' → '}<b>${fmtW(r.last)}</b>${unit}</div></div>${spark(r.pts, r.d.assist)}${ch}</div>`;
   };
@@ -2323,7 +2398,7 @@ function recentTxt(hk) {
   Object.keys(S.history).filter(k => canon(k) === canon(hk)).forEach(k => S.history[k].forEach(e => { if (e.date === today) t = 'Done today'; else if (e.date === y && !t) t = 'Done yesterday'; }));
   return t;
 }
-const ADDGROUPS = [['Machine', ['Machine']], ['Cable', ['Cable']], ['Dumbbell', ['Dumbbell']], ['Band and mat', ['Band', 'Mat']]];
+const ADDGROUPS = [['Machine', ['Machine']], ['Cable', ['Cable']], ['Dumbbell', ['Dumbbell']], ['Band', ['Mini band', 'Long band']], ['Mat', ['Mat']]];
 function renderAdd() {
   const day = DAYS[S.view], rec = recommend(day);
   let h = '<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>';
@@ -2344,7 +2419,7 @@ function renderAdd() {
       const rows = i.rows.filter(hk => pls.includes((TAGS[hk] || {}).pl)); if (!rows.length) return;
       h += `<div class="lbl">${lab}</div><div class="mlist">` + rows.map(hk => {
         const d = HKDEF[hk], tod = have.has(canon(hk)), chip = tod ? 'Today' : recentTxt(hk);
-        return `<button class="xrow" data-addhk="${hk}" ${tod ? 'disabled' : ''}><span class="xf">${moveSVG(d.move, false)}</span><span class="xt"><b>${d.name}</b><small>${lab === 'Band and mat' ? TAGS[hk].pl + ' · ' : ''}${lastTxt(hk)}</small></span>${chip ? `<span class="badge ${tod ? 'gray' : ''}">${chip}</span>` : '<span></span>'}<span class="chev">›</span></button>`;
+        return `<button class="xrow" data-addhk="${hk}" ${tod ? 'disabled' : ''}><span class="xf">${moveSVG(d.move, false)}</span><span class="xt"><b>${d.name}</b><small>${lab === 'Band' ? TAGS[hk].pl + ' · ' : ''}${lastTxt(hk)}</small></span>${chip ? `<span class="badge ${tod ? 'gray' : ''}">${chip}</span>` : '<span></span>'}<span class="chev">›</span></button>`;
       }).join('') + '</div>';
     });
     if (!i.rows.length) h += '<div class="empty">No light moves today.</div>';
