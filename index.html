@@ -1265,7 +1265,9 @@ const skey = ex => ex.id + (isSwapped(ex) ? '~s' : '');
 const otherCur = ex => (isSwapped(ex) || !ex.swap ? ex : asSwap(ex));
 const otherDone = ex => (ex.cls || !ex.swap ? [] : (S.sets[ex.id + (isSwapped(ex) ? '' : '~s')] || []).filter(s => s.done));
 /* today's intensity: the pick saved today, else today's suggestion */
-const modeNow = () => (S.mode && S.mode.d === todayStr() ? S.mode.v : suggestMode().v);
+/* a workout started on the mode's date and still open (late session past midnight) keeps that mode */
+const modeLive = () => !!S.mode && Object.values(S.start || {}).some(t => t && ds(new Date(t)) === S.mode.d && Date.now() - t < 6 * 3600000);
+const modeNow = () => (S.mode && (S.mode.d === todayStr() || modeLive()) ? S.mode.v : suggestMode().v);
 /* Light after Pump or Combat yesterday, or after 10+ days off; never Hard */
 function suggestMode() {
   const t = todayStr(), y = addDays(t, -1); let pump = false, combat = false, last = '';
@@ -1770,7 +1772,8 @@ function renderTabs() {
   $('#btnStats').classList.toggle('on', S.view === 'stats');
 }
 function centerTab() { const a = tabsEl.querySelector('.active') || tabsEl.querySelector('.next') || tabsEl.firstElementChild; if (a) tabsEl.scrollLeft = a.offsetLeft - (tabsEl.clientWidth - a.offsetWidth) / 2; }
-function render(keepScroll) { renderTabs(); if (!keepScroll) centerTab(); if (S.view === 'stats') renderStats(); else renderDay(); updateHUD(); fxFlush(); if (!keepScroll) window.scrollTo({ top: 0 }); }
+let shownDay = '';   /* date the day view was drawn for; a tap after midnight redraws first */
+function render(keepScroll) { shownDay = todayStr(); renderTabs(); if (!keepScroll) centerTab(); if (S.view === 'stats') renderStats(); else renderDay(); updateHUD(); fxFlush(); if (!keepScroll) window.scrollTo({ top: 0 }); }
 
 /* intensity picker: the old heart-rate panel and 3-column grid; a tap saves, no lock */
 function modePicker(day) {
@@ -1787,7 +1790,7 @@ function renderDay() {
   const day = DAYS[S.view], lift = day.type === 'lift';
   dropStale(day);
   /* no pick yet today: a suggested Light may swap the class; any day: an old Light swap is undone */
-  if (lightSwap(!(S.mode && S.mode.d === todayStr()))) save();
+  if (lightSwap(!(S.mode && (S.mode.d === todayStr() || modeLive())))) save();
   /* a Run swap left from before is undone when a run is not allowed today (not once it started) */
   day.items.forEach(it => { if (it.cls && it.alt && it.alt.run && S.swaps[it.id] === 'use' && !clsBusy(it) && runBlock()) { S.swaps[it.id] = 0; save(); } });
   if (reorderDay !== day.id) reorderDay = null;
@@ -2105,6 +2108,7 @@ $('#feel').addEventListener('click', e => {
 tabsEl.addEventListener('click', e => { const b = e.target.closest('.tab'); if (!b) return; buzz('tick'); S.view = b.dataset.day; S.viewDate = todayStr(); save(); render(); });
 
 mainEl.addEventListener('click', e => {
+  if (shownDay && shownDay !== todayStr()) { buzz('block'); render(true); return; }
   if (S.view === 'stats') { statsClick(e); return; }
   const t = e.target;
   const card = t.closest('[data-ex]'); const ex = card ? getEx(card.dataset.ex) : null;
@@ -2802,7 +2806,7 @@ document.addEventListener('click', e => { if (Date.now() - sheetT < 350) { e.sto
 /* ================= BOOT ================= */
 /* back in the app: catch up the ring, and keep the screen on again (a video releases the lock) */
 const inWorkout = () => S.view !== 'stats' && (!!S.timer || !!S.start[S.view]);
-document.addEventListener('visibilitychange', () => { if (document.hidden) return; if (S.timer) { runTick(); if (timerActive()) { ringRun(); scheduleBeep(); } } if (inWorkout()) keepAwake(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) return; if (shownDay && shownDay !== todayStr()) render(true); if (S.timer) { runTick(); if (timerActive()) { ringRun(); scheduleBeep(); } } if (inWorkout()) keepAwake(); });
 if (S.viewDate !== todayStr() && S.view !== 'stats') { S.view = nextUp(); S.viewDate = todayStr(); save(); }
 /* home-screen shortcuts: long-press the app icon -> ?go=next or ?go=stats */
 const GO = new URLSearchParams(location.search).get('go');
