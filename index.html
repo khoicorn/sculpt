@@ -72,14 +72,12 @@
   .chip.red { border-color: var(--red); color: var(--red); }
   .lbl { font-family: var(--head); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); font-weight: 700; margin: 18px 0 8px; }
 
-  .hr { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px; margin-top: 14px; transition: var(--t); }
-  .hr .q { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-weight: 700; }
-  .hr .opts { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 8px; }
+  .mode { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px; margin-top: 14px; transition: var(--t); }
+  .mode .q { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-weight: 700; }
+  .mode .opts { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 8px; }
   .opt { min-height: 52px; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 14px; font-weight: 700; transition: var(--t); }
   .opt.on { background: var(--lime); border-color: var(--lime); color: #09090B; }
-  .opt.on.bad { background: var(--red); border-color: var(--red); color: #09090B; }
-  .hr .msg { font-size: 13px; color: var(--dim); margin-top: 8px; }
-  .hr.bad { border-color: var(--red); } .hr.bad .msg { color: var(--red); }
+  .mode .msg { font-size: 13px; color: var(--dim); margin-top: 8px; }
   .warm { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 8px 8px 8px 12px; font-size: 14px; color: var(--muted); min-height: 56px; }
   .wlink { flex: 0 0 auto; min-height: 44px; padding: 0 12px; display: flex; align-items: center; gap: 6px; border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: var(--t); }
   .wlink:active { border-color: var(--lime); color: var(--lime); }
@@ -162,10 +160,8 @@
   .ccard .body + .body { padding-top: 0; }
   .ccard .big { margin-top: 0; }
   .ccard .big.live { border-color: var(--lime); color: var(--lime); }
-  .ccard .big.calm { margin-top: 0; background: var(--lime); border-color: var(--lime); color: #09090B; }
-  .calmok { display: flex; align-items: center; justify-content: space-between; min-height: 44px; font-size: 13px; color: var(--lime); }
+  .calmok { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; font-size: 13px; color: var(--lime); }
   .calmok .btn-q { min-height: 44px; min-width: 48px; }
-  .calmok.red { color: var(--red); }
   .thumb.static { color: var(--dim); border-color: var(--line); }
   .big { width: 100%; min-height: 56px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; background: transparent; border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; transition: var(--t); }
   .big.on { background: var(--lime); border-color: var(--lime); color: #09090B; }
@@ -526,10 +522,10 @@
   .is-pressed { transition-duration: 0s !important; }
   :is(.ok, .mvb, .gbtn, .xbtn, .bk, .ibtn, .tab, .thumb, .pday, .wnav button, .pill).is-pressed { transform: scale(0.96); }
   :is(.btn, .big, .swap, .addrow, .apply, .opt, .feel button, .wlink).is-pressed { transform: scale(0.98); }
-  :is(.opt:not(.on), .feel button:not(.on), .big:not(.on):not(.calm), .btn-g, .ibtn:not(.warn), .tab:not(.active), .bk, .mvb, .gbtn, .xbtn, .thumb, .wnav button, .apply, .swap, .addrow, .wlink).is-pressed { border-color: var(--lime); }
+  :is(.opt:not(.on), .feel button:not(.on), .big:not(.on), .btn-g, .ibtn:not(.warn), .tab:not(.active), .bk, .mvb, .gbtn, .xbtn, .thumb, .wnav button, .apply, .swap, .addrow, .wlink).is-pressed { border-color: var(--lime); }
   :is(.pill, .stp button).is-pressed { background: var(--lime); border-color: var(--lime); color: #09090B; }
-  :is(.btn-p, .big.on, .big.calm, .opt.on, .feel button.on, .tab.active, .seg button.on).is-pressed { filter: brightness(0.9); }
-  :is(.btn-r, .ibtn.warn, .opt.bad:not(.on)).is-pressed { border-color: var(--red); background-color: var(--red-dim); }
+  :is(.btn-p, .big.on, .opt.on, .feel button.on, .tab.active, .seg button.on).is-pressed { filter: brightness(0.9); }
+  :is(.btn-r, .ibtn.warn).is-pressed { border-color: var(--red); background-color: var(--red-dim); }
   :is(.mrow, .crow, .xrow, .row.tap, .seg button:not(.on), .set:not(.done)).is-pressed { background-color: var(--panel-2); }
   :is(.btn-q, .rbtn).is-pressed { color: var(--lime); }
   .ok.locked.is-pressed { transform: none; }
@@ -597,7 +593,7 @@
     <h2>How it works</h2>
     <ol class="steps">
       <li><b>Plan</b><span>Your week has 4 lifts, 2 classes and 1 rest day. Tap a day to change it.</span><button class="btn-q" data-go="plan">Open my week</button></li>
-      <li><b>Train</b><span>Open today's workout. Tap resting HR. Reorder if a class is late.</span><button class="btn-q" data-go="today">Today's workout</button></li>
+      <li><b>Train</b><span>Open today's workout. Pick how hard. Reorder if a class is late.</span><button class="btn-q" data-go="today">Today's workout</button></li>
       <li><b>Record</b><span>Tap the circle after each set and rate it. Then Finish + log.</span></li>
       <li><b>Review</b><span>Stats shows sets per muscle and your lifts. The app sets your next kg.</span><button class="btn-q" data-go="lifts">See my lifts</button></li>
     </ol>
@@ -611,7 +607,7 @@
     <h2>Menu</h2>
     <div class="mlist">
       <button class="mrow" data-menu="guide"><span>How it works</span><span class="chev">›</span></button>
-      <button class="mrow" data-menu="rules"><span>Rules<small>Heart and lifting safety</small></span><span class="chev">›</span></button>
+      <button class="mrow" data-menu="rules"><span>Rules<small>Safety and lifting</small></span><span class="chev">›</span></button>
       <button class="mrow" data-menu="profile"><span>Profile<small>InBody and body trend</small></span><span class="chev">›</span></button>
       <button class="mrow" data-menu="install" id="rowInstall" style="display:none"><span>Install app</span><span class="chev">›</span></button>
     </div>
@@ -632,18 +628,25 @@
       <li>4 lifts: Glutes A, Push, Glutes B, Pull.</li>
       <li>Plus 1-3 classes: Pump, Combat, Yoga.</li>
       <li>Do every exercise. Reorder if needed.</li>
-      <li>Class days: max 3 light extras.</li>
+      <li>Extras: Light 0, Normal 2, Hard 1.</li>
       <li>Glutes A and B: 2+ days apart.</li>
+      <li>Combat max 1x per week.</li>
+      <li>Gym full? Do Mat + Band.</li>
     </ul>
-    <h4 class="red">Heart</h4>
+    <h4>Intensity</h4>
     <ul>
-      <li>No HIIT. Cardio = warm-up only.</li>
+      <li>Light: 1 set less, lighter kg.</li>
+      <li>Hard: 1 more set on 2 moves.</li>
+      <li>Hard max 2x a week.</li>
+    </ul>
+    <h4 class="red">Safety</h4>
+    <ul>
+      <li>No HIIT. Easy runs on Walk tab only.</li>
       <li>Stop every set with 2-3 reps left.</li>
       <li>Rest timer locks the next set. Skip only after 90 s.</li>
-      <li>Sets before class: tap resting HR first.</li>
-      <li>Resting HR over 100 = Yoga or walk.</li>
-      <li>Class: HR over 150 = walk until under 120.</li>
-      <li>Combat max 1x per week.</li>
+      <li>Tired? Pick Light, or skip today.</li>
+      <li>Can't speak a full sentence? Slow down.</li>
+      <li>Dizzy, chest tight, heart racing: stop.</li>
     </ul>
     <h4 class="red">Lifting</h4>
     <ul>
@@ -864,7 +867,7 @@ function figure(key) {
    w = suggested start kg (first session). pair = kg per hand (2 dumbbells).
    side = reps per side. noW = bodyweight/band. assist = machine help (more = easier). */
 const PROGRAM = [
-  { id: 'mon', tab: 'GLU A', tt: 'Lift', type: 'lift', title: 'Glutes A', sub: 'Hip thrust day. Round, lifted glutes.', warm: 'Bike 8 min, easy. HR under 120.', items: [
+  { id: 'mon', tab: 'GLU A', tt: 'Lift', type: 'lift', title: 'Glutes A', sub: 'Hip thrust day. Round, lifted glutes.', warm: 'Bike 8 min, easy. Can chat.', items: [
     { id: 'mon_thrustm', hk: 'thrust_m', name: 'Hip Thrust Machine', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 4, reps: 12, w: 20, step: 5, max: 60, rest: 120,
       guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat. Shins straight up at the top.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Pushing through the toes.'] },
       swap: { hk: 'thrust', name: 'DB Hip Thrust', what: 'Upper back on a bench. Lift hips with a dumbbell on them.', vn: 'Bench + 1 dumbbell', move: 'hipthrust', muscle: 'Glute max', target: 'glute_max', reps: 12, w: 10, step: 2, rest: 120,
@@ -886,7 +889,7 @@ const PROGRAM = [
       swap: { hk: 'pallof', name: 'Cable Pallof Press', what: 'Side-on to a cable. Push the handle straight out. Do not twist.', vn: 'Cable, chest height', move: 'pallof', muscle: 'Deep abs', target: 'abs', reps: 10, w: 5, step: 2.5, rest: 90, side: true,
         guide: { setup: ['Cable at chest height. Stand side-on.', 'Exhale. Press handle straight out.', 'Hold 2 s. Keep breathing. Return.'], avoid: ['Turning toward the cable.', 'Holding breath.'] } } }
   ]},
-  { id: 'tue', tab: 'PUSH', tt: 'Lift', type: 'lift', title: 'Upper Push', sub: 'Upper chest line + shoulders.', warm: 'Elliptical 6 min, easy. HR under 120.', items: [
+  { id: 'tue', tab: 'PUSH', tt: 'Lift', type: 'lift', title: 'Upper Push', sub: 'Upper chest line + shoulders.', warm: 'Elliptical 6 min, easy. Can chat.', items: [
     { id: 'tue_cpress', hk: 'chestpress', name: 'Chest Press Machine', what: 'Sit and push handles forward.', vn: 'Máy đẩy ngực', move: 'chestpress', muscle: 'Upper chest', target: 'upper_chest', sets: 3, reps: 12, w: 15, step: 2.5, rest: 90,
       guide: { setup: ['Set seat so handles sit just above nipple line.', 'Elbows 45° from body.', 'Exhale and push. No lockout.'], avoid: ['Handles below nipple line: works lower chest.', 'Flaring elbows out.', 'Holding breath.'] },
       swap: { hk: 'incpress', name: 'Incline DB Press', what: 'On a tilted bench, press dumbbells up.', vn: 'Bench 30° + 2 dumbbells', move: 'incpress', muscle: 'Upper chest', target: 'upper_chest', reps: 12, w: 6, pair: true, step: 1, rest: 90,
@@ -908,7 +911,7 @@ const PROGRAM = [
       swap: { hk: 'reardelt', name: 'Rear-Delt DB Fly', what: 'Chest on a bench. Lift dumbbells out to the sides.', vn: 'Incline bench + 2 dumbbells', move: 'reardelt', muscle: 'Rear shoulder', target: 'rear_delt', reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
         guide: { setup: ['Chest on incline bench.', 'Arms hang. Slight elbow bend.', 'Lift out to shoulder height.'], avoid: ['Swinging.', 'Shrugging.'] } } }
   ]},
-  { id: 'thu', tab: 'GLU B', tt: 'Lift', type: 'lift', title: 'Glutes B', sub: 'Side glutes + hamstrings.', warm: 'Rowing 5 min, damper 3. HR under 120.', items: [
+  { id: 'thu', tab: 'GLU B', tt: 'Lift', type: 'lift', title: 'Glutes B', sub: 'Side glutes + hamstrings.', warm: 'Rowing 5 min, damper 3. Can chat.', items: [
     { id: 'thu_rdl', hk: 'rdl', name: 'DB Romanian Deadlift', what: 'Hold dumbbells. Push hips back, then stand tall.', vn: '2 dumbbells', move: 'rdl', muscle: 'Hamstring + glute', target: 'hams', sets: 3, reps: 12, w: 8, pair: true, step: 2, rest: 120,
       guide: { setup: ['Dumbbells on front of thighs.', 'Soft knees. Push hips back, back flat.', 'Feel hamstring stretch. Exhale, stand.'], avoid: ['Rounding the back.', 'Heavy weight. Stay light.', 'Holding breath.'] },
       swap: { hk: 'pullthrough', name: 'Cable Pull-Through', what: 'Back to a low cable. Push hips back, then drive them forward.', vn: 'Cable + rope, low', move: 'pullthrough', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 10, step: 2.5, rest: 120,
@@ -930,7 +933,7 @@ const PROGRAM = [
       swap: { hk: 'bridge', name: 'DB Glute Bridge', what: 'Lie on your back. Lift hips with a dumbbell on them.', vn: 'Floor + 1 dumbbell', move: 'bridge', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 12, step: 2, rest: 90,
         guide: { setup: ['Lie on back, knees bent, feet flat.', 'Dumbbell on hip bones.', 'Exhale, lift hips. Hold 2 s.'], avoid: ['Arching the back.', 'Pushing through the neck.'] } } }
   ]},
-  { id: 'fri', tab: 'PULL', tt: 'Lift', type: 'lift', title: 'Upper Pull', sub: 'Posture + back width.', warm: 'Bike 6 min, easy. HR under 120.', items: [
+  { id: 'fri', tab: 'PULL', tt: 'Lift', type: 'lift', title: 'Upper Pull', sub: 'Posture + back width.', warm: 'Bike 6 min, easy. Can chat.', items: [
     { id: 'fri_lpd', hk: 'latpull', name: 'Lat Pulldown', what: 'Sit and pull a wide bar down to your chest.', vn: 'Máy kéo lưng xô', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
       guide: { setup: ['Knees locked under the pad.', 'Grip wider than shoulders.', 'Pull to upper chest. Exhale.'], avoid: ['Leaning far back.', 'Pulling behind the neck.'] },
       swap: { hk: 'cablepd', name: 'Kneeling Cable Pulldown', what: 'Kneel at a high cable. Pull the bar to your upper chest.', vn: 'Cable + bar, high', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', reps: 12, w: 15, step: 2.5, rest: 90,
@@ -956,9 +959,9 @@ const PROGRAM = [
       swap: { hk: 'cablelat', name: 'Cable Lateral Raise', what: 'One arm lifts a low cable out to the side.', vn: 'Cable, low', move: 'cablelat', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90, side: true,
         guide: { setup: ['Cable at lowest point.', 'Stand side-on. Handle in far hand.', 'Lift to shoulder height.'], avoid: ['Leaning away.', 'Shrugging.'] } } }
   ]},
-  { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', after: 'finisher', warm: 'Walk 5 min, flat. HR under 110.', warmMin: 5, items: [
+  { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', after: 'finisher', warm: 'Walk 5 min, flat, easy.', warmMin: 5, items: [
     { id: 'wed_pump', cls: true, main: true, name: 'New Pump', vn: 'Class', min: 45, icon: 'cls', move: 'pump',
-      rules: ['HR over 150 = sit out one track.', 'Lightest plates. Add nothing mid-class.', 'Squat track: half depth. Exhale up.', 'Lunge track: no bar. Core: keep breathing.'],
+      rules: ['Dizzy, chest tight, heart racing = stop.', 'Lightest plates. Lunges: no bar.', 'Squats half depth. Skip crunches.', 'No full sentence? Sit out one track.'],
       alt: { name: 'Light Circuit', vn: 'Machines', min: 40, cue: 'Chest Press, Lat Pulldown, Row, Shoulder Press, Leg Press half range. 2 × 15 each. Rest 90 s. Exhale every rep.' } },
     /* glute finisher after class: 2 light machine moves, mat swaps */
     { id: 'wed_ht', hk: 'thrust_mf', name: 'Hip Thrust Machine · Light', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 2, reps: 15, w: 15, step: 5, max: 40, rest: 90,
@@ -969,14 +972,14 @@ const PROGRAM = [
       guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Going heavy: this is a finisher.'] },
       swap: { hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', reps: 15, unit: 'steps', side: true, noW: 'Band', rest: 90,
         guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', 'Step right, then the same back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] } } },
-    { id: 'wed_walk', cls: true, name: 'Cool-down Walk', vn: 'Treadmill', min: 5, icon: 'cardio', move: 'walk', rules: ['Flat. Speed 4.', 'Leave with HR under 110.', 'Hands off the rails.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, cue: '5 min. HR under 110.' } }
+    { id: 'wed_walk', cls: true, name: 'Cool-down Walk', vn: 'Treadmill', min: 5, icon: 'cardio', move: 'walk', rules: ['Flat. Speed 4.', 'Leave when breathing is calm.', 'Hands off the rails.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, cue: '5 min. Easy pace.' } }
   ]},
-  { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', after: 'extras', warm: 'Walk 3 min, flat.', warmMin: 3, items: [
+  { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', warm: 'Walk 3 min, flat.', warmMin: 3, items: [
     { id: 'sat_combat', cls: true, main: true, name: 'New Combat', vn: 'Class', min: 45, icon: 'cls', move: 'combat',
-      rules: ['HR over 150 = march until under 130.', 'Low option every track. No jumps.', 'Kicks knee height. Never lock the knee.', 'Dizzy, shaky or chest tight = stop.'],
-      alt: { name: 'Easy Elliptical', vn: 'Elliptical', min: 20, cue: '20 min. HR under 125. Or join Yoga.' } },
-    { id: 'sat_walk', cls: true, name: 'Walk-down', vn: 'Treadmill', min: 5, icon: 'cardio', move: 'walk', rules: ['Up to 5 min. Flat. Slow.', 'Stop when HR is under 110.', 'No more cardio today.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, cue: '5 min. HR under 110.' } },
-    /* posture + glute med after the walk-down: no cardio, low HR moves */
+      rules: ['Dizzy, chest tight, heart racing = stop.', 'Low option every track. No jumps.', 'Kicks knee height. Never lock knee.', 'No full sentence? March until you can.'],
+      alt: { name: 'Easy Elliptical', vn: 'Elliptical', min: 20, cue: '20 min. Can chat. Or join Yoga.' } },
+    { id: 'sat_walk', cls: true, name: 'Walk-down', vn: 'Treadmill', min: 5, icon: 'cardio', move: 'walk', rules: ['Up to 5 min. Flat. Slow.', 'Stop when breathing is calm.', 'No more cardio today.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, cue: '5 min. Easy pace.' } },
+    /* posture + glute med after the walk-down: no cardio, easy moves */
     { id: 'sat_fp', hk: 'facepull_l', name: 'Cable Face Pull', what: 'Pull a rope toward your face, elbows high.', vn: 'Cable + rope, high', move: 'facepull', muscle: 'Rear shoulder', target: 'rear_delt', sets: 2, reps: 15, w: 7.5, step: 2.5, rest: 90,
       guide: { setup: ['Rope at forehead height.', 'Pull to forehead. Elbows high.', 'Thumbs back. Squeeze 1 s.'], avoid: ['Leaning back.', 'Elbows dropping low.'] },
       swap: { hk: 'reardelt', name: 'Rear-Delt DB Fly', what: 'Chest on a bench. Lift dumbbells out to the sides.', vn: 'Incline bench + 2 dumbbells', move: 'reardelt', muscle: 'Rear shoulder', target: 'rear_delt', reps: 15, w: 3, pair: true, step: 1, rest: 90,
@@ -1068,10 +1071,13 @@ const rh = x => Math.floor(x + 0.5);   /* round half up, display only */
 
 /* ================= STATE ================= */
 const KEY = 'sculpt_v3';
-const fresh = () => ({ view: 'mon', viewDate: '', hr: {}, missing: {}, plans: {}, basePlan: null, statTab: 'week', statRange: '1m', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, cin: {}, calm: {}, order: {}, extra: {}, lastExport: '' });
+const MODES = ['light', 'normal', 'hard'];
+const fresh = () => ({ view: 'mon', viewDate: '', mode: null, missing: {}, plans: {}, basePlan: null, statTab: 'week', statRange: '1m', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, cin: {}, order: {}, extra: {}, lastExport: '' });
 let S = load();
-/* fill fields an older backup may lack or hold as null */
-function norm(s) { const f = fresh(); ['hr','missing','plans','sets','classes','swaps','sel','history','profile','start','cin','calm','order','extra'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; });
+/* fill fields an older backup may lack or hold as null; drop v3.7 heart-rate keys */
+function norm(s) { const f = fresh(); ['missing','plans','sets','classes','swaps','sel','history','profile','start','cin','order','extra'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; });
+  delete s.hr; delete s.calm;
+  const m = s.mode; s.mode = m && typeof m === 'object' && MODES.includes(m.v) && typeof m.d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(m.d) ? { v: m.v, d: m.d } : null;
   for (const d in s.extra) { const v = s.extra[d]; if (!Array.isArray(v)) { delete s.extra[d]; continue; } s.extra[d] = v.filter(x => x && typeof x.id === 'string' && x.id.slice(0, 2) === 'x_' && HKDEF[x.hk]).slice(0, 3); }
   for (const d in s.order) { const v = s.order[d]; if (!v || typeof v.d !== 'string' || !Array.isArray(v.ids)) delete s.order[d]; }
   if (s.statRange !== '1m' && s.statRange !== '3m') s.statRange = '1m'; ['sessions','body'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; }); if (typeof s.lastExport !== 'string') s.lastExport = ''; return s; }
@@ -1122,7 +1128,11 @@ const skey = ex => ex.id + (isSwapped(ex) ? '~s' : '');
 /* the version not on screen (main or swap): its done sets are kept and counted */
 const otherCur = ex => (isSwapped(ex) || !ex.swap ? ex : asSwap(ex));
 const otherDone = ex => (ex.cls || !ex.swap ? [] : (S.sets[ex.id + (isSwapped(ex) ? '' : '~s')] || []).filter(s => s.done));
-const hrNow = () => (S.hr && S.hr.d === todayStr() ? S.hr.v : '');
+/* today's intensity: the pick saved today, else Normal */
+const modeNow = () => (S.mode && S.mode.d === todayStr() ? S.mode.v : 'normal');
+function setMode(v) { if (!MODES.includes(v)) return; S.mode = { v, d: todayStr() }; save(); render(true); }
+/* no intensity picker on these days */
+const NOMODE = ['sun', 'walk'];
 const HKASSIST = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.assist) HKASSIST[it.hk] = 1; if (it.swap && it.swap.assist) HKASSIST[it.swap.hk] = 1; }));
 const repUnit = c => c.unit || 'reps';
 const repStep = c => (c.unit === 'sec' || c.unit === 'steps' ? 5 : 1);
@@ -1269,22 +1279,18 @@ function classLater(day, first) {
 }
 /* where pending exercises sit relative to the class: { above, below } counts */
 function aroundClass(day) {
-  const m = mainOf(day); if (!m) return { above: 0, below: 0, doneAbove: 0 };
-  const items = dayItems(day), mi = items.indexOf(m); let above = 0, below = 0, doneAbove = 0;
-  items.forEach((it, i) => { if (it.cls) return; if (hasPending(it)) { if (i < mi) above++; else below++; } if (i < mi && hasDone(it)) doneAbove++; });
-  return { above, below, doneAbove };
+  const m = mainOf(day); if (!m) return { above: 0, below: 0 };
+  const items = dayItems(day), mi = items.indexOf(m); let above = 0, below = 0;
+  items.forEach((it, i) => { if (it.cls || !hasPending(it)) return; if (i < mi) above++; else below++; });
+  return { above, below };
 }
 /* set lock for one card: '' = open, else the toast text */
 function gate(day, ex) {
-  const hr = hrNow(), ok = hr === 'low' || hr === 'mid';
-  if (hr === 'high') return 'HR too high today';
   const m = mainOf(day);
-  if (!m) return ok ? '' : 'Tap resting HR first';
-  if (S.classes[m.id]) return S.calm[day.id] === todayStr() ? '' : 'Tap HR under 120 first';
+  if (!m || S.classes[m.id]) return '';
   if (S.cin[m.id]) return 'Class in progress';
   const items = dayItems(day);
-  if (items.indexOf(ex) < items.indexOf(m)) return ok ? '' : 'Tap resting HR first';
-  return 'Class first, then HR under 120';
+  return items.indexOf(ex) < items.indexOf(m) ? '' : 'Class first';
 }
 
 /* ================= MUSCLE COUNTS ================= */
@@ -1349,24 +1355,21 @@ function rowsFor(c, lo) {
 /* weighted sets per category logged on one date (+ live sets when that date is today) */
 function dayCat(date, day) { const r = histCat(date, date); if (date === todayStr() && day) { const l = liveCat(day).done; CATS_R.forEach(c => r[c] += l[c]); } return r; }
 function recommend(day) {
-  const hr = hrNow(), ws = weekStart(), wc = weekCat(ws, day), today = todayStr();
+  const ws = weekStart(), wc = weekCat(ws, day), today = todayStr();
   const tod = dayCat(today, day), yes = dayCat(addDays(today, -1), null), gt = glutesTomorrow(), have = todaySet(day);
   const info = {};
   CATS.forEach(c => {
     const lo = lightOnly(day), rows = rowsFor(c, lo), free = rows.filter(hk => !have.has(canon(hk))), rest = c === 'Glutes' && !!gt, lf = liftFor(c);
     const hint = rest ? LIFTNAME[gt] + ' tomorrow. Rest them.' : lo && !rows.length ? (wc.G[c] >= 2 && lf ? 'Do ' + LIFTNAME[lf] + ' day next' : 'No light moves today')
       : tod[c] >= 3 ? 'Done today' : yes[c] >= 3 ? 'Done yesterday' : '';
-    info[c] = { T: wc.T[c], D: wc.D[c], L: wc.L[c], G: wc.G[c], R: tod[c] + yes[c], lo, rows, free, hint, off: hr === 'high' || rest || (lo && !rows.length) };
+    info[c] = { T: wc.T[c], D: wc.D[c], L: wc.L[c], G: wc.G[c], R: tod[c] + yes[c], lo, rows, free, hint, off: rest || (lo && !rows.length) };
   });
   let cat = null, line = '';
-  if (hr === 'high') line = 'HR high. Yoga or walk.';
-  else {
-    const cand = CATS.filter(c => { const i = info[c]; return i.T > 0 && i.G >= 2 && i.R < 3 && !i.off && i.free.length; });
-    cand.forEach(c => { if (!cat || info[c].G / info[c].T > info[cat].G / info[cat].T + 1e-9) cat = c; });
-    if (!S.sessions.length && !Object.keys(S.history).length) { cat = null; line = 'No data yet. Pick any.'; }
-    else if (!cat) { const tired = CATS.filter(c => info[c].T > 0 && info[c].G >= 2 && info[c].R >= 3 && !info[c].off).sort((x, y) => info[y].G - info[x].G)[0];
-      line = tired ? tired + ' ' + (info[tired].hint === 'Done today' ? 'done today' : 'done yesterday') + '. Rest it.' : 'All on track.'; }
-  }
+  const cand = CATS.filter(c => { const i = info[c]; return i.T > 0 && i.G >= 2 && i.R < 3 && !i.off && i.free.length; });
+  cand.forEach(c => { if (!cat || info[c].G / info[c].T > info[cat].G / info[cat].T + 1e-9) cat = c; });
+  if (!S.sessions.length && !Object.keys(S.history).length) { cat = null; line = 'No data yet. Pick any.'; }
+  else if (!cat) { const tired = CATS.filter(c => info[c].T > 0 && info[c].G >= 2 && info[c].R >= 3 && !info[c].off).sort((x, y) => info[y].G - info[x].G)[0];
+    line = tired ? tired + ' ' + (info[tired].hint === 'Done today' ? 'done today' : 'done yesterday') + '. Rest it.' : 'All on track.'; }
   return { cat, line, info };
 }
 
@@ -1418,7 +1421,7 @@ const FX = {
   /* all sets of a card done: the border turns lime slowly */
   complete: f => fxOnce(mainEl.querySelector(f.sel), [{ borderColor: '#27272A' }, { borderColor: '#CCFF00' }],
     { duration: MO.d4, delay: MO.d2, easing: MO.std, fill: 'backwards', key: 'complete' }),
-  /* heart rate tapped: circles that were locked fade in */
+  /* class done: circles that were locked fade in */
   unlock: f => f.ids.forEach(id => { const c = exEl(id); if (!c || c.querySelector('.ok.locked')) return;
     c.querySelectorAll('.ok:not(.on)').forEach(o => fxOnce(o, [{ opacity: 0.3 }, { opacity: 1 }], { duration: MO.d3, easing: MO.std, key: 'unlock' })); }),
   /* reorder: each item slides from its old place */
@@ -1452,10 +1455,18 @@ function renderTabs() {
 function centerTab() { const a = tabsEl.querySelector('.active') || tabsEl.querySelector('.next') || tabsEl.firstElementChild; if (a) tabsEl.scrollLeft = a.offsetLeft - (tabsEl.clientWidth - a.offsetWidth) / 2; }
 function render(keepScroll) { renderTabs(); if (!keepScroll) centerTab(); if (S.view === 'stats') renderStats(); else renderDay(); updateHUD(); fxFlush(); if (!keepScroll) window.scrollTo({ top: 0 }); }
 
+/* intensity picker: the old heart-rate panel and 3-column grid; a tap saves, no lock */
+function modePicker(day) {
+  if (NOMODE.includes(day.id)) return '';
+  const md = modeNow();
+  return `<div class="mode"><div class="q">How hard today?</div>
+      <div class="opts">${MODES.map(k => `<button class="opt ${md === k ? 'on' : ''}" data-mode="${k}" aria-pressed="${md === k}">${k[0].toUpperCase() + k.slice(1)}</button>`).join('')}</div>
+      ${md === 'light' ? '<div class="msg">Less kg. Progress kept.</div>' : ''}</div>`;
+}
 /* reorder mode is screen state only; it is on for one day view */
 let reorderDay = null;
 function renderDay() {
-  const day = DAYS[S.view], lift = day.type === 'lift', hr = hrNow();
+  const day = DAYS[S.view], lift = day.type === 'lift';
   dropStale(day);
   if (reorderDay !== day.id) reorderDay = null;
   const items = dayItems(day), exs = items.filter(e => !e.cls), wc = weekCount(day.id), m = mainOf(day);
@@ -1471,9 +1482,7 @@ function renderDay() {
   let h = `<section class="day-head"><h2>${day.title}</h2>
     <p>${sub}</p>
     ${day.id === 'sat' ? `<div class="chips"><span class="chip ${wc ? 'red' : ''}">${wc ? 'Combat done this week' : 'Max 1× per week'}</span></div>` : ''}</section>
-    <div class="hr ${hr === 'high' ? 'bad' : ''}"><div class="q">Resting heart rate${lift ? '' : ' before class'}</div>
-      <div class="opts">${[['low', '< 90'], ['mid', '90–100'], ['high', '> 100']].map(([k, l]) => `<button class="opt ${hr === k ? 'on' : ''} ${k === 'high' ? 'bad' : ''}" data-hr="${k}" aria-pressed="${hr === k}">${l}</button>`).join('')}</div>
-      ${hr === 'low' || hr === 'mid' ? '' : `<div class="msg">${hr === 'high' ? (lift ? 'Too high. Sets locked. Do Yoga or walk.' : 'Too high. Skip the class. Do the swap.') : (lift ? 'Tap one to unlock your sets.' : 'Tap one before class.')}</div>`}</div>
+    ${modePicker(day)}
     ${/^None/.test(day.warm) ? '' : `<div class="lbl">Warm-up</div><div class="warm"><span>${day.warm}</span>${WARMVID[day.id] ? `<a class="wlink" href="${ytUrl(WARMVID[day.id])}" target="_blank" rel="noopener">${IC.play}Video</a>` : ''}</div>`}
     <div class="lblrow"><div class="lbl">${lift ? 'Workout' : 'Session'}</div>${ro ? '' : movable >= 2 ? `<button class="rbtn" data-reorder>${IC.sort}Reorder</button>` : ''}</div>`;
   if (ro) {
@@ -1552,7 +1561,7 @@ const clsLen = it => (clsSwapped(it) ? (it.alt.min || it.min) : it.min) || 0;
 function cardClass(it) {
   const day = DAYS[S.view];
   if (S.cin[it.id] && Date.now() - S.cin[it.id] > 4 * 3600000) { delete S.cin[it.id]; delete S.start[day.id]; } /* stale Start from another day */
-  if (S.classes[it.id] && ds(new Date(+S.classes[it.id] || 0)) !== todayStr()) { delete S.classes[it.id]; delete S.calm[day.id]; if (S.start[day.id] && Date.now() - S.start[day.id] > 4 * 3600000) delete S.start[day.id]; } /* class done on another day */
+  if (S.classes[it.id] && ds(new Date(+S.classes[it.id] || 0)) !== todayStr()) { delete S.classes[it.id]; if (S.start[day.id] && Date.now() - S.start[day.id] > 4 * 3600000) delete S.start[day.id]; } /* class done on another day */
   const done = !!S.classes[it.id], sw = clsSwapped(it), live = !done && !!S.cin[it.id];
   const name = sw ? it.alt.name : it.name, vn = sw ? it.alt.vn || 'Swap' : it.vn, min = clsLen(it);
   const rules = sw ? it.alt.cue.split('. ').map(x => x.replace(/\.$/, '') + '.') : it.rules;
@@ -1560,23 +1569,20 @@ function cardClass(it) {
   const meta = done ? '✓ Done · ' + min + ' min' : live ? 'In progress · ' + inMin + ' min' : (vn === 'Class' ? '' : vn + ' · ') + min + ' min';
   const ac = it.main ? aroundClass(day) : null;
   const btn = it.main
-    ? (done ? '' : `<button class="big ${live ? 'live' : ''}" data-clschk="${it.id}">${live ? 'Class done' : ac.doneAbove ? 'HR under 120? Start class' : 'Start'}</button>`)
+    ? (done ? '' : `<button class="big ${live ? 'live' : ''}" data-clschk="${it.id}">${live ? 'Class done' : 'Start'}</button>`)
     : `<button class="big ${done ? 'on' : ''}" data-clschk="${it.id}">${done ? '✓ Done' : 'Done'}</button>`;
   const undo = `<button class="btn-q" data-clschk="${it.id}">undo</button>`;
   const pendAny = it.main && dayItems(day).some(hasPending);
-  const calm = it.main && done && !pendAny ? `<div class="calmok">✓ Class done ${undo}</div>` : it.main && done ? (hrNow() === 'high'
-    ? `<div class="calmok red">HR over 100 today. No ${day.after}. ${undo}</div>`
-    : S.calm[day.id] === todayStr()
-    ? `<div class="calmok">✓ HR under 120 · ${day.after} unlocked ${undo}</div>`
-    : `<button class="big calm" data-calm="${day.id}">HR under 120? Start ${day.after}</button><div class="calmok">&nbsp;${undo}</div>`) : '';
-  const later = it.main && !done && !live && hrNow() !== 'high' ? (ac.below ? `<button class="swap" data-clslater="later"><span class="z">${IC.down}</span><span class="tx">Class late? <b>Exercises first</b></span><span class="chev">›</span></button>`
+  /* Pump (day.after) adds the walk before its finisher, while finisher sets are still pending */
+  const doneLine = it.main && done ? `<div class="calmok"><span>✓ Class done${day.after && pendAny ? '. Walk 3 min, then ' + day.after + '.' : ''}</span>${undo}</div>` : '';
+  const later = it.main && !done && !live ? (ac.below ? `<button class="swap" data-clslater="later"><span class="z">${IC.down}</span><span class="tx">Class late? <b>Exercises first</b></span><span class="chev">›</span></button>`
     : ac.above ? `<button class="swap" data-clslater="first"><span class="z">${IC.up}</span><span class="tx">Back to <b>class first</b></span><span class="chev">›</span></button>` : '') : '';
-  const swapBtn = done ? '' : `<button class="swap ${sw ? 'on' : ''}" data-clsswap="${it.id}"><span class="z">${sw ? IC.back : IC.swap}</span><span class="tx">${sw ? 'Back to <b>' + it.name + '</b>' : (it.icon === 'cls' ? 'No class or HR high? Swap to <b>' : 'Busy? Swap to <b>') + it.alt.name + '</b>'}</span><span class="chev">›</span></button>`;
+  const swapBtn = done ? '' : `<button class="swap ${sw ? 'on' : ''}" data-clsswap="${it.id}"><span class="z">${sw ? IC.back : IC.swap}</span><span class="tx">${sw ? 'Back to <b>' + it.name + '</b>' : (it.icon === 'cls' ? 'No class? Swap to <b>' : 'Busy? Swap to <b>') + it.alt.name + '</b>'}</span><span class="chev">›</span></button>`;
   return `<article class="card ccard ${done ? 'complete' : ''}" data-cls="${it.id}">
     <div class="ch"><div class="thumb static">${it.move ? moveSVG(it.move, false) : ICONS[it.icon]}</div><div><h3>${name}</h3><div class="meta">${meta}</div></div><div></div></div>
     ${done ? '' : `<div class="body"><ul>${rules.map((r, i) => `<li class="${it.main && !sw && i === 0 ? 'hrr' : ''}">${r}</li>`).join('')}</ul></div>`}
     ${later}${swapBtn}
-    <div class="body">${btn}${calm}</div>
+    <div class="body">${btn}${doneLine}</div>
   </article>`;
 }
 
@@ -1663,12 +1669,7 @@ function finishTimer() {
   setTimeout(() => { if (S.timer && !timerActive()) endTimer(); }, 4000);
 }
 function endTimer() { clearInterval(tick); tick = null; if (ringA) { ringA.cancel(); ringA = null; } cancelBeep(); S.timer = null; save(); hud.classList.remove('timer', 'go', 'rate'); document.body.classList.remove('tm-on'); applyLock(); }
-function scrollNextCard(dayId) {
-  const day = DAYS[dayId], items = dayItems(day), i = items.indexOf(mainOf(day)), nx = items.slice(i + 1).find(hasPending) || items.find(hasPending); if (!nx) return;
-  const el = mainEl.querySelector(`[data-ex="${nx.id}"]`); if (!el) return;
-  const top = $('.hdr').getBoundingClientRect().bottom + 8, r = el.getBoundingClientRect(); if (r.top > top) window.scrollBy({ top: r.top - top, behavior: SM() });
-}
-/* lock set buttons per card: rest timer, or the heart-rate gate for that card's place in the list */
+/* lock set buttons per card: rest timer, or the class gate for that card's place in the list */
 function applyLock() {
   const day = DAYS[S.view], t = timerActive();
   document.querySelectorAll('.card[data-ex]').forEach(card => {
@@ -1774,10 +1775,8 @@ mainEl.addEventListener('click', e => {
   const ax = t.closest('[data-addx]'); if (ax) { buzz('tick'); openAdd(ax.dataset.addx); return; }
   const xr = t.closest('[data-xrm]'); if (xr) { const x = getEx(xr.dataset.xrm); if (x && !hasDone(x)) removeExtra(DAYS[S.view], x.id); return; }
 
-  const hrb = t.closest('[data-hr]');
-  if (hrb) { buzz('pick'); setTimeout(unlockAudio, MO.d3); keepAwake(); const ids = lockedIds(); S.hr = { v: hrb.dataset.hr, d: todayStr() };
-    if (DAYS[S.view].type === 'class') DAYS[S.view].items.forEach(it => { if (it.main && !S.classes[it.id] && !S.cin[it.id]) S.swaps[it.id] = hrb.dataset.hr === 'high' ? 'use' : 0; });
-    if (hrb.dataset.hr !== 'high') fx('unlock', { ids }); save(); render(true); return; }
+  const md = t.closest('[data-mode]');
+  if (md) { buzz('pick'); setMode(md.dataset.mode); return; }
 
   const g = t.closest('[data-guide]');
   if (g) { buzz('tick'); const x = getEx(g.dataset.guide); if (x) openGuide(x, isSwapped(x)); return; }
@@ -1826,7 +1825,7 @@ mainEl.addEventListener('click', e => {
       save(); if (mainOf(DAYS[S.view])) render(true); else refreshCard(ex); return;
     }
     const gt = gate(DAYS[S.view], ex);
-    if (gt) { nope(gt); if (/resting HR|too high/.test(gt)) { const hb = $('.hr'); if (hb) hb.scrollIntoView({ behavior: SM(), block: 'center' }); } return; }
+    if (gt) { nope(gt); return; }
     if (timerActive()) { nope('Rest first'); return; }
     s.done = true; s.t = Date.now(); buzz('done'); hideRate();
     if (!S.start[S.view]) S.start[S.view] = Date.now();
@@ -1846,16 +1845,15 @@ mainEl.addEventListener('click', e => {
 
   const csw = t.closest('[data-clsswap]');
   if (csw) { buzz('pick'); const id = csw.dataset.clsswap; S.swaps[id] = S.swaps[id] === 'use' ? 0 : 'use'; save(); render(true); return; }
-  const cm = t.closest('[data-calm]');
-  if (cm) { buzz('done'); const ids = lockedIds(); S.calm[cm.dataset.calm] = todayStr(); fx('unlock', { ids }); save(); render(true); toast(DAYS[S.view].after[0].toUpperCase() + DAYS[S.view].after.slice(1) + ' unlocked'); setTimeout(() => scrollNextCard(cm.dataset.calm), 350); return; }
   const cl = t.closest('[data-clschk]');
   if (cl) {
     const id = cl.dataset.clschk, it = EX[id], now = Date.now();
     let hz = 'done';
-    if (S.classes[id]) { if (now - S.classes[id] < 1200) return; delete S.classes[id]; delete S.calm[S.view]; hz = 'pick'; }
+    if (S.classes[id]) { if (now - S.classes[id] < 1200) return; delete S.classes[id]; hz = 'pick'; }
     else if (it.main && !S.cin[id]) { if (timerActive()) endTimer(); S.cin[id] = now; if (!S.start[S.view]) S.start[S.view] = now; }
     else if (it.main && now - S.cin[id] < 1200) return; /* shaky double tap on Start */
-    else { S.classes[id] = now; delete S.cin[id]; if (!S.start[S.view]) S.start[S.view] = now - clsLen(it) * 60000; fx('complete', { sel: '[data-cls="' + id + '"]' }); }
+    else { const ids = it.main ? lockedIds() : []; S.classes[id] = now; delete S.cin[id]; if (!S.start[S.view]) S.start[S.view] = now - clsLen(it) * 60000;
+      fx('complete', { sel: '[data-cls="' + id + '"]' }); if (ids.length) fx('unlock', { ids }); /* class done: the locked circles below fade in */ }
     buzz(hz); save(); render(true); afterChange(); return; }
 
   if (t.id === 'btnReset') { buzz('tick'); resetDay(); return; }
@@ -1886,7 +1884,7 @@ function resetDay() {
   const day = DAYS[S.view]; if (!confirm('Clear today\'s ' + day.title + '?')) return;
   dayItems(day).forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
   delete S.order[day.id]; delete S.extra[day.id]; reorderDay = null;
-  delete S.start[day.id]; delete S.calm[day.id]; day.items.forEach(it => delete S.cin[it.id]); if (S.timer) endTimer(); hideRate(); save(); render();
+  delete S.start[day.id]; day.items.forEach(it => delete S.cin[it.id]); if (S.timer) endTimer(); hideRate(); save(); render();
 }
 
 /* ================= GUIDE ================= */
@@ -1970,7 +1968,7 @@ function logSession() {
   const min = dayMin(day), pbs = dayPbs(day); if (min) sess.min = min; if (pbs.length) sess.pbs = pbs.map(o => o.name);
   const xn = items.filter(e => e.added && hasDone(e)).length; if (xn) sess.extra = xn;
   if (day.type === 'class') { const m0 = mainOf(day), cm = day.items.filter(it => it.cls && S.classes[it.id] && (it.main || !m0)).reduce((a, it) => a + (clsLen(it) || CLSMIN[day.id] || 0), 0); if (cm) sess.cmin = cm; }
-  S.sessions.push(sess); delete S.start[day.id]; delete S.calm[day.id]; day.items.forEach(it => delete S.cin[it.id]);
+  S.sessions.push(sess); delete S.start[day.id]; day.items.forEach(it => delete S.cin[it.id]);
   items.forEach(it => { delete S.sets[it.id]; delete S.sets[it.id + '~s']; delete S.classes[it.id]; delete S.sel[it.id]; if (!it.added) S.swaps[it.id] = S.missing[it.id] ? 'use' : 0; });
   delete S.order[day.id]; delete S.extra[day.id]; reorderDay = null;
   if (S.timer) endTimer(); hideRate(); releaseWake();
@@ -2214,17 +2212,13 @@ function recentTxt(hk) {
 }
 const ADDGROUPS = [['Machine', ['Machine']], ['Cable', ['Cable']], ['Dumbbell', ['Dumbbell']], ['Band and mat', ['Band', 'Mat']]];
 function renderAdd() {
-  const day = DAYS[S.view], hr = hrNow(), rec = recommend(day);
+  const day = DAYS[S.view], rec = recommend(day);
   let h = '<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>';
   if (!addCat) {
-    /* one helper line: safety first, then the answer */
+    /* one helper line: class-day rule first, then the answer */
     const lines = [];
-    if (hr === 'high') lines.push(['red', 'HR high. Yoga or walk.']);
-    else {
-      if (!hr) lines.push(['', 'Tap resting HR first.']);
-      if (day.type === 'class') lines.push(['', 'Light only today.']);
-      if (rec.line && rec.line !== 'All on track.') lines.push(['', rec.line]);
-    }
+    if (day.type === 'class') lines.push(['', 'Light only today.']);
+    if (rec.line && rec.line !== 'All on track.') lines.push(['', rec.line]);
     h += `<h2>Pick a muscle</h2><p class="note">This week · done / target</p>
       ${lines.slice(0, 1).map(l => `<p class="abanner ${l[0]}">${l[1]}</p>`).join('')}
       <div class="mlist">${CATS.map(c => { const i = rec.info[c], dw = i.T ? Math.min(100, i.D / i.T * 100) : 0;
@@ -2237,7 +2231,7 @@ function renderAdd() {
       const rows = i.rows.filter(hk => pls.includes((TAGS[hk] || {}).pl)); if (!rows.length) return;
       h += `<div class="lbl">${lab}</div><div class="mlist">` + rows.map(hk => {
         const d = HKDEF[hk], tod = have.has(canon(hk)), chip = tod ? 'Today' : recentTxt(hk);
-        return `<button class="xrow" data-addhk="${hk}" ${tod || hr === 'high' ? 'disabled' : ''}><span class="xf">${moveSVG(d.move, false)}</span><span class="xt"><b>${d.name}</b><small>${lab === 'Band and mat' ? TAGS[hk].pl + ' · ' : ''}${lastTxt(hk)}</small></span>${chip ? `<span class="badge ${tod ? 'gray' : ''}">${chip}</span>` : '<span></span>'}<span class="chev">›</span></button>`;
+        return `<button class="xrow" data-addhk="${hk}" ${tod ? 'disabled' : ''}><span class="xf">${moveSVG(d.move, false)}</span><span class="xt"><b>${d.name}</b><small>${lab === 'Band and mat' ? TAGS[hk].pl + ' · ' : ''}${lastTxt(hk)}</small></span>${chip ? `<span class="badge ${tod ? 'gray' : ''}">${chip}</span>` : '<span></span>'}<span class="chev">›</span></button>`;
       }).join('') + '</div>';
     });
     if (!i.rows.length) h += '<div class="empty">No light moves today.</div>';
@@ -2251,7 +2245,6 @@ $('#addBox').addEventListener('click', e => {
   const x = t.closest('[data-addhk]'); if (x) addExtra(DAYS[S.view], x.dataset.addhk, addPos);
 });
 function addExtra(day, hk, pos) {
-  if (hrNow() === 'high') { toast('HR high. Yoga or walk.', true); buzz('block'); return; }
   const x = S.extra[day.id] || [];
   if (x.length >= 3) { toast('Max 3 added today', true); buzz('block'); return; }
   if (todaySet(day).has(canon(hk))) { toast("Already in today's list", true); buzz('block'); return; }
@@ -2449,7 +2442,7 @@ document.addEventListener('click', e => { if (Date.now() - sheetT < 350) { e.sto
 
 /* ================= BOOT ================= */
 /* back in the app: catch up the ring, and keep the screen on again (a video releases the lock) */
-const inWorkout = () => S.view !== 'stats' && (!!S.timer || !!S.start[S.view] || (!!hrNow() && !S.sessions.some(x => x.date === todayStr())));
+const inWorkout = () => S.view !== 'stats' && (!!S.timer || !!S.start[S.view]);
 document.addEventListener('visibilitychange', () => { if (document.hidden) return; if (S.timer) { runTick(); if (timerActive()) { ringRun(); scheduleBeep(); } } if (inWorkout()) keepAwake(); });
 if (S.viewDate !== todayStr() && S.view !== 'stats') { S.view = nextUp(); S.viewDate = todayStr(); save(); }
 /* home-screen shortcuts: long-press the app icon -> ?go=next or ?go=stats */
