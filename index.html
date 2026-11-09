@@ -663,6 +663,7 @@
     <ul>
       <li>Gym: no barbell squat, no heavy deadlift.</li>
       <li>Leg press: light, feet high, stop at 90°.</li>
+      <li>Dumbbells overhead: seated, back on pad.</li>
       <li>Exhale on every push. Never hold breath.</li>
       <li>Pressure or pain = stop, walk 2 min, swap.</li>
     </ul>
@@ -802,6 +803,35 @@ const MOVES = {
   cablefly: { front: true, A: [50,26, 50,54, 46,72, 46,90, 34,44, 24,62, 54,72, 54,90, 66,44, 76,62], B: [50,26, 50,54, 46,72, 46,90, 38,32, 47,22, 54,72, 54,90, 62,32, 53,22],
     props: [{ t: 'line', x1: 4, y1: 14, x2: 4, y2: 90 }, { t: 'line', x1: 96, y1: 14, x2: 96, y2: 90 }, { t: 'cable', x: 6, y: 86, j: 'W1' }, { t: 'cable', x: 94, y: 86, j: 'W2' }] }
 };
+/* ===== DB POSES (v3.10) =====
+   Dumbbell moves. Same joint order as MOVES. csrow and incy share the 45 deg bench (chest on the pad).
+   dber and lyinglat are side-lying, seen from the belly side (up = ceiling). aroundw is seen from above.
+   kstrdl: near = front leg, far = back leg (toe down). slthrust: far = lifted leg. */
+Object.assign(MOVES, {
+  pullover: { A: [34,66, 61,66, 79.5,70.5, 81,89.5, 36.5,52.5, 38.5,39.5], B: [34,66, 61,66, 79.5,70.5, 81,89.5, 20.5,67.5, 7,69],
+    props: [{ t: 'rect', x: 18, y: 70, w: 50, h: 5 }, { t: 'line', x1: 23, y1: 75, x2: 23, y2: 90 }, { t: 'line', x1: 63, y1: 75, x2: 63, y2: 90 }, { t: 'db', j: 'W1' }] },
+  csrow: { A: [59,43, 40,62, 33.5,80, 17,89.5, 59.5,56.5, 60,70], B: [59,43, 40,62, 33.5,80, 17,89.5, 46,47, 47.5,60],
+    props: [{ t: 'line', x1: 42.5, y1: 67.5, x2: 60, y2: 49.5 }, { t: 'line', x1: 52, y1: 58, x2: 52, y2: 90 }, { t: 'line', x1: 40, y1: 90, x2: 64, y2: 90 }, { t: 'db', j: 'W1' }] },
+  incy: { A: [59,43, 40,62, 33.5,80, 17,89.5, 59.5,56.5, 60,70], B: [59,43, 40,62, 33.5,80, 17,89.5, 64.5,30.5, 70,18],
+    props: [{ t: 'line', x1: 42.5, y1: 67.5, x2: 60, y2: 49.5 }, { t: 'line', x1: 52, y1: 58, x2: 52, y2: 90 }, { t: 'line', x1: 40, y1: 90, x2: 64, y2: 90 }, { t: 'db', j: 'W1' }] },
+  dber: { A: [20,84, 45,84, 64,86.5, 83,88, 33,81, 43,89.5, 63.5,89, 82.5,89.5, 21,89.5, 10,83.5], B: [20,84, 45,84, 64,86.5, 83,88, 33,81, 34,67.5, 63.5,89, 82.5,89.5, 21,89.5, 10,83.5],
+    props: [{ t: 'db', j: 'W1' }] },
+  arnold: { front: true, A: [50,44, 50,70, 44,80, 44,90, 43.5,50, 42.5,36.5, 56,80, 56,90, 56.5,50, 57.5,36.5], B: [50,44, 50,70, 44,80, 44,90, 33,34.5, 27.5,22, 56,80, 56,90, 67,34.5, 72.5,22],
+    props: [{ t: 'rect', x: 44, y: 30, w: 12, h: 40 }, { t: 'rect', x: 36, y: 70, w: 28, h: 4 }, { t: 'db', j: 'W1' }, { t: 'db', j: 'W2' }] },
+  lyinglat: { A: [39,49, 58,68, 75,76, 91.5,86, 39.5,62.5, 40.5,76, 74,79, 90,89.5, 33,60, 38,71], B: [39,49, 58,68, 75,76, 91.5,86, 41,35.5, 43.5,22.5, 74,79, 90,89.5, 33,60, 38,71],
+    props: [{ t: 'line', x1: 56.5, y1: 75, x2: 36, y2: 54.5 }, { t: 'line', x1: 56, y1: 76, x2: 56, y2: 90 }, { t: 'db', j: 'W1' }] },
+  squeeze: { front: true, A: [50,40, 50,70, 44,80, 42,90, 38,53, 47,46, 56,80, 58,90, 62,53, 53,46], B: [50,40, 50,70, 44,80, 42,90, 44.5,31.5, 47,18.5, 56,80, 58,90, 55.5,31.5, 53,18.5],
+    props: [{ t: 'rect', x: 40, y: 34, w: 20, h: 46 }, { t: 'db', j: 'W1' }, { t: 'db', j: 'W2' }] },
+  aroundw: { front: true, A: [50,32, 50,60, 39,77, 35,82, 39.5,47.5, 39,61, 61,77, 65,82, 60.5,47.5, 61,61], B: [50,32, 50,60, 39,77, 35,82, 31,25, 21,16, 61,77, 65,82, 69,25, 79,16],
+    props: [{ t: 'rect', x: 41, y: 13, w: 18, h: 57 }, { t: 'db', j: 'W1' }, { t: 'db', j: 'W2' }] },
+  suitcase: { front: true, A: [50,26, 50,54, 45.5,67, 46,83, 40,40, 39.5,53.5, 54,72, 54,90, 61,39, 66,51], B: [50,26, 50,54, 46,72, 46,90, 40,40, 39.5,53.5, 54.5,67, 54,83, 61,39, 66,51],
+    props: [{ t: 'db', j: 'W1' }] },
+  kstrdl: { A: [53,26, 52.5,53, 58,71, 55,90, 52.5,39.5, 55.5,52.5, 48.5,71.5, 40,88.5], B: [69,42, 45,54, 53.5,71, 55,90, 67.5,55, 70,68.5, 50,72.5, 40,88.5],
+    props: [{ t: 'db', j: 'W1' }] },
+  slthrust: { A: [28,58, 40.5,78, 57,69, 68,88, 29,70, 40.5,74.5, 45.5,59.5, 64.5,59.5], B: [28,58, 51.5,60, 69.5,66, 68,88, 40,60, 51.5,56.5, 51.5,41, 70.5,41],
+    props: [...BENCH_HT, { t: 'db', j: 'W1' }] }
+});
+/* ===== END DB POSES ===== */
 /* ===== MAT + BAND POSES (v3.8) =====
    Floor and band moves plus the 1-arm pulldown. Same joint order as MOVES.
    QUAD = all fours, side view (hands under shoulders, knees under hips): start of bandkick and birddog.
@@ -926,7 +956,7 @@ const PROGRAM = [
     { id: 'mon_thrustm', hp: 1, hk: 'thrust_m', name: 'Hip Thrust Machine', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 4, reps: 12, w: 20, step: 5, max: 60, rest: 120,
       guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat. Shins straight up at the top.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Pushing through the toes.'] },
       grp: 'Hip thrust', alts: [{ hk: 'thrust', name: 'DB Hip Thrust', what: 'Upper back on a bench. Lift hips with a dumbbell on them.', vn: 'Bench + 1 dumbbell', move: 'hipthrust', muscle: 'Glute max', target: 'glute_max', reps: 12, w: 10, step: 2, rest: 120,
-        guide: { setup: ['Upper back on bench edge. Feet flat.', 'Dumbbell on hip bones. Hold both ends.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Feet too close: thighs take over.'] } }, 'bridge', 'bandbridge', 'slbridge'] },
+        guide: { setup: ['Upper back on bench edge. Feet flat.', 'Dumbbell on hip bones. Hold both ends.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back at the top.', 'Holding breath.', 'Feet too close: thighs take over.'] } }, 'bridge', 'slbridge'] },
     { id: 'mon_legpress', hk: 'legpress', name: 'Leg Press · Half Range', what: 'Sit and push the plate away with your feet.', vn: 'Máy đạp chân ngang', move: 'legpress', muscle: 'Glutes', target: 'glute_max', sets: 3, reps: 12, w: 40, step: 5, max: 60, rest: 120,
       guide: { setup: ['Feet high and wide on the plate.', 'Lower until knees reach 90°. Stop.', 'Exhale. Push through heels.'], avoid: ['Going deep: knees to chest.', 'Heavy load or holding breath.', 'Locking knees straight.'] },
       grp: 'Leg press', alts: [{ hk: 'gobletsq', name: 'DB Goblet Box Squat', what: 'Hold a dumbbell at chest. Sit to a box, stand up.', vn: 'Box + 1 dumbbell', move: 'gobletsq', muscle: 'Glutes', target: 'glute_max', reps: 12, w: 8, step: 2, rest: 120,
@@ -934,84 +964,83 @@ const PROGRAM = [
     { id: 'mon_kickm', hp: 1, hk: 'glutemach', name: 'Glute Kickback Machine', what: 'Chest on the pad. Push the foot plate back with one leg.', vn: 'Máy tập mông', move: 'glutemach', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, repTop: 15, w: 10, step: 2.5, rest: 90, side: true,
       guide: { setup: ['Chest or forearms on the pad.', 'Foot on the plate, knee under hip.', 'Push back with the heel. Squeeze 1 s.'], avoid: ['Arching the lower back.', 'Swinging the leg.'] },
       grp: 'Kickback', alts: [{ hk: 'kick', name: 'Cable Kickback', what: 'Kick one leg straight back against a cable.', vn: 'Cable + ankle strap', move: 'kickback', muscle: 'Glute max', target: 'glute_max', reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90, side: true,
-        guide: { setup: ['Strap on ankle. Cable at lowest point.', 'Hold frame. Lean forward a little.', 'Kick back. Squeeze glute 1 s.'], avoid: ['Swinging the leg.', 'Arching the lower back.'] } }, 'bandkick'] },
+        guide: { setup: ['Strap on ankle. Cable at lowest point.', 'Hold frame. Lean forward a little.', 'Kick back. Squeeze glute 1 s.'], avoid: ['Swinging the leg.', 'Arching the lower back.'] } }, 'slthrust'] },
     { id: 'mon_abdm', hk: 'abductor', name: 'Abductor Machine', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', sets: 4, reps: 15, repTop: 20, w: 20, step: 5, rest: 90,
       guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little for more glute.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Bouncing with the hips.'] },
-      grp: 'Side glutes', alts: [{ hk: 'abd', name: 'Seated Band Abduction', what: 'Sit with a band above knees. Push knees apart.', vn: 'Bench + mini band', move: 'bandabd', muscle: 'Glute med (side)', target: 'glute_med', reps: 20, noW: 'Band', rest: 90,
-        guide: { setup: ['Band just above knees.', 'Sit on bench edge. Lean forward 30°.', 'Push knees out. Pause 1 s.'], avoid: ['Bouncing fast.', 'Sitting straight up.'] } }, 'cableabd', 'latwalk', 'hydrant', 'clamshell'] },
+      grp: 'Side glutes', alts: ['cableabd', { hk: 'abd', name: 'Seated Band Abduction', what: 'Sit with a band above knees. Push knees apart.', vn: 'Bench + mini band', move: 'bandabd', muscle: 'Glute med (side)', target: 'glute_med', reps: 20, noW: 'Band', rest: 90,
+        guide: { setup: ['Band just above knees.', 'Sit on bench edge. Lean forward 30°.', 'Push knees out. Pause 1 s.'], avoid: ['Bouncing fast.', 'Sitting straight up.'] } }, 'latwalk'] },
     { id: 'mon_abs', hk: 'deadbug', name: 'Dead Bug', what: 'On your back. Lower opposite arm and leg slowly.', vn: 'Mat', move: 'deadbug', muscle: 'Deep abs', target: 'abs', sets: 3, reps: 10, noW: 'Body', rest: 90, side: true,
       guide: { setup: ['Back flat. Arms up. Knees at 90°.', 'Exhale. Lower one arm and opposite leg.', 'Return. Switch sides.'], avoid: ['Lower back lifting off the floor.', 'Moving fast.'] },
-      grp: 'Core', alts: [{ hk: 'pallof', name: 'Cable Pallof Press', what: 'Side-on to a cable. Push the handle straight out. Do not twist.', vn: 'Cable, chest height', move: 'pallof', muscle: 'Deep abs', target: 'abs', reps: 10, w: 5, step: 2.5, rest: 90, side: true,
+      grp: 'Core', alts: ['suitcase', { hk: 'pallof', name: 'Cable Pallof Press', what: 'Side-on to a cable. Push the handle straight out. Do not twist.', vn: 'Cable, chest height', move: 'pallof', muscle: 'Deep abs', target: 'abs', reps: 10, w: 5, step: 2.5, rest: 90, side: true,
         guide: { setup: ['Cable at chest height. Stand side-on.', 'Exhale. Press handle straight out.', 'Hold 2 s. Keep breathing. Return.'], avoid: ['Turning toward the cable.', 'Holding breath.'] } }, 'birddog', 'sideplank'] }
   ]},
   { id: 'tue', tab: 'PUSH', tt: 'Lift', type: 'lift', title: 'Upper Push', sub: 'Upper chest line + shoulders.', warm: 'Elliptical 6 min, easy. Can chat.', items: [
-    { id: 'tue_cpress', hp: 1, hk: 'chestpress', name: 'Chest Press Machine', what: 'Sit and push handles forward.', vn: 'Máy đẩy ngực', move: 'chestpress', muscle: 'Upper chest', target: 'upper_chest', sets: 3, reps: 12, w: 15, step: 2.5, rest: 90,
-      guide: { setup: ['Set seat so handles sit just above nipple line.', 'Elbows 45° from body.', 'Exhale and push. No lockout.'], avoid: ['Handles below nipple line: works lower chest.', 'Flaring elbows out.', 'Holding breath.'] },
-      grp: 'Chest press', alts: [{ hk: 'incpress', name: 'Incline DB Press', what: 'On a tilted bench, press dumbbells up.', vn: 'Bench 30° + 2 dumbbells', move: 'incpress', muscle: 'Upper chest', target: 'upper_chest', reps: 12, w: 6, pair: true, step: 1, rest: 90,
-        guide: { setup: ['Bench at 30°.', 'Dumbbells at chest. Elbows 45°.', 'Exhale. Press up.'], avoid: ['Bouncing at the bottom.', 'Arching the back.'] } }, 'bandpress', 'kneepush'] },
+    /* v3.10: main is the incline DB press (was the machine, now the first alt) */
+    { id: 'tue_cpress', hp: 1, hk: 'incpress', name: 'Incline DB Press', what: 'On a tilted bench, press dumbbells up.', vn: 'Bench 30° + 2 dumbbells', move: 'incpress', muscle: 'Upper chest', target: 'upper_chest', sets: 3, reps: 12, w: 6, pair: true, step: 1, max: 12, rest: 90,
+      guide: { setup: ['Bench at 30°.', 'Dumbbells at chest. Elbows 45°.', 'Exhale. Press up.'], avoid: ['Bouncing at the bottom.', 'Arching the back.'] },
+      grp: 'Chest press', alts: [{ hk: 'chestpress', name: 'Chest Press Machine', what: 'Sit and push handles forward.', vn: 'Máy đẩy ngực', move: 'chestpress', muscle: 'Upper chest', target: 'upper_chest', reps: 12, w: 15, step: 2.5, rest: 90,
+        guide: { setup: ['Set seat so handles sit just above nipple line.', 'Elbows 45° from body.', 'Exhale and push. No lockout.'], avoid: ['Handles below nipple line: works lower chest.', 'Flaring elbows out.', 'Holding breath.'] } }, 'squeeze', 'kneepush'] },
     { id: 'tue_pec', hk: 'pecdeck', name: 'Chest Fly Machine', what: 'Sit and hug the handles together in front of your chest.', vn: 'Máy ép ngực', move: 'pecdeck', muscle: 'Inner chest', target: 'inner_chest', sets: 4, reps: 12, repTop: 15, w: 15, step: 2.5, rest: 90,
       guide: { setup: ['Seat so handles are at chest height.', 'Back on pad. Slight elbow bend.', 'Exhale. Hug handles together. Squeeze 1 s.'], avoid: ['Shoulders rolling forward.', 'Arms going too far back.'] },
       grp: 'Chest fly', alts: [{ hk: 'incfly', name: 'Incline DB Fly', what: 'On a tilted bench, open arms wide, then hug in.', vn: 'Bench 30° + 2 dumbbells', move: 'incfly', muscle: 'Inner + upper chest', target: 'inner_chest', reps: 12, repTop: 15, w: 4, pair: true, step: 1, rest: 90,
-        guide: { setup: ['Bench at 30°. Dumbbells above chest.', 'Slight elbow bend. Open wide to stretch.', 'Hug back in. Squeeze 1 s.'], avoid: ['Straight arms (elbow strain).', 'Going too heavy.'] } }, 'cablefly_lh_l'] },
+        guide: { setup: ['Bench at 30°. Dumbbells above chest.', 'Slight elbow bend. Open wide to stretch.', 'Hug back in. Squeeze 1 s.'], avoid: ['Straight arms (elbow strain).', 'Going too heavy.'] } }, 'squeeze', 'cablefly_lh_l'] },
     { id: 'tue_spress', hk: 'shoulderpress', name: 'Shoulder Press Machine', what: 'Sit and push handles overhead.', vn: 'Máy đẩy vai', move: 'shoulderpress', muscle: 'Shoulders', target: 'side_delt', sets: 3, reps: 10, w: 10, step: 2.5, rest: 120,
       guide: { setup: ['Seat: handles at ear height.', 'Back flat on pad.', 'Exhale and press up.'], avoid: ['Holding breath.', 'Arching off the pad.'] },
       grp: 'Shoulder press', alts: [{ hk: 'dbspress', name: 'Seated DB Shoulder Press', what: 'Sit upright. Press dumbbells overhead.', vn: 'Bench upright + 2 dumbbells', move: 'dbspress', muscle: 'Shoulders', target: 'side_delt', reps: 10, w: 4, pair: true, step: 1, rest: 120,
-        guide: { setup: ['Bench upright. Back on pad.', 'Dumbbells at ear height.', 'Exhale. Press up.'], avoid: ['Arching the back.', 'Banging dumbbells together.'] } }] },
+        guide: { setup: ['Bench upright. Back on pad.', 'Dumbbells at ear height.', 'Exhale. Press up.'], avoid: ['Arching the back.', 'Banging dumbbells together.'] } }, 'arnold'] },
     { id: 'tue_latm', hp: 1, hk: 'latmach', name: 'Lateral Raise Machine', what: 'Sit and lift the arm pads out to the sides.', vn: 'Máy tập vai', move: 'latmach', muscle: 'Side shoulder', target: 'side_delt', sets: 4, reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90,
       guide: { setup: ['Seat so shoulders line up with the pivot.', 'Pads on the outside of the elbows.', 'Lift to shoulder height. Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Leaning back.'] },
       grp: 'Side delts', alts: [{ hk: 'latraise', name: 'DB Lateral Raise', what: 'Lift dumbbells out to the sides.', vn: '2 light dumbbells', move: 'latraise', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
-        guide: { setup: ['Stand tall. Slight forward lean.', 'Lead with elbows to shoulder height.', 'Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Swinging the body.'] } }, 'cablelat', 'bandlat'] },
+        guide: { setup: ['Stand tall. Slight forward lean.', 'Lead with elbows to shoulder height.', 'Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Swinging the body.'] } }, 'lyinglat', 'cablelat'] },
     { id: 'tue_face', hk: 'facepull', name: 'Cable Face Pull', what: 'Pull a rope toward your face, elbows high.', vn: 'Cable + rope, high', move: 'facepull', muscle: 'Rear shoulder', target: 'rear_delt', sets: 3, reps: 15, w: 10, step: 2.5, rest: 90,
       guide: { setup: ['Rope at forehead height.', 'Pull to forehead. Elbows high.', 'Thumbs back. Squeeze 1 s.'], avoid: ['Leaning back.', 'Elbows dropping low.'] },
       grp: 'Rear delts', alts: [{ hk: 'reardelt', name: 'Rear-Delt DB Fly', what: 'Chest on a bench. Lift dumbbells out to the sides.', vn: 'Incline bench + 2 dumbbells', move: 'reardelt', muscle: 'Rear shoulder', target: 'rear_delt', reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
-        guide: { setup: ['Chest on incline bench.', 'Arms hang. Slight elbow bend.', 'Lift out to shoulder height.'], avoid: ['Swinging.', 'Shrugging.'] } }, 'pullapart', 'proney', 'bander'] }
+        guide: { setup: ['Chest on incline bench.', 'Arms hang. Slight elbow bend.', 'Lift out to shoulder height.'], avoid: ['Swinging.', 'Shrugging.'] } }, 'incy', 'dber', 'proney'] }
   ]},
   { id: 'thu', tab: 'GLU B', tt: 'Lift', type: 'lift', title: 'Glutes B', sub: 'Side glutes + hamstrings.', warm: 'Rowing 5 min, damper 3. Can chat.', items: [
     { id: 'thu_rdl', hk: 'rdl', name: 'DB Romanian Deadlift', what: 'Hold dumbbells. Push hips back, then stand tall.', vn: '2 dumbbells', move: 'rdl', muscle: 'Hamstring + glute', target: 'hams', sets: 3, reps: 12, w: 8, pair: true, step: 2, rest: 120,
       guide: { setup: ['Dumbbells on front of thighs.', 'Soft knees. Push hips back, back flat.', 'Feel hamstring stretch. Exhale, stand.'], avoid: ['Rounding the back.', 'Heavy weight. Stay light.', 'Holding breath.'] },
-      grp: 'Hinge', alts: [{ hk: 'pullthrough', name: 'Cable Pull-Through', what: 'Back to a low cable. Push hips back, then drive them forward.', vn: 'Cable + rope, low', move: 'pullthrough', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 10, step: 2.5, rest: 120,
-        guide: { setup: ['Rope at lowest point. Face away.', 'Rope between legs. Walk 2 steps out.', 'Hips back, then drive hips forward. Squeeze.'], avoid: ['Pulling with the arms.', 'Squatting down instead of hinging.'] } }, 'bandrdl'] },
+      grp: 'Hinge', alts: ['kstrdl', { hk: 'pullthrough', name: 'Cable Pull-Through', what: 'Back to a low cable. Push hips back, then drive them forward.', vn: 'Cable + rope, low', move: 'pullthrough', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 10, step: 2.5, rest: 120,
+        guide: { setup: ['Rope at lowest point. Face away.', 'Rope between legs. Walk 2 steps out.', 'Hips back, then drive hips forward. Squeeze.'], avoid: ['Pulling with the arms.', 'Squatting down instead of hinging.'] } }] },
     { id: 'thu_bss', hk: 'bss', name: 'Bulgarian Split Squat', what: 'Back foot on a bench. Squat down on the front leg.', vn: 'Bench + 2 dumbbells', move: 'bss', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 10, w: 2, pair: true, step: 1, rest: 120, side: true,
       guide: { setup: ['Back foot laces on bench.', 'Big step forward. Lean slightly forward.', 'Lower slow. Exhale up.'], avoid: ['Short stance: knee strain.', 'Wobbling: use bodyweight first.'] },
-      grp: 'Lunge', alts: [{ hk: 'revlunge', name: 'Reverse Lunge', what: 'Step one leg back, drop the knee, step back up.', vn: 'Bodyweight', move: 'revlunge', muscle: 'Glutes', target: 'glute_max', reps: 12, noW: 'Body', rest: 90, side: true,
-        guide: { setup: ['Stand tall. Hands on hips.', 'Big step back. Back knee near floor.', 'Push through front heel to stand.'], avoid: ['Front knee caving in.', 'Short step.'] } }, 'stepup'] },
+      grp: 'Lunge', alts: [{ hk: 'stepup', name: 'DB Step-Up', what: 'Step up onto a box, stand tall, step down.', vn: 'Box + 2 dumbbells', move: 'stepup', muscle: 'Glutes', target: 'glute_max', reps: 10, w: 4, pair: true, step: 1, rest: 120, side: true,
+        guide: { setup: ['Box at knee height or lower.', 'Whole foot on the box.', 'Push through heel. Exhale up.'], avoid: ['Pushing off the back foot.', 'Box too high.'] } }, 'revlunge'] },
     { id: 'thu_alp', hk: 'anglepress', name: 'Angled Leg Press · Half Range', what: 'Lie back. Push the sled up with your feet.', vn: 'Máy đạp đùi xiên · kg = plates', move: 'anglepress', muscle: 'Glutes', target: 'glute_max', sets: 3, reps: 12, w: 20, step: 5, max: 40, rest: 120,
       guide: { setup: ['Feet high on plate, hip width.', 'Unlock. Lower to 90° knees only.', 'Exhale. Push through heels.'], avoid: ['Deep range: hips curl up.', 'Heavy load or breath hold.', 'Locking knees.'] },
-      grp: 'Leg press', alts: ['legpress', 'gobletsq', { hk: 'stepup', name: 'DB Step-Up', what: 'Step up onto a box, stand tall, step down.', vn: 'Box + 2 dumbbells', move: 'stepup', muscle: 'Glutes', target: 'glute_max', reps: 10, w: 4, pair: true, step: 1, rest: 120, side: true,
-        guide: { setup: ['Box at knee height or lower.', 'Whole foot on the box.', 'Push through heel. Exhale up.'], avoid: ['Pushing off the back foot.', 'Box too high.'] } }] },
+      grp: 'Leg press', alts: ['legpress', 'gobletsq'] },
     { id: 'thu_hipabd', hp: 1, hk: 'cableabd', name: 'Cable Hip Abduction', what: 'Lift one leg out to the side against a cable.', vn: 'Cable + ankle strap', move: 'cableabd', muscle: 'Glute med (side)', target: 'glute_med', sets: 4, reps: 15, repTop: 20, w: 5, step: 2.5, rest: 90, side: true,
       guide: { setup: ['Strap on the outer ankle.', 'Hold frame. Stand tall.', 'Lift leg out, toes forward. Pause.'], avoid: ['Leaning away.', 'Toes turning up.'] },
-      grp: 'Side glutes', alts: [{ hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', reps: 15, unit: 'steps', side: true, noW: 'Band', rest: 90,
-        guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', 'Step right, then the same back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] } }, 'abductor', 'abd', 'sidelying', 'hydrant'] },
+      grp: 'Side glutes', alts: ['abductor', { hk: 'latwalk', name: 'Banded Lateral Walk', what: 'Band above knees. Step sideways in a half squat.', vn: 'Mini band', move: 'latwalk', muscle: 'Glute med (side)', target: 'glute_med', reps: 15, unit: 'steps', side: true, noW: 'Band', rest: 90,
+        guide: { setup: ['Band just above knees.', 'Half squat. Chest up.', 'Step right, then the same back left.'], avoid: ['Feet touching.', 'Standing up tall.', 'Holding breath.'] } }, 'abd'] },
     { id: 'thu_backext', hp: 1, hk: 'backext', name: 'Back Extension · Glute Focus', what: 'Hips on the pad. Bend forward, then lift to a straight line.', vn: 'Máy gập cơ lưng', move: 'backext', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, noW: 'Body', rest: 90,
       guide: { setup: ['Pad just below the hip bones. Feet locked.', 'Toes turned out a little. Upper back slightly round.', 'Exhale. Squeeze glutes to lift to a straight line.'], avoid: ['Arching past straight.', 'Jerking up fast.', 'Holding breath.'] },
       grp: 'Hip thrust', alts: [{ hk: 'bridge', name: 'DB Glute Bridge', what: 'Lie on your back. Lift hips with a dumbbell on them.', vn: 'Floor + 1 dumbbell', move: 'bridge', muscle: 'Glute max', target: 'glute_max', reps: 15, w: 12, step: 2, rest: 90,
-        guide: { setup: ['Lie on back, knees bent, feet flat.', 'Dumbbell on hip bones.', 'Exhale, lift hips. Hold 2 s.'], avoid: ['Arching the back.', 'Pushing through the neck.'] } }, 'thrust', 'bandbridge', 'slbridge'] }
+        guide: { setup: ['Lie on back, knees bent, feet flat.', 'Dumbbell on hip bones.', 'Exhale, lift hips. Hold 2 s.'], avoid: ['Arching the back.', 'Pushing through the neck.'] } }, 'thrust', 'slbridge'] }
   ]},
   { id: 'fri', tab: 'PULL', tt: 'Lift', type: 'lift', title: 'Upper Pull', sub: 'Posture + back width.', warm: 'Bike 6 min, easy. Can chat.', items: [
     { id: 'fri_lpd', hp: 1, hk: 'latpull', name: 'Lat Pulldown', what: 'Sit and pull a wide bar down to your chest.', vn: 'Máy kéo lưng xô', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
       guide: { setup: ['Knees locked under the pad.', 'Grip wider than shoulders.', 'Pull to upper chest. Exhale.'], avoid: ['Leaning far back.', 'Pulling behind the neck.'] },
-      grp: 'Vertical pull', alts: [{ hk: 'cablepd1', name: '1-Arm Cable Pulldown', what: 'Half kneel. Pull one handle to your side.', vn: 'Cable + single handle, high', move: 'kneelpd1', muscle: 'Lats (back width)', target: 'lats', sets: 3, reps: 12, w: 7.5, step: 2.5, rest: 90, side: true,
-        guide: { setup: ['Handle on high cable. Half kneel.', 'Same-side knee down, arm reaching up.', 'Exhale. Elbow down to your ribs.'], avoid: ['Twisting toward the cable.', 'Shrugging the shoulder up.'] } }, 'bandpd', 'bandpu'] },
+      grp: 'Vertical pull', alts: ['pullover', { hk: 'cablepd1', name: '1-Arm Cable Pulldown', what: 'Half kneel. Pull one handle to your side.', vn: 'Cable + single handle, high', move: 'kneelpd1', muscle: 'Lats (back width)', target: 'lats', sets: 3, reps: 12, w: 7.5, step: 2.5, rest: 90, side: true,
+        guide: { setup: ['Handle on high cable. Half kneel.', 'Same-side knee down, arm reaching up.', 'Exhale. Elbow down to your ribs.'], avoid: ['Twisting toward the cable.', 'Shrugging the shoulder up.'] } }] },
     { id: 'fri_row', hp: 1, hk: 'cablerow', name: 'Seated Cable Row', what: 'Sit and pull a handle to your belly.', vn: 'Máy ngồi kéo cáp', move: 'cablerow', muscle: 'Mid back (posture)', target: 'upper_back', sets: 4, reps: 12, w: 20, step: 2.5, rest: 90,
       guide: { setup: ['Sit tall. Feet on plate. Knees soft.', 'Exhale. Pull handle to lower ribs.', 'Squeeze shoulder blades 1 s.'], avoid: ['Rounding forward.', 'Rocking back.'] },
-      grp: 'Row', alts: [{ hk: 'dbrow', name: 'Single-Arm DB Row', what: 'One hand on a bench. Pull a dumbbell to your hip.', vn: 'Bench + 1 dumbbell', move: 'dbrow', muscle: 'Mid back (posture)', target: 'upper_back', reps: 12, w: 10, step: 2, rest: 90, side: true,
-        guide: { setup: ['Hand on bench. Back flat.', 'Dumbbell hangs under shoulder.', 'Pull elbow to hip. Exhale.'], avoid: ['Twisting the body.', 'Jerking the weight.'] } }, 'bandrow'] },
+      grp: 'Row', alts: ['csrow', { hk: 'dbrow', name: 'Single-Arm DB Row', what: 'One hand on a bench. Pull a dumbbell to your hip.', vn: 'Bench + 1 dumbbell', move: 'dbrow', muscle: 'Mid back (posture)', target: 'upper_back', reps: 12, w: 10, step: 2, rest: 90, side: true,
+        guide: { setup: ['Hand on bench. Back flat.', 'Dumbbell hangs under shoulder.', 'Pull elbow to hip. Exhale.'], avoid: ['Twisting the body.', 'Jerking the weight.'] } }] },
     { id: 'fri_apu', hk: 'assistpu', name: 'Assisted Pull Up', what: 'Kneel on a pad that helps lift you to the bar.', vn: 'Máy hít xà đơn trợ lực', move: 'assistpu', muscle: 'Lats (back width)', target: 'lats', sets: 2, reps: 8, w: 50, assist: true, step: 5, rest: 120,
       guide: { setup: ['Assist ≈ your weight − 20 kg. More = easier.', 'Knees on pad. Full hang.', 'Pull chin over bar. Exhale.'], avoid: ['Swinging.', 'Half reps.'] },
-      grp: 'Vertical pull', alts: ['cablepd1', 'bandpd', { hk: 'bandpu', name: 'Band-Assisted Pull Up', what: 'A band under your knee helps you pull up.', vn: 'Pull-up bar + thick band', move: 'bandpu', muscle: 'Lats (back width)', target: 'lats', reps: 8, noW: 'Band', rest: 120,
-        guide: { setup: ['Loop band over the bar.', 'Knee in band. Full hang.', 'Pull chin over bar. Exhale.'], avoid: ['Kicking the legs.', 'Dropping fast.'] } }] },
+      grp: 'Vertical pull', alts: ['cablepd1', 'pullover'] },
     { id: 'fri_face', hk: 'facepull', name: 'Cable Face Pull', what: 'Pull a rope toward your face, elbows high.', vn: 'Cable + rope, high', move: 'facepull', muscle: 'Rear shoulder', target: 'rear_delt', sets: 3, reps: 15, w: 10, step: 2.5, rest: 90,
       guide: { setup: ['Rope at forehead height.', 'Pull to forehead. Elbows high.', 'Thumbs back. Squeeze 1 s.'], avoid: ['Leaning back.', 'Elbows dropping.'] },
-      grp: 'Rear delts', alts: ['reardelt', 'pullapart', 'proney', 'bander'] },
+      grp: 'Rear delts', alts: ['reardelt', 'incy', 'dber', 'proney'] },
     { id: 'fri_fly', hk: 'incfly_l', name: 'Incline DB Fly · Easy', what: 'On a tilted bench, open arms wide, then hug in.', vn: 'Bench 30° + 2 dumbbells', move: 'incfly', muscle: 'Inner + upper chest', target: 'inner_chest', sets: 3, reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
       guide: { setup: ['Bench at 30°.', 'Lighter than Push day.', 'Squeeze at the top 1 s.'], avoid: ['Straight arms.', 'Bouncing.'] },
-      grp: 'Chest fly', alts: [{ hk: 'cablefly_lh_l', name: 'Low-to-High Cable Fly', what: 'Pull low cables up and in to chin height.', vn: 'Cable, both sides low', move: 'cablefly', muscle: 'Upper chest', target: 'upper_chest', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90,
+      grp: 'Chest fly', alts: ['aroundw', { hk: 'cablefly_lh_l', name: 'Low-to-High Cable Fly', what: 'Pull low cables up and in to chin height.', vn: 'Cable, both sides low', move: 'cablefly', muscle: 'Upper chest', target: 'upper_chest', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90,
         guide: { setup: ['Both cables at lowest point. Stand in the middle.', 'Slight elbow bend. Hands low and wide.', 'Exhale. Sweep up and in to chin. Squeeze.'], avoid: ['Bending elbows into a press.', 'Leaning back.'] } }] },
     { id: 'fri_lat', hk: 'latraise', name: 'DB Lateral Raise', what: 'Lift dumbbells out to the sides.', vn: '2 light dumbbells', move: 'latraise', muscle: 'Side shoulder', target: 'side_delt', sets: 3, reps: 15, repTop: 20, w: 3, pair: true, step: 1, rest: 90,
       guide: { setup: ['Slight forward lean.', 'Lead with elbows.', 'Lower in 3 s.'], avoid: ['Shrugging.', 'Swinging.'] },
-      grp: 'Side delts', alts: [{ hk: 'cablelat', name: 'Cable Lateral Raise', what: 'One arm lifts a low cable out to the side.', vn: 'Cable, low', move: 'cablelat', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90, side: true,
-        guide: { setup: ['Cable at lowest point.', 'Stand side-on. Handle in far hand.', 'Lift to shoulder height.'], avoid: ['Leaning away.', 'Shrugging.'] } }, 'latmach', 'bandlat'] }
+      grp: 'Side delts', alts: ['lyinglat', { hk: 'cablelat', name: 'Cable Lateral Raise', what: 'One arm lifts a low cable out to the side.', vn: 'Cable, low', move: 'cablelat', muscle: 'Side shoulder', target: 'side_delt', reps: 15, repTop: 20, w: 2.5, step: 2.5, rest: 90, side: true,
+        guide: { setup: ['Cable at lowest point.', 'Stand side-on. Handle in far hand.', 'Lift to shoulder height.'], avoid: ['Leaning away.', 'Shrugging.'] } }, 'latmach'] }
   ]},
   { id: 'wed', tab: 'PUMP', tt: 'Class', type: 'class', title: 'New Pump', after: 'finisher', warm: 'Walk 5 min, flat, easy.', warmMin: 5, items: [
     { id: 'wed_pump', cls: true, main: true, name: 'New Pump', vn: 'Class', min: 45, met: 3.5, icon: 'cls', move: 'pump',
@@ -1022,10 +1051,10 @@ const PROGRAM = [
     { id: 'wed_ht', hk: 'thrust_mf', name: 'Hip Thrust Machine · Finisher', what: 'Upper back on the pad. Push hips up against the belt.', vn: 'Máy đẩy hông', move: 'hipthrustm', muscle: 'Glute max', target: 'glute_max', sets: 2, reps: 15, w: 15, step: 5, max: 40, rest: 90,
       guide: { setup: ['Upper back on pad. Belt over hip bones.', 'Feet flat. Shins straight at the top.', 'Exhale, push hips up. Hold 2 s, keep breathing.'], avoid: ['Arching the lower back.', 'Going heavy: this is a finisher.'] },
       grp: 'Hip thrust', alts: [{ hk: 'frogpump', name: 'Frog Pump', what: 'On your back, soles together, knees out. Pump hips up.', vn: 'Mat', move: 'frogpump', muscle: 'Glute max', target: 'glute_max', reps: 20, noW: 'Body', rest: 90,
-        guide: { setup: ['Lie back. Soles of feet together.', 'Let knees fall open.', 'Exhale, pump hips up. Squeeze.'], avoid: ['Arching the back.', 'Holding breath.'] } }, 'bandbridge'] },
+        guide: { setup: ['Lie back. Soles of feet together.', 'Let knees fall open.', 'Exhale, pump hips up. Squeeze.'], avoid: ['Arching the back.', 'Holding breath.'] } }] },
     { id: 'wed_ab', hk: 'abductor_f', name: 'Abductor Machine · Finisher', what: 'Sit and push the knee pads apart.', vn: 'Máy tập đùi (abductor)', move: 'abductor', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 20, w: 15, step: 5, max: 30, rest: 90,
       guide: { setup: ['Pads on the outside of the knees.', 'Lean forward a little.', 'Push out. Pause 1 s. Return slow.'], avoid: ['Letting the weights slam.', 'Going heavy: this is a finisher.'] },
-      grp: 'Side glutes', alts: ['latwalk', 'abd', 'sidelying', 'clamshell', 'hydrant'] },
+      grp: 'Side glutes', alts: ['latwalk', 'abd', 'sidelying'] },
     { id: 'wed_walk', cls: true, name: 'Cool-down Walk', vn: 'Treadmill', min: 5, met: 3.5, icon: 'cardio', move: 'walk', rules: ['Flat. Speed 4.', 'Leave when you can chat.', 'Hands off the rails.'], alt: { name: 'Easy Bike', vn: 'Bike', min: 5, met: 3.5, cue: 'Easy pace.' } }
   ]},
   { id: 'sat', tab: 'COMBAT', tt: 'Class', type: 'class', title: 'New Combat', warm: 'Walk 3 min, flat.', warmMin: 3, items: [
@@ -1036,10 +1065,10 @@ const PROGRAM = [
     /* posture + glute med after the walk-down: no cardio, easy moves */
     { id: 'sat_fp', hk: 'facepull_l', name: 'Cable Face Pull', what: 'Pull a rope toward your face, elbows high.', vn: 'Cable + rope, high', move: 'facepull', muscle: 'Rear shoulder', target: 'rear_delt', sets: 2, reps: 15, w: 7.5, step: 2.5, rest: 90,
       guide: { setup: ['Rope at forehead height.', 'Pull to forehead. Elbows high.', 'Thumbs back. Squeeze 1 s.'], avoid: ['Leaning back.', 'Elbows dropping low.'] },
-      grp: 'Rear delts', alts: ['reardelt', 'pullapart', 'proney', 'bander'] },
+      grp: 'Rear delts', alts: ['reardelt', 'incy', 'dber', 'proney'] },
     { id: 'sat_sl', hk: 'sidelying', name: 'Side-Lying Leg Raise', what: 'Lie on your side. Lift the top leg up.', vn: 'Mat', move: 'sidelying', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 15, noW: 'Body', rest: 90, side: true,
       guide: { setup: ['Lie on side. Bottom knee bent.', 'Top toes point slightly down.', 'Lift slow to 45°. Pause 1 s.'], avoid: ['Rolling backward.', 'Lifting too high.'] },
-      grp: 'Side glutes', alts: ['abductor_f', 'abd', 'latwalk', 'clamshell', 'hydrant'] },
+      grp: 'Side glutes', alts: ['abductor_f', 'abd', 'latwalk'] },
     { id: 'sat_stretch', cls: true, name: 'Stretch', vn: 'Mat', min: 6, met: 2.3, icon: 'floor', move: 'stretch', rules: ['Child pose 2 min. Belly breathing.', 'Happy baby 1 min.', 'Hip flexor 1 min per side.', 'Chest stretch on frame 30 s per side.'], alt: { name: 'Slow Walk', vn: 'Treadmill', min: 6, met: 3.5, cue: '6 min flat.' } }
   ]},
   { id: 'sun', tab: 'YOGA', tt: 'Class', type: 'class', title: 'Yoga', sub: 'Recovery. Breathe and relax.', warm: 'None.', items: [
@@ -1059,12 +1088,8 @@ const PROGRAM = [
    All band or bodyweight (noW), rest 90 s, reps (or seconds) go up to repTop.
    hinge = never gets the Hard +1 set, even as the swap of a Hard+ item. */
 const LIBRARY = [
-  { hk: 'bandbridge', name: 'Long-Band Glute Bridge', what: 'On your back. Band over hips. Lift hips.', vn: 'Mat + long band', move: 'bandbridge', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 15, repTop: 20, noW: 'Band', rest: 90,
-    guide: { setup: ['Band over hip bones, ends under hands.', 'Heels near hips, feet hip width.', 'Exhale, lift hips. Hold 2 s.'], avoid: ['Arching the lower back on top.', 'Holding breath at the top.', 'Pushing through the toes.'] } },
   { hk: 'slbridge', name: 'Single-Leg Glute Bridge', what: 'One foot down, one knee hugged. Lift hips.', vn: 'Mat', move: 'slbridge', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 10, repTop: 15, noW: 'Body', rest: 90, side: true,
     guide: { setup: ['Hug one knee to your chest.', 'Other heel flat, close to hip.', 'Exhale. Push heel down, lift hips.'], avoid: ['Hips dropping to one side.', 'Pushing through the toes.'] } },
-  { hk: 'bandkick', name: 'Kneeling Band Kickback', what: 'On all fours. Push one foot back.', vn: 'Mat + long band', move: 'bandkick', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, repTop: 15, noW: 'Band', rest: 90, side: true,
-    guide: { setup: ['Band around one foot, ends under hands.', 'Hands under shoulders, knees under hips.', 'Exhale. Push heel back to hip height.'], avoid: ['Arching the lower back.', 'Kicking above hip height.'] } },
   { hk: 'hydrant', name: 'Banded Fire Hydrant', what: 'On all fours. Lift one knee out sideways.', vn: 'Mat + mini band', move: 'hydrant', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 12, repTop: 15, noW: 'Band', rest: 90, side: true,
     guide: { setup: ['Mini band just above knees.', 'Hands under shoulders, knees under hips.', 'Lift knee out to hip height. Pause.'], avoid: ['Leaning away from the moving leg.', 'Twisting the hips open.'] } },
   { hk: 'clamshell', name: 'Banded Clamshell', what: 'On your side. Open the top knee.', vn: 'Mat + mini band', move: 'clamshell', muscle: 'Glute med (side)', target: 'glute_med', sets: 2, reps: 15, repTop: 20, noW: 'Band', rest: 90, side: true,
@@ -1083,34 +1108,70 @@ const LIBRARY = [
     guide: { setup: ['Face down. Forehead on a towel.', 'Arms overhead in a Y, thumbs up.', 'Exhale. Lift arms. Hold 2 s.'], avoid: ['Lifting the chest high.', 'Shrugging to your ears.'] } },
   { hk: 'pullapart', name: 'Band Pull-Apart', what: 'Arms straight ahead. Pull the band apart.', vn: 'Long band', move: 'pullapart', muscle: 'Rear shoulder', target: 'rear_delt', sets: 2, reps: 15, repTop: 20, noW: 'Band', rest: 90,
     guide: { setup: ['Arms straight at shoulder height.', 'Hands shoulder width. Too hard? Wider.', 'Exhale. Band to chest. Squeeze 1 s.'], avoid: ['Shrugging shoulders up.', 'Ribs flaring forward.'] } },
-  { hk: 'bandlat', name: 'Band Lateral Raise', what: 'Stand on band. Lift arms to the sides.', vn: 'Long band', move: 'bandlat', muscle: 'Side shoulder', target: 'side_delt', sets: 3, reps: 15, repTop: 20, noW: 'Band', rest: 90,
-    guide: { setup: ['Stand on band. One side per hand.', 'Lead with elbows to shoulder height.', 'Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Swinging the body.'] } },
   { hk: 'bander', name: 'Band External Rotation', what: 'Elbows at sides. Rotate hands out.', vn: 'Mini band', move: 'bander', muscle: 'Rear shoulder', target: 'rear_delt', sets: 2, reps: 15, repTop: 20, noW: 'Band', rest: 90,
     guide: { setup: ['Mini band around both wrists.', 'Elbows bent 90°, tucked at sides.', 'Rotate hands out. Pause 1 s.'], avoid: ['Elbows leaving your sides.', 'Leaning back to cheat.'] } },
   { hk: 'kneepush', name: 'Knee Push-Up', what: 'Push-up with knees on the mat.', vn: 'Mat', move: 'kneepush', muscle: 'Chest', target: 'inner_chest', sets: 3, reps: 8, repTop: 12, noW: 'Body', rest: 90,
     guide: { setup: ['Hands a bit wider than shoulders.', 'Straight line knees to head.', 'Lower slow. Exhale, push up.'], avoid: ['Hips sagging or piking up.', 'Elbows flaring out wide.', 'Holding breath at the bottom.'] } },
-  { hk: 'bandpress', name: 'Band Incline Press', what: 'Band behind back. Press up and forward.', vn: 'Long band', move: 'bandpress', muscle: 'Upper chest', target: 'upper_chest', sets: 3, reps: 12, repTop: 15, noW: 'Band', rest: 90,
-    guide: { setup: ['Band across upper back, under arms.', 'One foot forward. Elbows at 45°.', 'Exhale. Press up to eye level.'], avoid: ['Shrugging shoulders up.', 'Arching the lower back.', 'Locking the elbows hard.'] } }
+  { hk: 'revlunge', name: 'Reverse Lunge', what: 'Step one leg back, drop the knee, step back up.', vn: 'Bodyweight', move: 'revlunge', muscle: 'Glutes', target: 'glute_max', sets: 3, reps: 12, noW: 'Body', rest: 90, side: true,
+    guide: { setup: ['Stand tall. Hands on hips.', 'Big step back. Back knee near floor.', 'Push through front heel to stand.'], avoid: ['Front knee caving in.', 'Short step.'] } }
 ];
-/* retired moves: no longer in PROGRAM, kept so old history still shows by name (TAGS old: not pickable) */
+/* retired moves: no longer in PROGRAM, kept so old history still shows by name (TAGS old: not pickable).
+   v3.10: 5 fiddly band moves retired (band behind the back, under the hands, needs a bar, or no card used it). */
 const RETIRED = [
   { hk: 'cablepd', name: 'Kneeling Cable Pulldown', what: 'Kneel at a high cable. Pull the bar to your upper chest.', vn: 'Cable + bar, high', move: 'latpull', muscle: 'Lats (back width)', target: 'lats', sets: 4, reps: 12, w: 15, step: 2.5, rest: 90,
-    guide: { setup: ['Bar on high cable. Kneel facing it.', 'Grip wider than shoulders.', 'Exhale. Pull to upper chest.'], avoid: ['Leaning far back.', 'Shrugging.'] } }
+    guide: { setup: ['Bar on high cable. Kneel facing it.', 'Grip wider than shoulders.', 'Exhale. Pull to upper chest.'], avoid: ['Leaning far back.', 'Shrugging.'] } },
+  { hk: 'bandpress', name: 'Band Incline Press', what: 'Band behind back. Press up and forward.', vn: 'Long band', move: 'bandpress', muscle: 'Upper chest', target: 'upper_chest', sets: 3, reps: 12, repTop: 15, noW: 'Band', rest: 90,
+    guide: { setup: ['Band across upper back, under arms.', 'One foot forward. Elbows at 45°.', 'Exhale. Press up to eye level.'], avoid: ['Shrugging shoulders up.', 'Arching the lower back.', 'Locking the elbows hard.'] } },
+  { hk: 'bandkick', name: 'Kneeling Band Kickback', what: 'On all fours. Push one foot back.', vn: 'Mat + long band', move: 'bandkick', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 12, repTop: 15, noW: 'Band', rest: 90, side: true,
+    guide: { setup: ['Band around one foot, ends under hands.', 'Hands under shoulders, knees under hips.', 'Exhale. Push heel back to hip height.'], avoid: ['Arching the lower back.', 'Kicking above hip height.'] } },
+  { hk: 'bandbridge', name: 'Long-Band Glute Bridge', what: 'On your back. Band over hips. Lift hips.', vn: 'Mat + long band', move: 'bandbridge', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Band over hip bones, ends under hands.', 'Heels near hips, feet hip width.', 'Exhale, lift hips. Hold 2 s.'], avoid: ['Arching the lower back on top.', 'Holding breath at the top.', 'Pushing through the toes.'] } },
+  { hk: 'bandpu', name: 'Band-Assisted Pull Up', what: 'A band under your knee helps you pull up.', vn: 'Pull-up bar + thick band', move: 'bandpu', muscle: 'Lats (back width)', target: 'lats', sets: 2, reps: 8, noW: 'Band', rest: 120,
+    guide: { setup: ['Loop band over the bar.', 'Knee in band. Full hang.', 'Pull chin over bar. Exhale.'], avoid: ['Kicking the legs.', 'Dropping fast.'] } },
+  { hk: 'bandlat', name: 'Band Lateral Raise', what: 'Stand on band. Lift arms to the sides.', vn: 'Long band', move: 'bandlat', muscle: 'Side shoulder', target: 'side_delt', sets: 3, reps: 15, repTop: 20, noW: 'Band', rest: 90,
+    guide: { setup: ['Stand on band. One side per hand.', 'Lead with elbows to shoulder height.', 'Lower in 3 s.'], avoid: ['Shrugging shoulders up.', 'Swinging the body.'] } }
 ];
-/* Mat + Band day: LIBRARY moves with this day's ids, sets and alts. Floor, then kneeling, then standing (stand up once).
+/* ================= DUMBBELL LIBRARY (v3.10) =================
+   Gym dumbbell moves used as alts on program cards (never on the Mat day: no dumbbells at home).
+   pair = 2 dumbbells, kg each. max = kg per hand. move = hk. */
+const DBLIB = [
+  { hk: 'pullover', name: 'DB Pullover', what: 'Lie on a bench. Arc one dumbbell overhead.', vn: 'Flat bench + 1 dumbbell', move: 'pullover', muscle: 'Lats (back width)', target: 'lats', sets: 3, reps: 12, repTop: 15, w: 6, step: 2, max: 12, rest: 90,
+    guide: { setup: ['Lie along the bench. Feet flat.', 'Cup one dumbbell. Elbows slightly bent.', 'Lower to your ears. Exhale, pull back.'], avoid: ['Lowering past your ears.', 'Lower back arching off the bench.', 'Holding breath at the stretch.'] } },
+  { hk: 'csrow', name: 'Chest-Supported DB Row', what: 'Chest on an incline bench. Row both dumbbells.', vn: 'Bench 45° + 2 dumbbells', move: 'csrow', muscle: 'Mid back (posture)', target: 'upper_back', sets: 3, reps: 12, repTop: 15, w: 6, pair: true, step: 1, rest: 90,
+    guide: { setup: ['Bench at 45°. Chest on the pad.', 'Arms hang straight. Palms face in.', 'Exhale. Elbows back. Squeeze 1 s.'], avoid: ['Lifting chest off the pad.', 'Shrugging shoulders to ears.', 'Jerking the weight up.'] } },
+  { hk: 'incy', name: 'Incline DB Y Raise', what: 'Chest on a bench. Raise dumbbells in a Y.', vn: 'Bench 30° + 2 light dumbbells', move: 'incy', muscle: 'Lower traps (posture)', target: 'upper_back', sets: 2, reps: 12, repTop: 15, w: 1, pair: true, step: 1, max: 4, rest: 90,
+    guide: { setup: ['Bench at 30°. Chest on the pad.', 'Thumbs up. Arms in a Y.', 'Exhale. Lift to ear height. Hold 1 s.'], avoid: ['Shrugging shoulders to ears.', 'Lifting chest off the pad.', 'Going heavy: 1-4 kg is enough.'] } },
+  { hk: 'dber', name: 'Side-Lying DB External Rotation', what: 'Lie on your side. Rotate a light dumbbell up.', vn: 'Mat + 1 light dumbbell', move: 'dber', muscle: 'Rotator cuff', target: 'rear_delt', sets: 2, reps: 15, repTop: 20, w: 1, step: 1, max: 4, rest: 90, side: true,
+    guide: { setup: ['Lie on side. Towel under top elbow.', 'Elbow at 90°, pinned to ribs.', 'Exhale. Rotate hand up. Lower in 3 s.'], avoid: ['Elbow leaving your side.', 'Rolling the body back.', 'Going heavy: 1-4 kg is enough.'] } },
+  { hk: 'arnold', name: 'Seated Arnold Press', what: 'Sit upright. Turn palms out as you press.', vn: 'Bench upright + 2 dumbbells', move: 'arnold', muscle: 'Shoulders', target: 'side_delt', sets: 3, reps: 10, repTop: 12, w: 3, pair: true, step: 1, max: 8, rest: 120,
+    guide: { setup: ['Bench upright. Back on the pad.', 'Dumbbells at chin, palms facing you.', 'Exhale. Turn palms out, press up.'], avoid: ['Arching off the pad.', 'Pressing through a shoulder pinch.', 'Holding breath at the top.'] } },
+  { hk: 'lyinglat', name: 'Side-Lying DB Lateral Raise', what: 'Lie side-on on a tilted bench. Raise one arm.', vn: 'Bench 30° + 1 light dumbbell', move: 'lyinglat', muscle: 'Side shoulder', target: 'side_delt', sets: 3, reps: 12, repTop: 15, w: 2, step: 1, max: 6, rest: 90, side: true,
+    guide: { setup: ['Bench at 30°. Lie on your side.', 'Top arm hangs in front, slight bend.', 'Exhale. Lift to just below vertical.'], avoid: ['Shrugging toward the ear.', 'Rolling the body back.', 'Swinging the weight up.'] } },
+  { hk: 'squeeze', name: 'Incline DB Squeeze Press', what: 'Press two dumbbells together, up from a tilted bench.', vn: 'Bench 30° + 2 dumbbells', move: 'squeeze', muscle: 'Inner + upper chest', target: 'inner_chest', sets: 3, reps: 12, repTop: 15, w: 4, pair: true, step: 1, max: 10, rest: 90,
+    guide: { setup: ['Bench at 30°. Palms face each other.', 'Press dumbbells together over chest.', 'Exhale. Press up, keep squeezing.'], avoid: ['Dumbbells drifting apart.', 'Elbows flaring out wide.', 'Holding breath while squeezing.'] } },
+  { hk: 'aroundw', name: 'Lying DB Around the World', what: 'Lie on a bench. Circle dumbbells hips to overhead.', vn: 'Flat bench + 2 light dumbbells', move: 'aroundw', muscle: 'Chest + shoulder range', target: 'upper_chest', sets: 2, reps: 10, repTop: 12, w: 2, pair: true, step: 1, max: 4, rest: 90,
+    guide: { setup: ['Lie on a flat bench. Feet flat.', 'Dumbbells by hips, palms up.', 'Sweep wide to overhead. Exhale back.'], avoid: ['Lower back arching off the bench.', 'Locking the elbows straight.', 'Going heavy: 2-4 kg only.'] } },
+  { hk: 'suitcase', name: 'Suitcase Carry', what: 'Walk tall holding one dumbbell at your side.', vn: '1 dumbbell + clear floor', move: 'suitcase', muscle: 'Side abs (posture)', target: 'abs', sets: 2, reps: 30, repTop: 40, unit: 'sec', w: 8, step: 2, max: 14, rest: 90, side: true,
+    guide: { setup: ['Dumbbell in one hand. Stand tall.', 'Shoulders level. Ribs down. Short steps.', 'Breathe normally the whole time.'], avoid: ['Leaning toward the dumbbell.', 'Holding breath or bracing hard.', 'Going heavier than 14 kg.'] } },
+  { hk: 'kstrdl', name: 'DB Kickstand RDL', what: 'Back toe down for balance. Hinge on the front leg.', vn: '2 dumbbells', move: 'kstrdl', muscle: 'Glute + hamstring', target: 'glute_max', sets: 3, reps: 10, repTop: 12, w: 6, pair: true, step: 2, max: 10, rest: 120, side: true, hinge: 1,
+    guide: { setup: ['Front foot flat. Back toes by front heel.', 'Most weight on the front leg.', 'Hips back, back flat. Exhale, stand.'], avoid: ['Rounding the back.', 'Pushing up with the back leg.', 'Holding breath. Stay light.'] } },
+  { hk: 'slthrust', name: 'Single-Leg DB Hip Thrust', what: 'Upper back on a bench. Lift hips on one leg.', vn: 'Bench + 1 dumbbell', move: 'slthrust', muscle: 'Glute max', target: 'glute_max', sets: 3, reps: 10, repTop: 12, w: 4, step: 2, max: 12, rest: 90, side: true,
+    guide: { setup: ['Upper back on bench edge. Foot flat.', 'Dumbbell on working hip. Other knee up.', 'Exhale. Drive heel, hips up. Hold 1 s.'], avoid: ['Hips tilting to one side.', 'Arching the lower back on top.', 'Holding breath at the top.'] } }
+];
+/* Mat + Band day: LIBRARY moves with this day's ids, sets and alts. PT order: floor, all fours, kneeling, then standing (stand up once).
    home = Add sheet shows only band and mat moves, swap rows ask no question, Guide has no "My gym has no" button.
    keepRest = Light and Hard keep the program rest (90 s). */
 const LIBDEF = {}; LIBRARY.forEach(d => LIBDEF[d.hk] = d);
 const matItem = (id, hk, grp, alts, sets, o) => Object.assign({}, LIBDEF[hk], { id: 'mat_' + id, sets, grp, alts }, o);
 PROGRAM.push({ id: 'mat', tab: 'MAT', tt: 'Lift', type: 'lift', title: 'Mat + Band', sub: 'Gym full or home. Mat + 2 bands.', warm: 'March 4 min, easy. 5 belly breaths.', home: 1, keepRest: 1, items: [
-  matItem('bridge', 'bandbridge', 'Hip thrust', ['slbridge', 'frogpump'], 3, { hp: 1 }),
+  matItem('bridge', 'slbridge', 'Hip thrust', ['frogpump'], 3, { hp: 1 }),
   matItem('clam', 'clamshell', 'Side glutes', ['hydrant', 'sidelying', 'latwalk', 'abd'], 2),
-  matItem('kick', 'bandkick', 'Kickback', ['bandrdl', 'slbridge'], 3, { hp: 1 }),
   matItem('bird', 'birddog', 'Core', ['deadbug', 'sideplank'], 2),
+  matItem('press', 'kneepush', 'Chest press', null, 3),
   matItem('pd', 'bandpd', 'Vertical pull', ['bandrow'], 3),
   /* first standing move: its first cue changes on this day only */
-  matItem('press', 'bandpress', 'Chest press', ['kneepush'], 3, { guide: { setup: ['Stand up slowly. Band across upper back.'].concat(LIBDEF.bandpress.guide.setup.slice(1)), avoid: LIBDEF.bandpress.guide.avoid } }),
-  matItem('pull', 'pullapart', 'Rear delts', ['proney', 'bander'], 2)
+  matItem('lunge', 'revlunge', 'Lunge', ['bandrdl'], 3, { hp: 1, guide: { setup: ['Stand up slowly. Light hand on wall.'].concat(LIBDEF.revlunge.guide.setup.slice(1)), avoid: LIBDEF.revlunge.guide.avoid } }),
+  matItem('pull', 'pullapart', 'Rear delts', ['bander', 'proney'], 2)
 ]});
 const ORDER = ['mon', 'tue', 'thu', 'fri', 'mat', 'wed', 'sat', 'sun', 'walk'];
 /* standard week, Mon..Sun: Glutes A, Push, Yoga, Glutes B, Pull, Pump, Rest */
@@ -1159,7 +1220,6 @@ const TAGS = {
   cablerow:      { p: 'Back', s: [], pl: 'Machine' },
   dbrow:         { p: 'Back', s: [], pl: 'Dumbbell' },
   assistpu:      { p: 'Back', s: [], pl: 'Machine' },
-  bandpu:        { p: 'Back', s: [], pl: 'Long band', bar: 1 },
   incfly_l:      { p: 'Chest', s: [], pl: 'Dumbbell', l: 1, to: 'incfly' },
   cablefly_lh_l: { p: 'Chest', s: [], pl: 'Cable', l: 1 },
   cablelat:      { p: 'Shoulders', s: [], pl: 'Cable' },
@@ -1169,10 +1229,8 @@ const TAGS = {
   facepull_l:    { p: 'Shoulders', s: ['Back'], pl: 'Cable', l: 1, to: 'facepull' },
   sidelying:     { p: 'Glutes', s: [], pl: 'Mat', l: 1 },
   /* mat + band library */
-  bandbridge:    { p: 'Glutes', s: [], pl: 'Long band', l: 1 },
   slbridge:      { p: 'Glutes', s: ['Legs'], pl: 'Mat' },
-  bandkick:      { p: 'Glutes', s: [], pl: 'Long band' },
-  hydrant:       { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
+  hydrant:      { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
   clamshell:     { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
   bandrdl:       { p: 'Glutes', s: ['Legs'], pl: 'Long band' },
   birddog:       { p: 'Core', s: ['Glutes'], pl: 'Mat', l: 1 },
@@ -1181,10 +1239,26 @@ const TAGS = {
   bandrow:       { p: 'Back', s: [], pl: 'Long band' },
   proney:        { p: 'Back', s: ['Shoulders'], pl: 'Mat', l: 1 },
   pullapart:     { p: 'Shoulders', s: ['Back'], pl: 'Long band', l: 1 },
-  bandlat:       { p: 'Shoulders', s: [], pl: 'Long band' },
   bander:        { p: 'Shoulders', s: ['Back'], pl: 'Mini band', l: 1 },
   kneepush:      { p: 'Chest', s: ['Shoulders'], pl: 'Mat' },
-  bandpress:     { p: 'Chest', s: ['Shoulders'], pl: 'Long band' },
+  /* dumbbell library (v3.10) */
+  pullover:      { p: 'Back', s: ['Chest'], pl: 'Dumbbell' },
+  csrow:         { p: 'Back', s: [], pl: 'Dumbbell' },
+  incy:          { p: 'Back', s: ['Shoulders'], pl: 'Dumbbell', l: 1 },
+  dber:          { p: 'Shoulders', s: ['Back'], pl: 'Dumbbell', l: 1 },
+  arnold:        { p: 'Shoulders', s: [], pl: 'Dumbbell' },
+  lyinglat:      { p: 'Shoulders', s: [], pl: 'Dumbbell' },
+  squeeze:       { p: 'Chest', s: ['Shoulders'], pl: 'Dumbbell' },
+  aroundw:       { p: 'Chest', s: ['Back'], pl: 'Dumbbell', l: 1 },
+  suitcase:      { p: 'Core', s: [], pl: 'Dumbbell' },
+  kstrdl:        { p: 'Glutes', s: ['Legs'], pl: 'Dumbbell', hinge: 1 },
+  slthrust:      { p: 'Glutes', s: [], pl: 'Dumbbell' },
+  /* retired band moves (v3.10): old history only, not pickable */
+  bandbridge:    { p: 'Glutes', s: [], pl: 'Long band', l: 1, old: 1 },
+  bandkick:      { p: 'Glutes', s: [], pl: 'Long band', old: 1 },
+  bandpu:        { p: 'Back', s: [], pl: 'Long band', bar: 1, old: 1 },
+  bandlat:       { p: 'Shoulders', s: [], pl: 'Long band', old: 1 },
+  bandpress:     { p: 'Chest', s: ['Shoulders'], pl: 'Long band', old: 1 },
   /* legacy keys: count old history only */
   bridge_bw:     { p: 'Glutes', s: [], old: 1 },
   abcrunch:      { p: 'Core', s: [], old: 1 },
@@ -1203,6 +1277,7 @@ const HKDEF = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk && !HKD
   (it.alts || []).forEach(a => { if (a && typeof a === 'object' && !HKDEF[a.hk]) HKDEF[a.hk] = Object.assign({}, a, { sets: a.sets || it.sets }); }); }));
 /* library defs win (the Mat day uses them with its own ids, alts and one day-only cue); retired moves fill gaps only */
 LIBRARY.forEach(d => HKDEF[d.hk] = d);
+DBLIB.forEach(d => HKDEF[d.hk] = d);
 RETIRED.forEach(d => { if (!HKDEF[d.hk]) HKDEF[d.hk] = d; });
 const canon = hk => (TAGS[hk] && TAGS[hk].to) || hk;
 const HOMEPL = ['Mini band', 'Long band', 'Mat'];
@@ -1246,6 +1321,33 @@ function normSwaps(s) {
   [s.timer && s.timer.ref, s.rate].forEach(r => { const it = r && typeof r.key === 'string' && r.key.endsWith('~s') && exOf(r.key.slice(0, -2)); if (!it) return;
     if (typeof r.k === 'number') r.k += shift[r.key] || 0; r.key = it.id + '~' + hk38(it); });
 }
+/* v3.10: cards whose main hk changed: id -> old main. Runs once (S.mig < MIG): old main rows go to id + '~' + old main,
+   rows of the new main (v3.9 swap rows, v3.8 '~s' rows) become the main rows, that swap -> 0; refs follow */
+const MIG = 310;
+const MAINCHG = { tue_cpress: 'chestpress', mat_bridge: 'bandbridge', mat_press: 'bandpress' };
+function normMain(s) {
+  if (s.mig >= MIG) return;
+  const refs = [s.timer && s.timer.ref, s.rate].filter(r => r && typeof r.key === 'string'), arr = k => (Array.isArray(s.sets[k]) ? s.sets[k] : []);
+  const move = (from, to) => { const a = arr(from), b = arr(to);
+    refs.forEach(r => { if (r.key === from) { r.key = to; if (typeof r.k === 'number') r.k += b.length; } });
+    if (a.length) s.sets[to] = b.concat(a); delete s.sets[from]; };
+  for (const id in MAINCHG) { const it = EX[id]; if (!it) continue;
+    move(id, id + '~' + MAINCHG[id]);
+    move(id + '~' + it.hk, id);
+    if (SWAP38[id] === it.hk) move(id + '~s', id);
+    if (s.swaps[id] === it.hk || s.swaps[id] === 'use') s.swaps[id] = 0;
+    if (s.missing[id] === it.hk || s.missing[id] === true) delete s.missing[id];
+    delete s.sel[id]; }
+}
+/* removed cards (v3.10 mat_kick) and other unknown ids: their swaps, picks and rows are dropped.
+   An exercise card with no alts left (v3.10 mat_press) has no swap and no gym default */
+function dropUnknown(s) {
+  const known = id => !!EX[id] || id.slice(0, 2) === 'x_', bare = id => !!EX[id] && !EX[id].cls && !EX[id].alts;
+  ['swaps', 'missing', 'sel'].forEach(f => { for (const id in s[f]) if (!known(id)) delete s[f][id]; });
+  for (const id in s.swaps) if (bare(id)) s.swaps[id] = 0;
+  for (const id in s.missing) if (bare(id)) delete s.missing[id];
+  Object.keys(s.sets).forEach(k => { if (!known(k.split('~')[0])) delete s.sets[k]; });
+}
 /* tags for any hk: TAGS first, then the old single-group map, else null (not counted) */
 const tagOf = hk => TAGS[hk] || (HKDEF[hk] && GROUP[HKDEF[hk].target] ? { p: GROUP[HKDEF[hk].target], s: [] } : null);
 /* weight of one set of hk for category c: 1, 0.5 or 0 */
@@ -1255,11 +1357,14 @@ const rh = x => Math.floor(x + 0.5);   /* round half up, display only */
 /* ================= STATE ================= */
 const KEY = 'sculpt_v3';
 const MODES = ['light', 'normal', 'hard'];
-const fresh = () => ({ view: 'mon', viewDate: '', mode: null, missing: {}, plans: {}, basePlan: null, statTab: 'week', statRange: '1m', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, cin: {}, order: {}, extra: {}, lastExport: '' });
+/* mig = data version: a new state is current; a stored or imported one without it is migrated (see stored()) */
+const fresh = () => ({ view: 'mon', viewDate: '', mode: null, missing: {}, plans: {}, basePlan: null, statTab: 'week', statRange: '1m', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, cin: {}, order: {}, extra: {}, lastExport: '', mig: MIG });
+/* a stored or imported object: fresh defaults, but no mig unless it has its own */
+const stored = o => Object.assign(fresh(), { mig: 0 }, o);
 let S = load();
-/* fill fields an older backup may lack or hold as null; drop v3.7 heart-rate keys; map v3.8 swaps */
+/* fill fields an older backup may lack or hold as null; drop v3.7 heart-rate keys; map v3.8 swaps; v3.10 main changes */
 function norm(s) { const f = fresh(); ['missing','plans','sets','classes','swaps','sel','history','profile','start','cin','order','extra'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; });
-  delete s.hr; delete s.calm; normSwaps(s);
+  delete s.hr; delete s.calm; normMain(s); normSwaps(s); dropUnknown(s); s.mig = MIG;
   const m = s.mode; s.mode = m && typeof m === 'object' && MODES.includes(m.v) && typeof m.d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(m.d) ? { v: m.v, d: m.d } : null;
   for (const d in s.extra) { const v = s.extra[d]; if (!Array.isArray(v)) { delete s.extra[d]; continue; } s.extra[d] = v.filter(x => x && typeof x.id === 'string' && x.id.slice(0, 2) === 'x_' && HKDEF[x.hk]).slice(0, 3); }
   for (const d in s.order) { const v = s.order[d]; if (!v || typeof v.d !== 'string' || !Array.isArray(v.ids)) delete s.order[d]; }
@@ -1267,7 +1372,7 @@ function norm(s) { const f = fresh(); ['missing','plans','sets','classes','swaps
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return norm(Object.assign(fresh(), JSON.parse(raw)));
+    if (raw) return norm(stored(JSON.parse(raw)));
     const old = localStorage.getItem('sculpt_v2') || localStorage.getItem('sculpt_tng_v1');
     if (old) { const o = JSON.parse(old); const s = fresh(); s.history = o.history || {}; s.sessions = o.sessions || []; return s; }
   } catch (e) {}
@@ -1316,14 +1421,20 @@ const cur = ex => { const h = altHk(ex); return h ? asAlt(ex, h) : ex; };
 /* rows of a version: main = S.sets[id], alt = S.sets[id + '~' + hk] */
 const vkey = (ex, hk) => ex.id + (hk ? '~' + hk : '');
 const skey = ex => vkey(ex, altHk(ex));
-/* every version of an exercise card: main (''), then the alts in PT order */
-const versions = ex => (ex.cls ? [] : [''].concat((ex.alts || []).map(a => a.hk)));
+/* every version of an exercise card: main (''), then the alts in PT order,
+   then any move no longer listed that still has rows on this card (v3.10 migration): those keep counting and log under their hk */
+const versions = ex => { if (ex.cls) return []; const v = [''].concat((ex.alts || []).map(a => a.hk));
+  Object.keys(S.sets).forEach(k => { const h = k.slice(ex.id.length + 1); if (k.startsWith(ex.id + '~') && HKDEF[h] && !v.includes(h)) v.push(h); });
+  return v; };
+/* the def of a version: main, an alt, or an old unlisted move (its own def in this slot) */
+const verDef = (ex, h) => { if (!h || !HKDEF[h]) return ex; if (isAlt(ex, h)) return asAlt(ex, h);
+  const d = HKDEF[h], c = { id: ex.id, from: ex.name, isSwap: true }; ALTF.forEach(k => { if (d[k] !== undefined) c[k] = d[k]; }); c.sets = ex.sets; c.rest = d.rest || ex.rest; return c; };
 /* the versions not on screen and their done sets: kept and counted (HUD, progress, muscle sets, kcal, log) */
 const others = ex => { const k0 = skey(ex); return versions(ex).filter(h => vkey(ex, h) !== k0).map(h => { const k = vkey(ex, h);
-  return { hk: h, k, get c() { return h ? asAlt(ex, h) : ex; }, done: (Array.isArray(S.sets[k]) ? S.sets[k] : []).filter(s => s.done) }; }); };
+  return { hk: h, k, get c() { return verDef(ex, h); }, done: (Array.isArray(S.sets[k]) ? S.sets[k] : []).filter(s => s.done) }; }); };
 const otherDone = ex => others(ex).flatMap(o => o.done);
 /* the card def of a rows key (the version a set was done on) */
-const defOfKey = (ex, key) => { const h = key.slice(ex.id.length + 1); return isAlt(ex, h) ? asAlt(ex, h) : ex; };
+const defOfKey = (ex, key) => verDef(ex, key.slice(ex.id.length + 1));
 const isHinge = c => !!(c.hinge || (TAGS[c.hk] || {}).hinge);
 /* today's intensity: the pick saved today, else today's suggestion */
 /* a workout started on the mode's date and still open (late session past midnight) keeps that mode */
@@ -1439,7 +1550,8 @@ function suggest(c) {
   if (daysAgo(l.date) >= 21) return { w: wNext(c, base, -1), r: tr, why: 'lighter', t: 'down' };
   if (allHit && !hard) {
     const capped = c.max && base >= c.max, top = c.repTop || (capped ? 15 : 0);
-    if (top && tr < top) return { w: base, r: tr + 1, why: '+1 rep', t: 'up' };
+    /* timed holds with kg (Suitcase Carry) add 5 s, not 1 */
+    if (top && tr < top) { const k = noWStep(c); return { w: base, r: Math.min(top, tr + k), why: '+' + k + ' ' + (k > 1 ? 's' : 'rep'), t: 'up' }; }
     if (capped) return { w: c.max, r: tr, why: 'max safe load', t: 'cap' };
     return { w: wNext(c, base, 1), r: c.reps, why: (c.assist ? '−' : '+') + fmtW(c.step) + ' kg' + (c.assist ? ' assist' : ''), t: 'up' };
   }
@@ -1646,7 +1758,7 @@ function weekCat(ws, day) {
    Lift MET: MAT every noW move, BIG legs-secondary moves and hip thrusts, LIFT the rest (also unknown keys).
    Class cards: their met on planned minutes. Computed from history and sessions, never stored. Sum unrounded, round at the end. */
 const KC = { MAT: 3.0, BIG: 5.0, LIFT: 3.5, H: 1.05, BW: 62 };
-const KC_BIG = ['thrust_m', 'thrust', 'thrust_mf'];
+const KC_BIG = ['thrust_m', 'thrust', 'thrust_mf', 'slthrust'];
 const kcGroup = hk => (HKDEF[hk] && HKDEF[hk].noW ? 'MAT' : (TAGS[hk] && TAGS[hk].s.includes('Legs')) || KC_BIG.includes(hk) ? 'BIG' : 'LIFT');
 /* body kg: the latest InBody weight on or before date, else the earliest, else 62 */
 function bwOn(date) {
@@ -2360,7 +2472,7 @@ let swapFor = null;
 function renderSwap(ex) {
   swapFor = ex.id;
   const on = altHk(ex), used = todaySet(DAYS[dayOfId(ex.id)], ex.id);
-  const rows = versions(ex).map(h => {
+  const rows = versions(ex).filter(h => !h || isAlt(ex, h)).map(h => {
     const d = h ? asAlt(ex, h) : ex, n = (S.sets[vkey(ex, h)] || []).filter(s => s.done).length, now = h === on, tod = !now && used.has(canon(d.hk));
     const badge = now ? '<span class="badge gray">Now</span>' : tod ? '<span class="badge gray">Today</span>' : n ? `<span class="badge">✓ ${n}</span>` : '<span></span>';
     return `<button class="xrow" data-swpick="${h || 'main'}" ${now || tod ? 'disabled' : ''}><span class="xf">${moveSVG(d.move, false)}</span><span class="xt"><b>${d.name}</b><small>${d.vn} · ${lastTxt(d.hk)}</small></span>${badge}<span class="chev">›</span></button>`;
@@ -2778,7 +2890,7 @@ function paintBackup() {
 $('#fileIn').addEventListener('change', e => {
   const f = e.target.files[0]; if (!f) return;
   const r = new FileReader();
-  r.onload = () => { try { const o = JSON.parse(r.result); if (!o.sessions || !o.history) throw 0; if (!confirm('Replace all data with this file?')) return; S = norm(Object.assign(fresh(), o)); save(); render(); paintBackup(); toast('Imported'); } catch (x) { toast('Can\'t read this file', true); } };
+  r.onload = () => { try { const o = JSON.parse(r.result); if (!o.sessions || !o.history) throw 0; if (!confirm('Replace all data with this file?')) return; S = norm(stored(o)); save(); render(); paintBackup(); toast('Imported'); } catch (x) { toast('Can\'t read this file', true); } };
   r.readAsText(f); e.target.value = '';
 });
 
@@ -2925,7 +3037,7 @@ S.rate = null;
 render(); resumeTimer();
 if (!localStorage.getItem(KEY + '_seen')) { openModal('mHow'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
 /* keep APP_VER in step with VERSION in sw.js */
-const APP_VER = '3.9.0';
+const APP_VER = '3.10.0';
 $('#appVer').textContent = 'SCULPT v' + APP_VER;
 if ('serviceWorker' in navigator) {
   const hadCtrl = !!navigator.serviceWorker.controller;
