@@ -1,5 +1,5 @@
 /* SCULPT service worker. Bump VERSION (and APP_VER in index.html) on every deploy. */
-const VERSION = 'sculpt-v3.11.0';
+const VERSION = 'sculpt-v3.11.1';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 
 self.addEventListener('install', e => {

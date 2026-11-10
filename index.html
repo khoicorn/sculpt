@@ -403,7 +403,7 @@
   .tgt .th b { color: var(--lime); }
   .tgt .tr { display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: 13px; color: var(--muted); margin-top: 3px; }
   .tgt .tr b { color: var(--text); }
-  .tgt .tr .ok b { color: var(--lime); }
+  .tgt .tr .yes b { color: var(--lime); }
   .fri, .setrow { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; font-size: 13px; color: var(--dim); }
   .fri b { color: var(--text); font-weight: 600; }
   .mark { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; font-size: 13px; color: var(--dim); }
@@ -419,7 +419,7 @@
   .dl .d2 em { font-style: normal; font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; margin-left: 4px; }
   .dl small { display: block; font-size: 11px; color: var(--dim); }
   .dl .d3 { text-align: right; font-weight: 600; white-space: nowrap; }
-  .dl.ok .d2 { color: var(--lime); }
+  .dl.yes .d2 { color: var(--lime); }
   .gh { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 10px; flex-wrap: wrap; font-size: 12px; color: var(--dim); }
   .gh .lv { font-family: var(--head); font-size: 15px; font-weight: 700; color: var(--lime); }
   .xpbar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin-top: 8px; }
@@ -428,7 +428,7 @@
   .qh { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-weight: 700; margin: 12px 0 2px; }
   .qr { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; gap: 8px; align-items: center; min-height: 40px; padding: 3px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
   .qi { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line-3); font-size: 11px; display: flex; align-items: center; justify-content: center; color: #09090B; }
-  .qr.ok .qi { background: var(--lime); border-color: var(--lime); }
+  .qr.yes .qi { background: var(--lime); border-color: var(--lime); }
   .qn small, .qv small { display: block; font-size: 11px; color: var(--dim); font-weight: 500; }
   .qv { text-align: right; font-weight: 600; white-space: nowrap; }
   .rw { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; font-size: 13px; padding: 3px 0; }
@@ -2976,7 +2976,7 @@ function statsWeek() {
     const cls = [date === today && 'today', dn && 'done', !wk && 'rest', wk && DAYS[id].type === 'class' && 'cl', role === 'flex' && 'flx', miss && 'miss', off && 'offd'].filter(Boolean).join(' ');
     return `<button class="pday ${cls}" data-pday="${i}" aria-label="${DOW[i]}: ${slotName(id)}, ${ROLE[role]}${dn ? ', done' : off ? ', off' : ''}"><span class="dn">${DOW[i]}</span><span class="dd">${+date.slice(8)}</span><span class="pw">${txt}</span><span class="pr">${off ? 'Off' : ROLE_S[role]}</span></button>`;
   }).join('');
-  const ok = c => (c ? ' class="ok"' : '');
+  const ok = c => (c ? ' class="yes"' : '');
   const core = wi.coreN ? `<div class="th">Core goal${wi.coreDone ? '<b>Complete</b>' : ''}</div><div class="tr">${wi.pump.n ? `<span${ok(wi.pump.d >= wi.pump.n)}>Pump <b>${wi.pump.d}/${wi.pump.n}</b></span>` : ''}${wi.combat.n ? `<span${ok(wi.combat.d >= wi.combat.n)}>Combat <b>${wi.combat.d}/${wi.combat.n}</b></span>` : ''}${wi.restN ? `<span${ok(!wi.broken && wi.kept >= wi.restN)}>Rest days <b>${wi.kept}/${wi.restN}</b></span>` : ''}</div>` : '';
   const bTxt = i => { const d = addDays(ws, i), mk = S.dayMark[d]; return st.done[i] ? 'Done' : d < today ? (mk ? MARKL[mk] : 'Skipped') : 'Optional'; };
   const fid = plan[FRI], friT = fid === 'off' ? 'Planned off' : fid === 'rest' ? 'Rest' : fid === 'flex' ? 'Optional' : slotName(fid) + ' · ' + bTxt(FRI);
@@ -2988,7 +2988,7 @@ function statsWeek() {
     : `<div class="fri"><span>Fri tip: <b>${friTip(ws).line}</b></span><button class="chipb" data-fri="off">Take Friday off</button></div>`;
   const marks = wi.bonus.filter(o => !st.done[o.i] && addDays(ws, o.i) < today).map(o => { const d = addDays(ws, o.i), mk = S.dayMark[d];
     return `<div class="mark"><span>${DOW[o.i]} ${slotName(o.id)} not logged. Optional.</span><div class="mk">${MARKS.map(([v, l]) => `<button class="chipb ${mk === v ? 'on' : ''}" data-mark="${d}:${v}" aria-pressed="${mk === v}">${l}</button>`).join('')}</div></div>`; }).join('');
-  const warns = planWarn(plan).map(t => `<div class="pwarn">${t}</div>`).join('');
+  const warns = ws < cw ? '' : planWarn(plan).map(t => `<div class="pwarn">${t}</div>`).join('');   /* past weeks: no advice */
   const past = ws < cw, future = ws > cw, k = weekCat(ws, null);
   let ans = '';
   if (past) {
@@ -3004,17 +3004,17 @@ function statsWeek() {
     const T = k.T[c], D = k.D[c], L = past ? 0 : k.L[c], mx = Math.max(T, D + L, 1), dw = Math.min(100, D / mx * 100), lw = Math.min(100 - dw, L / mx * 100);
     return `<div class="cset ${c === 'Legs' ? 'dimrow' : ''}"><span class="mg">${c}</span><span class="cbar"><i style="width:${dw}%"></i>${L ? `<i class="lt" style="width:${lw}%"></i>` : ''}</span><span class="mv">${rh(D)}<small> / ${rh(T)}</small></span></div>`;
   }).join('');
-  const dlist = plan.map((id, i) => (isWk(id) ? `<div class="dl ${st.done[i] ? 'ok' : ''}"><span class="d1">${DOW[i]}</span><span class="d2">${slotName(id)} <em>${ROLE[roleOf(plan, i)]}</em><small>${EMPH[id]}</small></span><span class="d3">${slotMode(wi, i)}<small>~${durOf(id)} min</small></span></div>` : '')).join('');
+  const dlist = plan.map((id, i) => (isWk(id) ? `<div class="dl ${st.done[i] ? 'yes' : ''}"><span class="d1">${DOW[i]}</span><span class="d2">${slotName(id)} <em>${ROLE[roleOf(plan, i)]}</em><small>${EMPH[id]}</small></span><span class="d3">${slotMode(wi, i)}<small>~${durOf(id)} min</small></span></div>` : '')).join('');
   /* progress: level, streak, quests, recent rewards, achievements */
   const lv = g.lv, gl = wi.gl.all, pp = wi.pp;
-  const glH = gl > GL.max ? 'Glutes are full this week. Rest them.' : gl >= 25 ? 'Big glute week.' : gl < 10 && !future ? 'Room for more glutes this week.' : '';
+  const glH = gl > GL.max ? 'Glutes are full this week. Rest them.' : gl >= 25 ? 'Big glute week.' : gl < 10 && ws === cw ? 'Room for more glutes this week.' : '';
   const ppH = pp.push > pp.pull ? 'More push than pull. Add a pull move.' : pp.push < 8 && pp.pull >= 8 ? 'Push is low. Add a chest move.' : '';
   const xH = wi.xsAll ? (wi.xs ? '+' + wi.xsAll + ' extra sets. Nice work.' : gl > GL.max ? 'Glutes full this week. Sets saved.' : 'Saved. Poor days don\'t add to target.') : '';
   const q = [[wi.coreDone, 'Core week', wi.coreN ? (wi.pump.d + wi.combat.d) + '/' + wi.coreN : '—', '+' + (wi.pump.n >= 3 ? 150 : 100), ''],
     [gl >= GL.lo, 'Glute sets', rh(wi.gl.ded) + (wi.gl.pump ? ' + ' + wi.gl.pump + ' Pump' : '') + ' / ' + GL.lo, '+30', glH],
     [pp.ok, 'Push / pull · 14 d', pp.push + ' / ' + pp.pull, '+30', ppH],
     [wi.xs > 0, 'Extra effort', wi.xsAll ? '+' + wi.xsAll + ' sets' : 'Add moves any day', '+3 a set', xH]];
-  const quests = q.map(([d, n, v, x, h]) => `<div class="qr ${d ? 'ok' : ''}"><span class="qi" aria-hidden="true">${d ? '✓' : ''}</span><span class="qn">${n}${h ? `<small>${h}</small>` : ''}</span><span class="qv">${v}<small>${x} XP</small></span></div>`).join('');
+  const quests = q.map(([d, n, v, x, h]) => `<div class="qr ${d ? 'yes' : ''}"><span class="qi" aria-hidden="true">${d ? '✓' : ''}</span><span class="qn">${n}${h ? `<small>${h}</small>` : ''}</span><span class="qv">${v}<small>${x} XP</small></span></div>`).join('');
   const recent = g.list.slice(0, 3).map(e => `<div class="rw"><b>+${e.xp}</b><span>${e.why}</span><small>${niceDate(e.d)}</small></div>`).join('');
   const ach = ACH.filter(a => S.game.achievements[a.id] || g.A[a.id]);
   return `
@@ -3467,7 +3467,7 @@ try { const neu = syncGame(); if (neu.length) setTimeout(() => toast('Badge: ' +
 render(); resumeTimer();
 if (!localStorage.getItem(KEY + '_seen')) { openModal('mHow'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
 /* keep APP_VER in step with VERSION in sw.js */
-const APP_VER = '3.11.0';
+const APP_VER = '3.11.1';
 $('#appVer').textContent = 'SCULPT v' + APP_VER;
 if ('serviceWorker' in navigator) {
   const hadCtrl = !!navigator.serviceWorker.controller;

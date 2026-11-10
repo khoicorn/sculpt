@@ -1,4 +1,4 @@
-# QA Report: SCULPT v3.11.0
+# QA Report: SCULPT v3.11.1
 
 **Date:** 2026-11-10
 **Verdict:** PASS (independent QA agent + own probes; 10 defects found, 9 fixed and rechecked, 1 kept by design)
@@ -10,6 +10,9 @@ Weekly planner and gamification:
 - **XP:** levels, a weekly streak, 4 weekly quests, 10 badges, and capped XP for extra sets.
 - **Storage:** XP is computed from sessions and never stored. Sessions get stable ids.
 - **Migration:** past weeks are pinned to the old plan.
+
+## v3.11.1 hotfix
+On the phone, the Week view drew done items as 56 px circles. The new class name `ok` clashed with the round set button `.ok`. It is renamed to `yes`. Past weeks no longer show plan warnings or the "Room for more glutes" tip. p13 now checks for round or squeezed rows, and screenshots at 360 and 412 px were checked by eye.
 
 ## Probe results (headless Chrome)
 | Probe | Result |
