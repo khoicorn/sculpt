@@ -73,8 +73,9 @@
   .lbl { font-family: var(--head); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); font-weight: 700; margin: 18px 0 8px; }
 
   .mode { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px; margin-top: 14px; transition: var(--t); }
-  .mode .q { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-weight: 700; }
-  .mode .opts { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 8px; }
+  .rdq { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px; margin-top: 14px; }
+  .mode .q, .rdq .q { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-weight: 700; }
+  .mode .opts, .rdq .opts { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 8px; }
   .opt { min-height: 52px; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 14px; font-weight: 700; transition: var(--t); }
   .opt.on { background: var(--lime); border-color: var(--lime); color: #09090B; }
   .opt.off { opacity: 0.4; }
@@ -391,7 +392,55 @@
   .pday:active { transform: scale(0.96); }
   .psum { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: 13px; color: var(--dim); margin-top: 10px; }
   .psum b { color: var(--text); }
-  .pwarn { font-size: 12px; color: var(--red); margin-top: 6px; }
+  .pwarn { font-size: 12px; color: var(--muted); margin-top: 6px; padding-left: 8px; border-left: 2px solid var(--red); }
+  /* v3.11 planner + progress */
+  .pday .pr { font-size: 8px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--dim); }
+  .pday.done .pr { color: #09090B; }
+  .pday.flx:not(.done) { border-style: dashed; }
+  .pday.offd .pw { color: var(--dim); }
+  .tgt { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 4px 12px 6px; margin-top: 10px; }
+  .tgt .th { display: flex; justify-content: space-between; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-weight: 700; margin-top: 6px; }
+  .tgt .th b { color: var(--lime); }
+  .tgt .tr { display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: 13px; color: var(--muted); margin-top: 3px; }
+  .tgt .tr b { color: var(--text); }
+  .tgt .tr .ok b { color: var(--lime); }
+  .fri, .setrow { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; font-size: 13px; color: var(--dim); }
+  .fri b { color: var(--text); font-weight: 600; }
+  .mark { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; font-size: 13px; color: var(--dim); }
+  .mark .mk { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chipb { flex: 0 0 auto; min-height: 44px; padding: 0 12px; background: transparent; border: 1px solid var(--line-2); border-radius: var(--r); font-family: var(--head); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); transition: var(--t); }
+  .chipb.on { border-color: var(--lime); color: var(--lime); }
+  .dlist, .game { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 2px 12px; }
+  .game { padding: 10px 12px; }
+  .dl { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 8px; align-items: center; min-height: 44px; padding: 4px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .dl:last-child { border-bottom: none; }
+  .dl .d1 { font-size: 11px; color: var(--dim); font-weight: 700; text-transform: uppercase; }
+  .dl .d2 { overflow-wrap: anywhere; }
+  .dl .d2 em { font-style: normal; font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; margin-left: 4px; }
+  .dl small { display: block; font-size: 11px; color: var(--dim); }
+  .dl .d3 { text-align: right; font-weight: 600; white-space: nowrap; }
+  .dl.ok .d2 { color: var(--lime); }
+  .gh { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 10px; flex-wrap: wrap; font-size: 12px; color: var(--dim); }
+  .gh .lv { font-family: var(--head); font-size: 15px; font-weight: 700; color: var(--lime); }
+  .xpbar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+  .xpbar i { display: block; height: 100%; background: var(--lime); transition: width var(--d4) var(--e-out); }
+  .gs { font-size: 11px; color: var(--dim); margin-top: 4px; }
+  .qh { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); font-weight: 700; margin: 12px 0 2px; }
+  .qr { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; gap: 8px; align-items: center; min-height: 40px; padding: 3px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .qi { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line-3); font-size: 11px; display: flex; align-items: center; justify-content: center; color: #09090B; }
+  .qr.ok .qi { background: var(--lime); border-color: var(--lime); }
+  .qn small, .qv small { display: block; font-size: 11px; color: var(--dim); font-weight: 500; }
+  .qv { text-align: right; font-weight: 600; white-space: nowrap; }
+  .rw { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; font-size: 13px; padding: 3px 0; }
+  .rw b { color: var(--lime); }
+  .rw small { color: var(--dim); font-size: 11px; }
+  .ach { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .rdy { width: 100%; margin-top: 14px; min-height: 48px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; padding: 6px 12px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); font-family: var(--data); font-size: 13px; color: var(--muted); text-align: left; }
+  .rdy small { font-size: 12px; color: var(--dim); }
+  .seg.wrap button { font-size: 11px; letter-spacing: 0.04em; padding: 0 4px; }
+  .mrow.dis { opacity: 0.45; }
+  .mrow .badge { margin-left: 6px; vertical-align: middle; }
+  .xpl span { color: var(--muted); }
   .pbtns { display: flex; justify-content: space-between; }
   .msets { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 4px 12px; }
   .mset { display: grid; grid-template-columns: 82px 1fr 64px; gap: 10px; align-items: center; min-height: 40px; border-bottom: 1px solid var(--line); }
@@ -603,7 +652,7 @@
     <button class="xbtn" data-close aria-label="Close">×</button>
     <h2>How it works</h2>
     <ol class="steps">
-      <li><b>Plan</b><span>Your week has 4 lifts, 2 classes and 1 rest day. Tap a day to change it.</span><button class="btn-q" data-go="plan">Open my week</button></li>
+      <li><b>Plan</b><span>Core week: 2 Pump, 1 Combat, Tue and Sun rest. Mon and Fri are bonus. Tap a day to change it.</span><button class="btn-q" data-go="plan">Open my week</button></li>
       <li><b>Train</b><span>Open today's workout. Pick how hard. Reorder if a class is late.</span><button class="btn-q" data-go="today">Today's workout</button></li>
       <li><b>Record</b><span>Tap the circle after each set and rate it. Then Finish + log.</span></li>
       <li><b>Review</b><span>Stats shows sets per muscle and your lifts. The app sets your next kg.</span><button class="btn-q" data-go="lifts">See my lifts</button></li>
@@ -636,10 +685,10 @@
     <h2>Rules</h2>
     <h4>Your week</h4>
     <ul>
-      <li>4 lifts: Glutes A, Push, Glutes B, Pull.</li>
-      <li>Plus 1-3 classes: Pump, Combat, Yoga.</li>
-      <li>Do every exercise. Reorder if needed.</li>
-      <li>Glutes A and B: 2+ days apart.</li>
+      <li>Core: 2 Pump + 1 Combat. Tue and Sun rest.</li>
+      <li>Mon: Push or Pull. Fri: optional Flex Day.</li>
+      <li>3 Pump is a big week: 1 Pump Light.</li>
+      <li>Glutes and Pump: 1+ day apart.</li>
       <li>Combat max 1x per week.</li>
       <li>Gym full? Do Mat + Band.</li>
     </ul>
@@ -648,7 +697,8 @@
       <li>Light: 1 set less, lighter kg.</li>
       <li>Hard: 1 more set on 2 moves.</li>
       <li>Hard max 2x per week.</li>
-      <li>Extras: Light 0, Normal 2, Hard 1.</li>
+      <li>Extras: Light 0, Normal 2, Hard 1. Okay day 1.</li>
+      <li>Poor day: rest, Walk or Light.</li>
     </ul>
     <h4 class="red">Safety</h4>
     <ul>
@@ -1174,8 +1224,9 @@ PROGRAM.push({ id: 'mat', tab: 'MAT', tt: 'Lift', type: 'lift', title: 'Mat + Ba
   matItem('pull', 'pullapart', 'Rear delts', ['bander', 'proney'], 2)
 ]});
 const ORDER = ['mon', 'tue', 'thu', 'fri', 'mat', 'wed', 'sat', 'sun', 'walk'];
-/* standard week, Mon..Sun: Glutes A, Push, Yoga, Glutes B, Pull, Pump, Rest */
-const STANDARD = ['mon', 'tue', 'sun', 'thu', 'fri', 'wed', 'rest'];
+/* the standard week before v3.11, Mon..Sun: Glutes A, Push, Yoga, Glutes B, Pull, Pump, Rest. Past weeks keep it (normPlanner).
+   v3.11 weeks come from template(): Mon Push/Pull, Tue Rest, Wed Pump, Thu Combat, Fri Flex, Sat Pump, Sun Rest */
+const OLD_STANDARD = ['mon', 'tue', 'sun', 'thu', 'fri', 'wed', 'rest'];
 const DOW = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const GROUP = { glute_max: 'Glutes', glute_med: 'Glutes', hams: 'Glutes', quads: 'Legs', upper_chest: 'Chest', inner_chest: 'Chest', side_delt: 'Shoulders', rear_delt: 'Shoulders', lats: 'Back', upper_back: 'Back', abs: 'Core' };
 /* muscle tags by history key (hk). p = primary (counts 1 set), s = secondary (0.5 set each).
@@ -1190,7 +1241,7 @@ const TAGS = {
   legpress:      { p: 'Glutes', s: ['Legs'], pl: 'Machine' },
   gobletsq:      { p: 'Glutes', s: ['Legs'], pl: 'Dumbbell' },
   glutemach:     { p: 'Glutes', s: [], pl: 'Machine' },
-  kick:          { p: 'Glutes', s: [], pl: 'Cable' },
+  kick:          { p: 'Glutes', s: [], pl: 'Cable', l: 1 },
   abductor:      { p: 'Glutes', s: [], pl: 'Machine', lv: 'abductor_f' },
   abd:           { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
   deadbug:       { p: 'Core', s: [], pl: 'Mat', l: 1 },
@@ -1229,7 +1280,7 @@ const TAGS = {
   facepull_l:    { p: 'Shoulders', s: ['Back'], pl: 'Cable', l: 1, to: 'facepull' },
   sidelying:     { p: 'Glutes', s: [], pl: 'Mat', l: 1 },
   /* mat + band library */
-  slbridge:      { p: 'Glutes', s: ['Legs'], pl: 'Mat' },
+  slbridge:      { p: 'Glutes', s: ['Legs'], pl: 'Mat', l: 1 },
   hydrant:      { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
   clamshell:     { p: 'Glutes', s: [], pl: 'Mini band', l: 1 },
   bandrdl:       { p: 'Glutes', s: ['Legs'], pl: 'Long band' },
@@ -1271,6 +1322,24 @@ const CLSMIN = { wed: 45, sat: 45, sun: 60 };
 const ABBR = { mon: 'GA', tue: 'PU', thu: 'GB', fri: 'PL', mat: 'MB', wed: 'PM', sat: 'CB', sun: 'YG', walk: 'WK' };
 const LIFTS = ['mon', 'tue', 'thu', 'fri'];
 const DAYS = {}; PROGRAM.forEach(d => DAYS[d.id] = d);
+/* ===== weekly planner ids =====
+   A plan slot is a workout id (DAYS) or one of: rest, off (day off / social plans), flex (Friday, nothing picked yet).
+   Workout ids name workouts, not weekdays: wed = Pump, sat = Combat (see PROGRAM). */
+const isWk = id => typeof id === 'string' && !!DAYS[id];
+const planOk = id => isWk(id) || id === 'rest' || id === 'off' || id === 'flex';
+const FRI = 4, WEEK_A = '2026-11-09';   /* WEEK_A: a Monday of an A week (Mon = Push) */
+const FRIPICK = ['flex', 'rest', 'off', 'walk', 'mat', 'mon', 'thu', 'tue', 'fri'];
+const GOALS = [['glutes', 'Glute growth'], ['upper', 'Upper balance'], ['general', 'General fitness'], ['cond', 'Conditioning'], ['recovery', 'Recovery']];
+/* readiness: r = feel, s = soreness, z = where (when high) */
+const RD = { r: ['good', 'ok', 'poor'], s: ['none', 'mild', 'high'], z: ['lower', 'upper', 'both'] };
+/* a skipped optional day, marked after: the first 3 never count against you */
+const MARKS = [['off', 'Planned off'], ['social', 'Social plans'], ['recovery', 'Needed rest'], ['missed', 'Missed']];
+/* achievements: unlock once, kept even if a session is later deleted */
+const ACH = [
+  { id: 'first', name: 'First Session' }, { id: 'double', name: 'Double Pump' }, { id: 'triple', name: 'Triple Pump' },
+  { id: 'combat', name: 'Combat Complete' }, { id: 'balanced', name: 'Balanced Week' }, { id: 'glute', name: 'Glute Focus' },
+  { id: 'recovery', name: 'Recovery Pro' }, { id: 'social', name: 'Social Balance' }, { id: 'four', name: 'Four Consistent Weeks' },
+  { id: 'pb', name: 'First Personal Best' }];
 const EX = {}; PROGRAM.forEach(d => d.items.forEach(it => EX[it.id] = it));
 /* first def of each hk: program mains, then alts written out in full ({ hk, name, ... }) */
 const HKDEF = {}; PROGRAM.forEach(d => d.items.forEach(it => { if (it.hk && !HKDEF[it.hk]) HKDEF[it.hk] = it;
@@ -1323,10 +1392,10 @@ function normSwaps(s) {
 }
 /* v3.10: cards whose main hk changed: id -> old main. Runs once (S.mig < MIG): old main rows go to id + '~' + old main,
    rows of the new main (v3.9 swap rows, v3.8 '~s' rows) become the main rows, that swap -> 0; refs follow */
-const MIG = 310;
+const MIG = 311;   /* 310 = v3.10 main changes, 311 = v3.11 planner */
 const MAINCHG = { tue_cpress: 'chestpress', mat_bridge: 'bandbridge', mat_press: 'bandpress' };
 function normMain(s) {
-  if (s.mig >= MIG) return;
+  if (s.mig >= 310) return;
   const refs = [s.timer && s.timer.ref, s.rate].filter(r => r && typeof r.key === 'string'), arr = k => (Array.isArray(s.sets[k]) ? s.sets[k] : []);
   const move = (from, to) => { const a = arr(from), b = arr(to);
     refs.forEach(r => { if (r.key === from) { r.key = to; if (typeof r.k === 'number') r.k += b.length; } });
@@ -1357,49 +1426,105 @@ const rh = x => Math.floor(x + 0.5);   /* round half up, display only */
 /* ================= STATE ================= */
 const KEY = 'sculpt_v3';
 const MODES = ['light', 'normal', 'hard'];
+/* date helpers: above load(), norm() uses them */
+const ds = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const todayStr = () => ds(new Date());
+const addDays = (d0, n) => { const d = new Date(d0 + 'T12:00:00'); d.setDate(d.getDate() + n); return ds(d); };
+const wsOf = d0 => { const d = new Date(d0 + 'T12:00:00'); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return ds(d); };
+const ISO = /^\d{4}-\d{2}-\d{2}$/;
+/* v3.11 weekly planner prefs. pumpTarget 2|3, primaryGoal GOALS key, mondayFocus alternate|push|pull, fridayDefault a FRIPICK id */
+const PREFS0 = () => ({ pumpTarget: 2, primaryGoal: 'general', goalSet: false, mondayFocus: 'alternate', fridayDefault: 'flex', fridayRequired: false, tuesdayRest: true, sundayRest: true });
 /* mig = data version: a new state is current; a stored or imported one without it is migrated (see stored()) */
-const fresh = () => ({ view: 'mon', viewDate: '', mode: null, missing: {}, plans: {}, basePlan: null, statTab: 'week', statRange: '1m', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, cin: {}, order: {}, extra: {}, lastExport: '', mig: MIG });
+const fresh = () => ({ view: 'mon', viewDate: '', mode: null, missing: {}, plans: {}, basePlan: null, statTab: 'week', statRange: '1m', sets: {}, classes: {}, swaps: {}, sel: {}, history: {}, sessions: [], timer: null, profile: { h: 0 }, body: [], start: {}, cin: {}, order: {}, extra: {}, lastExport: '',
+  weekPrefs: PREFS0(), ready: {}, dayMark: {}, game: { achievements: {}, init: 0 }, mig: MIG });
 /* a stored or imported object: fresh defaults, but no mig unless it has its own */
 const stored = o => Object.assign(fresh(), { mig: 0 }, o);
 let S = load();
 /* fill fields an older backup may lack or hold as null; drop v3.7 heart-rate keys; map v3.8 swaps; v3.10 main changes */
 function norm(s) { const f = fresh(); ['missing','plans','sets','classes','swaps','sel','history','profile','start','cin','order','extra'].forEach(k => { if (!s[k] || typeof s[k] !== 'object') s[k] = f[k]; });
-  delete s.hr; delete s.calm; normMain(s); normSwaps(s); dropUnknown(s); s.mig = MIG;
+  delete s.hr; delete s.calm; normMain(s); normSwaps(s); dropUnknown(s);
   const m = s.mode; s.mode = m && typeof m === 'object' && MODES.includes(m.v) && typeof m.d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(m.d) ? { v: m.v, d: m.d } : null;
   for (const d in s.extra) { const v = s.extra[d]; if (!Array.isArray(v)) { delete s.extra[d]; continue; } s.extra[d] = v.filter(x => x && typeof x.id === 'string' && x.id.slice(0, 2) === 'x_' && HKDEF[x.hk]).slice(0, 3); }
   for (const d in s.order) { const v = s.order[d]; if (!v || typeof v.d !== 'string' || !Array.isArray(v.ids)) delete s.order[d]; }
-  if (s.statRange !== '1m' && s.statRange !== '3m') s.statRange = '1m'; ['sessions','body'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; }); if (typeof s.lastExport !== 'string') s.lastExport = ''; return s; }
+  if (s.statRange !== '1m' && s.statRange !== '3m') s.statRange = '1m'; ['sessions','body'].forEach(k => { if (!Array.isArray(s[k])) s[k] = []; }); if (typeof s.lastExport !== 'string') s.lastExport = '';
+  try { normRows(s); } catch (e) {}
+  try { normPlanner(s); } catch (e) {}
+  s.mig = MIG; return s; }
+/* v3.11: history entries need a date and a sets array of objects; set rows must be objects (a bad import cannot crash a view) */
+function normRows(s) {
+  for (const hk in s.history) { const h = s.history[hk]; if (!Array.isArray(h)) { delete s.history[hk]; continue; }
+    s.history[hk] = h.filter(e => e && typeof e === 'object' && typeof e.date === 'string' && Array.isArray(e.sets)).map(e => { e.sets = e.sets.filter(x => x && typeof x === 'object'); return e; }); }
+  for (const k in s.sets) { const a = s.sets[k]; if (!Array.isArray(a)) { delete s.sets[k]; continue; } s.sets[k] = a.filter(x => x && typeof x === 'object'); }
+}
+/* v3.11: session ids, planner prefs, readiness, day marks, game. Each part is defensive: bad data is dropped, never the whole state */
+function normPlanner(s) {
+  const was = +s.mig || 0;
+  s.sessions = s.sessions.filter(x => x && typeof x === 'object' && typeof x.date === 'string');
+  /* stable ids: kept when present and unique; old sessions get one from date, workout id and order (same file = same ids) */
+  const seen = new Set(), n = {};
+  s.sessions.forEach(x => { const k = x.date + ':' + x.day; n[k] = (n[k] || 0) + 1;
+    if (typeof x.id !== 'string' || !x.id || seen.has(x.id)) { let id = 'L' + k + ':' + n[k]; while (seen.has(id)) id += '+'; x.id = id; }
+    seen.add(x.id); });
+  /* before v3.11 the standard week was the old 4-lift week: pin past weeks to it, then the new template applies */
+  if (was < 311) { const cw = wsOf(todayStr()), old = Array.isArray(s.basePlan) && s.basePlan.length === 7 ? s.basePlan : OLD_STANDARD;
+    s.sessions.forEach(x => { if (!ISO.test(x.date)) return; const w = wsOf(x.date); if (w < cw && !Array.isArray(s.plans[w])) s.plans[w] = old.slice(); });
+    s.basePlan = null; }
+  const oneCombat = p => { let n = 0; return p.map(x => (x === 'sat' && n++ ? 'rest' : x)); };
+  for (const w in s.plans) { const p = s.plans[w]; if (!Array.isArray(p) || p.length !== 7 || !p.every(planOk)) delete s.plans[w]; else s.plans[w] = oneCombat(p); }
+  if (s.basePlan && (!Array.isArray(s.basePlan) || s.basePlan.length !== 7 || !s.basePlan.every(planOk))) s.basePlan = null;
+  if (s.basePlan) s.basePlan = oneCombat(s.basePlan);
+  const p0 = PREFS0(), p = s.weekPrefs && typeof s.weekPrefs === 'object' ? s.weekPrefs : {};
+  s.weekPrefs = { pumpTarget: p.pumpTarget === 3 ? 3 : 2, primaryGoal: GOALS.some(g => g[0] === p.primaryGoal) ? p.primaryGoal : p0.primaryGoal, goalSet: !!p.goalSet,
+    mondayFocus: ['alternate', 'push', 'pull'].includes(p.mondayFocus) ? p.mondayFocus : 'alternate', fridayDefault: FRIPICK.includes(p.fridayDefault) ? p.fridayDefault : 'flex',
+    fridayRequired: false, tuesdayRest: true, sundayRest: true };
+  /* readiness: last 60 days only */
+  const r0 = s.ready && typeof s.ready === 'object' ? s.ready : {}, cut = addDays(todayStr(), -60); s.ready = {};
+  for (const d in r0) { const v = r0[d]; if (!ISO.test(d) || d < cut || !v || !RD.r.includes(v.r)) continue;
+    s.ready[d] = { r: v.r }; if (RD.s.includes(v.s)) s.ready[d].s = v.s; if (RD.z.includes(v.z)) s.ready[d].z = v.z; }
+  const m0 = s.dayMark && typeof s.dayMark === 'object' ? s.dayMark : {}; s.dayMark = {};
+  for (const d in m0) if (ISO.test(d) && MARKS.some(m => m[0] === m0[d])) s.dayMark[d] = m0[d];
+  const g = s.game && typeof s.game === 'object' ? s.game : {}, a0 = g.achievements && typeof g.achievements === 'object' ? g.achievements : {};
+  s.game = { achievements: {}, init: g.init ? 1 : 0 };
+  for (const id in a0) if (ACH.some(a => a.id === id) && ISO.test(a0[id])) s.game.achievements[id] = a0[id];
+}
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return norm(stored(JSON.parse(raw)));
+    if (raw) { try { return norm(stored(JSON.parse(raw))); } catch (e) { try { localStorage.setItem(KEY + '_bak', raw); } catch (x) {} throw e; } }
     const old = localStorage.getItem('sculpt_v2') || localStorage.getItem('sculpt_tng_v1');
     if (old) { const o = JSON.parse(old); const s = fresh(); s.history = o.history || {}; s.sessions = o.sessions || []; return s; }
   } catch (e) {}
   return fresh();
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
-const ds = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-const todayStr = () => ds(new Date());
 function weekStart() { const d = new Date(); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return ds(d); }
 function weekCount(id) { const ws = weekStart(); return S.sessions.filter(s => s.day === id && s.date >= ws).length; }
-const addDays = (d0, n) => { const d = new Date(d0 + 'T12:00:00'); d.setDate(d.getDate() + n); return ds(d); };
-const wsOf = d0 => { const d = new Date(d0 + 'T12:00:00'); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return ds(d); };
 const todayIdx = () => (new Date().getDay() + 6) % 7;
-const planFor = ws => (S.plans && S.plans[ws]) || S.basePlan || STANDARD;
-/* a planned slot counts as done when that workout was logged any day of that week (order-free) */
+/* week template from the prefs: Tue and Sun rest, Fri flex; Mon Push in A weeks, Pull in B weeks (or the fixed pick) */
+const weekAB = ws => { const n = Math.round((new Date(ws + 'T12:00:00') - new Date(WEEK_A + 'T12:00:00')) / 6048e5); return ((n % 2) + 2) % 2 ? 'B' : 'A'; };
+const monId = ws => { const f = S.weekPrefs ? S.weekPrefs.mondayFocus : 'alternate'; return f === 'push' ? 'tue' : f === 'pull' ? 'fri' : weekAB(ws) === 'A' ? 'tue' : 'fri'; };
+function template(ws) {
+  const p = S.weekPrefs || PREFS0(), fd = p.fridayDefault || 'flex';
+  if (p.pumpTarget === 3) return ['wed', 'rest', 'wed', 'sat', ['rest', 'walk', 'off'].includes(fd) ? fd : 'rest', 'wed', 'rest'];
+  return [monId(ws), 'rest', 'wed', 'sat', fd, 'wed', 'rest'];
+}
+const planFor = ws => (S.plans && S.plans[ws]) || S.basePlan || template(ws);
+/* slots to sessions of that week: a session logged on a slot's own date fills that slot first,
+   then it fills the nearest open slot of the same workout. So two Pump slots are checked one by one, by date */
 function planStatus(ws) {
-  const plan = planFor(ws), we = addDays(ws, 6), left = {};
-  S.sessions.forEach(x => { if (x.date >= ws && x.date <= we) left[x.day] = (left[x.day] || 0) + 1; });
-  const done = plan.map(id => { if (id !== 'rest' && left[id]) { left[id]--; return true; } return false; });
-  const extra = Object.keys(left).filter(k => left[k] > 0 && DAYS[k]).map(k => DAYS[k].title);
-  return { plan, done, extra };
+  const plan = planFor(ws), we = addDays(ws, 6), done = plan.map(() => false), sid = plan.map(() => null), used = new Set();
+  const ss = S.sessions.filter(x => x && x.date >= ws && x.date <= we && DAYS[x.day]).sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+  plan.forEach((id, i) => { if (!isWk(id)) return; const d = addDays(ws, i), x = ss.find(y => !used.has(y) && y.day === id && y.date === d); if (x) { used.add(x); done[i] = true; sid[i] = x.id; } });
+  ss.forEach(x => { if (used.has(x) || [...used].some(y => y.day === x.day && y.date === x.date)) return; const xi = (new Date(x.date + 'T12:00:00').getDay() + 6) % 7; let best = -1;
+    plan.forEach((id, i) => { if (id === x.day && !done[i] && (best < 0 || Math.abs(i - xi) < Math.abs(best - xi))) best = i; });
+    if (best >= 0) { used.add(x); done[best] = true; sid[best] = x.id; } });
+  const left = ss.filter(x => !used.has(x)), extra = [...new Set(left.map(x => DAYS[x.day].title))];
+  return { plan, done, extra, sid, left };
 }
 function nextUp() {
   const st = planStatus(weekStart());
-  for (let j = todayIdx(); j < 7; j++) if (st.plan[j] !== 'rest' && !st.done[j]) return st.plan[j];
-  for (const id of LIFTS) if (!weekCount(id)) return id;
-  return st.plan.find(x => x !== 'rest') || 'mon';
+  for (let j = todayIdx(); j < 7; j++) if (isWk(st.plan[j]) && !st.done[j]) return st.plan[j];
+  return planFor(addDays(weekStart(), 7)).find(isWk) || st.plan.find(isWk) || 'mon';
 }
 /* haptics by rhythm: 1 short, 1 firm, 2, 3 quick (refused), long pair (rest over) */
 const HAPTIC = { tick: 12, pick: 24, done: [30, 50, 30], logged: [30, 50, 30, 50, 60], block: [20, 40, 20, 40, 20], restEnd: [180, 90, 180] };
@@ -1440,21 +1565,39 @@ const isHinge = c => !!(c.hinge || (TAGS[c.hk] || {}).hinge);
 /* a workout started on the mode's date and still open (late session past midnight) keeps that mode */
 const modeLive = () => !!S.mode && Object.values(S.start || {}).some(t => t && ds(new Date(t)) === S.mode.d && Date.now() - t < 6 * 3600000);
 const modeNow = () => (S.mode && (S.mode.d === todayStr() || modeLive()) ? S.mode.v : suggestMode().v);
-/* Light after Pump or Combat yesterday, or after 10+ days off; never Hard */
+/* readiness of a date (today by default): { r, s, z } or null */
+const rdOf = d => (S.ready && S.ready[d || todayStr()]) || null;
+/* body area a workout loads, for soreness: Pump both, Combat and glute days lower, Push/Pull upper */
+const AREA = { wed: 'both', sat: 'lower', mon: 'lower', thu: 'lower', mat: 'lower', tue: 'upper', fri: 'upper' };
+const soreFor = (r, id) => !!r && r.s === 'high' && (!r.z || r.z === 'both' || AREA[id] === 'both' || AREA[id] === r.z);
+/* the workout the suggestion is for: the open day, else today's planned slot */
+const modeDay = () => (DAYS[S.view] ? S.view : planFor(weekStart())[todayIdx()]);
+/* 3+ Pump slots: the middle one defaults to Light */
+const lightPumpIdx = plan => { const ix = plan.map((x, i) => (x === 'wed' ? i : -1)).filter(i => i >= 0); return ix.length >= 3 ? ix[1] : -1; };
+/* readiness first: Poor or sore = Light. No check-in: Light after Pump yesterday (not on Combat: it would swap the class),
+   after 10+ days off, in a 3-Pump week on the Light Pump and on a Friday lift. Never Hard */
 function suggestMode() {
-  const t = todayStr(), y = addDays(t, -1); let pump = false, combat = false, last = '';
+  const t = todayStr(), y = addDays(t, -1); let pump = false, glu = false, last = '';
   S.sessions.forEach(s => { if (!s || typeof s.date !== 'string' || s.date > t) return;
-    if (s.date === y) { if (s.day === 'wed') pump = true; if (s.day === 'sat') combat = true; }
+    if (s.date === y) { if (s.day === 'wed') pump = true; if (s.day === 'mon' || s.day === 'thu') glu = true; }
     if (s.date > last) last = s.date; });
-  if (pump) return { v: 'light', why: 'After Pump' };
-  if (combat) return { v: 'light', why: 'After Combat' };
+  const r = rdOf(t), id = modeDay(), plan = planFor(weekStart()), ti = todayIdx();
+  if (r && r.r === 'poor') return { v: 'light', why: 'Poor day' };
+  if (soreFor(r, id)) return { v: 'light', why: 'Sore' };
   if (last && daysAgo(last) >= 10) return { v: 'light', why: 'After a break' };
+  if (id === 'wed' && glu && r && r.s && r.s !== 'none') return { v: 'light', why: 'Glutes yesterday' };
+  if (plan.filter(x => x === 'wed').length >= 3 && ((id === 'wed' && lightPumpIdx(plan) === ti) || (ti === FRI && DAYS[id] && DAYS[id].type === 'lift'))) return { v: 'light', why: 'Big week' };
+  if (pump && !r && id !== 'sat') return { v: 'light', why: 'After Pump' };
   return { v: 'normal', why: '' };
 }
 /* why Hard is not allowed today ('' = allowed). Hard days = dates with a Hard session in the 6 days before today */
 function hardBlock() {
   const t = todayStr(), y = addDays(t, -1), w = addDays(t, -6), ss = S.sessions.filter(s => s && typeof s.date === 'string');
-  const ys = ss.filter(s => s.date === y);
+  const ys = ss.filter(s => s.date === y), r = rdOf(t), ti = todayIdx(), nx = ti < 6 ? planFor(weekStart())[ti + 1] : planFor(addDays(weekStart(), 7))[0];
+  if (r && r.r === 'poor') return 'Poor day. Not today.';
+  if (r && r.r === 'ok') return 'Okay day. Normal max.';
+  if (r && r.s && r.s !== 'none') return 'Sore today. Normal max.';
+  if (nx === 'wed' || nx === 'sat') return 'Class tomorrow. Not today.';
   if (ys.some(s => s.day === 'wed')) return 'Pump yesterday. Not today.';
   if (ys.some(s => s.day === 'sat')) return 'Combat yesterday. Not today.';
   if (ys.some(s => s.mode === 'hard')) return 'Hard yesterday. Not today.';
@@ -1510,7 +1653,12 @@ const clsLift = c => !c.added && !!EX[c.id] && !EX[c.id].cls && DAYS[dayOfId(c.i
 /* Pump on Light: finisher cards are off today, unless a set on any version is already done */
 const offToday = (day, it) => !!day.after && !it.cls && !it.added && modeOn(day.id) === 'light' && !versions(it).some(h => (S.sets[vkey(it, h)] || []).some(s => s.done));
 /* extras allowed today: Light 0, Normal 2, Hard 1 */
-const maxExtra = day => ({ light: 0, normal: 2, hard: 1 })[modeOn(day.id)];
+/* v3.11: Okay day or 4th training day in a row = 1 max; Poor day = 0 */
+const maxExtra = day => { let n = ({ light: 0, normal: 2, hard: 1 })[modeOn(day.id)]; const r = rdOf();
+  if (r && r.r === 'poor') n = 0; else if ((r && r.r === 'ok') || runDays() >= 3) n = Math.min(n, 1); return n; };
+/* days in a row before today with a training session (Walk and Yoga do not count) */
+function runDays() { const t = todayStr(), on = new Set(S.sessions.filter(s => s && s.day !== 'walk' && s.day !== 'sun').map(s => s.date)); let n = 0;
+  while (n < 7 && on.has(addDays(t, -(n + 1)))) n++; return n; }
 const modeSfx = m => (m === 'light' ? ' · Light' : m === 'hard' ? ' · Hard' : '');
 /* shown unit: 'sec' holds read as "20 s" */
 const repUnit = c => (c.unit === 'sec' ? 's' : c.unit || 'reps');
@@ -1741,8 +1889,8 @@ function weekCat(ws, day) {
   const we = addDays(ws, 6), plan = planFor(ws), st = planStatus(ws), cw = weekStart(), ti = todayIdx();
   const T = zeroCats(), D = histCat(ws, we), L = zeroCats(), G = zeroCats(), live = day && ws === cw ? liveCat(day) : null;
   let fut = [];
-  if (ws === cw) { for (let j = day ? ti + 1 : ti; j < 7; j++) if (plan[j] !== 'rest' && !st.done[j]) fut.push(plan[j]); if (day) { const k = fut.indexOf(day.id); if (k >= 0) fut.splice(k, 1); } }
-  else if (ws > cw) fut = plan.filter(x => x !== 'rest');
+  if (ws === cw) { for (let j = day ? ti + 1 : ti; j < 7; j++) if (isWk(plan[j]) && !st.done[j]) fut.push(plan[j]); if (day) { const k = fut.indexOf(day.id); if (k >= 0) fut.splice(k, 1); } }
+  else if (ws > cw) fut = plan.filter(isWk);
   CATS_R.forEach(c => {
     T[c] = plan.reduce((a, id) => a + plannedSets(id, c), 0);
     if (live) D[c] += live.done[c];
@@ -1818,6 +1966,11 @@ function kcSession(s) {
 function todaySet(day, but) { const s = new Set(); dayItems(day).forEach(it => { if (it.cls || it.id === but) return;
   s.add(canon(cur(it).hk)); others(it).forEach(o => { if (o.done.length) s.add(canon(o.c.hk)); }); }); return s; }
 /* 'mon', 'thu' or 'mat' when Glutes A, Glutes B or Mat + Band is planned tomorrow, else null */
+/* a Glutes A or B session logged yesterday */
+const glutesYday = () => { const y = addDays(todayStr(), -1); return S.sessions.some(s => s && s.date === y && (s.day === 'mon' || s.day === 'thu')); };
+/* high soreness today in the area of category c */
+const soreCat = c => { const r = rdOf(); if (!r || r.s !== 'high') return false; const z = r.z || 'both';
+  return z === 'both' || (z === 'lower' ? c === 'Glutes' : c !== 'Glutes' && c !== 'Core'); };
 function glutesTomorrow() {
   const ws = weekStart(), ti = todayIdx(); let id;
   if (ti < 6) { const st = planStatus(ws); id = st.done[ti + 1] ? null : st.plan[ti + 1]; } else id = planFor(addDays(ws, 7))[0];
@@ -1848,8 +2001,10 @@ function recommend(day) {
   const tod = dayCat(today, day), yes = dayCat(addDays(today, -1), null), gt = glutesTomorrow(), have = todaySet(day);
   const info = {};
   CATS.forEach(c => {
-    const lo = lightOnly(day), rows = rowsFor(c, lo, !!day.home), free = rows.filter(hk => !have.has(canon(hk))), rest = c === 'Glutes' && !!gt, lf = liftFor(c);
-    const hint = rest ? LIFTNAME[gt] + ' tomorrow. Rest them.' : lo && !rows.length ? (wc.G[c] >= 2 && lf ? 'Do ' + LIFTNAME[lf] + ' day next' : 'No easy moves today')
+    const lo = lightOnly(day), rows = rowsFor(c, lo, !!day.home), free = rows.filter(hk => !have.has(canon(hk))), lf = liftFor(c);
+    /* v3.11: glutes rest the day before and after a glute day; a high-sore area rests (readiness) */
+    const gy = c === 'Glutes' && lo && !gt && glutesYday(), sore = soreCat(c), rest = (c === 'Glutes' && (!!gt || gy)) || sore;
+    const hint = sore ? 'Sore today. Rest it.' : gy ? 'Glutes yesterday. Skip extra glute moves.' : rest ? LIFTNAME[gt] + ' tomorrow. Rest them.' : lo && !rows.length ? (wc.G[c] >= 2 && lf ? 'Do ' + LIFTNAME[lf] + ' day next' : 'No easy moves today')
       : tod[c] >= 3 ? 'Done today' : yes[c] >= 3 ? 'Done yesterday' : '';
     info[c] = { T: wc.T[c], D: wc.D[c], L: wc.L[c], G: wc.G[c], R: tod[c] + yes[c], lo, rows, free, hint, off: rest || (lo && !rows.length) };
   });
@@ -1955,6 +2110,31 @@ function modePicker(day) {
       <div class="opts">${MODES.map(k => `<button class="opt ${md === k ? 'on' : ''} ${k === 'hard' && off ? 'off' : ''}" data-mode="${k}" aria-pressed="${md === k}"${k === 'hard' && off ? ' aria-disabled="true"' : ''}>${k[0].toUpperCase() + k.slice(1)}${k === 'light' && why ? `<small>${why}</small>` : ''}</button>`).join('')}</div>
       ${md === 'light' ? '<div class="msg">Easier today. Progress kept.</div>' : ''}</div>`;
 }
+/* daily readiness: Good / Okay / Poor, then soreness, then where (when high). Hidden once the workout started.
+   Advice only, not a diagnosis */
+const RDL = { r: { good: 'Good', ok: 'Okay', poor: 'Poor' }, s: { none: 'None', mild: 'Mild', high: 'High' }, z: { lower: 'Lower', upper: 'Upper', both: 'Both' } };
+const RDQ = { r: 'How do you feel?', s: 'Sore?', z: 'Where?' };
+function rdTip(day, r) {
+  const t = todayStr(), p3 = [1, 2].every(n => { const x = rdOf(addDays(t, -n)); return x && x.r === 'poor'; });
+  if (r.r === 'poor') return p3 ? 'Tired 3 days. Rest, and check with your doctor.' : 'Rest, Walk or Yoga is fine.';
+  if (soreFor(r, day.id)) return 'Light today, or rest.';
+  if (r.r === 'ok') return 'Normal or Light.';
+  return r.s === 'mild' ? 'Go as planned. No Hard.' : 'Go as planned.';
+}
+function readyBox(day) {
+  const r = rdOf(), started = !!S.start[day.id] || day.items.some(it => S.cin[it.id] || S.classes[it.id]);
+  const q = !r ? 'r' : !r.s ? 's' : r.s === 'high' && !r.z ? 'z' : '';
+  if (!q) return started ? '' : `<button class="rdy" data-rdy="edit" aria-label="Readiness: ${RDL.r[r.r]}, ${RDL.s[r.s]} soreness. Tap to change"><span>${RDL.r[r.r]} · ${r.s === 'none' ? 'No soreness' : RDL.s[r.s] + ' soreness'}${r.z ? ' · ' + RDL.z[r.z] : ''}</span><small>${rdTip(day, r)}</small></button>`;
+  if (started && q === 'r') return '';
+  return `<div class="rdq"><div class="q">${RDQ[q]}</div><div class="opts">${RD[q].map(v => `<button class="opt" data-rdy="${q}:${v}">${RDL[q][v]}</button>`).join('')}</div></div>`;
+}
+function setReady(v) {
+  const t = todayStr();
+  if (v === 'edit') delete S.ready[t];
+  else { const [k, x] = v.split(':'); if (!RD[k] || !RD[k].includes(x)) return;
+    if (k === 'r') S.ready[t] = { r: x }; else if (S.ready[t]) { S.ready[t][k] = x; if (k === 's') delete S.ready[t].z; } }
+  save(); buzz('pick'); render(true);
+}
 /* reorder mode is screen state only; it is on for one day view */
 let reorderDay = null;
 function renderDay() {
@@ -1978,7 +2158,7 @@ function renderDay() {
   let h = `<section class="day-head"><h2>${day.title}</h2>
     <p>${sub}</p>
     ${day.id === 'sat' ? `<div class="chips"><span class="chip ${wc ? 'red' : ''}">${wc ? 'Combat done this week' : 'Max 1× per week'}</span></div>` : ''}</section>
-    ${modePicker(day)}
+    ${readyBox(day)}${modePicker(day)}
     ${/^None/.test(day.warm) ? '' : `<div class="lbl">Warm-up</div><div class="warm"><span>${day.warm}</span>${WARMVID[day.id] ? `<a class="wlink" href="${ytUrl(WARMVID[day.id])}" target="_blank" rel="noopener">${IC.play}Video</a>` : ''}</div>`}
     <div class="lblrow"><div class="lbl">${lift ? 'Workout' : 'Session'}</div>${ro ? '' : movable >= 2 ? `<button class="rbtn" data-reorder>${IC.sort}Reorder</button>` : ''}</div>`;
   if (ro) {
@@ -2296,6 +2476,7 @@ mainEl.addEventListener('click', e => {
   const ax = t.closest('[data-addx]'); if (ax) { buzz('tick'); openAdd(ax.dataset.addx); return; }
   const xr = t.closest('[data-xrm]'); if (xr) { const x = getEx(xr.dataset.xrm); if (x && !hasDone(x)) removeExtra(DAYS[S.view], x.id); return; }
 
+  const rq = t.closest('[data-rdy]'); if (rq) { setReady(rq.dataset.rdy); return; }
   const md = t.closest('[data-mode]');
   if (md) { const v = md.dataset.mode, no = v === 'hard' ? hardBlock() : '';
     if (no) { toast(no, true); buzz('block'); return; }
@@ -2510,6 +2691,15 @@ function openFinish(editIdx) {
   let kc, setsN, title, date, min, pbs, md;
   if (finEdit !== null) { const s = S.sessions[finEdit]; kc = kcSession(s); setsN = s.sets; title = sessTitle(s); date = s.date; min = s.min || 0; pbs = (s.pbs || []).map(n => ({ name: n })); md = s.mode; }
   else { const day = DAYS[S.view], p = dayProgress(day); kc = kcToday(day); setsN = p.d; title = runDone(day) ? mainOf(day).alt.name : day.title; date = todayStr(); min = dayMin(day); pbs = dayPbs(day); md = modeOn(day.id); if (day.type === 'class') setsN = dayItems(day).filter(e => !e.cls).reduce((a, e) => a + sets(e).filter(x => x.done).length + otherDone(e).length, 0); }
+  /* XP: a draft of the session to log, or the logged one's events */
+  let xp = 0, xLine = '';
+  if (finEdit !== null) { const s = S.sessions[finEdit], L = gameCalc().L; for (const k in L) if (s && k.startsWith('session:' + s.id + ':')) xp += L[k].xp; }
+  else { const day = DAYS[S.view], xc = xSets(dayItems(day, true)), r = rdOf(), dr = { id: 'draft', date, day: day.id, title, pbs: pbs.map(o => o.name), xs: xc.xs, xg: xc.xg };
+    if (md !== 'normal') dr.mode = md; if (r) dr.rd = r;
+    xp = sessXp(dr).reduce((a, e) => a + e.xp, 0); const cr = extraCredit(dr);
+    if (xc.xs) xLine = cr ? `+${xc.xs} extra sets. Nice work.` : r && r.r === 'poor' ? 'Extra sets saved. Poor days don\'t add to target.' : 'Glutes are full this week. Sets saved.';
+    else if (r && r.r === 'poor' && md !== 'light' && !REC.includes(day.id)) xLine = 'Poor day: Light or rest earns XP.'; }
+  const xpLine = `<p class="note lime xpl">${xp ? '+' + xp + ' XP' : 'No XP'}${xLine ? ` · <span>${xLine}</span>` : ''}</p>`;
   const pbLine = pbs.length ? `<p class="note lime">New best: ${pbs.slice(0, 3).map(o => o.name + (o.w ? ' ' + fmtW(o.w) + ' kg' : '')).join(', ')}${pbs.length > 3 ? ' +' + (pbs.length - 3) : ''}</p>` : '';
   $('#finishBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
     <div class="kicker">${finEdit !== null ? 'Edit · ' : ''}${niceDate(date)}${modeSfx(md)}</div><h2>${title}</h2>
@@ -2518,7 +2708,7 @@ function openFinish(editIdx) {
       if (setsN) tiles.push(['Sets', setsN]);
       if (min) tiles.push(['Time', min + ' ' + u('min')]);
       if (!tiles.length) tiles.push(['Done', '✓']);
-      return `<div class="kv ${tiles.length === 3 ? 'three' : ''}">${tiles.map(([k, v]) => `<div><div class="k">${k}</div><div class="v">${v}</div></div>`).join('')}</div>`; })()}${pbLine}
+      return `<div class="kv ${tiles.length === 3 ? 'three' : ''}">${tiles.map(([k, v]) => `<div><div class="k">${k}</div><div class="v">${v}</div></div>`).join('')}</div>`; })()}${xpLine}${pbLine}
     ${finEdit !== null ? '<button class="btn btn-r" id="btnDel">Delete session</button>' : '<button class="btn btn-p" id="btnSave">Log session</button>'}
     <button class="btn btn-g" data-close>Cancel</button>`;
   openModal('mFinish');
@@ -2546,6 +2736,10 @@ function logSession() {
   const sess = { date, day: day.id, title: runDone(day) ? mainOf(day).alt.name : day.title + (swapped ? ' · swap' : ''), type: day.type, vol: Math.round(dayVolume(day)), sets: day.type === 'class' ? exSets : p.d };
   const min = dayMin(day), pbs = dayPbs(day), md = modeOn(day.id); if (min) sess.min = min; if (pbs.length) sess.pbs = pbs.map(o => o.name); if (md !== 'normal') sess.mode = md;
   const xn = items.filter(e => e.added && hasDone(e)).length; if (xn) sess.extra = xn;
+  /* v3.11: stable id, readiness at log time, sets on added cards (xs) and how many are glute sets (xg) */
+  sess.id = newSid(); const rd0 = rdOf(date); if (rd0) sess.rd = Object.assign({}, rd0);
+  const xc = xSets(items); if (xc.xs) { sess.xs = xc.xs; if (xc.xg) sess.xg = xc.xg; }
+  const g0 = gameCalc();
   /* Easy Run done in place of the Walk */
   if (swapped && mainOf(day).alt.run) sess.run = 1;
   if (day.type === 'class') { const m0 = mainOf(day), cm = day.items.filter(it => it.cls && S.classes[it.id] && (it.main || !m0)).reduce((a, it) => a + (clsLen(it) || CLSMIN[day.id] || 0), 0); if (cm) sess.cmin = cm;
@@ -2560,7 +2754,158 @@ function logSession() {
   const pbar = $('#progBar'); pbar.style.transition = 'none';
   fx('saved', { day: day.id }); render();
   void pbar.offsetWidth; pbar.style.transition = '';
-  toast('Logged');
+  const g1 = gameCalc(), neu = syncGame(), gain = g1.total - g0.total;
+  toast('Logged' + (gain > 0 ? ' · +' + gain + ' XP' : '') + (g1.lv.l > g0.lv.l ? ' · Level ' + g1.lv.l : ''), false, 2400);
+  if (neu.length) setTimeout(() => toast('Badge: ' + neu.map(a => a.name).join(', '), false, 2600), 2500);
+}
+/* a new session id: time + random, never reused */
+function newSid() { const ids = new Set(S.sessions.map(x => x && x.id)); let id; do id = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); while (ids.has(id)); return id; }
+/* done sets on added cards today; xg = those with Glutes as the main muscle */
+function xSets(items) { let xs = 0, xg = 0;
+  items.forEach(e => { if (!e.added || e.cls) return; const n = sets(e).filter(x => x.done).length + otherDone(e).length, t = tagOf(cur(e).hk); xs += n; if (t && t.p === 'Glutes') xg += n; });
+  return { xs, xg }; }
+
+/* ================= WEEK PLANNER + GAME (v3.11) =================
+   Core goal: every Pump and Combat slot done, Tue and Sun rest kept. Mon and Fri are bonus; Fri is a Flex Day.
+   A rest day is kept unless a Normal or Hard workout (not Walk or Yoga) was logged that day.
+   XP is never stored: it is computed from sessions, plans, day marks and readiness, keyed by event
+   (session:<id>:complete, week:<ws>:core, recovery:<date>:planned, achievement:<id>), so a rerender, a double tap, an import
+   or a delete can never add it twice. Only unlocked achievements are stored (they stay once unlocked). Kcal never gives XP. */
+const REC = ['sun', 'walk'];
+const restLike = id => id === 'rest' || id === 'off' || id === 'flex' || REC.includes(id);
+const isLiftId = id => !!DAYS[id] && DAYS[id].type === 'lift';
+const ROLE = { core: 'Core', bonus: 'Bonus', flex: 'Flex', rest: 'Rest', rec: 'Recovery' };
+const ROLE_S = { core: 'Core', bonus: 'Bonus', flex: 'Flex', rest: 'Rest', rec: 'Easy' };
+function roleOf(plan, i) { const id = plan[i];
+  if (id === 'wed' || id === 'sat') return 'core';
+  if (i === FRI) return 'flex';
+  if (id === 'rest' || id === 'off' || id === 'flex') return 'rest';
+  return REC.includes(id) ? 'rec' : 'bonus'; }
+const EMPH = { mon: 'Glutes', thu: 'Side glutes, hams', tue: 'Chest, shoulders', fri: 'Back', mat: 'Glutes, core', wed: 'Full body', sat: 'Cardio, legs', sun: 'Mobility', walk: 'Easy cardio' };
+const slotName = id => (id === 'off' ? 'Day off' : id === 'flex' ? 'Flex Day' : id === 'rest' ? 'Rest' : LIFTNAME[id] || DAYS[id].title);
+/* planned minutes of a workout: sets x (rest + 45 s), class cards, warm-up */
+function durOf(id) { const d = DAYS[id]; if (!d) return 0;
+  const ex = d.items.filter(it => !it.cls).reduce((a, it) => a + it.sets * ((it.rest || 90) + 45 * (it.side ? 2 : 1)), 0) / 60;
+  const cl = d.items.filter(it => it.cls).reduce((a, it) => a + (it.min || 0), 0);
+  return Math.round((ex + cl + (d.warmMin || (d.type === 'lift' ? 7 : 0))) / 5) * 5; }
+/* a Normal or Hard workout logged that date (breaks a rest day) */
+const trainOn = d => S.sessions.some(s => s && s.date === d && DAYS[s.day] && !REC.includes(s.day) && s.mode !== 'light');
+/* glute sets per week: target 12-24, ceiling 28. Each Pump class adds 2 (max 4): exposure, never a Glutes workout */
+const GL = { lo: 12, hi: 24, max: 28, pump: 2, pumpMax: 4 };
+/* push vs pull, rolling 14 days. Lateral raises count for neither; Pump counts for both, so it is left out of the ratio */
+const PUSHX = ['shoulderpress', 'dbspress', 'arnold'], PULLX = ['facepull', 'reardelt', 'dber', 'pullapart', 'bander'];
+function pushPull(a, b) { let push = 0, pull = 0;
+  for (const hk in S.history) { const t = tagOf(hk), c = canon(hk); if (!t || !Array.isArray(S.history[hk])) continue;
+    const isP = t.p === 'Chest' || PUSHX.includes(c), isL = t.p === 'Back' || PULLX.includes(c); if (!isP && !isL) continue;
+    S.history[hk].forEach(e => { if (!e || e.date < a || e.date > b || !Array.isArray(e.sets)) return; if (isP) push += e.sets.length; if (isL) pull += e.sets.length; }); }
+  return { push, pull, ok: push >= 8 && pull >= 8 && pull / push >= 1 && pull / push <= 1.6 }; }
+/* glute sets of a week up to date d: dedicated (logged, finishers and extras) + Pump exposure */
+function gluteSets(ws, d) { const ded = histCat(ws, d).Glutes, np = S.sessions.filter(s => s && s.day === 'wed' && s.date >= ws && s.date <= d).length, pump = Math.min(GL.pumpMax, GL.pump * np);
+  return { ded, pump, all: ded + pump }; }
+/* cache: a state stamp; any change to sessions, plans, prefs, marks, readiness or the date recomputes */
+const GM = { k: '', wi: {}, calc: null };
+const gStamp = () => [S.sessions.length, (S.sessions[S.sessions.length - 1] || {}).id, todayStr(), JSON.stringify(S.plans), JSON.stringify(S.basePlan), JSON.stringify(S.weekPrefs), JSON.stringify(S.dayMark), JSON.stringify(S.ready), Object.keys(S.history).length].join('|');
+function gFresh() { const k = gStamp(); if (GM.k !== k) { GM.k = k; GM.wi = {}; GM.calc = null; } }
+const wInfo = ws => { gFresh(); return GM.wi[ws] || (GM.wi[ws] = weekInfo(ws)); };
+function weekInfo(ws) {
+  const st = planStatus(ws), plan = st.plan, today = todayStr(), we = addDays(ws, 6), end = we < today ? we : today;
+  const cnt = id => ({ n: plan.filter(x => x === id).length, d: plan.filter((x, i) => x === id && st.done[i]).length });
+  const pump = cnt('wed'), combat = cnt('sat');
+  const restIx = [1, 6].filter(i => restLike(plan[i])), passed = restIx.filter(i => addDays(ws, i) <= today);
+  const broken = passed.filter(i => trainOn(addDays(ws, i))), kept = passed.length - broken.length;
+  const coreN = pump.n + combat.n, coreDone = coreN > 0 && pump.d >= pump.n && combat.d >= combat.n && !broken.length;
+  const coreDate = coreDone ? plan.reduce((a, id, i) => { if (id !== 'wed' && id !== 'sat') return a; const s = S.sessions.find(x => x && x.id === st.sid[i]); return s && s.date > a ? s.date : a; }, ws) : '';
+  /* planned recovery days that passed with no Normal/Hard workout: Tue, Sun, and Friday off or rest */
+  const recDays = [1, 6, FRI].filter(i => (i === FRI ? plan[i] === 'off' || plan[i] === 'rest' : restLike(plan[i]))).map(i => addDays(ws, i)).filter(d => d <= today && !trainOn(d));
+  const bonus = plan.map((id, i) => ({ id, i })).filter(o => isWk(o.id) && (roleOf(plan, o.i) === 'bonus' || roleOf(plan, o.i) === 'flex'));
+  const g = gluteSets(ws, end), pp = pushPull(addDays(end, -13), end);
+  const ss = S.sessions.filter(s => s && s.date >= ws && s.date <= we);
+  const xs = ss.reduce((a, s) => a + extraCredit(s), 0), xsAll = ss.reduce((a, s) => a + (+s.xs || 0), 0);
+  const friOff = plan[FRI] === 'off' || ['off', 'social'].includes(S.dayMark[addDays(ws, FRI)]);
+  return { ws, we, end, st, plan, pump, combat, restN: restIx.length, kept, broken: broken.length, coreN, coreDone, coreDate, recDays, bonus, gl: g, pp, xs, xsAll, friOff };
+}
+/* extra sets that earn credit: Poor day 0; cap 6 per session (3 on an Okay or Hard day); glute extras stop above the ceiling */
+function extraCredit(s) {
+  if (!s || !(+s.xs > 0)) return 0; const r = s.rd || null; if (r && r.r === 'poor') return 0;
+  let n = +s.xs; if (ISO.test(s.date) && gluteSets(wsOf(s.date), s.date).all > GL.max) n -= Math.min(n, +s.xg || 0);
+  return Math.max(0, Math.min(n, (r && r.r === 'ok') || s.mode === 'hard' ? 3 : 6));
+}
+/* XP events of one session. Training through a Poor day (not Light, not Walk/Yoga) earns nothing */
+function sessXp(s) {
+  const rec = REC.includes(s.day), core = s.day === 'wed' || s.day === 'sat', r = s.rd || null, poor = !!r && r.r === 'poor' && !rec && s.mode !== 'light', out = [];
+  if (!poor) out.push({ k: 'complete', xp: core ? 40 : rec ? 15 : 30, why: sessTitle(s) });
+  if (!poor && Array.isArray(s.pbs) && s.pbs.length) out.push({ k: 'pb', xp: 15, why: 'New best' });
+  if (s.mode === 'light' && !rec && r && (r.r !== 'good' || (r.s && r.s !== 'none'))) out.push({ k: 'light', xp: 10, why: 'Light on a tired day' });
+  const x = extraCredit(s); if (x) out.push({ k: 'extra', xp: 3 * x, why: '+' + x + ' extra sets' });
+  return out;
+}
+const needXp = l => 100 + 50 * l;   /* XP from level l to l + 1 */
+function levelOf(t) { let l = 1, r = t; while (r >= needXp(l) && l < 99) { r -= needXp(l); l++; } return { l, r, n: needXp(l) }; }
+function gameCalc() {
+  gFresh(); if (GM.calc) return GM.calc;
+  const L = {}, add = (key, xp, d, why) => { if (xp > 0 && !L[key]) L[key] = { xp, d, why }; }, A = {}, hit = (id, d) => { if (d && (!A[id] || d < A[id])) A[id] = d; };
+  const ss = S.sessions.filter(s => s && s.id && DAYS[s.day] && ISO.test(s.date)), cw = weekStart();
+  let light = 0;
+  ss.forEach(s => { sessXp(s).forEach(e => { add('session:' + s.id + ':' + e.k, e.xp, s.date, e.why); if (e.k === 'light' && ++light >= 3) hit('recovery', s.date); });
+    if (s.day === 'sat') hit('combat', s.date); if (Array.isArray(s.pbs) && s.pbs.length) hit('pb', s.date); });
+  const first = ss.reduce((a, s) => (!a || s.date < a ? s.date : a), ''); if (first) hit('first', first);
+  let run = 0;
+  const w0 = first && wsOf(first) < cw ? wsOf(first) : cw, wMin = addDays(cw, -7 * 260);
+  for (let w = w0 < wMin ? wMin : w0; w <= cw; w = addDays(w, 7)) { const wi = wInfo(w), active = w === cw || ss.some(s => s.date >= w && s.date <= wi.we);
+    if (wi.coreDone) { run++; const d = wi.coreDate || wi.end;
+      add('week:' + w + ':core', 100, d, 'Core week complete');
+      if (wi.pump.n >= 3) add('week:' + w + ':triple', 50, d, '3 Pump week');
+      if (run >= 2) add('week:' + w + ':streak', 10 * Math.min(run - 1, 5), d, run + ' weeks in a row');
+      if (wi.friOff) hit('social', d); if (run >= 4) hit('four', d); }
+    else if (w < cw && wi.coreN > 0) run = 0;   /* this week still open, or no core planned (a planned week off): the streak pauses */
+    if (wi.pump.d >= 2) hit('double', wi.end); if (wi.pump.d >= 3) hit('triple', wi.end);
+    if (wi.pp.ok) { add('week:' + w + ':balanced', 30, wi.end, 'Push and pull balanced'); hit('balanced', wi.end); }
+    if (wi.gl.all >= GL.lo) { add('week:' + w + ':glutes', 30, wi.end, 'Glute target hit'); hit('glute', wi.end); }
+    if (active) wi.recDays.forEach(d => add('recovery:' + d + ':planned', 5, d, 'Rest day')); }
+  const got = (S.game && S.game.achievements) || {};
+  ACH.forEach(a => { const d = got[a.id] || A[a.id]; if (d) add('achievement:' + a.id, 50, d, a.name); });
+  const list = Object.keys(L).map(key => Object.assign({ key }, L[key])).sort((x, y) => (x.d < y.d ? 1 : x.d > y.d ? -1 : 0));
+  const total = list.reduce((a, e) => a + e.xp, 0);
+  return (GM.calc = { L, list, total, lv: levelOf(total), A, streak: run });
+}
+/* store newly unlocked achievements; the first run (existing history) unlocks silently */
+function syncGame() {
+  const g = S.game, c = gameCalc(), neu = [];
+  ACH.forEach(a => { if (!g.achievements[a.id] && c.A[a.id]) { g.achievements[a.id] = c.A[a.id]; neu.push(a); } });
+  const first = !g.init; g.init = 1; if (neu.length || first) save();
+  return first ? [] : neu;
+}
+/* the next Glutes day: the other one than the last done (alternate A and B) */
+const nextGlutes = () => { let l = null; S.sessions.forEach(s => { if (s && (s.day === 'mon' || s.day === 'thu') && (!l || s.date >= l.date)) l = s; }); return l && l.day === 'mon' ? 'thu' : 'mon'; };
+/* Friday tip from goal, week and (on Friday) readiness */
+function friTip(ws) {
+  const p = S.weekPrefs, plan = planFor(ws), big = plan.filter(x => x === 'wed').length >= 3, r = addDays(ws, FRI) === todayStr() ? rdOf() : null;
+  const satPump = plan[5] === 'wed', ng = nextGlutes(), opp = plan[0] === 'tue' ? 'fri' : plan[0] === 'fri' ? 'tue' : 'fri';
+  const lowS = !!r && r.s === 'high' && r.z === 'lower', upS = !!r && r.s === 'high' && r.z === 'upper';
+  if (big) return { id: 'walk', line: 'Big week. Rest or Walk + mobility.' };
+  if (r && (r.r === 'poor' || (r.s === 'high' && (!r.z || r.z === 'both')))) return { id: 'rest', line: 'Low recovery. Rest or Walk 20 min.' };
+  if (p.primaryGoal === 'glutes') return lowS ? { id: opp, line: 'Legs sore. ' + LIFTNAME[opp] + ' or Walk.' } : { id: ng, line: LIFTNAME[ng] + ' next.' + (satPump ? ' Keep it Normal: Pump Sat.' : '') };
+  if (p.primaryGoal === 'upper') return upS ? { id: 'walk', line: 'Upper sore. Walk or rest.' } : { id: opp, line: LIFTNAME[opp] + ' balances Monday.' };
+  if (p.primaryGoal === 'cond') return { id: 'walk', line: 'Walk 30 min. No extra HIIT.' };
+  if (p.primaryGoal === 'recovery') return { id: 'rest', line: 'Rest or Walk + mobility.' };
+  return lowS ? { id: 'walk', line: 'Walk + mobility.' } : { id: 'walk', line: 'Walk + mobility, or ' + LIFTNAME[ng] + '.' };
+}
+/* planned intensity of a slot: the logged mode when done, today's mode today, else the default */
+function slotMode(wi, i) {
+  const id = wi.plan[i], date = addDays(wi.ws, i); if (!isWk(id)) return '';
+  if (wi.st.done[i]) { const s = S.sessions.find(x => x && x.id === wi.st.sid[i]); return s && s.mode ? (s.mode === 'light' ? 'Light' : 'Hard') : 'Normal'; }
+  if (NOMODE.includes(id)) return 'Easy';
+  if (date === todayStr() && modeDay() === id) return modeNow()[0].toUpperCase() + modeNow().slice(1);
+  const big = wi.pump.n >= 3;
+  return big && (i === lightPumpIdx(wi.plan) || (i === FRI && isLiftId(id))) ? 'Light' : 'Normal';
+}
+/* honest, short weekly read: never "failed" */
+function weekVerdict(wi) {
+  if (wi.coreDone) return wi.xs ? 'Core week complete. Extra work counted.' : 'Core week complete.';
+  if (wi.ws > weekStart()) return 'Planned.';
+  if (wi.ws < weekStart()) return wi.pump.d + wi.combat.d ? 'Some core work done.' : 'Quiet week.';
+  const left = wi.pump.n - wi.pump.d + wi.combat.n - wi.combat.d;
+  return left === 1 ? '1 core workout to go.' : left + ' core workouts to go.';
 }
 
 /* ================= STATS ================= */
@@ -2604,50 +2949,92 @@ function renderStats() {
     ${tab === 'week' ? statsWeek() : tab === 'month' ? (rng === '3m' ? stats3M() : statsMonth()) : statsLifts()}`;
   fxFlush();
 }
+/* plan warnings: short, no guilt words. Glutes A/B and Pump need a day between; Fri Glutes before Sat Pump overlaps */
 function planWarn(plan) {
-  const w = [], a = plan.indexOf('mon'), b = plan.indexOf('thu'), lifts = plan.filter(x => LIFTS.includes(x)).length;
-  if (a >= 0 && b >= 0 && Math.abs(a - b) < 2) w.push('Glutes A and B back to back. Keep 2 days apart.');
-  if (!plan.includes('rest')) w.push('No rest day. Keep at least 1.');
-  if (lifts < 4) w.push(lifts + ' of 4 lifts planned.');
-  return w;
+  const w = [], glu = x => x === 'mon' || x === 'thu', big = plan.filter(x => x === 'wed').length >= 3;
+  for (let i = 0; i < 6; i++) { const a = plan[i], b = plan[i + 1];
+    if (glu(a) && glu(b)) w.push('Glutes 2 days running. Keep 2 days apart.');
+    if (a === 'wed' && b === 'wed') w.push('Pump 2 days running. Keep 48 h apart.');
+    if ((a === 'tue' && b === 'tue') || (a === 'fri' && b === 'fri')) w.push('Same muscles 2 days running.');
+    if (glu(a) && b === 'wed') w.push(DOW[i] + ' Glutes, ' + DOW[i + 1] + ' Pump: keep ' + DOW[i] + ' Normal or Light.');
+    if (big && ((a === 'wed' && b === 'sat') || (a === 'sat' && b === 'wed'))) w.push('Pump and Combat back to back. Use low options.'); }
+  if (plan.filter(restLike).length < 2) w.push('Fewer than 2 rest days. Keep 2.');
+  if (big) w.push(isLiftId(plan[FRI]) ? 'Friday lift in a 3-Pump week: Light only.' : 'Big week: 1 Pump goes Light.');
+  return [...new Set(w)];
 }
-/* Week: which muscle is behind this week? */
+const MARKL = {}; MARKS.forEach(([v, l]) => MARKL[v] = l);
+const GOALSUB = { glutes: 'Fri: Glutes when fresh', upper: 'Fri: the other upper day', general: 'Fri: Walk or Glutes', cond: 'Fri: Walk. Combat 1× max', recovery: 'Fri: rest. Light more often' };
+/* Week: the plan, core goal, Friday, warnings, progress, then which muscle is behind */
 function statsWeek() {
   const ws = addDays(weekStart(), 7 * statWeek), we = addDays(ws, 6), today = todayStr(), cw = weekStart();
-  const st = planStatus(ws), plan = st.plan, custom = !!(S.plans && S.plans[ws]);
+  const wi = wInfo(ws), st = wi.st, plan = wi.plan, custom = !!(S.plans && S.plans[ws]), g = gameCalc(), p = S.weekPrefs;
   const label = statWeek === 0 ? 'This week' : statWeek === 1 ? 'Next week' : statWeek === -1 ? 'Last week' : rangeLabel(ws, we);
   const slots = plan.map((id, i) => {
-    const date = addDays(ws, i), rest = id === 'rest', cls = !rest && DAYS[id].type === 'class', miss = !rest && !st.done[i] && date < today;
-    return `<button class="pday ${date === today ? 'today' : ''} ${st.done[i] ? 'done' : ''} ${rest ? 'rest' : ''} ${cls ? 'cl' : ''} ${miss ? 'miss' : ''}" data-pday="${i}"><span class="dn">${DOW[i]}</span><span class="dd">${+date.slice(8)}</span><span class="pw">${rest ? 'Rest' : (st.done[i] ? '✓' : '') + ABBR[id]}</span></button>`;
+    const date = addDays(ws, i), role = roleOf(plan, i), wk = isWk(id), dn = st.done[i], mk = S.dayMark[date], gone = wk && !dn && date < today;
+    const miss = gone && role === 'core', off = gone && role !== 'core' && !!mk && mk !== 'missed';
+    const txt = !wk ? (id === 'off' ? 'Off' : id === 'flex' ? 'Flex' : 'Rest') : (dn ? '✓' : '') + ABBR[id];
+    const cls = [date === today && 'today', dn && 'done', !wk && 'rest', wk && DAYS[id].type === 'class' && 'cl', role === 'flex' && 'flx', miss && 'miss', off && 'offd'].filter(Boolean).join(' ');
+    return `<button class="pday ${cls}" data-pday="${i}" aria-label="${DOW[i]}: ${slotName(id)}, ${ROLE[role]}${dn ? ', done' : off ? ', off' : ''}"><span class="dn">${DOW[i]}</span><span class="dd">${+date.slice(8)}</span><span class="pw">${txt}</span><span class="pr">${off ? 'Off' : ROLE_S[role]}</span></button>`;
   }).join('');
-  /* lift or class by the day's type (Mat + Band is a lift here; Walk is neither; the "4 lifts" counts stay on LIFTS) */
-  const isL = x => !!DAYS[x] && DAYS[x].type === 'lift', isC = x => !!DAYS[x] && DAYS[x].type === 'class' && x !== 'walk';
-  const lp = plan.filter(isL).length, ld = plan.filter((x, i) => isL(x) && st.done[i]).length;
-  const cp = plan.filter(isC).length, cd = plan.filter((x, i) => isC(x) && st.done[i]).length;
-  const nx = statWeek === 0 ? nextUp() : null;
+  const ok = c => (c ? ' class="ok"' : '');
+  const core = wi.coreN ? `<div class="th">Core goal${wi.coreDone ? '<b>Complete</b>' : ''}</div><div class="tr">${wi.pump.n ? `<span${ok(wi.pump.d >= wi.pump.n)}>Pump <b>${wi.pump.d}/${wi.pump.n}</b></span>` : ''}${wi.combat.n ? `<span${ok(wi.combat.d >= wi.combat.n)}>Combat <b>${wi.combat.d}/${wi.combat.n}</b></span>` : ''}${wi.restN ? `<span${ok(!wi.broken && wi.kept >= wi.restN)}>Rest days <b>${wi.kept}/${wi.restN}</b></span>` : ''}</div>` : '';
+  const bTxt = i => { const d = addDays(ws, i), mk = S.dayMark[d]; return st.done[i] ? 'Done' : d < today ? (mk ? MARKL[mk] : 'Skipped') : 'Optional'; };
+  const fid = plan[FRI], friT = fid === 'off' ? 'Planned off' : fid === 'rest' ? 'Rest' : fid === 'flex' ? 'Optional' : slotName(fid) + ' · ' + bTxt(FRI);
+  const bon = wi.bonus.filter(o => o.i !== FRI).map(o => `<span${ok(st.done[o.i])}>${DOW[o.i]} ${slotName(o.id)}: <b>${bTxt(o.i)}</b></span>`).join('');
+  const bonus = `<div class="th">Bonus focus</div><div class="tr">${bon}<span${ok(st.done[FRI])}>Fri Flex: <b>${friT}</b></span></div>`;
+  /* Friday: one tap off, or a tip; a skipped optional day can be marked after */
+  const fd = addDays(ws, FRI); let fri = '';
+  if (fd >= today && !st.done[FRI]) fri = fid === 'off' ? `<div class="fri"><span>Friday is optional. Enjoy your evening.</span><button class="chipb" data-pday="${FRI}">Plan Friday</button></div>`
+    : `<div class="fri"><span>Fri tip: <b>${friTip(ws).line}</b></span><button class="chipb" data-fri="off">Take Friday off</button></div>`;
+  const marks = wi.bonus.filter(o => !st.done[o.i] && addDays(ws, o.i) < today).map(o => { const d = addDays(ws, o.i), mk = S.dayMark[d];
+    return `<div class="mark"><span>${DOW[o.i]} ${slotName(o.id)} not logged. Optional.</span><div class="mk">${MARKS.map(([v, l]) => `<button class="chipb ${mk === v ? 'on' : ''}" data-mark="${d}:${v}" aria-pressed="${mk === v}">${l}</button>`).join('')}</div></div>`; }).join('');
   const warns = planWarn(plan).map(t => `<div class="pwarn">${t}</div>`).join('');
   const past = ws < cw, future = ws > cw, k = weekCat(ws, null);
   let ans = '';
   if (past) {
-    /* a past week: name the workouts that were missed; else the biggest gap in sets */
-    const missed = plan.filter((id, i) => id !== 'rest' && !st.done[i]).map(id => DAYS[id].title);
-    let big = null; CATS.forEach(c => { const g = k.T[c] - k.D[c]; if (g >= 2 && (!big || g > k.T[big] - k.D[big])) big = c; });
-    ans = missed.length ? `Missed: <b>${missed.join(', ')}</b>` : big ? `Short: <b>${big}</b> · ${rh(k.T[big] - k.D[big])} sets` : '<b>All on track</b>';
+    const missed = plan.filter((id, i) => roleOf(plan, i) === 'core' && !st.done[i]).map(id => DAYS[id].title);
+    let big = null; CATS.forEach(c => { const gp = k.T[c] - k.D[c]; if (gp >= 2 && (!big || gp > k.T[big] - k.D[big])) big = c; });
+    ans = missed.length ? `Not done: <b>${missed.join(', ')}</b>` : big ? `Short: <b>${big}</b> · ${rh(k.T[big] - k.D[big])} sets` : '<b>All on track</b>';
   } else if (!future) {
     let worst = null; CATS.forEach(c => { if (k.T[c] > 0 && k.G[c] >= 2 && (!worst || k.G[c] / k.T[c] > k.G[worst] / k.T[worst] + 1e-9)) worst = c; });
     const lf = worst && liftFor(worst);
-    ans = worst ? `Behind: <b>${worst}</b>${lf ? ' · do ' + LIFTNAME[lf] + ' next' : ''}` : '<b>All on track</b>';
+    ans = worst ? `Behind: <b>${worst}</b>${lf ? ' · ' + LIFTNAME[lf] + ' helps' : ''}` : '<b>All on track</b>';
   }
   const rows = CATS_R.map(c => {
-    const T = k.T[c], D = k.D[c], L = past ? 0 : k.L[c], g = past ? T - D : k.G[c], mx = Math.max(T, D + L, 1), dw = Math.min(100, D / mx * 100), lw = Math.min(100 - dw, L / mx * 100);
+    const T = k.T[c], D = k.D[c], L = past ? 0 : k.L[c], mx = Math.max(T, D + L, 1), dw = Math.min(100, D / mx * 100), lw = Math.min(100 - dw, L / mx * 100);
     return `<div class="cset ${c === 'Legs' ? 'dimrow' : ''}"><span class="mg">${c}</span><span class="cbar"><i style="width:${dw}%"></i>${L ? `<i class="lt" style="width:${lw}%"></i>` : ''}</span><span class="mv">${rh(D)}<small> / ${rh(T)}</small></span></div>`;
   }).join('');
+  const dlist = plan.map((id, i) => (isWk(id) ? `<div class="dl ${st.done[i] ? 'ok' : ''}"><span class="d1">${DOW[i]}</span><span class="d2">${slotName(id)} <em>${ROLE[roleOf(plan, i)]}</em><small>${EMPH[id]}</small></span><span class="d3">${slotMode(wi, i)}<small>~${durOf(id)} min</small></span></div>` : '')).join('');
+  /* progress: level, streak, quests, recent rewards, achievements */
+  const lv = g.lv, gl = wi.gl.all, pp = wi.pp;
+  const glH = gl > GL.max ? 'Glutes are full this week. Rest them.' : gl >= 25 ? 'Big glute week.' : gl < 10 && !future ? 'Room for more glutes this week.' : '';
+  const ppH = pp.push > pp.pull ? 'More push than pull. Add a pull move.' : pp.push < 8 && pp.pull >= 8 ? 'Push is low. Add a chest move.' : '';
+  const xH = wi.xsAll ? (wi.xs ? '+' + wi.xsAll + ' extra sets. Nice work.' : gl > GL.max ? 'Glutes full this week. Sets saved.' : 'Saved. Poor days don\'t add to target.') : '';
+  const q = [[wi.coreDone, 'Core week', wi.coreN ? (wi.pump.d + wi.combat.d) + '/' + wi.coreN : '—', '+' + (wi.pump.n >= 3 ? 150 : 100), ''],
+    [gl >= GL.lo, 'Glute sets', rh(wi.gl.ded) + (wi.gl.pump ? ' + ' + wi.gl.pump + ' Pump' : '') + ' / ' + GL.lo, '+30', glH],
+    [pp.ok, 'Push / pull · 14 d', pp.push + ' / ' + pp.pull, '+30', ppH],
+    [wi.xs > 0, 'Extra effort', wi.xsAll ? '+' + wi.xsAll + ' sets' : 'Add moves any day', '+3 a set', xH]];
+  const quests = q.map(([d, n, v, x, h]) => `<div class="qr ${d ? 'ok' : ''}"><span class="qi" aria-hidden="true">${d ? '✓' : ''}</span><span class="qn">${n}${h ? `<small>${h}</small>` : ''}</span><span class="qv">${v}<small>${x} XP</small></span></div>`).join('');
+  const recent = g.list.slice(0, 3).map(e => `<div class="rw"><b>+${e.xp}</b><span>${e.why}</span><small>${niceDate(e.d)}</small></div>`).join('');
+  const ach = ACH.filter(a => S.game.achievements[a.id] || g.A[a.id]);
   return `
     <div class="wnav"><button data-wk="-1" aria-label="Previous week">‹</button><div><b>${label}</b><small>${rangeLabel(ws, we)}</small></div><button data-wk="1" aria-label="Next week">›</button></div>
     <div class="plan">${slots}</div>
-    <div class="psum"><span>Lifts <b>${ld}/${lp}</b> · Classes <b>${cd}/${cp}</b></span>${nx ? `<span>Next <b>${DAYS[nx].title}</b></span>` : ''}</div>
-    ${warns}${st.extra.length ? `<div class="note">Also done: ${st.extra.join(', ')}</div>` : ''}
-    ${custom ? `<div class="pbtns"><button class="btn-q" data-plan="reset">Reset to standard</button><button class="btn-q" data-plan="base">Make this my standard</button></div>` : ''}
+    <div class="shead">${weekVerdict(wi)}</div>
+    <div class="tgt">${core}${bonus}</div>
+    ${fri}${marks}${warns}${st.extra.length ? `<div class="note">Also done: ${st.extra.join(', ')}</div>` : ''}
+    <div class="setrow"><span>${(GOALS.find(x => x[0] === p.primaryGoal) || GOALS[2])[1]} · ${p.pumpTarget} Pump</span><button class="chipb ${p.goalSet ? '' : 'on'}" data-setup="1">${p.goalSet ? 'Week setup' : 'Pick your goal'}</button></div>
+    ${custom ? `<div class="pbtns"><button class="btn-q" data-plan="reset">Reset week</button><button class="btn-q" data-plan="base">Use every week</button></div>` : ''}
+    ${dlist ? `<div class="lbl">Plan</div><div class="dlist">${dlist}</div>` : ''}
+    <div class="lbl">Progress</div>
+    <div class="game">
+      <div class="gh"><span class="lv">Level ${lv.l}</span><span>${g.streak ? g.streak + '-week streak' : 'Streak starts with a core week'}</span><span>${g.total} XP</span></div>
+      <div class="xpbar" role="progressbar" aria-label="XP to level ${lv.l + 1}" aria-valuemin="0" aria-valuemax="${lv.n}" aria-valuenow="${lv.r}"><i style="width:${Math.round(lv.r / lv.n * 100)}%"></i></div>
+      <div class="gs">${lv.n - lv.r} XP to Level ${lv.l + 1}</div>
+      <div class="qh">Weekly quests</div>${quests}
+      ${recent ? `<div class="qh">Recent</div>${recent}` : ''}
+      ${ach.length ? `<div class="qh">Badges ${ach.length}/${ACH.length}</div><div class="ach">${ach.map(a => `<span class="badge">${a.name}</span>`).join('')}</div>` : ''}
+    </div>
     ${ans ? `<div class="shead">${ans}</div>` : ''}
     <div class="lbl">Muscle sets · done / target</div>
     <div class="msets">${past ? '' : '<div class="clg"><span><i></i>Done</span><span><i class="lt"></i>Planned</span></div>'}${rows}</div>
@@ -2674,10 +3061,10 @@ function statsMonth() {
   for (let ws = wsOf(a); ws <= b; ws = addDays(ws, 7)) {
     const wa = ws < a ? a : ws, wb = addDays(ws, 6) > b ? b : addDays(ws, 6);
     const ss = S.sessions.filter(x => x.date >= wa && x.date <= wb), cnt = {}; ss.forEach(x => cnt[x.day] = (cnt[x.day] || 0) + 1);
-    weeks.push({ wa, wb, cnt, n: kc5(ss.reduce((t, x) => t + kcSession(x), 0)), lifts: LIFTS.filter(id => cnt[id]).length });
+    weeks.push({ wa, wb, cnt, n: kc5(ss.reduce((t, x) => t + kcSession(x), 0)), wi: wInfo(ws) });
   }
   const wmax = Math.max(1, ...weeks.map(w => w.n));
-  const rows = weeks.map(w => `<div class="wk"><div class="wl">${+w.wa.slice(8)}–${+w.wb.slice(8)}<small class="${w.lifts >= 4 ? 'ok4' : ''}">${MON[+w.wa.slice(5, 7) - 1]} · ${w.lifts}/4</small></div>
+  const rows = weeks.map(w => `<div class="wk"><div class="wl">${+w.wa.slice(8)}–${+w.wb.slice(8)}<small class="${w.wi.coreDone ? 'ok4' : ''}">${MON[+w.wa.slice(5, 7) - 1]} · ${w.wi.pump.d + w.wi.combat.d}/${w.wi.coreN}</small></div>
       ${ORDER.map(id => { const n = w.cnt[id] || 0; return `<div class="cell ${n ? 'on' : ''} ${DAYS[id].type === 'class' ? 'cl' : ''}">${n > 1 ? n : n ? '✓' : ''}</div>`; }).join('')}
       <div class="wv">${w.n || '—'}<div class="vb"><i style="width:${Math.round(w.n / wmax * 100)}%"></i></div></div></div>`).join('');
   const list = S.sessions.map((x, i) => ({ x, i })).filter(o => o.x.date >= a && o.x.date <= b).reverse();
@@ -2762,21 +3149,55 @@ function statsLifts() {
   const more = rest.length ? `<button class="btn btn-g" data-more style="width:100%;margin-top:12px">${liftsAll ? 'Show fewer' : 'Show ' + rest.length + ' more'}</button>` : '';
   return head + groups + more;
 }
-/* plan editing */
+/* plan editing: one slot, or the week setup (planEdit.setup) */
 let planEdit = null;
+const FRIOPT = ['mon', 'thu', 'tue', 'fri', 'walk', 'mat', 'rest', 'off', 'wed', 'sat', 'sun'];
+const pickName = id => (id === 'rest' ? 'Rest day' : id === 'off' ? 'Day off / social' : DAYS[id].title);
 function openPlan(ws, i) {
   planEdit = { ws, i };
-  const cur0 = planFor(ws)[i], date = addDays(ws, i);
+  const plan = planFor(ws), cur0 = plan[i], date = addDays(ws, i), wi = wInfo(ws), role = roleOf(plan, i), tip = i === FRI ? friTip(ws) : null, ng = nextGlutes();
+  const ids = i === FRI ? FRIOPT : [...ORDER, 'rest', 'off'], cb = id => id === 'sat' && plan.some((x, j) => x === 'sat' && j !== i);
+  const sub = id => (id === 'rest' ? 'Recover' : id === 'off' ? 'Free day. Social plans.' : DAYS[id].tt + ' · ~' + durOf(id) + ' min · ' + EMPH[id]);
+  const head = isWk(cur0) ? `${ROLE[role]} · ${slotMode(wi, i)} · ~${durOf(cur0)} min` : ROLE[role] + (i === FRI ? ' · optional' : '');
+  const tag = id => (tip && tip.id === id ? '<span class="badge">Tip</span>' : i === FRI && id === ng ? '<span class="badge gray">Next glutes</span>' : '');
   $('#planBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button>
-    <div class="kicker">${DOW[i]} · ${MON[+date.slice(5, 7) - 1]} ${+date.slice(8)}</div><h2>Pick a workout</h2>
-    <div class="mlist">${[...ORDER, 'rest'].map(id => `<button class="mrow ${id === cur0 ? 'on' : ''}" data-pick="${id}"><span>${id === 'rest' ? 'Rest day' : DAYS[id].title}<small>${id === 'rest' ? 'Recover' : DAYS[id].tt}</small></span><span class="chev">${id === cur0 ? '✓' : '›'}</span></button>`).join('')}</div>`;
+    <div class="kicker">${DOW[i]} · ${MON[+date.slice(5, 7) - 1]} ${+date.slice(8)}</div><h2>${i === FRI ? 'Flex Day' : 'Pick a workout'}</h2>
+    <p class="note">${head}</p>${tip ? `<p class="abanner">${tip.line}</p>` : ''}
+    <div class="mlist">${ids.map(id => `<button class="mrow ${id === cur0 ? 'on' : ''} ${cb(id) ? 'dis' : ''}" data-pick="${id}"${cb(id) ? ' aria-disabled="true"' : ''}><span>${pickName(id)}${tag(id)}<small>${cb(id) ? 'Already this week' : sub(id)}</small></span><span class="chev">${id === cur0 ? '✓' : '›'}</span></button>`).join('')}</div>`;
   openModal('mPlan');
 }
+function openSetup() { planEdit = { setup: 1 }; renderSetup(); openModal('mPlan'); }
+function renderSetup() {
+  const p = S.weekPrefs, on = (k, v) => String(p[k]) === String(v);
+  const seg = (k, opts) => `<div class="seg wrap">${opts.map(([v, l]) => `<button class="${on(k, v) ? 'on' : ''}" data-pref="${k}:${v}" aria-pressed="${on(k, v)}">${l}</button>`).join('')}</div>`;
+  $('#planBox').innerHTML = `<div class="grab"></div><button class="xbtn" data-close aria-label="Close">×</button><h2>Week setup</h2>
+    <div class="lbl">Main goal</div><div class="mlist">${GOALS.map(([v, l]) => { const o = p.goalSet && p.primaryGoal === v; return `<button class="mrow ${o ? 'on' : ''}" data-pref="primaryGoal:${v}" aria-pressed="${o}"><span>${l}<small>${GOALSUB[v]}</small></span><span class="chev">${o ? '✓' : '›'}</span></button>`; }).join('')}</div>
+    <div class="lbl">Pump per week</div>${seg('pumpTarget', [[2, '2 · Recommended'], [3, '3 · High volume']])}
+    <div class="lbl">Monday</div>${seg('mondayFocus', [['alternate', 'Push / Pull'], ['push', 'Push'], ['pull', 'Pull']])}
+    <p class="note">Tue and Sun rest. Fri is optional. Changes this week and later; past weeks stay.</p>
+    <button class="btn btn-p" data-close>Done</button>`;
+}
+const PREFOK = { primaryGoal: GOALS.map(g => g[0]), pumpTarget: [2, 3], mondayFocus: ['alternate', 'push', 'pull'] };
+function setupClick(e) {
+  const b = e.target.closest('[data-pref]'); if (!b) return;
+  const [k, v0] = b.dataset.pref.split(':'), v = k === 'pumpTarget' ? +v0 : v0; if (!PREFOK[k] || !PREFOK[k].includes(v)) return;
+  freezePast(); S.weekPrefs[k] = v; if (k === 'primaryGoal') S.weekPrefs.goalSet = true;
+  if (k !== 'primaryGoal') { const cw = weekStart(); S.basePlan = null;
+    for (const w in S.plans) if (w >= cw) { const f = S.plans[w][FRI], t = template(w); if (f !== 'flex' && !(v === 3 && isLiftId(f))) t[FRI] = f; S.plans[w] = t; } }
+  save(); buzz('pick'); renderSetup(); sheetMark(); renderTabs(); if (S.view === 'stats') renderStats();
+  if (k === 'pumpTarget') toast(v === 3 ? 'High-volume week: 1 Pump Light, Fri rests.' : '2 Pump: the recommended week.', false, 2600);
+}
 $('#planBox').addEventListener('click', e => {
+  if (planEdit && planEdit.setup) { setupClick(e); return; }
   const b = e.target.closest('[data-pick]'); if (!b || !planEdit) return;
-  const { ws, i } = planEdit, id = b.dataset.pick, plan = planFor(ws).slice();
+  const { ws, i } = planEdit, id = b.dataset.pick, plan = planFor(ws).slice(), date = addDays(ws, i); if (!planOk(id)) return;
   if (id === 'sat' && plan.some((x, j) => x === 'sat' && j !== i)) { toast('Combat max 1× per week', true); buzz('block'); return; }
+  if (i === FRI && plan.filter((x, j) => x === 'wed' && j !== i).length >= 3 && (isLiftId(id) || id === 'wed') && !confirm(id === 'wed' ? '3 Pump week already. Add a 4th? Keep it Light.' : '3 Pump week already. Add this lift? Keep it Light.')) return;
   plan[i] = id; S.plans[ws] = plan; save(); buzz('pick'); closeAll(); renderTabs(); renderStats();
+  const r = date === todayStr() ? rdOf() : null, glu = id === 'mon' || id === 'thu';
+  if (id === 'off' && i === FRI) toast('Friday is optional. Enjoy your evening.', false, 2600);
+  else if (glu && r && (r.r === 'poor' || soreFor(r, id))) toast('Low recovery today. Walk or rest is better.', true, 2600);
+  else if (glu && plan[i + 1] === 'wed') toast('Pump next day. Keep it Normal or Light.', false, 2600);
 });
 /* ================= ADD EXERCISE PICKER ================= */
 let addPos = 'end', addCat = null;
@@ -2853,10 +3274,10 @@ function removeExtra(day, id) {
   if (S.order[day.id]) S.order[day.id].ids = S.order[day.id].ids.filter(i => i !== id);
   delete S.sets[id]; delete S.sel[id]; save(); buzz('pick'); lastLayout = Date.now(); render(true);
 }
-/* before changing the standard week, pin past weeks to the old plan so history does not change */
+/* before changing the template or the standard week, pin past weeks to their plan so history does not change */
 function freezePast() {
-  const cw = weekStart(), old = (S.basePlan || STANDARD).slice();
-  new Set(S.sessions.map(x => wsOf(x.date))).forEach(w => { if (w < cw && !S.plans[w]) S.plans[w] = old.slice(); });
+  const cw = weekStart();
+  new Set(S.sessions.filter(x => x && ISO.test(x.date)).map(x => wsOf(x.date))).forEach(w => { if (w < cw && !S.plans[w]) S.plans[w] = planFor(w).slice(); });
 }
 function statsClick(e) {
   const t = e.target, hit = sel => t.closest(sel);
@@ -2864,10 +3285,18 @@ function statsClick(e) {
   if ((b = hit('[data-stab]'))) { buzz('tick'); S.statTab = b.dataset.stab; save(); fx('bars'); renderStats(); return; }
   if ((b = hit('[data-wk]'))) { buzz('tick'); statWeek = Math.min(4, Math.max(-12, statWeek + +b.dataset.wk)); renderStats(); return; }
   if ((b = hit('[data-pday]'))) { buzz('tick'); openPlan(addDays(weekStart(), 7 * statWeek), +b.dataset.pday); return; }
+  if ((b = hit('[data-setup]'))) { buzz('tick'); openSetup(); return; }
+  if ((b = hit('[data-fri]'))) {
+    const ws = addDays(weekStart(), 7 * statWeek), plan = planFor(ws).slice(); plan[FRI] = 'off'; S.plans[ws] = plan;
+    save(); buzz('pick'); renderTabs(); renderStats(); toast('Friday is optional. Enjoy your evening.', false, 2600); return; }
+  if ((b = hit('[data-mark]'))) {
+    const [d, v] = b.dataset.mark.split(':'); if (!ISO.test(d) || !MARKL[v]) return;
+    if (S.dayMark[d] === v) delete S.dayMark[d]; else S.dayMark[d] = v;
+    save(); buzz('pick'); renderStats(); return; }
   if ((b = hit('[data-plan]'))) {
     buzz('pick'); const ws = addDays(weekStart(), 7 * statWeek);
-    if (b.dataset.plan === 'reset') { delete S.plans[ws]; toast('Back to standard'); }
-    else { freezePast(); S.basePlan = planFor(ws).slice(); delete S.plans[ws]; toast('Saved as your standard week'); }
+    if (b.dataset.plan === 'reset') { delete S.plans[ws]; toast('Back to your template'); }
+    else { freezePast(); S.basePlan = planFor(ws).slice(); delete S.plans[ws]; toast('Used every week'); }
     save(); renderTabs(); renderStats(); return;
   }
   if ((b = hit('[data-rng]'))) { buzz('tick'); S.statRange = b.dataset.rng; save(); fx('bars'); renderStats(); return; }
@@ -3034,10 +3463,11 @@ const GO = new URLSearchParams(location.search).get('go');
 if (GO) { S.view = GO === 'stats' ? 'stats' : nextUp(); S.viewDate = todayStr(); save(); try { history.replaceState(null, '', location.pathname); } catch (e) {} }
 if (!DAYS[S.view] && S.view !== 'stats') S.view = 'mon';
 S.rate = null;
+try { const neu = syncGame(); if (neu.length) setTimeout(() => toast('Badge: ' + neu.map(a => a.name).join(', '), false, 2600), 800); } catch (e) {}
 render(); resumeTimer();
 if (!localStorage.getItem(KEY + '_seen')) { openModal('mHow'); try { localStorage.setItem(KEY + '_seen', '1'); } catch (e) {} }
 /* keep APP_VER in step with VERSION in sw.js */
-const APP_VER = '3.10.0';
+const APP_VER = '3.11.0';
 $('#appVer').textContent = 'SCULPT v' + APP_VER;
 if ('serviceWorker' in navigator) {
   const hadCtrl = !!navigator.serviceWorker.controller;
